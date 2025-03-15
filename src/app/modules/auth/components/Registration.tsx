@@ -9,15 +9,18 @@ import {register} from '../redux/AuthCRUD'
 import {Link} from 'react-router-dom'
 
 const initialValues = {
-  firstname: '',
+  name: '',
   lastname: '',
   email: '',
   phone_number: '',
-  acceptTerms: false,
+  occupation: '',
+  city: '',
+  referenced: '',
+  status_waiting_list: 0,
 }
 
 const registrationSchema = Yup.object().shape({
-  firstname: Yup.string()
+  name: Yup.string()
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('First name is required'),
@@ -31,29 +34,32 @@ const registrationSchema = Yup.object().shape({
     .max(50, 'Maximum 50 symbols')
     .required('Last name is required'),
   phone_number: Yup.string().required('Phone number is required'),
-  acceptTerms: Yup.bool().required('You must accept the terms and conditions'),
 })
 
 export function Registration() {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [statusAlert, setStatusAlert] = useState<string>("");
   const dispatch = useDispatch()
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
-    onSubmit: (values, {setStatus, setSubmitting}) => {
+    onSubmit: async(values, {setStatus, setSubmitting}) => {
+    
       setLoading(true)
-      setTimeout(() => {
-        register(values.email, values.firstname, values.lastname, values.phone_number)
-          .then(({data: {accessToken}}) => {
-            setLoading(false)
-            dispatch(auth.actions.login(accessToken))
-          })
-          .catch(() => {
-            setLoading(false)
-            setSubmitting(false)
-            setStatus('Registration process has broken')
-          })
-      }, 1000)
+      try {
+        const response = await register(values);
+        formik.resetForm();
+        setLoading(false);
+        setStatusAlert("success")
+        setStatus("Registration process has been completed");
+
+        /*dispatch(auth.actions.login(response.data.accessToken));*/
+      } catch (error) {
+        setLoading(false);
+        setSubmitting(false);
+        setStatusAlert("danger")
+        setStatus("Registration process has broken");
+      }
     },
   })
 
@@ -99,7 +105,7 @@ export function Registration() {
       </div>*/}
 
       {formik.status && (
-        <div className='mb-lg-15 alert alert-danger'>
+        <div className={`mb-lg-15 alert alert-${statusAlert}`}>
           <div className='alert-text font-weight-bold'>{formik.status}</div>
         </div>
       )}
@@ -112,21 +118,21 @@ export function Registration() {
             placeholder='First name'
             type='text'
             autoComplete='off'
-            {...formik.getFieldProps('firstname')}
+            {...formik.getFieldProps('name')}
             className={clsx(
               'form-control form-control-lg form-control-solid',
               {
-                'is-invalid': formik.touched.firstname && formik.errors.firstname,
+                'is-invalid': formik.touched.name && formik.errors.name,
               },
               {
-                'is-valid': formik.touched.firstname && !formik.errors.firstname,
+                'is-valid': formik.touched.name && !formik.errors.name,
               }
             )}
           />
-          {formik.touched.firstname && formik.errors.firstname && (
+          {formik.touched.name && formik.errors.name && (
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block'>
-                <span role='alert'>{formik.errors.firstname}</span>
+                <span role='alert'>{formik.errors.name}</span>
               </div>
             </div>
           )}
@@ -232,7 +238,7 @@ export function Registration() {
     
 
       {/* begin::Form group */}
-      <div className='fv-row mb-10'>
+      {/*<div className='fv-row mb-10'>
         <div className='form-check form-check-custom form-check-solid'>
           <input
             className='form-check-input'
@@ -258,7 +264,7 @@ export function Registration() {
             </div>
           )}
         </div>
-      </div>
+      </div>*/}
       {/* end::Form group */}
 
       {/* begin::Form group */}
@@ -267,7 +273,8 @@ export function Registration() {
           type='submit'
           id='kt_sign_up_submit'
           className='btn btn-lg btn-primary w-100 mb-5'
-          disabled={formik.isSubmitting || !formik.isValid || !formik.values.acceptTerms}
+          disabled={formik.isSubmitting || !formik.isValid}
+          
         >
           {!loading && <span className='indicator-label'>Submit</span>}
           {loading && (
