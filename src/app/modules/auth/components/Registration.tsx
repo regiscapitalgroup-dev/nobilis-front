@@ -5,7 +5,6 @@ import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
 import * as auth from '../redux/AuthRedux'
-import {register} from '../redux/AuthCRUD'
 import {Link} from 'react-router-dom'
 
 const initialValues = {
@@ -47,7 +46,6 @@ export function Registration() {
     
       setLoading(true)
       try {
-        const response = await register(values);
         formik.resetForm();
         setLoading(false);
         setStatusAlert("success")

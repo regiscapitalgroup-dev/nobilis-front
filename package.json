@@ -1,8 +1,8 @@
 {
-  "name": "demo1",
+  "name": "nobilis",
   "version": "8.0.24",
   "private": true,
-  "homepage": "/regis",
+  "homepage": "/nobilis",
   "dependencies": {
     "@formatjs/intl-pluralrules": "^4.0.28",
     "@formatjs/intl-relativetimeformat": "^9.1.7",
@@ -46,6 +46,7 @@
     "react-inlinesvg": "^2.3.0",
     "react-intl": "^5.20.4",
     "react-is": "^17.0.2",
+    "react-phone-input-2": "^2.15.1",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -55,6 +56,7 @@
     "rtlcss-webpack-plugin": "^4.0.6",
     "sass": "1.32.1",
     "socicon": "^3.0.5",
+    "sweetalert2": "^11.17.2",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1",
     "yup": "^0.32.9"

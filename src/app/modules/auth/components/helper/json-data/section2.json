@@ -1,0 +1,24 @@
+[
+
+    {
+        "code": "wealthOwner",
+        "title": "Wealth owner",
+        "descrption": "- Net worth $30M+."
+    },
+    {
+        "code": "impactMaker",
+        "title": "Impact Maker",
+        "descrption": "- Reaching 1M+ people through recognized work in fields such as arts, music, science, technology, philanthropy, sports, ect."
+    },
+    {
+        "code": "executive",
+        "title": "Executive",
+        "descrption": "- C-suite Leaders of companies with $500M+ annual revenue."
+    },
+    {
+        "code": "governor",
+        "title": "Governor",
+        "descrption": "- Regional os State Leaders or heads of intergovernmental organizations."
+    }
+
+]
