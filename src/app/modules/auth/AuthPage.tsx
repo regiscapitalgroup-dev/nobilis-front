@@ -2,7 +2,6 @@
 import  {useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {ForgotPassword} from './components/ForgotPassword'
-import {Login} from './components/Login'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import {  RegitrationWizard } from './components/RegistrationWizard'
 

@@ -2,7 +2,6 @@ import {FC, useEffect, useRef, useState} from 'react'
 import {Step1} from './steps/Step1'
 import {Step2} from './steps/Step2'
 import {Step3} from './steps/Step3'
-import {KTSVG} from '../../../../_metronic/helpers'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Formik, Form, FormikValues, useFormikContext} from 'formik'
 import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizardHelper'
@@ -58,10 +57,6 @@ const RegitrationWizard: FC = () => {
 
     loadStepper()
   }, [stepperRef])
-
-  useEffect(() => {
-    console.log(formikRef.current.isValid)
-  }, [formikRef.current])
 
   const handleSubmit = async (event: any) => {
     event?.preventDefault()
