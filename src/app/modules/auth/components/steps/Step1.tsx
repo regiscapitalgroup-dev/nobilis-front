@@ -62,11 +62,11 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
                 type='text'
                 autoComplete='off'
                 className={'form-control form-control-lg form-control-solid bg-dark text-white'}
-                name='name'
+                name='firstName'
               />
               <div className='fv-plugins-message-container'>
                 <div className='fv-help-block text-white fs-8'>
-                  <ErrorMessage name='name' />
+                  <ErrorMessage name='firstName' />
                 </div>
               </div>
             </div>

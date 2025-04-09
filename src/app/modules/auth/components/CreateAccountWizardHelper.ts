@@ -1,7 +1,7 @@
 import * as Yup from 'yup'
 
 export interface ICreateAccount {
-  name: string,
+  firstName: string,
   lastName: string
   email: string
   phoneNumber: string,
@@ -31,7 +31,7 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const createAccountSchemas = [
 
   Yup.object({
-    name: Yup.string().required().label('First Name'),
+    firstName: Yup.string().required().label('First Name'),
     lastName: Yup.string().required().label('Last Name'),
     email: Yup.string().required().email().label('Email'),
     phoneNumber: Yup.string().required().matches(phoneRegExp, 'Phone number is not valid').label('Phone Number'),
@@ -52,7 +52,7 @@ const createAccountSchemas = [
 ]
 
 const inits: ICreateAccount = {
-  name: "",
+  firstName: "",
   lastName: "",
   email: "",
   phoneNumber: "",

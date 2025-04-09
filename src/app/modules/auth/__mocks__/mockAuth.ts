@@ -10,7 +10,7 @@ import {UsersTableMock} from './usersTableMock'
 
 export function mockAuth(mock: MockAdapter) {
   mock.onPost(LOGIN_URL).reply(({data}) => {
-    const {email, password} = JSON.parse(data)
+    /* const {email, password} = JSON.parse(data)
 
     if (email && password) {
       const user = UsersTableMock.table.find(
@@ -21,7 +21,7 @@ export function mockAuth(mock: MockAdapter) {
         const auth = user.auth
         return [200, {...auth, password: undefined}]
       }
-    }
+    } */
 
     return [400]
   })
@@ -31,22 +31,22 @@ export function mockAuth(mock: MockAdapter) {
 
     if (email && firstname && lastname && password) {
       const user: UserModel = {
-        id: generateUserId(),
+       /*  id: generateUserId(), */
         email,
-        firstname,
-        lastname,
-        username: `${firstname}-${lastname}`,
+        firstName: firstname,
+        lastName: lastname,
+       /*  username: `${firstname}-${lastname}`,
         password,
         roles: [2], // Manager
         auth: {
           accessToken: 'access-token-' + Math.random(),
           refreshToken: 'access-token-' + Math.random(),
         },
-        pic: process.env.PUBLIC_URL + '/media/users/default.jpg',
+        pic: process.env.PUBLIC_URL + '/media/users/default.jpg', */
       }
 
       UsersTableMock.table.push(user)
-      const auth = user.auth
+      const auth = user
 
       return [200, {...auth, password: undefined}]
     }
@@ -61,7 +61,7 @@ export function mockAuth(mock: MockAdapter) {
       const user = UsersTableMock.table.find((x) => x.email.toLowerCase() === email.toLowerCase())
       let result = false
       if (user) {
-        user.password = undefined
+         
         result = true
         return [200, {result, password: undefined}]
       }
@@ -75,19 +75,19 @@ export function mockAuth(mock: MockAdapter) {
       Authorization && Authorization.startsWith('Bearer ') && Authorization.slice('Bearer '.length)
 
     if (accessToken) {
-      const user = UsersTableMock.table.find((x) => x.auth?.accessToken === accessToken)
+      const user =null
 
       if (user) {
-        return [200, {...user, password: undefined}]
+        return [200]
       }
     }
 
     return [401]
   })
 
-  function generateUserId(): number {
+  /* function generateUserId(): number {
     const ids = UsersTableMock.table.map((el) => el.id)
     const maxId = Math.max(...ids)
     return maxId + 1
-  }
+  } */
 }

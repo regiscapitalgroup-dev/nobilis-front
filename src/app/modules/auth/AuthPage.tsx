@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import  {useEffect} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import {ForgotPassword} from './components/ForgotPassword'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import {  RegitrationWizard } from './components/RegistrationWizard'
+import { Login } from './components/Login'
+import { CreatePassword } from './components/CreatePassword'
 
 export function AuthPage() {
   useEffect(() => {
@@ -22,13 +23,13 @@ export function AuthPage() {
           <img alt='Logo' src={toAbsoluteUrl('/media/logos/logo-1.svg')} className='h-45px' />
         </a>
         {/* end::Logo */} {/* begin::Wrapper */}
-        <div className='w-lg-500px  rounded shadow-sm  mx-auto'>
+        <div className='w-lg-400px mx-auto'>
           <Switch>
-          <Route path='/auth/registration' component={RegitrationWizard} />
+          <Route path='/auth/login' component={Login} />
             <Route path='/auth/registration' component={RegitrationWizard} />
-            <Route path='/auth/forgot-password' component={ForgotPassword} />
+            <Route path='/activate-account/:token' component={CreatePassword} />
             <Redirect from='/auth' exact={true} to='/auth/login' />
-            <Redirect to='/auth/registration' />      
+            <Redirect to='/auth/login' />      
           </Switch>          
         </div>       
         {/* end::Wrapper */}
