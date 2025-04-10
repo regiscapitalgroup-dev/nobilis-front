@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {useHistory, useParams} from 'react-router-dom'
+import {useState} from 'react'
+import {Link, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {IUpdatePassword, updatePassword} from '../models/UserSettingsModel'
@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import {useDispatch} from 'react-redux'
 import {activateAccount} from '../redux/AuthCRUD'
 import * as auth from '../redux/AuthRedux'
+import {TermsConditionsModal} from './_modals/TermsConditionsModal'
 
 const passwordFormValidationSchema = Yup.object().shape({
   newPassword: Yup.string()
@@ -22,10 +23,11 @@ const passwordFormValidationSchema = Yup.object().shape({
 })
 
 export function CreatePassword() {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const [passwordUpdateData, setPasswordUpdateData] = useState<IUpdatePassword>(updatePassword)
   const [accepted, setAccepted] = useState<boolean>(false)
   const {token} = useParams<{token: string}>()
+  const [openModal, setOpenModal] = useState<boolean>(false)
   const dispatch = useDispatch()
 
   const formik = useFormik<IUpdatePassword>({
@@ -37,38 +39,48 @@ export function CreatePassword() {
       setLoading(true)
 
       if (token) {
-        const {data} = await activateAccount(token, values.newPassword)
-
-        dispatch(auth.actions.login(data.access))
-
-        /* Swal.fire({
-          theme: 'dark',
-          title: `
-                <div className="fs-9">Thanks for resetting your password!.</div>
-                `,
-          html: `
-                <div className="fs-8">Updates have been made. Let´s continue to memership details and confirmation.</div>
-                `,
-          icon: 'success',
-          iconColor: '#808b96',
-          showConfirmButton: false,
-          timer: 1500,
-          allowOutsideClick: false,
-        }) */
+        await activateAccount(token, values.newPassword)
+          .then((data) => {
+            const {access} = data.data
+            setPasswordUpdateData(values)
+            setLoading(false)
+            Swal.fire({
+              theme: 'dark',
+              title: `
+                  <div className="fs-9">Thanks for resetting your password!.</div>
+                  `,
+              html: `
+                  <div className="fs-8">Updates have been made. Let´s continue to memership details and confirmation.</div>
+                  `,
+              icon: 'success',
+              iconColor: '#808b96',
+              showConfirmButton: false,
+              timer: 1000,
+              allowOutsideClick: false,
+            })
+            dispatch(auth.actions.login(access))
+          })
+          .catch(() => {
+            setLoading(false);
+            Swal.fire({
+              theme: 'dark',
+              title: `
+                      <div className="fs-9">An error has occurred.</div>
+                      `,
+              icon: 'error',
+              showConfirmButton: false,
+              timer: 1000,
+              allowOutsideClick: false,
+            })
+          })
       }
-
-      setTimeout((values) => {
-        setPasswordUpdateData(values)
-        setLoading(false)
-      }, 1000)
     },
   })
-
 
   return (
     <>
       <form
-        className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
+        className='form w-100'
         noValidate
         id='kt_login_password_reset_form'
         onSubmit={formik.handleSubmit}
@@ -110,7 +122,7 @@ export function CreatePassword() {
         <div className='fv-row mb-10'>
           <label
             htmlFor='confirmpassword'
-            className='form-label fs-6 fw-bolder mb-3 text-gray-400 required'
+            className='form-label fs-6 mb-3 text-gray-400 required'
           >
             CONFIRM PASSWORD
           </label>
@@ -142,7 +154,12 @@ export function CreatePassword() {
             />
             <label className='form-check-label text-white'>
               I agree to the{' '}
-              <a className='font-weight-bold cursor-pointer'>
+              <a
+                className='font-weight-bold cursor-pointer'
+                onClick={() => {
+                  setOpenModal(true)
+                }}
+              >
                 Founding Member Terms and Conditions.
               </a>
             </label>
@@ -152,24 +169,31 @@ export function CreatePassword() {
         {/* end::Form group */}
 
         {/* begin::Form group */}
-        <div className='d-flex flex-wrap justify-content-center pb-lg-0'>
+        <div className='text-center'>          
           <button
             type='submit'
             id='kt_password_reset_submit'
-            className='btn btn-lg btn-light border bg-dark me-4'
+            className='btn btn-lg btn-light border bg-dark w-100 mb-5'
             disabled={!accepted}
           >
-            <span className='indicator-label'>CHANGE PASSWORD</span>
+            {!loading && <span className='indicator-label'>CHANGE PASSWORD</span>}
             {loading && (
-              <span className='indicator-progress'>
+              <span className='indicator-progress' style={{display: 'block'}}>
                 Please wait...
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}
-          </button>
+          </button>          
         </div>
         {/* end::Form group */}
       </form>
+
+      <TermsConditionsModal
+        show={openModal}
+        handleClose={() => {
+          setOpenModal(!openModal)
+        }}
+      ></TermsConditionsModal>
     </>
   )
 }

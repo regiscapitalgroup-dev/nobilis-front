@@ -19,7 +19,7 @@ export function AuthPage() {
       {/* begin::Content */}
       <div className='d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20'>
         {/* begin::Logo */}
-        <a href='#' className='mb-12'>
+        <a href='#' className='mb-5'>
           <img alt='Logo' src={toAbsoluteUrl('/media/logos/logo-1.svg')} className='h-45px' />
         </a>
         {/* end::Logo */} {/* begin::Wrapper */}
@@ -27,7 +27,7 @@ export function AuthPage() {
           <Switch>
           <Route path='/auth/login' component={Login} />
             <Route path='/auth/registration' component={RegitrationWizard} />
-            <Route path='/activate-account/:token' component={CreatePassword} />
+            <Route path='/auth/activate-account/:token' component={CreatePassword} />
             <Redirect from='/auth' exact={true} to='/auth/login' />
             <Redirect to='/auth/login' />      
           </Switch>          

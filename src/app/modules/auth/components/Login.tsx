@@ -18,7 +18,6 @@ const initialValues = {
 }
 
 export function Login() {
-  
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const formik = useFormik({
@@ -36,6 +35,7 @@ export function Login() {
           .catch(() => {
             setLoading(false)
             setSubmitting(false)
+            alert("an error has occurred")
           })
       }, 1000)
     },
@@ -62,7 +62,7 @@ export function Login() {
 
       {/* begin::Form group */}
       <div className='fv-row mb-10'>
-        <label className='form-label fs-6  text-white'>Email</label>
+        <label className='form-label fs-6 text-gray-400 required'>Email</label>
         <input
           placeholder='Email'
           {...formik.getFieldProps('email')}
@@ -90,7 +90,7 @@ export function Login() {
         <div className='d-flex justify-content-between mt-n5'>
           <div className='d-flex flex-stack mb-2'>
             {/* begin::Label */}
-            <label className='form-label text-white fs-6 mb-0'>Password</label>
+            <label className='form-label text-gray-400 fs-6 mb-0 required'>Password</label>
             {/* end::Label */}
             {/* begin::Link */}
             {/*  <Link
@@ -133,7 +133,7 @@ export function Login() {
         <button
           type='submit'
           id='kt_sign_in_submit'
-          className='btn btn-lg btn-light border bg-dark w-100 mb-5'
+          className='btn btn-lg btn-light   w-100 mb-5'
           disabled={formik.isSubmitting || !formik.isValid}
         >
           {!loading && <span className='indicator-label'>Sign In</span>}

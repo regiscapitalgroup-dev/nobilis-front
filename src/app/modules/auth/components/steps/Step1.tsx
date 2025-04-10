@@ -1,10 +1,11 @@
-import  {FC} from 'react'
+import {FC} from 'react'
 import Swal from 'sweetalert2'
 import {ErrorMessage, Field, useField, useFormikContext} from 'formik'
 import {FooterTitle, HeaderText, HeaderTitle} from '../helper/header-text'
 import countries from '../helper/json-data/countries.json'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import {Link} from 'react-router-dom'
 const Step1: FC<{goNext: () => void}> = ({goNext}) => {
   const formik = useFormikContext<any>()
   const [field, meta, helpers] = useField('phoneNumber')
@@ -144,7 +145,6 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
                   name='country'
                   className='form-select form-select-lg form-select-solid bg-dark text-white'
                 >
-                  <option>Selected option</option>
                   {countries.map((type, index) => (
                     <option key={index} value={type.code}>
                       {type.name}
@@ -180,12 +180,25 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <div>
               <button
                 type='submit'
-                className='btn btn-lg btn-light border bg-dark me-3'
+                className='btn btn-lg btn-light w-50'
                 onClick={handlerSubmit}
               >
                 <span className='indicator-label'>JOIN THE WAITING LIST</span>
               </button>
             </div>
+          </div>
+          <div className='text-center pt-5'>
+            <Link to='/auth/login'>
+              <div>
+                <button
+                  type='submit'
+                  className='btn btn-lg btn-light bg-dark fw-bolder w-50'
+                  disabled={formik.isSubmitting || !formik.isValid}
+                >
+                  <span className='indicator-label'>CANCEL</span>
+                </button>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

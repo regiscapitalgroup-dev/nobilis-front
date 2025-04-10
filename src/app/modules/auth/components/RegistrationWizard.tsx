@@ -7,6 +7,7 @@ import {Formik, Form, FormikValues, useFormikContext} from 'formik'
 import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizardHelper'
 import {register} from '../redux/AuthCRUD'
 import Swal from 'sweetalert2'
+import {KTSVG} from '../../../../_metronic/helpers'
 
 const FormObserver: FC<{
   setFormValues: (values: ICreateAccount) => void
@@ -31,6 +32,18 @@ const RegitrationWizard: FC = () => {
   const [loading, setLoading] = useState(false)
   const loadStepper = () => {
     stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement)
+  }
+
+  const prevStep = () => {
+    if (!stepper.current) {
+      return
+    }
+
+    setSubmitButton(stepper.current.currentStepIndex === stepper.current.totatStepsNumber! - 1)
+
+    stepper.current.goPrev()
+
+    setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex - 1])
   }
 
   const submitStep = (values: ICreateAccount, actions: FormikValues) => {
@@ -114,13 +127,13 @@ const RegitrationWizard: FC = () => {
         >
           <div className='stepper-nav mb-5 w-lg-500px'>
             <div className='stepper-item current ' data-kt-stepper-element='nav'>
-              <h3 className='text-muted'>Step 1</h3>
+              <h3 className='text-muted fs-5'>Step 1</h3>
             </div>
             <div className='stepper-item' data-kt-stepper-element='nav'>
-              <h3 className='text-muted'>Step 2</h3>
+              <h3 className='text-muted fs-5'>Step 2</h3>
             </div>
             <div className='stepper-item' data-kt-stepper-element='nav'>
-              <h3 className='text-muted'>Step 3</h3>
+              <h3 className='text-muted fs-5'>Step 3</h3>
             </div>
           </div>
 
@@ -131,7 +144,7 @@ const RegitrationWizard: FC = () => {
             onSubmit={submitStep}
           >
             {() => (
-              <Form className='mx-auto mw-600px w-100 mt-10  pb-10' id='kt_create_account_form'>
+              <Form className='mx-auto mw-600px w-100 mt-5  pb-5' id='kt_create_account_form'>
                 <FormObserver setFormValues={setCurrentFormValues} />
 
                 <div className='current' data-kt-stepper-element='content'>
@@ -147,11 +160,26 @@ const RegitrationWizard: FC = () => {
                 </div>
 
                 {isSubmitButton && (
-                  <div className='text-center pt-15'>
+                  <div className='d-flex flex-stack pt-15'>
+                    <div className='mr-2'>
+                      <button
+                        onClick={prevStep}
+                        type='button'
+                        className='btn btn-lg btn-light bg-dark me-3'
+                        data-kt-stepper-action='previous'
+                      >
+                        <KTSVG
+                          path='/media/icons/duotune/arrows/arr063.svg'
+                          className='svg-icon-4 me-1'
+                        />
+                        Back
+                      </button>
+                    </div>
+
                     <div>
                       <button
                         type='submit'
-                        className='btn btn-lg btn-light border bg-dark me-3'
+                        className='btn btn-lg btn-light me-3'
                         onClick={handleSubmit}
                       >
                         {!loading && <span className='indicator-label'>Submit</span>}
@@ -161,7 +189,6 @@ const RegitrationWizard: FC = () => {
                             <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                           </span>
                         )}
-                        
                       </button>
                     </div>
                   </div>
