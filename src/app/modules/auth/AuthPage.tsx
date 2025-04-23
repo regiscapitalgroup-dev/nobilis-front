@@ -20,7 +20,7 @@ export function AuthPage() {
       <div className='d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20'>
         {/* begin::Logo */}
         <a href='#' className='mb-5'>
-          <img alt='Logo' src={toAbsoluteUrl('/media/logos/logo-1.svg')} className='h-45px' />
+          <img alt='Logo' src={toAbsoluteUrl('/media/logos/nobilis-white.svg')}/>
         </a>
         {/* end::Logo */} {/* begin::Wrapper */}
         <div className='w-lg-400px mx-auto'>

@@ -2,6 +2,7 @@ import axios from 'axios'
 import {
   UserModel
 } from '../models/UserModel'
+import { SubscriptionModel } from '../models/SubscriptionModel'
 import { ICreateAccount } from '../components/CreateAccountWizardHelper'
 import apiClient from '../../../helpers/apiClient'
 const API_URL = process.env.REACT_APP_API_URL || 'https://lf3566q8-8000.usw3.devtunnels.ms/api/v1'
@@ -24,43 +25,16 @@ export async function register(formData: ICreateAccount) {
 
   const response = await apiClient.post('/waitinglist/', formData);
   return response;
-
-
-  /* try {
-
-    const response = await fetch(`https://lf3566q8-8000.usw3.devtunnels.ms/api/v1/waitinglist/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('Respuesta del servidor:', data);
-    return data;
-  } catch (error) {
-    console.error('Error en la petición:', error);
-    throw error;
-  } */
 }
 
-
-/* export async function getUserByToken(): Promise<UserModel> {
-  const response = await apiClient.get('/users/current/');
-  return response.data;
-} */
-
-export async function getUserByToken() {
- 
+export async function getUserByToken(): Promise<{user: UserModel, subscription?: SubscriptionModel}> {
   return axios
-    .get<UserModel>(`${API_URL}/users/current/`)
+    .get<any>(`${API_URL}/users/current/`)
     .then((res) => {
-      return res.data; 
+      return {
+        user: res.data.user,
+        subscription: res.data.subscription
+      };
     })
     .catch((error) => {
       console.error("Error al obtener el usuario:", error);

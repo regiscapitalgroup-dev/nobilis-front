@@ -53,7 +53,7 @@ export function Login() {
         <h1 className='text-white mb-3'>Sign In to Nobilis</h1>
         <div className='text-gray-400 fw-bold fs-4'>
           New Here?{' '}
-          <Link to='/auth/registration' className='link-primary fw-bolder'>
+          <Link to='/auth/registration' className='link-light fw-bolder'>
             Create an Account
           </Link>
         </div>

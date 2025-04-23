@@ -1,0 +1,42 @@
+[
+    {
+        "activity": "Complete Profile",
+        "creditEarningRate": "1000 credits",
+        "notes": "Fully completed profile following recommended guidelines"
+    },
+    {
+        "activity": "Hosting Experince",
+        "creditEarningRate": "1 credit per $1 sales price",
+        "notes": "Credits counted after publishing the experience"
+    },
+    {
+        "activity": "Leading Experience",
+        "creditEarningRate": "0.15 credits per $1 sales price",
+        "notes": "(Comming Soon) Earn credits through experience offered together with Nobilis Panners"
+    },
+    {
+        "activity": "Region or Industry Chair Position",
+        "creditEarningRate": "25,000 credits per year",
+        "notes": "Yearly commitment and requires annual approvals"
+    },
+    {
+        "activity": "Referrals (onboareded Members)",
+        "creditEarningRate": "750 (HA) - 1500 (UHA) - 3000 (LT) credits per member",
+        "notes": "Based on tier of onboarded member: HA=High Achiever, UHA=Ultra High Achiever, LT=Legacy Tier"
+    },
+    {
+        "activity": "Nobilis Board or Commmittee Participation",
+        "creditEarningRate": "6,000 credits per year",
+        "notes": "For up to 12 meetings a year, requines annual approvals"
+    },
+    {
+        "activity": "Public Name Usage",
+        "creditEarningRate": "5,000 - 75,000 credits",
+        "notes": "Based on source type and Member profile. Nobilis may feature your name in marketing efforts"
+    },
+    {
+        "activity": "Leading Forum, Think-Tank, Article in Nobilis Community",
+        "creditEarningRate": "500 credits per initative",
+        "notes": "Loading Community"
+    }
+]

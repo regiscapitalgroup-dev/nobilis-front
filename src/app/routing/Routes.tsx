@@ -5,7 +5,7 @@
  * components (e.g: `src/app/modules/Auth/pages/AuthPage`, `src/app/BasePage`).
  */
 
-import React, {FC} from 'react'
+import  {FC} from 'react'
 import {Redirect, Switch, Route} from 'react-router-dom'
 import {shallowEqual, useSelector} from 'react-redux'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
@@ -16,6 +16,7 @@ import {RootState} from '../../setup'
 
 const Routes: FC = () => {
   const isAuthorized = useSelector<RootState>(({auth}) => auth.user, shallowEqual)
+
 
   return (
     <Switch>

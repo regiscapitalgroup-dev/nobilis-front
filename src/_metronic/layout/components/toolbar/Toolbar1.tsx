@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import clsx from 'clsx'
 import React, {FC} from 'react'
-import {KTSVG} from '../../../helpers'
+/* import {KTSVG} from '../../../helpers' */
 import {useLayout} from '../../core'
 import {DefaultTitle} from '../header/page-title/DefaultTitle'
 
@@ -17,11 +17,8 @@ const Toolbar1: FC = () => {
       >
         <DefaultTitle />
 
-        {/* begin::Actions */}
         <div className='d-flex align-items-center py-1'>
-          {/* begin::Wrapper */}
-          <div className='me-4'>
-            {/* begin::Menu */}
+         {/*  <div className='me-4'>
             <a
               href='#'
               className='btn btn-sm btn-flex btn-light btn-active-primary fw-bolder'
@@ -36,11 +33,8 @@ const Toolbar1: FC = () => {
               Filter
             </a>
 
-            {/* end::Menu */}
           </div>
-          {/* end::Wrapper */}
 
-          {/* begin::Button */}
 
           <a
             href='#'
@@ -50,8 +44,7 @@ const Toolbar1: FC = () => {
             id='kt_toolbar_primary_button'
           >
             Create
-          </a>
-          {/* end::Button */}
+          </a> */}
         </div>
         {/* end::Actions */}
       </div>

@@ -4,7 +4,7 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {UserModel} from '../../../../app/modules/auth/models/UserModel'
 import {RootState} from '../../../../setup'
-import {Languages} from './Languages'
+/* import {Languages} from './Languages' */
 
 const HeaderUserMenu: FC = () => {
   const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
@@ -22,9 +22,9 @@ const HeaderUserMenu: FC = () => {
           <div className='d-flex flex-column'>
             <div className='fw-bolder d-flex align-items-center fs-5'>
               {user.firstName} {user.lastName}
-              <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span>
+              {/* <span className='badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2'>Pro</span> */}
             </div>
-            <a href='#' className='fw-bold text-muted text-hover-primary fs-7'>
+            <a href='#' className='fw-bold text-muted text-hover-primary fs-8'>
               {user.email}
             </a>
           </div>
@@ -34,12 +34,14 @@ const HeaderUserMenu: FC = () => {
       <div className='separator my-2'></div>
 
       <div className='menu-item px-5'>
-        <Link to={'/crafted/pages/profile'} className='menu-link px-5'>
+        {/* <Link to={'/crafted/pages/profile'} className='menu-link px-5'> */}
+       {/*  <Link to={'/crafted/account/profile'} className='menu-link px-5'>
+
           My Profile
-        </Link>
+        </Link> */}
       </div>
 
-      <div className='menu-item px-5'>
+      {/* <div className='menu-item px-5'>
         <a href='#' className='menu-link px-5'>
           <span className='menu-text'>My Projects</span>
           <span className='menu-badge'>
@@ -122,7 +124,7 @@ const HeaderUserMenu: FC = () => {
         <Link to='/crafted/account/settings' className='menu-link px-5'>
           Account Settings
         </Link>
-      </div>
+      </div> */}
 
       <div className='menu-item px-5'>
         <Link to='/logout' className='menu-link px-5'>

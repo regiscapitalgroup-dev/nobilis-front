@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react'
+/* import React from 'react' */
 import {useIntl} from 'react-intl'
-import {KTSVG} from '../../../helpers'
-import {AsideMenuItemWithSub} from './AsideMenuItemWithSub'
+/* import {KTSVG} from '../../../helpers'
+import {AsideMenuItemWithSub} from './AsideMenuItemWithSub' */
 import {AsideMenuItem} from './AsideMenuItem'
 
 export function AsideMenuMain() {
@@ -15,8 +15,9 @@ export function AsideMenuMain() {
         icon='/media/icons/duotune/art/art002.svg'
         title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
         fontIcon='bi-app-indicator'
+        
       />
-      <AsideMenuItem
+     {/*  <AsideMenuItem
         to='/builder'
         icon='/media/icons/duotune/general/gen019.svg'
         title='Layout Builder'
@@ -116,7 +117,7 @@ export function AsideMenuMain() {
           </span>
           <span className='menu-title'>Changelog {process.env.REACT_APP_VERSION}</span>
         </a>
-      </div>
+      </div> */}
     </>
   )
 }
