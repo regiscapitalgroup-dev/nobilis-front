@@ -79,12 +79,6 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
     })
   }
 
-  useEffect(() => {
-    if (membership) {
-      formik.setFieldValue('membershipId', membership.id)
-      scrollTopRef.current?.scrollTo({behavior: 'smooth', top: 0})
-    }
-  }, [membership])
 
   const formik = useFormik({
     initialValues: inits,
@@ -148,6 +142,11 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
     },
   })
 
+  useEffect(() => {
+    if (membership) {
+      scrollTopRef.current?.scrollTo({behavior: 'smooth', top: 0})
+    }
+  }, [membership])
   return (
     <>
       <div className='col-xl-8' ref={scrollTopRef}>

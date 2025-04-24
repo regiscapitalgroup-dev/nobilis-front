@@ -3,7 +3,6 @@ import * as Yup from 'yup'
 export interface IMembershipPayment {
   cardHoldName: string,  
   invoice: boolean,
-  membershipId: string,
   paymentMethodId: string,
   price_id: string
 }
@@ -18,7 +17,6 @@ const membershipPaymentSchemas = [
 const inits: IMembershipPayment = {
   cardHoldName: "",
   invoice: false,
-  membershipId: "",
   paymentMethodId: "" ,
   price_id: ""
 }

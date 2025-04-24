@@ -90,6 +90,7 @@ const MembershipWidget: React.FC<Props> = ({handleScroll, handleMembershipSelect
                         />
                         <div className='d-flex align-items-center flex-wrap w-100 ms-2'>
                           <a
+                          href='#'
                             onClick={() => {
                               if (isLast && item.requirements.length > 1) {
                                 handleScroll()
@@ -115,7 +116,6 @@ const MembershipWidget: React.FC<Props> = ({handleScroll, handleMembershipSelect
                           ? 'btn-active-secondary text-dark'
                           : 'bg-dark'
                       } btn border btn-bg-dark text-white btn-lg btn-block w-100 `}
-                      /*   disabled={item.id !== membershipSelected && membershipSelected !== null} */
                       disabled={membershipSelected !== null && item.id !== membershipSelected}
                       onClick={() => {
                         setMembershipSelected(item.id === membershipSelected ? null : item.id)
