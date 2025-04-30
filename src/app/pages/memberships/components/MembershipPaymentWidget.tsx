@@ -123,8 +123,9 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
           price_id: membership.stripePlanId,
         })
 
-        await successAlert()
-        window.location.reload()
+        await successAlert().then(()=>{
+          window.location.reload()
+        })
       } catch (err: any) {
         console.error('[Submit Error]', err)
         setErrorStripe(err.message || 'An unexpected error occurred')
