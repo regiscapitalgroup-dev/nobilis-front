@@ -8,10 +8,13 @@ import {MembershipDetailModel} from './models/MembershipModel'
 import {MembershipWelcomeWidget} from './components/MembershipWelcomeWidget'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
+import {useMemberships} from '../../hooks/membership/useMemberships'
+import NoMembershipsFound from './components/NoMembershipsFound'
 
 const MembershipPage: FC = () => {
   const secondSecctionRef = useRef<HTMLDivElement>(null)
   const [membership, setMembership] = useState<MembershipDetailModel | null>(null)
+  const {memberships, loading} = useMemberships()
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || '', {
     locale: 'en',
   })
@@ -31,23 +34,29 @@ const MembershipPage: FC = () => {
 
   return (
     <>
-      <div className='row g-5 g-xl-8'>      
+      <div className='row g-5 g-xl-8'>
         {subscription ? (
-          <MembershipWelcomeWidget subscriptionDetail={subscription}></MembershipWelcomeWidget>
-        ) : membership! == null ? (
+          <MembershipWelcomeWidget subscriptionDetail={subscription} />
+        ) : membership == null ? (
           <>
-            <MembershipWidget
-              handleScroll={handleSectionScroll}
-              handleMembershipSelected={handleMembershipSelected}
-            />
-            <MembershipCreditsWidget refToScroll={secondSecctionRef} />
+            {Array.isArray(memberships) && memberships.length ? (
+              <>
+                <MembershipWidget
+                  memberships={memberships}
+                  loading={loading}
+                  handleScroll={handleSectionScroll}
+                  handleMembershipSelected={handleMembershipSelected}
+                />
+                <MembershipCreditsWidget refToScroll={secondSecctionRef} />
+              </>
+            ) : <NoMembershipsFound />}
           </>
         ) : (
           <Elements stripe={stripePromise}>
             <MembershipPaymentWidget
               membership={membership}
               handleCancelSelected={handleCancelSelected}
-            ></MembershipPaymentWidget>
+            />
           </Elements>
         )}
       </div>

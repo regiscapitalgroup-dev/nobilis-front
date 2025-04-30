@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {MembershipDetailModel} from '../models/MembershipModel'
-import {useMemberships} from '../../../hooks/membership/useMemberships'
 
 type Props = {
+  memberships: any[],
+  loading: boolean,
   handleScroll: () => void
   handleMembershipSelected: (data: MembershipDetailModel | null) => void
 }
 
-const MembershipWidget: React.FC<Props> = ({handleScroll, handleMembershipSelected}) => {
+const MembershipWidget: React.FC<Props> = ({memberships, loading, handleScroll, handleMembershipSelected}) => {
   const [membershipSelected, setMembershipSelected] = useState<string | null>(null)
-  const {memberships, loading} = useMemberships()
 
   useEffect(() => {
     if (!membershipSelected) {
@@ -29,7 +29,7 @@ const MembershipWidget: React.FC<Props> = ({handleScroll, handleMembershipSelect
         </div>
       ) : (
         memberships &&
-        memberships.map((item) => (
+        memberships.map((item:any) => (
           <div className='col-xl-4' key={item.id}>
             <div
               className={`card card-xl-stretch mb-xl-8 card-custom shadow bg-dark border border-secondary border-hover`}
@@ -133,6 +133,7 @@ const MembershipWidget: React.FC<Props> = ({handleScroll, handleMembershipSelect
             </div>
           </div>
         ))
+        
       )}
     </>
   )
