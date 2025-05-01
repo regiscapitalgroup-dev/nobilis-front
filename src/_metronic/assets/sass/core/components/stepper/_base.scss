@@ -80,3 +80,13 @@
     }
   }
 }
+
+.stepper-links .stepper-nav .stepper-item::before,
+.stepper-links .stepper-nav .stepper-item::after {
+  display: none !important;
+  content: none !important;
+}
+
+.stepper-links .stepper-nav .stepper-item * {
+  display: none !important;
+}

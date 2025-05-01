@@ -5,7 +5,7 @@ import {MembershipDetailModel} from '../models/MembershipModel'
 type Props = {
   memberships: any[],
   loading: boolean,
-  handleScroll: () => void
+  handleScroll: (e?: React.MouseEvent) => void
   handleMembershipSelected: (data: MembershipDetailModel | null) => void
 }
 
@@ -91,9 +91,9 @@ const MembershipWidget: React.FC<Props> = ({memberships, loading, handleScroll, 
                         <div className='d-flex align-items-center flex-wrap w-100 ms-2'>
                           <a
                           href='#'
-                            onClick={() => {
+                            onClick={(e) => {
                               if (isLast && item.requirements.length > 1) {
-                                handleScroll()
+                                handleScroll(e)
                               }
                             }}
                             className={`${

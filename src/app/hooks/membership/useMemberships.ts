@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { getAllMemberships } from '../../services/membershipService';
 
 
-export const useMemberships = () => {
+export const useMemberships = (isActive: boolean) => {
   const [memberships, setMemberships] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -28,12 +28,14 @@ export const useMemberships = () => {
       }
     };
 
-    fetchMemberships();
+    if (isActive) {
+      fetchMemberships();
+    }
 
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [isActive]);
 
   return { memberships, loading, error };
 };

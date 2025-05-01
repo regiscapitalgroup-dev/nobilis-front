@@ -1,4 +1,4 @@
-import {FC, useRef, useState} from 'react'
+import {FC, useRef, useState, useEffect} from 'react'
 import {MembershipWidget} from './components/MembershipWidget'
 import {MembershipCreditsWidget} from './components/MembershipCreditsWidget'
 import {MembershipPaymentWidget} from './components/MembershipPaymentWidget'
@@ -10,18 +10,30 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {useMemberships} from '../../hooks/membership/useMemberships'
 import NoMembershipsFound from './components/NoMembershipsFound'
+import Swal from 'sweetalert2'
 
 const MembershipPage: FC = () => {
   const secondSecctionRef = useRef<HTMLDivElement>(null)
+  const [isActiveRequest, setIsActiveRequest] = useState<boolean>(false)
   const [membership, setMembership] = useState<MembershipDetailModel | null>(null)
-  const {memberships, loading} = useMemberships()
+  const {memberships, loading} = useMemberships(isActiveRequest)
   const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || '', {
     locale: 'en',
   })
   const {subscription} = useSelector((state: RootState) => state.auth, shallowEqual)
 
-  const handleSectionScroll = () => {
-    secondSecctionRef.current?.scrollIntoView({behavior: 'smooth'})
+  const handleSectionScroll = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault()
+    }
+    setTimeout(() => {
+      if (secondSecctionRef.current) {
+        secondSecctionRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+      }
+    }, 50)
   }
 
   const handleMembershipSelected = (data: MembershipDetailModel | null) => {
@@ -32,9 +44,17 @@ const MembershipPage: FC = () => {
     setMembership(null)
   }
 
+  useEffect(() => {
+    if (subscription) {
+      setIsActiveRequest(false)
+    } else {
+      setIsActiveRequest(true)
+    }
+  }, [subscription])
+
   return (
     <>
-      <div className='row g-5 g-xl-8'>
+      <div className='row g-5 g-xl-8'>        
         {subscription ? (
           <MembershipWelcomeWidget subscriptionDetail={subscription} />
         ) : membership == null ? (
@@ -49,7 +69,9 @@ const MembershipPage: FC = () => {
                 />
                 <MembershipCreditsWidget refToScroll={secondSecctionRef} />
               </>
-            ) : <NoMembershipsFound />}
+            ) : (
+              <NoMembershipsFound />
+            )}
           </>
         ) : (
           <Elements stripe={stripePromise}>

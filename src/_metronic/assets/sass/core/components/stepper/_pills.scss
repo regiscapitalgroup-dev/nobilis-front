@@ -170,3 +170,48 @@
     }
   }
 }
+
+/* CSS para indicadores tipo líneas simples */
+
+/* 1. Ocultar el texto de los pasos */
+.stepper-links .stepper-nav .stepper-item h3 {
+  display: none;
+}
+
+/* 2. Configurar el contenedor principal de los indicadores */
+.stepper-links .stepper-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Espacio entre los indicadores */
+}
+
+/* 3. Estilo base para los indicadores tipo línea */
+.stepper-links .stepper-nav .stepper-item {
+  height: 4px; /* Altura de la línea */
+  width: 50px; /* Ancho de cada indicador */
+  background-color: rgba(228, 230, 239, 0.5); /* Color transparente para no activos */
+  transition: all 0.3s ease;
+}
+
+/* 4. Estilo para el indicador actual (color blanco) */
+.stepper-links .stepper-nav .stepper-item.current {
+  background-color: #ffffff; /* Blanco para el paso actual */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Opcional: un ligero brillo */
+}
+
+/* 5. Estilo para indicadores completados (opcional) */
+.stepper-links .stepper-nav .stepper-item.completed {
+  background-color: #ffffff; /* Azul semi-transparente para completados (opcional) */
+}
+
+/* Ajustes responsive */
+@media (max-width: 767px) {
+  .stepper-links .stepper-nav {
+    width: 100% !important;
+  }
+  
+  .stepper-links .stepper-nav .stepper-item {
+    width: 30px; /* Líneas más cortas en móviles */
+  }
+}

@@ -6,6 +6,8 @@ import {membershipPaymentSchemas, inits} from './MembershipPaymentHelper'
 import {useSubscription} from '../../../hooks/subscription/useSubscription '
 import {MembershipDetailModel} from '../models/MembershipModel'
 import {CardElement, useElements, useStripe} from '@stripe/react-stripe-js'
+import { shallowEqual, useSelector } from 'react-redux'
+import { RootState } from '../../../../setup'
 
 type Props = {
   membership?: MembershipDetailModel | null | undefined
@@ -19,6 +21,8 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
   const [errorStripe, setErrorStripe] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const scrollTopRef = useRef<HTMLDivElement>(null)
+  const {user} = useSelector((state: RootState) => state.auth, shallowEqual)
+  const firstName = user?.firstName;
 
   const cardElementOptions = {
     style: {
@@ -46,7 +50,7 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
       theme: 'dark',
       width: '600px',
       title: `
-          <div class="fs-4">Titas, thank you for becoming a part of Nobilis!.</div>
+          <div class="fs-4">${firstName}, thank you for becoming a part of Nobilis!.</div>
           `,
       html: `
           <div class="fs-6 mb-10">To ensure your exclusive spot and full platform access after launch, please complete your member profile and upload your experiences by June 30, 2025..</div>

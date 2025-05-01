@@ -82,16 +82,20 @@ const RegitrationWizard: FC = () => {
 
         Swal.fire({
           theme: 'dark',
+          width: '600px',
           title: `
-                  <div className="fs-9">Thank you! We’ve got you submission!.</div>
-                  `,
+      <div>Thank you! We have successfully received the application.</div>
+      `,
           html: `
-                  <div className="fs-8">Dedicated Nobilis person will contact you as soon as possible via email or phoe.</div>
-                  `,
+      <div class="mb-5 text-gray-400">
+      The review process will take up to 14 days. A Nobilis representative will reach out directly regarding the application status. Thank you for your interest in the Nobilis community.</div>
+
+      <div class="text-white">The Nobilis Team</div>
+      `,
           icon: 'success',
           iconColor: '#808b96',
           showConfirmButton: false,
-          timer: 1500,
+          timer:1500,
           allowOutsideClick: false,
         }).then(() => {
           if (stepper.current) {
@@ -126,14 +130,14 @@ const RegitrationWizard: FC = () => {
           id='kt_create_account_stepper'
         >
           <div className='stepper-nav mb-5 w-lg-500px'>
-            <div className='stepper-item current ' data-kt-stepper-element='nav'>
-              <h3 className='text-muted fs-5'>Step 1</h3>
+            <div className='stepper-item current' data-kt-stepper-element='nav'>
+              <h3 className='text-muted fs-5 visually-hidden'>Step 1</h3>
             </div>
             <div className='stepper-item' data-kt-stepper-element='nav'>
-              <h3 className='text-muted fs-5'>Step 2</h3>
+              <h3 className='text-muted fs-5 visually-hidden'>Step 2</h3>
             </div>
             <div className='stepper-item' data-kt-stepper-element='nav'>
-              <h3 className='text-muted fs-5'>Step 3</h3>
+              <h3 className='text-muted fs-5 visually-hidden'>Step 3</h3>
             </div>
           </div>
 
