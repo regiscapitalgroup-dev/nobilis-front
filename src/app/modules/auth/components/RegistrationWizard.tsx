@@ -95,7 +95,7 @@ const RegitrationWizard: FC = () => {
           icon: 'success',
           iconColor: '#808b96',
           showConfirmButton: false,
-          timer:1500,
+          timer:5000,
           allowOutsideClick: false,
         }).then(() => {
           if (stepper.current) {
