@@ -110,7 +110,7 @@ const RegitrationWizard: FC = () => {
         Swal.fire({
           theme: 'dark',
           title: `
-                  <div className="fs-9">An error has occurred.</div>
+                  <div class="fs-4">An error has occurred.</div>
                   `,
           icon: 'error',
           showConfirmButton: false,

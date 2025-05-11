@@ -27,7 +27,7 @@ export async function register(formData: ICreateAccount) {
   return response;
 }
 
-export async function getUserByToken(): Promise<{user: UserModel, subscription?: SubscriptionModel}> {
+export async function getUserByToken(): Promise<{ user: UserModel, subscription?: SubscriptionModel }> {
   return axios
     .get<any>(`${API_URL}/users/current/`)
     .then((res) => {
@@ -49,3 +49,10 @@ export async function activateAccount(token: string, new_password: string) {
   return response
 }
 
+export async function existUserName(credential: string) {
+
+  const response = await apiClient.post('/waitinglist/exists/', { email: credential });
+
+  return response;
+
+}

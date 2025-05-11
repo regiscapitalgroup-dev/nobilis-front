@@ -1,4 +1,4 @@
-import {FC} from 'react'
+import {FC, useState} from 'react'
 import Swal from 'sweetalert2'
 import {ErrorMessage, Field, useField, useFormikContext} from 'formik'
 import {FooterTitle, HeaderText, HeaderTitle} from '../helper/header-text'
@@ -6,9 +6,11 @@ import countries from '../helper/json-data/countries.json'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import {Link} from 'react-router-dom'
+import {existUserName} from '../../redux/AuthCRUD'
 const Step1: FC<{goNext: () => void}> = ({goNext}) => {
   const formik = useFormikContext<any>()
   const [field, meta, helpers] = useField('phoneNumber')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handlerSubmit = (event: any) => {
     formik.validateForm().then((errors) => {
@@ -26,9 +28,33 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
           confirmButtonText: 'Confirm',
           confirmButtonColor: '#000000',
           denyButtonText: `Don't save`,
-        }).then((result) => {
+        }).then(async (result) => {
           if (result.isConfirmed) {
-            goNext()
+            setLoading(true)
+            const credential = formik.getFieldProps('email')
+            await existUserName(credential.value)
+              .then(() => {
+                setLoading(false)
+
+                goNext()
+              })
+              .catch((error) => {
+                setLoading(false)
+
+                const errorMessage = error.response?.data?.error || error.message || 'Unknown error'
+                console.log('error', error)
+                Swal.fire({
+                  theme: 'dark',
+                  title: 'An error has occurred.',
+                  html: `
+                        <div class="fs-6">${errorMessage}.</div>
+                        `,
+                  icon: 'error',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  allowOutsideClick: false,
+                })
+              })
           } else if (result.isDenied) {
             Swal.fire({
               icon: 'info',
@@ -178,12 +204,14 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
           </div>
           <div className='text-center pt-15'>
             <div>
-              <button
-                type='submit'
-                className='btn btn-lg btn-light w-50'
-                onClick={handlerSubmit}
-              >
-                <span className='indicator-label'>JOIN THE WAITING LIST</span>
+              <button type='submit' className='btn btn-lg btn-light w-50' onClick={handlerSubmit}>
+                {!loading && <span className='indicator-label'>JOIN THE WAITING LIST</span>}
+                {loading && (
+                  <span className='indicator-progress' style={{display: 'block'}}>
+                    Please wait...
+                    <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                  </span>
+                )}
               </button>
             </div>
           </div>
@@ -195,7 +223,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
                   className='btn btn-lg btn-light bg-dark fw-bolder w-50'
                   disabled={formik.isSubmitting || !formik.isValid}
                 >
-                  <span className='indicator-label'>CANCEL</span>
+                  <span>CANCEL</span>
                 </button>
               </div>
             </Link>
