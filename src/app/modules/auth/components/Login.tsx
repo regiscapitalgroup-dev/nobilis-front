@@ -8,8 +8,8 @@ import {useFormik} from 'formik'
 import * as auth from '../redux/AuthRedux'
 import {login} from '../redux/AuthCRUD'
 const loginSchema = Yup.object().shape({
-  email: Yup.string().email('Wrong email format').required('Email is required'),
-  password: Yup.string().min(8, 'Minimum 8 symbols').required('Password is required'),
+  email: Yup.string().email('Wrong email format').required('This field is required'),
+  password: Yup.string().min(8, 'Minimum 8 symbols').required('This field is required'),
 })
 
 const initialValues = {
@@ -19,6 +19,8 @@ const initialValues = {
 
 export function Login() {
   const [loading, setLoading] = useState(false)
+  const [showPwd, setShowPwd] = useState(false)
+
   const dispatch = useDispatch()
   const formik = useFormik({
     initialValues,
@@ -35,7 +37,7 @@ export function Login() {
           .catch(() => {
             setLoading(false)
             setSubmitting(false)
-            alert("an error has occurred")
+            alert('an error has occurred')
           })
       }, 1000)
     },
@@ -43,31 +45,25 @@ export function Login() {
 
   return (
     <form
-      className='form w-100'
+      className='form w-100 p-5'
       onSubmit={formik.handleSubmit}
       noValidate
       id='kt_login_signin_form'
     >
       {/* begin::Heading */}
       <div className='text-center mb-10'>
-        <h1 className='text-white mb-3'>Sign In to Nobilis</h1>
-        <div className='text-gray-400 fw-bold fs-4'>
-          New Here?{' '}
-          <Link to='/auth/registration' className='link-light fw-bolder'>
-            Create an Account
-          </Link>
-        </div>
+        <h2 className='nb-heading-h2 nb-text-center mb-3'>Welcome to Nobilis</h2>
+        <div className='nb-body nb-center nb-muted'>Enter your credential to login.</div>
       </div>
       {/* begin::Heading */}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-10'>
-        <label className='form-label fs-6 text-gray-400 required'>Email</label>
+      <div className='fv-row mb-8'>
+      <label className='form-label nb-tag required'>Email</label>
         <input
-          placeholder='Email'
           {...formik.getFieldProps('email')}
           className={clsx(
-            'form-control form-control-lg form-control-solid bg-dark text-white',
+            'form-control form-control-lg form-control-underline',
             {'is-invalid': formik.touched.email && formik.errors.email},
             {
               'is-valid': formik.touched.email && !formik.errors.email,
@@ -78,54 +74,65 @@ export function Login() {
           autoComplete='off'
         />
         {formik.touched.email && formik.errors.email && (
-          <div className='fv-plugins-message-container text-white fs-8'>
-            <span role='alert'>{formik.errors.email}</span>
+          <div className='fv-plugins-message-container fs-8'>
+            <span role='alert'  className='text-danger'>{formik.errors.email}</span>
           </div>
         )}
       </div>
       {/* end::Form group */}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-10'>
+      <div className='fv-row mb-5'>
         <div className='d-flex justify-content-between mt-n5'>
-          <div className='d-flex flex-stack mb-2'>
+          <div className='d-flex flex-stack'>
             {/* begin::Label */}
-            <label className='form-label text-gray-400 fs-6 mb-0 required'>Password</label>
+            <label className='form-label nb-tag required'>Password</label>
+
             {/* end::Label */}
-            {/* begin::Link */}
-            {/*  <Link
-              to='/auth/forgot-password'
-              className='link-primary fs-6 fw-bolder'
-              style={{marginLeft: '5px'}}
-            >
-              Forgot Password ?
-            </Link> */}
-            {/* end::Link */}
           </div>
         </div>
-        <input
-          type='password'
-          autoComplete='off'
-          placeholder='Password'
-          {...formik.getFieldProps('password')}
-          className={clsx(
-            'form-control form-control-lg form-control-solid bg-dark text-white',
-            {
-              'is-invalid': formik.touched.password && formik.errors.password,
-            },
-            {
-              'is-valid': formik.touched.password && !formik.errors.password,
-            }
-          )}
-        />
+        <div className='nb-input-wrap'>
+          <input
+            type={showPwd ? 'text' : 'password'}
+            autoComplete='off'
+            {...formik.getFieldProps('password')}
+            className={clsx(
+              'form-control form-control-lg form-control-underline',
+              {
+                'is-invalid': formik.touched.password && formik.errors.password,
+              },
+              {
+                'is-valid': formik.touched.password && !formik.errors.password,
+              }
+            )}
+          />
+          <button
+            type='button'
+            className='nb-input-eye'
+            aria-label={showPwd ? 'Hide password' : 'Show password'}
+            onClick={() => setShowPwd((s) => !s)}
+          >
+            <i className={`bi ${showPwd ? 'bi-eye-slash' : 'bi-eye'}`}></i>
+          </button>
+        </div>
+
         {formik.touched.password && formik.errors.password && (
           <div className='fv-plugins-message-container'>
-            <div className='fv-help-block text-white fs-8'>
-              <span role='alert'>{formik.errors.password}</span>
+            <div className='fv-help-block fs-8'>
+              <span role='alert' className='text-danger'>{formik.errors.password}</span>
             </div>
           </div>
         )}
       </div>
+      <div className='mb-10'>
+        <Link
+          to='/auth/forgot-password'
+          className='nb-link-underline nb-link-underline--heading mt-4'
+        >
+          FORGOT PASSWORD ?
+        </Link>
+      </div>
+
       {/* end::Form group */}
 
       {/* begin::Action */}
@@ -133,17 +140,20 @@ export function Login() {
         <button
           type='submit'
           id='kt_sign_in_submit'
-          className='btn btn-lg btn-light   w-100 mb-5'
+          className='btn nb-btn-primary w-100 mb-5'
           disabled={formik.isSubmitting || !formik.isValid}
         >
-          {!loading && <span className='indicator-label'>Sign In</span>}
+          {!loading && <span className='indicator-label nb-heading-md'>LOG IN</span>}
           {loading && (
-            <span className='indicator-progress' style={{display: 'block'}}>
+            <span className='indicator-progress nb-heading-md' style={{display: 'block'}}>
               Please wait...
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
           )}
         </button>
+        <Link to='/auth/registration' className='btn nb-btn-outline w-100 nb-heading-md'>
+          REQUEST MEMBERSHIP
+        </Link>
       </div>
       {/* end::Action */}
     </form>

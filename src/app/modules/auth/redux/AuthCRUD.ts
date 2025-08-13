@@ -56,3 +56,15 @@ export async function existUserName(credential: string) {
   return response;
 
 }
+
+export async function requestPassword(email: string) {
+  return await apiClient.post('password-reset/', { email })
+}
+
+export async function recoverAccount(token: string, new_password: string, user: string) {
+  const response = await apiClient.post(
+    `reset-password/confirm/`,
+    { password: new_password, user: user, token: token }
+  )
+  return response.data
+}

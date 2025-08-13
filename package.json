@@ -1,6 +1,6 @@
 {
   "name": "nobilis",
-  "version": "8.0.24",
+  "version": "1.0.0",
   "private": true,
   "homepage": ".",
   "dependencies": {

@@ -1,12 +1,13 @@
 import {FC, useState} from 'react'
 import Swal from 'sweetalert2'
 import {ErrorMessage, Field, useField, useFormikContext} from 'formik'
-import {FooterTitle, HeaderText, HeaderTitle} from '../helper/header-text'
-import countries from '../helper/json-data/countries.json'
+import {FooterTitle, HeaderText} from '../helper/header-text'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import {Link} from 'react-router-dom'
 import {existUserName} from '../../redux/AuthCRUD'
+import {KTSVG} from '../../../../../_metronic/helpers'
+import CityAutocompleteField from '../fields/CityAutocompleteField'
+
 const Step1: FC<{goNext: () => void}> = ({goNext}) => {
   const formik = useFormikContext<any>()
   const [field, meta, helpers] = useField('phoneNumber')
@@ -30,6 +31,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
           denyButtonText: `Don't save`,
         }).then(async (result) => {
           if (result.isConfirmed) {
+            /* goNext() */
             setLoading(true)
             const credential = formik.getFieldProps('email')
             await existUserName(credential.value)
@@ -40,7 +42,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
               })
               .catch((error) => {
                 setLoading(false)
-
+                goNext()
                 const errorMessage = error.response?.data?.error || error.message || 'Unknown error'
                 console.log('error', error)
                 Swal.fire({
@@ -70,165 +72,169 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
 
   return (
     <>
-      <div className='w-100'>
-        <div className='w-100 fv-plugins-bootstrap5 fv-plugins-framework w-lg-500px'>
-          {/* begin::Heading */}
-          <div className='mb-10 text-center'>
-            <HeaderText />
-            <HeaderTitle
-              text={'To join the waiting list or refer a friend, please leave the details below.'}
+      <div className='w-100 fv-plugins-bootstrap5 fv-plugins-framework '>
+        {/* begin::Heading */}
+        <HeaderText
+          title='There is currently a waiting list for Nobilis membership'
+          subtitle='To join the waiting list, please leave your details below:'
+        />
+        {/* end::Heading */}
+
+        {/* begin::Form group Name - Last Name */}
+        <div className='row fv-row mb-2 nb-align-row'>
+          <div className='col-xl-6'>
+            <label className='form-label nb-tag'>NAME</label>
+            <Field
+              type='text'
+              autoComplete='off'
+              className={'form-control form-control-lg form-control-underline'}
+              name='firstName'
             />
-          </div>
-          {/* end::Heading */}
-
-          {/* begin::Form group Name - Last Name */}
-          <div className='row fv-row mb-7'>
-            <div className='col-xl-6'>
-              <label className='class="form-label text-muted fs-7 required'>FIRST NAME</label>
-              <Field
-                type='text'
-                autoComplete='off'
-                className={'form-control form-control-lg form-control-solid bg-dark text-white'}
-                name='firstName'
-              />
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block text-white fs-8'>
-                  <ErrorMessage name='firstName' />
-                </div>
-              </div>
-            </div>
-            <div className='col-xl-6'>
-              <label className='class="form-label text-muted fs-7 required'>LAST NAME</label>
-              <Field
-                type='text'
-                autoComplete='off'
-                className={'form-control form-control-lg form-control-solid bg-dark text-white'}
-                name='lastName'
-              />
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block text-white fs-8'>
-                  <ErrorMessage name='lastName' />
-                </div>
+            <div className='fv-plugins-message-container'>
+              <div className='fv-help-block text-danger fs-8'>
+                <ErrorMessage name='firstName' />
               </div>
             </div>
           </div>
-          {/* end::Form group Name - Last Name*/}
-
-          {/* begin::Form group Email - Phone Number */}
-          <div className='row fv-row mb-7'>
-            <div className='col-xl-6'>
-              <label className='form-label text-muted fs-7 required'>EMAIL</label>
-              <Field
-                type='text'
-                autoComplete='off'
-                className={'form-control form-control-lg form-control-solid bg-dark text-white'}
-                name='email'
-              />
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block text-white fs-8'>
-                  <ErrorMessage name='email' />
-                </div>
+          <div className='col-xl-6'>
+            <label className='form-label nb-tag '>SURNAME</label>
+            <Field
+              type='text'
+              autoComplete='off'
+              className={'form-control form-control-lg form-control-underline'}
+              name='lastName'
+            />
+            <div className='fv-plugins-message-container'>
+              <div className='fv-help-block text-danger fs-8'>
+                <ErrorMessage name='lastName' />
               </div>
             </div>
-            <div className='col-xl-6'>
-              <label className='form-label text-muted fs-7 required'>PHONE NUMBER</label>
-              <div className='position-relative mb-3'>
-                <PhoneInput
-                  {...field}
-                  country={'us'}
-                  inputClass='form-control form-control-lg form-control-solid bg-dark text-white'
-                  value={field.value}
-                  onChange={(value) => helpers.setValue(value)}
-                  inputStyle={{width: '100%'}}
-                />
-
-                <div className='fv-plugins-message-container'>
-                  <div className='fv-help-block text-white fs-8'>
-                    <ErrorMessage name='phoneNumber' />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* end::Form group Email - Phone Number - CITY*/}
-
-          {/* begin::Form group OCCUPATION-CITY */}
-          <div className='row fv-row mb-7'>
-            <div className='col-xl-6'>
-              <label className='form-label text-muted fs-7'>OCCUPATION</label>
-              <Field
-                type='text'
-                className={'form-control form-control-lg form-control-solid bg-dark text-white'}
-                name='occupation'
-              />
-            </div>
-            <div className='col-xl-6'>
-              <label className='form-label text-muted fs-7'>COUNTRY</label>
-
-              <div className='position-relative mb-3'>
-                <Field
-                  as='select'
-                  name='country'
-                  className='form-select form-select-lg form-select-solid bg-dark text-white'
-                >
-                  {countries.map((type, index) => (
-                    <option key={index} value={type.code}>
-                      {type.name}
-                    </option>
-                  ))}
-                </Field>
-              </div>
-            </div>
-          </div>
-          {/* end::Form group OCCUPATION-CITY*/}
-
-          {/* begin::Form group REFERRED */}
-          <div className='mb-10 fv-row'>
-            <div className='mb-1'>
-              <label className='form-label text-muted fs-7'>
-                REFERRED/INVITED BY (PLEASE PROVIDE NAME)
-              </label>
-              <div className='position-relative mb-3'>
-                <Field
-                  type='text'
-                  className={'form-control form-control-lg form-control-solid bg-dark text-white'}
-                  name='referenced'
-                />
-              </div>
-            </div>
-          </div>
-          {/* end::Form group REFERRED*/}
-
-          <div className='text-center'>
-            <FooterTitle text='Please complete the following confidential application to be considered. Submitting this form adds you yo ourwaiting list, it does not guarantee membership' />
-          </div>
-          <div className='text-center pt-15'>
-            <div>
-              <button type='submit' className='btn btn-lg btn-light w-50' onClick={handlerSubmit}>
-                {!loading && <span className='indicator-label'>JOIN THE WAITING LIST</span>}
-                {loading && (
-                  <span className='indicator-progress' style={{display: 'block'}}>
-                    Please wait...
-                    <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-          <div className='text-center pt-5'>
-            <Link to='/auth/login'>
-              <div>
-                <button
-                  type='submit'
-                  className='btn btn-lg btn-light bg-dark fw-bolder w-50'
-                  disabled={formik.isSubmitting || !formik.isValid}
-                >
-                  <span>CANCEL</span>
-                </button>
-              </div>
-            </Link>
           </div>
         </div>
+        {/* end::Form group Name - Last Name*/}
+
+        {/* begin::Form group Email - Phone Number */}
+        <div className='row fv-row mb-2 nb-align-row'>
+          <div className='col-xl-6'>
+            <label className='form-label nb-tag '>PHONE NUMBER</label>
+            <div className='position-relative mb-3'>
+              <PhoneInput
+                {...field}
+                country='us'
+                placeholder='+1'
+                containerClass='nb-phone'
+                inputClass='form-control'
+                value={field.value}
+                onChange={(value) => helpers.setValue(value)}
+              />
+
+              <div className='fv-plugins-message-container'>
+                <div className='fv-help-block text-danger fs-8'>
+                  <ErrorMessage name='phoneNumber' />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='col-xl-6'>
+            <label className='form-label nb-tag '>EMAIL</label>
+
+            <Field
+              type='text'
+              autoComplete='off'
+              className={'form-control form-control-lg form-control-underline'}
+              name='email'
+            />
+            <div className='fv-plugins-message-container'>
+              <div className='fv-help-block text-danger fs-8'>
+                <ErrorMessage name='email' />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* end::Form group Email - Phone Number - CITY*/}
+
+        {/* begin::Form group OCCUPATION-CITY */}
+        <div className='row fv-row mb-2 nb-align-row'>
+          <div className='col-xl-6'>
+            <label className='form-label nb-tag'>OCCUPATION</label>
+            <Field
+              type='text'
+              className={'form-control form-control-lg form-control-underline'}
+              name='occupation'
+            />
+          </div>
+          <div className='col-xl-6'>
+            <label className='form-label nb-tag '>CITY</label>
+
+            <div className='position-relative mb-2 nb-autocomplete'>
+              <CityAutocompleteField
+                name='city' // guarda el nombre (label) en country
+                /* options={COUNTRY_OPTIONS} */
+              />
+            </div>
+          </div>
+        </div>
+        {/* end::Form group OCCUPATION-CITY*/}
+
+        {/* begin::Form group REFERRED */}
+        <div className='mb-10 fv-row'>
+          <div className='mb-1'>
+            <label className='form-label nb-tag'>Invited by (Please provide a name)</label>
+            <div className='position-relative mb-3'>
+              <Field
+                type='text'
+                className={'form-control form-control-lg form-control-underline'}
+                name='referenced'
+              />
+            </div>
+          </div>
+        </div>
+        {/* end::Form group REFERRED*/}
+
+        <div className='text-center'>
+          <FooterTitle
+            text='Please complete the following confidential application to be considered. 
+                 Submitting this form adds you to our waiting list; it does not guarantee membership.'
+          />
+          <div className='nb-divider my-6 ' aria-hidden='true'>
+            <span className='nb-divider__line' />
+            <span className='nb-divider__icon'>
+              {/* tu SVG */}
+              <KTSVG path='/media/svg/nobilis/fleur.svg' className='nb-fleur' />
+            </span>
+            <span className='nb-divider__line' />
+          </div>
+        </div>
+        <div className='text-center pt-5'>
+          <div>
+            <button
+              type='submit'
+              className='btn nb-btn-outline w-100 nb-heading-md'
+              onClick={handlerSubmit}
+            >
+              {!loading && <span className='indicator-label'>JOIN THE WAITING LIST</span>}
+              {loading && (
+                <span className='indicator-progress nb-heading-md' style={{display: 'block'}}>
+                  Please wait...
+                  <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+        {/* <div className='text-center pt-5'>
+          <Link to='/auth/login'>
+            <div>
+              <button
+                type='submit'
+                className='btn btn-lg btn-light bg-dark fw-bolder w-50'
+                disabled={formik.isSubmitting || !formik.isValid}
+              >
+                <span>CANCEL</span>
+              </button>
+            </div>
+          </Link>
+        </div> */}
       </div>
     </>
   )

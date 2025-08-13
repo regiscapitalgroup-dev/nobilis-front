@@ -1,13 +1,12 @@
 import {FC} from 'react'
 
-const HeaderText = () => {
+const HeaderText: FC<{title: string; subtitle: string}> = ({title, subtitle}) => {
   return (
     <>
-      {/* begin::Title */}
-      <h1 className='text-white fw-bold mb-3 fs-2'>The is currently a waiting list for</h1>
-
-      <div className='text-white fw-bold fs-2 mb-3'>NOBILIS membership</div>
-      {/* end::Title */}
+      <div className='text-center mb-10'>
+        <h2 className='nb-heading-h2 nb-text-center mb-3'>{title}</h2>
+        <div className='nb-body nb-center'>{subtitle}</div>
+      </div>
     </>
   )
 }
@@ -26,7 +25,7 @@ const FooterTitle: FC<{text: string}> = ({text}) => {
   return (
     <>
       {/* begin::Title */}
-      <div className='text-muted fs-7'>{text}</div>
+      <div className='nb-body nb-center  nb-tag'>{text}</div>
       {/* end::Title */}
     </>
   )

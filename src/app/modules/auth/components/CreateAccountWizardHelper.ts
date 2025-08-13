@@ -31,10 +31,10 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const createAccountSchemas = [
 
   Yup.object({
-    firstName: Yup.string().required().label('First Name'),
-    lastName: Yup.string().required().label('Last Name'),
-    email: Yup.string().required().email().label('Email'),
-    phoneNumber: Yup.string().required().matches(phoneRegExp, 'Phone number is not valid').label('Phone Number'),
+    firstName: Yup.string().required('This field is required').label('First Name'),
+    lastName: Yup.string().required('This field is required').label('Last Name'),
+    email: Yup.string().required('This field is required').email().label('Email'),
+    phoneNumber: Yup.string().required('This field is required').matches(phoneRegExp, 'Phone number is not valid').label('Phone Number'),
 
   }),
   Yup.object({}),

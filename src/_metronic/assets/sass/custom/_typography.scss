@@ -1,0 +1,58 @@
+/* === Nobilis Typography === */
+$nb-font-heading: 'Oswald', Arial, sans-serif !default;
+$nb-heading-weight: 500 !default;
+$nb-heading-line-height: 1.2 !default; // 120%
+$nb-heading-letter-spacing: 0 !default;
+
+/* Clase base: solo cambia la familia/weight */
+.nb-font-heading{
+  font-family: $nb-font-heading !important;
+  font-weight: $nb-heading-weight !important;
+  letter-spacing: $nb-heading-letter-spacing !important;
+}
+
+/* Escala de tamaños (ajústala a tu gusto) */
+$nb-heading-sizes: (
+  xs: 10px,
+  sm: 12px,
+  md: 14px,
+  lg: 16px,
+  xl: 20px,
+  h5: 24px,
+  h4: 32px,
+  h3: 36px,
+  h2: 40px,  // el del mock
+  h1: 56px
+);
+
+/* Genera utilidades: .nb-heading-h2, .nb-heading-sm, etc. */
+@each $name, $size in $nb-heading-sizes {
+  .nb-heading-#{$name}{
+    @extend .nb-font-heading;
+    font-size: $size !important;
+    line-height: $nb-heading-line-height !important;
+  }
+}
+
+/* Variantes útiles */
+.nb-text-center   { text-align: center !important; }
+.nb-text-uppercase{ text-transform: uppercase !important; }
+
+/* Link subrayado negro con tipografía de heading (para “FORGOT PASSWORD?”) */
+.nb-link-underline{
+  color: #000 !important;
+  text-decoration: none !important;
+  display: inline-block;
+  border-bottom: 1px solid #000;
+  padding-bottom: .15rem;
+
+  &:hover,&:focus,&:active{
+    color: #000 !important;
+    border-bottom-color: #000;
+    text-decoration: none !important;
+  }
+}
+.nb-link-underline--heading{
+  @extend .nb-heading-sm;          /* usa Oswald 500 en 12px; cambia por md/lg si quieres */
+  @extend .nb-text-uppercase;
+}

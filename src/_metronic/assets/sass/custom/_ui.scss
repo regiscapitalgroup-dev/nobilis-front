@@ -1,0 +1,379 @@
+/* ===== Títulos, subtítulos, botones y card del login ===== */
+
+/* Título grande */
+.nb-title{
+    font-family: $nb-font-headings;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 36px);
+    letter-spacing: -0.01em;
+    color: $nb-text;
+  }
+  
+  /* Subtítulo tenue */
+  .nb-subtitle{
+    color: $nb-muted;
+    font-size: .95rem;
+  }
+  
+  /* Link "Forgot password" */
+  .nb-link-strong{
+    color: $nb-text;
+    font-weight: 700;
+    font-size: .85rem;
+    text-decoration: none;
+    &:hover{ text-decoration: underline; }
+  }
+  
+  /* Botón negro con flecha (como mock) */
+  .nb-btn-primary{
+    background: $nb-black !important;
+    color: #fff !important;
+    border: 0 !important;
+    border-radius: 2px !important;      /* esquinas casi rectas */
+    height: 46px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  
+    /* flecha */
+    position: relative;
+    & .indicator-label::after{
+      content: " \2192";                 /* → */
+      margin-left: .35rem;
+      transition: transform .15s ease;
+      display: inline-block;
+    }
+    &:hover .indicator-label::after{ transform: translateX(2px); }
+  }
+  
+  /* Botón borde negro (secundario) */
+  .nb-btn-outline{
+    background: #fff !important;
+    color: $nb-black !important;
+    border: 1px solid $nb-black !important;
+    border-radius: 2px !important;
+    height: 46px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  
+    &::after{
+      content: " \2192";
+      margin-left: .35rem;
+      transition: transform .15s ease;
+      display: inline-block;
+    }
+    &:hover{ background: $gray-100 !important; }
+    &:hover::after{ transform: translateX(2px); }
+  }
+  
+  /* Card blanca con sombra suave como el mock */
+  .nb-auth-card{
+    background: #fff;
+    border: 0;
+    border-radius: .5rem;
+    box-shadow: 0 10px 40px rgba(0,0,0,.06);
+    padding: 2.25rem;                    /* espacio interno */
+    max-width: 640px;                    /* ancho de la tarjeta del mock */
+  }
+  
+  /* Link negro subrayado, sin efectos en hover */
+  .nb-link-underline{
+    color: $nb-black;
+    font-weight: 700;
+    font-size: .85rem;
+    text-decoration: none;
+    display: inline-block;
+    border-bottom: 1px solid $nb-black;
+    padding-bottom: .15rem;
+  
+    &:hover,&:focus,&:active{
+      color: $nb-black;
+      border-bottom-color: $nb-black;
+      text-decoration: none;
+    }
+  }
+  
+
+  /* Divider fleur */
+.nb-divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 1rem;           /* separa líneas del ícono */
+  margin-top: 1rem;
+}
+
+.nb-divider__line{
+  content:'';
+  height: 2px;         /* grosor de las líneas */
+  flex: 1 1 120px;     /* líneas cortas; crecen un poco si hay espacio */
+  max-width: 140px;
+  background: rgba(0,0,0,.12);  /* gris suave como el mock */
+}
+
+.nb-divider__icon{
+  display:inline-flex;
+  line-height: 0;
+}
+.nb-divider__icon svg{
+  width: 24px;
+  height: 25px;
+  display:block;
+}
+
+/* si usas KTSVG y quieres controlar el color vía CSS: */
+.nb-fleur{
+  width:24px; height:25px;
+  color:#460107; /* borgoña */
+}
+.nb-fleur *{ fill: currentColor; } /* funciona si en el SVG el fill es currentColor */
+
+
+/* === PHONE (react-phone-input-2) — underline style === */
+.nb-phone {
+  position: relative;
+}
+.nb-phone .form-control {
+  width: 100%;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--bs-gray-300) !important;
+  border-radius: 0 !important;
+  padding-left: 48px !important; /* espacio para bandera */
+  padding-right: 8px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  box-shadow: none !important;
+  font-weight: 400;
+}
+.nb-phone .form-control:focus {
+  border-bottom-color: #000 !important; /* focus negro como pediste */
+  box-shadow: none !important;
+}
+.nb-phone .flag-dropdown,
+.nb-phone .selected-flag {
+  background: transparent !important;
+  border: 0 !important;
+  height: 44px !important;
+}
+.nb-phone .selected-flag {
+  padding: 0 8px !important;
+}
+.nb-phone .selected-flag .arrow {
+  display: none !important; /* sin caret */
+}
+.nb-phone .country-list {
+  border-radius: .475rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+/* === AUTOCOMPLETE CITY — underline + panel === */
+.nb-autocomplete {
+  position: relative;
+}
+.nb-autocomplete-input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--bs-gray-300);
+  border-radius: 0;
+  height: 44px;
+  line-height: 44px;
+  padding: 0;
+  width: 100%;
+}
+.nb-autocomplete-input:focus {
+  outline: none;
+  border-bottom-color: #000;
+}
+.nb-autocomplete-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 20;
+  background: #fff;
+  border: 1px solid var(--bs-gray-300);
+  border-radius: .25rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  max-height: 260px;
+  overflow-y: auto;
+}
+.nb-autocomplete-item {
+  padding: .625rem .875rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.nb-autocomplete-item:hover,
+.nb-autocomplete-item.nb-active {
+  background: var(--bs-gray-100);
+}
+.nb-autocomplete-item strong {
+  font-weight: 600;
+}
+
+/* -------------------------- */
+
+
+/* ===========================
+   Nobilis – Question blocks (add-only)
+   =========================== */
+
+/* Título de bloque (“WHAT DRAWS…”, “HOW ARE YOU…”) */
+.nbq-title {
+  /* no tocamos nb-tag; esto solo refuerza color y peso */
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Hint “Select all that apply” */
+.nbq-hint {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #8f95a3;   /* gris suave como el mock */
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+/* Contenedor de cada opción (checkbox + texto) */
+.nbq-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid #d9dbe5;     /* gris del borde */
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+
+/* Texto de la opción – negro y en semibold/bold */
+.nbq-option__text {
+  color: #000;                 /* negro */
+  font-weight: 600;            /* “bold visual” del mock */
+}
+
+/* Wrapper del checkbox para no romper los form-check globales */
+.nbq-check .form-check-input{
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border-radius: 2px;
+  border: 2px solid #c7cad5;
+  background-color: #fff;
+  box-shadow: none !important;
+}
+
+/* Estado :checked (vino #460107 + palomita blanca) */
+.nbq-check .form-check-input:checked{
+  background-color: #460107;
+  border-color: #460107;
+  /* check blanco embebido (no depende de otros assets) */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M3.5 8.5l3 3 6-6'/%3e%3c/svg%3e");
+  background-size: 14px 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Hover/Focus no azules */
+.nbq-check .form-check-input:focus { box-shadow: none !important; border-color: #b7bbc8; }
+.nbq-check .form-check-input:hover  { border-color: #aeb3c2; }
+
+/* “Other” – el input debe crecer y el underline ocupar todo el ancho */
+.nbq-other { display:flex; align-items:center; gap:12px; }
+.nbq-grow  { flex: 1 1 auto; min-width: 0; }
+
+/* Para que el underline ocupe el 100% dentro del item */
+.nbq-grow .form-control-underline{
+  width: 100% !important;
+}
+
+/* Footer con flecha/“fleur” – líneas y color del ícono */
+.nb-divider__line { height: 2px; width: 160px; background: #e2e4ea; border-radius: 2px; }
+.nb-fleur { width: 22px; height: 22px; fill: #460107; }
+
+
+
+
+/* ====== STEP 3 — sólo dentro de nb-step3 ====== */
+.nb-step3 {
+  /* asegura centrado del contenido sin afectar el form global */
+  .nbq-wrap { max-width: 640px; width: 100%; margin: 0 auto; }
+
+  /* pila título + descripción dentro de cada opción */
+  .nbq-option__stack { display: flex; flex-direction: column; gap: .125rem; }
+
+  /* título en bold y negro como el mock */
+  .nbq-option__title {
+    font-weight: 700;           /* negrita */
+    color: #0A0A0A;             /* negro (no gris) */
+    font-size: .875rem;         /* ~14px, igual a Step 2 */
+    line-height: 1.4;
+  }
+
+  /* descripción light y más clara, línea 2 */
+  .nbq-option__desc {
+    font-weight: 300;
+    color: #8b8f97;
+    font-size: .75rem;          /* ~12px */
+    line-height: 1.35;
+  }
+
+  /* hint del campo de evidencia (respeta tu nb-tag) */
+  .nb-proof { margin-top: 1.25rem; }
+
+  /* placeholder suave SOLO en este input, sin tocar tu .form-control-underline global */
+  .nb-proof__input::placeholder {
+    color: #9aa1ab;             /* igual al mock */
+    opacity: 1;
+  }
+
+  /* ====== PROOF FIELD (aislado) ====== */
+.nb-proof { margin-top: 1.5rem; }
+
+.nb-proof__label{
+  /* body 1: Satoshi, 14px, 300, 140% */
+  font-family: 'Satoshi', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 300;
+  letter-spacing: 0;
+  color: #9aa1ab; /* gris del mock */
+  margin-bottom: .5rem;
+  text-transform: none;
+}
+
+/* Base: ya usas .form-control-underline (sólo ajusto este input) */
+.nb-proof__input{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  height: 40px;                /* cómodo y limpio */
+  border-bottom-color: #E4E6EA !important; /* línea tenue como el mock */
+}
+
+/* Placeholder visible y fino */
+.nb-proof__input::placeholder{
+  color: #B8BEC7 !important;   /* gris claro del mock */
+  opacity: 1 !important;
+  font-weight: 300;
+  letter-spacing: .01em;
+  font-size: 10px;
+}
+
+/* Compatibilidad */
+.nb-proof__input:-ms-input-placeholder{ color:#B8BEC7 !important; }
+.nb-proof__input::-ms-input-placeholder{ color:#B8BEC7 !important; }
+
+/* En foco, línea negra (consistente con tus inputs) */
+.nb-proof__input:focus{
+  border-bottom-color: #000 !important;
+}
+
+/* Evita que el autofill “pinte” el texto y tape el placeholder en WebKit */
+.nb-proof__input:-webkit-autofill{
+  -webkit-text-fill-color: inherit;
+  transition: background-color 9999s ease-out 0s;
+}
+
+}
+
