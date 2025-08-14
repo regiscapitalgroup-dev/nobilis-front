@@ -1,13 +1,12 @@
 import {useState} from 'react'
-import { useParams} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {IUpdatePassword, updatePassword} from '../models/UserSettingsModel'
 import Swal from 'sweetalert2'
-import {useDispatch} from 'react-redux'
 import {activateAccount} from '../redux/AuthCRUD'
-import * as auth from '../redux/AuthRedux'
 import {TermsConditionsModal} from './_modals/TermsConditionsModal'
+import {HeaderText} from './helper/header-text'
 
 const passwordFormValidationSchema = Yup.object().shape({
   newPassword: Yup.string()
@@ -16,9 +15,9 @@ const passwordFormValidationSchema = Yup.object().shape({
     .matches(/[a-z]/, 'The password must contain at least one lowercase letter.')
     .matches(/[0-9]/, 'The password must contain at least one number.')
     .matches(/[^A-Za-z0-9]/, 'The password must contain at least one special character.')
-    .required('New Password is required'),
+    .required('This field is required'),
   passwordConfirmation: Yup.string()
-    .required('Confirm Password is required')
+    .required('This field is required')
     .oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
 })
 
@@ -26,9 +25,12 @@ export function CreatePassword() {
   const [loading, setLoading] = useState<boolean>(false)
   const [passwordUpdateData, setPasswordUpdateData] = useState<IUpdatePassword>(updatePassword)
   const [accepted, setAccepted] = useState<boolean>(false)
-  const {token} = useParams<{token: string}>()
+  const {token, user} = useParams<{token: string, user:string}>()
   const [openModal, setOpenModal] = useState<boolean>(false)
-  const dispatch = useDispatch()
+  const [showPwd, setShowPwd] = useState(false)
+  const [showPwd2, setShowPwd2] = useState(false)
+  const navigate = useHistory()
+
 
   const formik = useFormik<IUpdatePassword>({
     initialValues: {
@@ -41,29 +43,22 @@ export function CreatePassword() {
       if (token) {
         await activateAccount(token, values.newPassword)
           .then((data) => {
-            const {access} = data.data
+            /* const {access} = data.data */
             setPasswordUpdateData(values)
             setLoading(false)
-            Swal.fire({
-              theme: 'dark',
-              title: `
-                  <div className="fs-9">Thanks for resetting your password!.</div>
-                  `,
-              html: `
-                  <div className="fs-8">Updates have been made. Let´s continue to memership details and confirmation.</div>
-                  `,
-              icon: 'success',
-              iconColor: '#808b96',
-              showConfirmButton: false,
-              timer: 1000,
-              allowOutsideClick: false,
+
+            navigate.replace('/message', {
+              title: 'Thanks for reseting your password!',
+              body: 'Updates have been made. Let’s continue to membership details and confirmation.',
+              ctaText: 'Continue',
+              ctaTo: '/auth/login',
+              classNameBtn: 'nb-btn-outline',
             })
-            dispatch(auth.actions.login(access))
+            /* dispatch(auth.actions.login(access)) */
           })
           .catch(() => {
-            setLoading(false);
+            setLoading(false)
             Swal.fire({
-              theme: 'dark',
               title: `
                       <div className="fs-9">An error has occurred.</div>
                       `,
@@ -85,66 +80,72 @@ export function CreatePassword() {
         id='kt_login_password_reset_form'
         onSubmit={formik.handleSubmit}
       >
-        <div className='text-center mb-10'>
-          {/* begin::Title */}
-          <h1 className='text-white mb-3'>Welcome to Nobilis, Titas!</h1>
-          {/* end::Title */}
 
-          {/* begin::Link */}
-          <div className='text-gray-400 fw-bold fs-8'>
-            We are honored to have join us as a Founding Member during this exciting pre-launch
-            phase.To begin, please reset your password.
-          </div>
-          {/* end::Link */}
-        </div>
+        <HeaderText
+          title={`Welcome to Nobilis, ${user}! Honored to have you among the world’s most accomplished`}
+          subtitle='To begin, please reset your password.'
+        />
 
         {/* begin::Form group */}
         <div className='fv-row mb-10'>
-          <label
-            htmlFor='newpassword'
-            className='form-label fs-6 fw-bolder mb-3 text-gray-400 required'
-          >
-            NEW PASSWORD
-          </label>
-          <input
-            autoComplete='off'
-            type='password'
-            className='form-control form-control-lg form-control-solid bg-dark text-white '
-            id='newpassword'
-            {...formik.getFieldProps('newPassword')}
-          />
+          <label className='form-label nb-tag required'>New Password</label>
+
+          <div className='nb-input-wrap'>
+            <input
+              autoComplete='off'
+              type={showPwd ? 'text' : 'password'}
+              className='form-control form-control-lg form-control-underline'
+              id='newpassword'
+              {...formik.getFieldProps('newPassword')}
+            />
+            <button
+              type='button'
+              className='nb-input-eye'
+              aria-label={showPwd ? 'Hide password' : 'Show password'}
+              onClick={() => setShowPwd((s) => !s)}
+            >
+              <i className={`bi ${showPwd ? 'bi-eye-slash' : 'bi-eye'}`}></i>
+            </button>
+          </div>
+
           {formik.touched.newPassword && formik.errors.newPassword && (
             <div className='fv-plugins-message-container'>
-              <div className='fv-help-block text-white fs-8'>{formik.errors.newPassword}</div>
+              <div className='fv-help-block text-danger fs-8'>{formik.errors.newPassword}</div>
             </div>
           )}
         </div>
         <div className='fv-row mb-10'>
-          <label
-            htmlFor='confirmpassword'
-            className='form-label fs-6 mb-3 text-gray-400 required'
-          >
-            CONFIRM PASSWORD
-          </label>
-          <input
-            type='password'
-            autoComplete='off'
-            className='form-control form-control-lg form-control-solid bg-dark text-white'
-            id='confirmpassword'
-            {...formik.getFieldProps('passwordConfirmation')}
-          />
+          <label className='form-label nb-tag required'>Confirm Password</label>
+          <div className='nb-input-wrap'>
+            <input
+              type={showPwd2 ? 'text' : 'password'}
+              autoComplete='off'
+              className='form-control form-control-lg form-control-underline'
+              id='confirmpassword'
+              {...formik.getFieldProps('passwordConfirmation')}
+            />
+            <button
+              type='button'
+              className='nb-input-eye'
+              aria-label={showPwd2 ? 'Hide password' : 'Show password'}
+              onClick={() => setShowPwd2((s) => !s)}
+            >
+              <i className={`bi ${showPwd2 ? 'bi-eye-slash' : 'bi-eye'}`}></i>
+            </button>
+          </div>
+
           {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation && (
             <div className='fv-plugins-message-container'>
-              <div className='fv-help-block text-white fs-8'>
+              <div className='fv-help-block text-danger fs-8'>
                 {formik.errors.passwordConfirmation}
               </div>
             </div>
           )}
         </div>
         <div className='fv-row mb-10'>
-          <div className='form-check form-check-custom form-check-solid'>
+          <div className='nbq-check'>
             <input
-              className='form-check-input'
+              className='form-check-input '
               type='checkbox'
               value=''
               id='flexCheckDefault'
@@ -152,15 +153,15 @@ export function CreatePassword() {
                 setAccepted(e.target.checked)
               }}
             />
-            <label className='form-check-label text-white'>
-              I agree to the{' '}
+            <label className='nb-body nb-center ms-3'>
+              I agree to the Nobilis{' '}
               <a
-                className='font-weight-bold cursor-pointer'
+                className='nb-body nb-link-underline cursor-pointer '
                 onClick={() => {
                   setOpenModal(true)
                 }}
               >
-                Founding Member Terms and Conditions.
+                Member´s Terms and Condition.
               </a>
             </label>
           </div>
@@ -169,21 +170,21 @@ export function CreatePassword() {
         {/* end::Form group */}
 
         {/* begin::Form group */}
-        <div className='text-center'>          
+        <div className='text-center'>
           <button
             type='submit'
             id='kt_password_reset_submit'
-            className='btn btn-lg btn-light border bg-dark w-100 mb-5'
+            className='btn nb-btn-outline w-100  nb-heading-md'
             disabled={!accepted}
           >
             {!loading && <span className='indicator-label'>CHANGE PASSWORD</span>}
             {loading && (
-              <span className='indicator-progress' style={{display: 'block'}}>
+              <span className='indicator-progress nb-heading-md' style={{display: 'block'}}>
                 Please wait...
                 <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
               </span>
             )}
-          </button>          
+          </button>
         </div>
         {/* end::Form group */}
       </form>

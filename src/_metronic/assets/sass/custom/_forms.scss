@@ -1,0 +1,112 @@
+.form-label-underline{
+    font-size: .72rem;          /* pequeño, uppercase como el mock */
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: $nb-label;
+    text-transform: uppercase;
+    margin-bottom: .65rem;
+  }
+  
+  .form-control-underline{
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid $nb-underline !important;
+    border-radius: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    height: 46px;               /* altura visual del mock */
+    box-shadow: none !important;
+    transition: border-color .15s ease;
+  
+    &::placeholder{ color: $nb-label; opacity: 1; letter-spacing: .01em; }
+    &:hover{ border-bottom-color: $nb-underline-hover; }
+    &:focus{ border-bottom-color: $nb-underline-focus !important; }
+  
+    &.is-invalid{ border-bottom-color: $nb-underline-error !important; }
+    &.is-valid{   border-bottom-color: $nb-underline-valid !important; }
+  
+    &:disabled, &[readonly]{ border-bottom-style: dashed !important; color: $gray-600; }
+  }
+  
+  /* Select underline: conserva caret nativo */
+  .form-select-underline{
+    @extend .form-control-underline;
+    appearance: none;
+    background-image: var(--bs-form-select-bg-img);
+    background-repeat: no-repeat;
+    background-position: right .5rem center;
+    padding-right: 1.75rem !important;
+  }
+  
+  /* Mensaje de error compacto bajo el input */
+  .nb-field-error{
+    font-size: .75rem;
+    color: $nb-underline-error;
+    margin-top: .35rem;
+  }
+  
+  /* Wrapper para el ojo */
+.nb-input-wrap{ position: relative; }
+
+/* extra espacio a la derecha para el icono */
+.nb-input-wrap .form-control-underline{
+  padding-right: 2.25rem !important;
+}
+
+.nb-input-wrap{ position: relative; }
+.nb-input-wrap .form-control-underline{ padding-right: 2.25rem !important; }
+
+.nb-input-eye{
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  background: transparent; border: 0; padding: 0; line-height: 1; cursor: pointer;
+  color: $nb-label;
+}
+.nb-input-eye .bi{ font-size: 1.125rem; } /* tamaño del icono */
+
+
+
+/* === Alinear subrayados por fila === */
+.nb-align-row > [class*='col-']{
+  display:flex;                /* apila label + input */
+  flex-direction:column;
+}
+
+/* Unifica alto visual del control en la fila */
+.nb-align-row .form-control-underline{ height:46px; line-height:46px; }
+
+/* ---- Teléfono (react-phone-input-2) dentro de tu fila ---- */
+.nb-align-row .nb-phone{ width:100%; }
+.nb-align-row .nb-phone .form-control{
+  height:46px; line-height:46px;
+  background:transparent !important;
+  border:0 !important;
+  border-bottom:1px solid $nb-underline !important;
+  border-radius:0 !important;
+  padding:0 0 0 38px !important;   /* espacio por la bandera */
+  box-shadow:none !important;
+}
+.nb-align-row .nb-phone .selected-flag{
+  width:28px; padding:0; margin:0;
+  height:46px; display:flex; align-items:center;
+  top:auto; transform:none;          /* alinea la bandera al centro */
+}
+.nb-align-row .nb-phone .flag-dropdown{ border:0; background:transparent; }
+.nb-align-row .nb-phone .country-list{ box-shadow:none; border:1px solid $gray-200; }
+
+/* ---- City (tu autocomplete o select) ----
+   Añade la clase nb-autocomplete al contenedor del componente */
+.nb-align-row .nb-autocomplete input,
+.nb-align-row .nb-autocomplete .form-control{
+  height:46px; line-height:46px;
+  background:transparent !important;
+  border:0 !important;
+  border-bottom:1px solid $nb-underline !important;
+  border-radius:0 !important;
+  padding:0 !important;
+  box-shadow:none !important;
+}
+/* dropdown del autocomplete (opcional) */
+.nb-align-row .nb-autocomplete .nb-autocomplete-menu{
+  margin-top:.5rem; border:1px solid $gray-200;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}

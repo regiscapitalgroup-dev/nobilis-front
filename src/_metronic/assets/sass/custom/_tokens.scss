@@ -1,0 +1,14 @@
+$nb-font-headings: "Montserrat", $font-family-sans-serif !default;
+$nb-font-base:      $font-family-sans-serif !default; // si usas Inter, cámbialo en variables.custom
+
+$nb-text:     $gray-900 !default;
+$nb-muted:    $gray-600 !default;
+$nb-label:    $gray-500 !default;
+
+$nb-underline:       if(isDarkMode(), $gray-500, $gray-300) !default;  // línea base
+$nb-underline-hover: if(isDarkMode(), $gray-400, $gray-400) !default;
+$nb-underline-focus: $black !default;
+$nb-underline-error: $danger !default;
+$nb-underline-valid: $success !default;
+
+$nb-black:   #111111 !default; 

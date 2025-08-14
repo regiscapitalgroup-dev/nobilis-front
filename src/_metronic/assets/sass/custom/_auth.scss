@@ -1,0 +1,22 @@
+.auth-shell{
+  position: relative;
+  min-height: 100vh;
+  background: #fff;         /* parte superior blanca */
+  overflow: hidden;
+}
+
+.auth-bg{
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 52vh;             /* ajusta 48–55vh si quieres */
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: grayscale(100%);  /* B/N como el mock */
+  z-index: -1;              /* detrás del contenido */
+  pointer-events: none;
+}
+
+@media (max-width: 992px){
+  .auth-bg{ height: 40vh; }
+}

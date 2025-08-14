@@ -6,7 +6,7 @@ export interface ICreateAccount {
   email: string
   phoneNumber: string,
   occupation: string,
-  country: string,
+  city: string,
   referenced: string,
   otherOption: string;
   option0: boolean;
@@ -18,7 +18,6 @@ export interface ICreateAccount {
   option6: boolean;
   option7: boolean;
   option8: boolean;
-  option9: boolean;
   wealthOwner: boolean;
   impactMaker: boolean;
   executive: boolean;
@@ -31,10 +30,10 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 const createAccountSchemas = [
 
   Yup.object({
-    firstName: Yup.string().required().label('First Name'),
-    lastName: Yup.string().required().label('Last Name'),
-    email: Yup.string().required().email().label('Email'),
-    phoneNumber: Yup.string().required().matches(phoneRegExp, 'Phone number is not valid').label('Phone Number'),
+    firstName: Yup.string().required('This field is required').label('First Name'),
+    lastName: Yup.string().required('This field is required').label('Last Name'),
+    email: Yup.string().required('This field is required').email().label('Email'),
+    phoneNumber: Yup.string().required('This field is required').matches(phoneRegExp, 'Phone number is not valid').label('Phone Number'),
 
   }),
   Yup.object({}),
@@ -57,7 +56,7 @@ const inits: ICreateAccount = {
   email: "",
   phoneNumber: "",
   occupation: "",
-  country: "",
+  city: "",
   referenced: "",
   otherOption: "",
   option0: false,
@@ -69,7 +68,6 @@ const inits: ICreateAccount = {
   option6: false,
   option7: false,
   option8: false,
-  option9: false,
   wealthOwner: false,
   impactMaker: false,
   executive: false,

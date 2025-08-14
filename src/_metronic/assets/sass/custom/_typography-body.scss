@@ -1,0 +1,27 @@
+/* === Body tokens (sin @font-face) === */
+// _metronic/assets/sass/custom/nobilis/_typography-body.scss
+$nb-font-body: 'Satoshi', Poppins, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif !default;
+$nb-body-weight: 300 !default;   // Light
+$nb-body-size:   14px !default;  // body 1
+$nb-body-lh:     1.4 !default;   // 140%
+
+/* Mixin reutilizable */
+@mixin nb-body($size: $nb-body-size, $lh: $nb-body-lh, $weight: $nb-body-weight){
+  font-family: $nb-font-body !important;
+  font-weight: $weight !important;
+  font-size: $size !important;
+  line-height: $lh !important;
+  letter-spacing: 0 !important;
+}
+
+/* Utilidades */
+.nb-body    { @include nb-body(); }      /* 14px / 1.4 / 300 */
+.nb-body-sm { @include nb-body(12px); }
+.nb-body-lg { @include nb-body(16px); }
+
+.nb-center  { text-align: center !important; }
+.nb-muted   { color: $text-muted !important; }
+
+/* Labels con el mismo body */
+.nb-label   { @include nb-body(); color: $gray-600 !important; }
+.nb-label--caps { text-transform: uppercase !important; }
