@@ -4,9 +4,7 @@ import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {IUpdatePassword, updatePassword} from '../models/UserSettingsModel'
 import Swal from 'sweetalert2'
-import {useDispatch} from 'react-redux'
 import {activateAccount} from '../redux/AuthCRUD'
-import * as auth from '../redux/AuthRedux'
 import {TermsConditionsModal} from './_modals/TermsConditionsModal'
 import {HeaderText} from './helper/header-text'
 
@@ -45,7 +43,7 @@ export function CreatePassword() {
       if (token) {
         await activateAccount(token, values.newPassword)
           .then((data) => {
-            const {access} = data.data
+            /* const {access} = data.data */
             setPasswordUpdateData(values)
             setLoading(false)
 

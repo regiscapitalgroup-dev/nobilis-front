@@ -6,7 +6,7 @@ export interface ICreateAccount {
   email: string
   phoneNumber: string,
   occupation: string,
-  country: string,
+  city: string,
   referenced: string,
   otherOption: string;
   option0: boolean;
@@ -18,7 +18,6 @@ export interface ICreateAccount {
   option6: boolean;
   option7: boolean;
   option8: boolean;
-  option9: boolean;
   wealthOwner: boolean;
   impactMaker: boolean;
   executive: boolean;
@@ -57,7 +56,7 @@ const inits: ICreateAccount = {
   email: "",
   phoneNumber: "",
   occupation: "",
-  country: "",
+  city: "",
   referenced: "",
   otherOption: "",
   option0: false,
@@ -69,7 +68,6 @@ const inits: ICreateAccount = {
   option6: false,
   option7: false,
   option8: false,
-  option9: false,
   wealthOwner: false,
   impactMaker: false,
   executive: false,

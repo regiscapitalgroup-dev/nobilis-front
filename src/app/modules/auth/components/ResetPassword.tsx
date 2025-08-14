@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useEffect, useState} from 'react'
 import {Link, useHistory, useParams} from 'react-router-dom'
-import {useDispatch} from 'react-redux'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import * as auth from '../redux/AuthRedux'
 import {useFormik} from 'formik'
 import {IUpdatePassword, updatePassword} from '../models/UserSettingsModel'
 import {recoverAccount} from '../redux/AuthCRUD'
@@ -38,15 +36,14 @@ export function ResetPassword() {
   const navigate = useHistory()
 
   const {token} = useParams<{token: string}>()
-  const {user} = useParams<{user: string}>()
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const {user} = useParams<{user: string}>()  
   const formik = useFormik<IUpdatePassword>({
     initialValues: {
       ...passwordUpdateData,
     },
     validationSchema: resetPasswordSchema,
     onSubmit: async (values) => {
+      
       setLoading(true)
 
       if (token) {
