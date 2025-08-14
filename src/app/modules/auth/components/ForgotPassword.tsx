@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {useFormik} from 'formik'
-import { requestPassword } from '../redux/AuthCRUD'
+import {requestPassword} from '../redux/AuthCRUD'
 
 const initialValues = {
   email: '',
@@ -21,6 +21,7 @@ export function ForgotPassword() {
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [errorAlert, setErrorAlert] = useState(false)
+  const navigate = useHistory()
 
   const formik = useFormik({
     initialValues,
@@ -29,24 +30,32 @@ export function ForgotPassword() {
       setLoading(true)
       setTimeout(() => {
         requestPassword(values.email)
-        .then((result) => {
-          setLoading(false)
-          setShowAlert(true)
-          resetForm()
-          setTimeout(() => setShowAlert(false), 5000)
-        })
-        .catch(() => {
-          setLoading(false)
-          setErrorAlert(true)
-          setTimeout(() => setErrorAlert(false), 5000)
-        })
-    }, 1000)
+          .then((result) => {
+            setLoading(false)
+
+            /* navigate.replace('/message', {
+              title: 'Thank you. Your password has been reset',
+              body: 'Continue to log is using your new password.',
+              ctaText: 'Continue',
+              ctaTo: '/auth/login',
+              classNameBtn: 'nb-btn-outline',
+            }) */
+            setShowAlert(true)
+
+            resetForm()
+          })
+          .catch(() => {
+            setLoading(false)
+            setErrorAlert(true)
+            setTimeout(() => setErrorAlert(false), 5000)
+          })
+      }, 1000)
     },
   })
 
   return (
     <>
-    {errorAlert && (
+      {errorAlert && (
         <div className='alert alert-danger' role='alert'>
           Something went wrong. Please try again or contact support if the problem persists.
         </div>
@@ -68,11 +77,12 @@ export function ForgotPassword() {
           {/* end::Title */}
 
           {/* begin::Link */}
-          <div className='nb-body nb-center nb-muted'>Enter your email to receive a secure link to reset your password.</div>
+          <div className='nb-body nb-center nb-muted'>
+            Enter your email to receive a secure link to reset your password.
+          </div>
           {/* end::Link */}
         </div>
 
-        
         {/* begin::Form group */}
         <div className='fv-row mb-10'>
           <label className='form-label nb-tag required'>Email</label>
@@ -92,7 +102,9 @@ export function ForgotPassword() {
           {formik.touched.email && formik.errors.email && (
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block fs-8'>
-                <span role='alert' className='text-danger'>{formik.errors.email}</span>
+                <span role='alert' className='text-danger'>
+                  {formik.errors.email}
+                </span>
               </div>
             </div>
           )}
@@ -114,7 +126,7 @@ export function ForgotPassword() {
               </span>
             )}
           </button>
-          <Link to='/auth/login'  className='nb-link-underline nb-link-underline--heading mt-4'>
+          <Link to='/auth/login' className='nb-link-underline nb-link-underline--heading mt-4'>
             Back
           </Link>{' '}
         </div>
