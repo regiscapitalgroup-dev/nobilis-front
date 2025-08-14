@@ -151,8 +151,8 @@ export function Login() {
             </span>
           )}
         </button>
-        <Link to='/auth/registration' className='btn nb-btn-outline w-100 nb-heading-md'>
-          REQUEST MEMBERSHIP
+        <Link to='/auth/registration' className='btn nb-btn-outline w-100  nb-heading-md'>
+        <span className='indicator-label nb-heading-md'>REQUEST MEMBERSHIP</span>
         </Link>
       </div>
       {/* end::Action */}

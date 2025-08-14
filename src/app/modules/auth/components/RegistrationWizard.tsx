@@ -8,8 +8,9 @@ import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizard
 import {register} from '../redux/AuthCRUD'
 import Swal from 'sweetalert2'
 import {KTSVG} from '../../../../_metronic/helpers'
+import {useHistory} from 'react-router-dom'
 
-const FormObserver: FC<{ setFormValues: (values: ICreateAccount) => void }> = ({setFormValues}) => {
+const FormObserver: FC<{setFormValues: (values: ICreateAccount) => void}> = ({setFormValues}) => {
   const formik = useFormikContext()
   useEffect(() => {
     setFormValues(formik.values as ICreateAccount)
@@ -29,6 +30,8 @@ const RegitrationWizard: FC = () => {
   const [loading, setLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState<number>(1)
   const [totalSteps, setTotalSteps] = useState<number>(3)
+
+  const navigate = useHistory()
 
   const loadStepper = () => {
     stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement)
@@ -75,7 +78,11 @@ const RegitrationWizard: FC = () => {
 
     const onChanged = () => setCurrentStep(s.currentStepIndex)
     s.on('kt.stepper.changed', onChanged)
-    return () => { try { (s as any).off?.('kt.stepper.changed', onChanged) } catch {} }
+    return () => {
+      try {
+        ;(s as any).off?.('kt.stepper.changed', onChanged)
+      } catch {}
+    }
   }, [stepperRef])
 
   /** --- EXTRA: request centralizado --- **/
@@ -84,25 +91,17 @@ const RegitrationWizard: FC = () => {
       setLoading(true)
       await register(currentFormValues)
       setLoading(false)
-      await Swal.fire({
-        theme: 'dark',
-        width: '600px',
-        title: `<div>Thank you! We have successfully received the application.</div>`,
-        html: `
-          <div class="mb-5 text-gray-400">
-          The review process will take up to 14 days. A Nobilis representative will reach out directly regarding the application status. Thank you for your interest in the Nobilis community.</div>
-          <div class="text-white">The Nobilis Team</div>
-        `,
-        icon: 'success',
-        iconColor: '#808b96',
-        showConfirmButton: false,
-        timer: 5000,
-        allowOutsideClick: false,
-      })
+     
       if (stepper.current) {
         formikRef.current.resetForm()
         setSubmitButton(false)
-        window.location.reload()
+
+        navigate.replace('/message', {
+          title: 'Thank you. We have received your application',
+          body: 'Our review process may take up to 30 days. Please note that we may request additional documentation to support your eligibility, if needed.',
+          ctaText: 'LOGIN',
+          ctaTo: '/auth/login',
+        })
       }
     } catch (error) {
       setLoading(false)
@@ -158,7 +157,9 @@ const RegitrationWizard: FC = () => {
         </div>
       </div>
 
-      <div className='text-center form-label nb-tag'>STEP {currentStep}/{totalSteps}</div>
+      <div className='text-center form-label nb-tag'>
+        STEP {currentStep}/{totalSteps}
+      </div>
 
       <Formik
         innerRef={formikRef}
@@ -175,17 +176,11 @@ const RegitrationWizard: FC = () => {
             </div>
 
             <div data-kt-stepper-element='content'>
-              <Step2
-                goPrev={() => stepper.current?.goPrev()}
-                goNext={nextOrSubmit}     
-              />
+              <Step2 goPrev={() => stepper.current?.goPrev()} goNext={nextOrSubmit} />
             </div>
 
             <div data-kt-stepper-element='content'>
-              <Step3
-                goPrev={() => stepper.current?.goPrev()}
-                goNext={nextOrSubmit}     
-              />
+              <Step3 goPrev={() => stepper.current?.goPrev()} goNext={nextOrSubmit} />
             </div>
 
             {isSubmitButton && (
@@ -197,21 +192,25 @@ const RegitrationWizard: FC = () => {
                     className='btn btn-lg btn-light bg-dark me-3'
                     data-kt-stepper-action='previous'
                   >
-                    <KTSVG path='/media/icons/duotune/arrows/arr063.svg' className='svg-icon-4 me-1' />
+                    <KTSVG
+                      path='/media/icons/duotune/arrows/arr063.svg'
+                      className='svg-icon-4 me-1'
+                    />
                     Back
                   </button>
                 </div>
 
                 <div>
                   <button
-                    type='button'                 /* evitamos submit nativo y usamos handleSubmit */
+                    type='button' /* evitamos submit nativo y usamos handleSubmit */
                     className='btn btn-lg btn-light me-3'
                     onClick={handleSubmit}
                   >
                     {!loading && <span className='indicator-label'>Submit</span>}
                     {loading && (
                       <span className='indicator-progress' style={{display: 'block'}}>
-                        Please wait... <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                        Please wait...{' '}
+                        <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                       </span>
                     )}
                   </button>

@@ -95,9 +95,15 @@ const Step2: FC<Step2Props> = ({goPrev, goNext}) => {
           >
             BACK
           </span>
-          <button type='button' data-kt-stepper-action='next' className='btn nb-btn-outline' onClick={goNext}>
-            NEXT
-          </button>
+          
+          <button
+              type='button'
+              className='btn nb-btn-outline b-heading-md'
+              onClick={goNext}
+            >
+               <span className='indicator-label nb-heading-md'>next</span>
+               
+            </button>
         </div>
       </div>
     </div>

@@ -94,8 +94,13 @@ const Step3: FC<Step3Props> = ({goPrev, goNext}) => {
             >
               BACK
             </span>
-            <button type='button' className='btn nb-btn-outline' onClick={goNext}>
-              NEXT
+            <button
+              type='button'
+              className='btn nb-btn-outline b-heading-md'
+              onClick={goNext}
+            >
+               <span className='indicator-label nb-heading-md'>next</span>
+               
             </button>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Modal} from 'react-bootstrap-v5'
 import {KTSVG} from '../../../../../_metronic/helpers'
+import {HeaderText} from '../helper/header-text'
 
 type Props = {
   show: boolean
@@ -17,7 +18,7 @@ const TermsConditionsModal: React.FC<Props> = ({show, handleClose}) => {
       show={show}
       onHide={handleClose}
     >
-      <div className='container-xxl px-10 py-10 text-center bg-dark border'>
+      <div className='container-xxl px-10 py-10 text-center border'>
         <div className='modal-header py-2 d-flex justify-content-end border-0'>
           {/* begin::Close */}
           <div className='btn btn-icon btn-sm btn-light' onClick={handleClose}>
@@ -35,9 +36,10 @@ const TermsConditionsModal: React.FC<Props> = ({show, handleClose}) => {
               <div className='pb-5 current' data-kt-stepper-element='content'>
                 <div className='w-100'>
                   {/*begin::Heading */}
-                  <div className='pb-5 pb-lg-10 '>
-                    <h3 className='fw-bolder text-white display-8'>Terms and Conditions</h3>
-                  </div>
+                  <HeaderText
+                    title='Coming soon '
+                    subtitle='Terms and conditions'
+                  />
                   {/*begin::Heading */}
 
                   {/*begin::Form Group */}
@@ -131,7 +133,6 @@ const TermsConditionsModal: React.FC<Props> = ({show, handleClose}) => {
               </div>
               {/*end::Nav */}
             </div>
-            
           </div>
           {/* end::Stepper */}
         </div>

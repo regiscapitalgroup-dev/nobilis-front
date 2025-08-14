@@ -7,6 +7,7 @@ import {Login} from './components/Login'
 import {CreatePassword} from './components/CreatePassword'
 import {ForgotPassword} from './components/ForgotPassword'
 import {ResetPassword} from './components/ResetPassword'
+import { MessageComponent } from './components/messages/messageComponent'
 
 export function AuthPage() {
   const {pathname} = useLocation()
@@ -55,9 +56,10 @@ export function AuthPage() {
             <Switch>
               <Route path='/auth/login' component={Login} />
               <Route path='/auth/registration' component={RegitrationWizard} />
-              <Route path='/auth/activate-account/:token' component={CreatePassword} />
+              <Route path='/auth/activate-account/:token/:user' component={CreatePassword} />
               <Route path='/auth/forgot-password' component={ForgotPassword} />
               <Route path='/reset-password/:user/:token' component={ResetPassword} />
+              <Route path='/message' component={MessageComponent} />
               <Redirect from='/auth' exact={true} to='/auth/login' />
               <Redirect to='/auth/login' />
             </Switch>

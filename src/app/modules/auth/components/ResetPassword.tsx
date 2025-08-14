@@ -35,6 +35,7 @@ export function ResetPassword() {
   const [errorAlert, setErrorAlert] = useState(false)
   const [showPwd, setShowPwd] = useState(false)
   const [showPwd2, setShowPwd2] = useState(false)
+  const navigate = useHistory()
 
   const {token} = useParams<{token: string}>()
   const {user} = useParams<{user: string}>()
@@ -55,10 +56,17 @@ export function ResetPassword() {
             setPasswordUpdateData(values)
             setLoading(false)
 
-            dispatch(auth.actions.login(access))
-            setTimeout(() => {
+            /* dispatch(auth.actions.login(access)) */
+
+            navigate.replace('/message', {
+              title: 'Thank you. Your password has been reset',
+              body: 'Continue to log is using your new password.',
+              ctaText: 'LOGIN',
+              ctaTo: '/auth/login',
+            })
+            /* setTimeout(() => {
               history.push('/dashboard/new')
-            }, 1000)
+            }, 1000) */
           })
           .catch(() => {
             setLoading(false)
