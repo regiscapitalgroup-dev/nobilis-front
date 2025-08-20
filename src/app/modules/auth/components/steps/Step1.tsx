@@ -101,7 +101,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
                 country='us'
                 placeholder='+1'
                 containerClass='nb-phone'
-                inputClass='form-control'
+                inputClass='form-control input-text-style'
                 value={field.value}
                 onChange={(value) => helpers.setValue(value)}
                 disableDropdown
