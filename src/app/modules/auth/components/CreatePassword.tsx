@@ -94,7 +94,7 @@ export function CreatePassword() {
             <input
               autoComplete='off'
               type={showPwd ? 'text' : 'password'}
-              className='form-control form-control-lg form-control-underline'
+              className='form-control form-control-lg form-control-underline input-text-style'
               id='newpassword'
               {...formik.getFieldProps('newPassword')}
             />
@@ -110,7 +110,7 @@ export function CreatePassword() {
 
           {formik.touched.newPassword && formik.errors.newPassword && (
             <div className='fv-plugins-message-container'>
-              <div className='fv-help-block text-danger fs-8'>{formik.errors.newPassword}</div>
+              <div className='fv-help-block input-text-style fs-8'>{formik.errors.newPassword}</div>
             </div>
           )}
         </div>
@@ -136,7 +136,7 @@ export function CreatePassword() {
 
           {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation && (
             <div className='fv-plugins-message-container'>
-              <div className='fv-help-block text-danger fs-8'>
+              <div className='fv-help-block input-text-style fs-8'>
                 {formik.errors.passwordConfirmation}
               </div>
             </div>

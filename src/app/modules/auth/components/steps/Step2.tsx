@@ -58,7 +58,7 @@ const Step2: FC<Step2Props> = ({goPrev, goNext}) => {
               <Field
                 type='text'
                 name='otherOption'
-                className='form-control form-control-lg form-control-underline'
+                className='form-control form-control-lg form-control-underline input-text-style'
                 placeholder=''
               />
             </div>

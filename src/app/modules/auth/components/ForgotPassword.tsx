@@ -92,17 +92,14 @@ export function ForgotPassword() {
             autoComplete='off'
             {...formik.getFieldProps('email')}
             className={clsx(
-              'form-control form-control-lg form-control-underline',
-              {'is-invalid': formik.touched.email && formik.errors.email},
-              {
-                'is-valid': formik.touched.email && !formik.errors.email,
-              }
+              'form-control form-control-lg form-control-underline input-text-style',
+              
             )}
           />
           {formik.touched.email && formik.errors.email && (
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block fs-8'>
-                <span role='alert' className='text-danger'>
+                <span role='alert' className='input-text-style'>
                   {formik.errors.email}
                 </span>
               </div>

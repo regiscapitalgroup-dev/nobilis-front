@@ -59,23 +59,19 @@ export function Login() {
 
       {/* begin::Form group */}
       <div className='fv-row mb-8'>
-      <label className='form-label nb-tag required'>Email</label>
+        <label className='form-label nb-tag required'>Email</label>
         <input
           {...formik.getFieldProps('email')}
-          className={clsx(
-            'form-control form-control-lg form-control-underline',
-            {'is-invalid': formik.touched.email && formik.errors.email},
-            {
-              'is-valid': formik.touched.email && !formik.errors.email,
-            }
-          )}
+          className={'form-control form-control-lg form-control-underline input-text-style'}
           type='email'
           name='email'
           autoComplete='off'
         />
         {formik.touched.email && formik.errors.email && (
           <div className='fv-plugins-message-container fs-8'>
-            <span role='alert'  className='text-danger'>{formik.errors.email}</span>
+            <span role='alert' className='input-text-style'>
+              {formik.errors.email}
+            </span>
           </div>
         )}
       </div>
@@ -96,15 +92,7 @@ export function Login() {
             type={showPwd ? 'text' : 'password'}
             autoComplete='off'
             {...formik.getFieldProps('password')}
-            className={clsx(
-              'form-control form-control-lg form-control-underline',
-              {
-                'is-invalid': formik.touched.password && formik.errors.password,
-              },
-              {
-                'is-valid': formik.touched.password && !formik.errors.password,
-              }
-            )}
+            className={'form-control form-control-lg form-control-underline input-text-style'}
           />
           <button
             type='button'
@@ -119,7 +107,9 @@ export function Login() {
         {formik.touched.password && formik.errors.password && (
           <div className='fv-plugins-message-container'>
             <div className='fv-help-block fs-8'>
-              <span role='alert' className='text-danger'>{formik.errors.password}</span>
+              <span role='alert' className='input-text-style'>
+                {formik.errors.password}
+              </span>
             </div>
           </div>
         )}
@@ -152,7 +142,7 @@ export function Login() {
           )}
         </button>
         <Link to='/auth/registration' className='btn nb-btn-outline w-100  nb-heading-md'>
-        <span className='indicator-label nb-heading-md'>REQUEST MEMBERSHIP</span>
+          <span className='indicator-label nb-heading-md'>REQUEST MEMBERSHIP</span>
         </Link>
       </div>
       {/* end::Action */}
