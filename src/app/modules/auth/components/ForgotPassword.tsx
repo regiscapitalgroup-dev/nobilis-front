@@ -60,11 +60,11 @@ export function ForgotPassword() {
           Something went wrong. Please try again or contact support if the problem persists.
         </div>
       )}
-      {showAlert && (
+      {/* {showAlert && (
         <div className='alert alert-success' role='alert'>
           Success! Please check your email. We have sent you a link to reset your password.
         </div>
-      )}
+      )} */}
       <form
         className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
         noValidate
