@@ -6,6 +6,7 @@ type MessageState = {
   ctaText?: string
   ctaTo?: string
   classNameBtn?: string | null
+  showBtn?: boolean
 }
 
 export function MessageComponent() {
@@ -16,6 +17,7 @@ export function MessageComponent() {
     ctaText = 'LOGIN',
     ctaTo = '/auth/login',
     classNameBtn = null,
+    showBtn = true,
   } = state || {}
 
   return (
@@ -46,14 +48,18 @@ export function MessageComponent() {
         </div>
       </div>
       {/* begin::Action */}
-      <div className='text-center'>
-        <Link
-          to={ctaTo}
-          className={`btn w-100 mb-5 ${classNameBtn ? 'nb-btn-outline' : 'nb-btn-primary'}`}
-        >
-          <span className='indicator-label nb-heading-md'> {ctaText}</span>
-        </Link>
-      </div>
+
+      {showBtn ? (
+        <div className='text-center'>
+          <Link
+            to={ctaTo}
+            className={`btn w-100 mb-5 ${classNameBtn ? 'nb-btn-outline' : 'nb-btn-primary'}`}
+          >
+            <span className='indicator-label nb-heading-md'> {ctaText}</span>
+          </Link>
+        </div>
+      ) : null}
+
       {/* end::Action */}
     </div>
   )

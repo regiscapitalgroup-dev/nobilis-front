@@ -53,6 +53,7 @@ export function CreatePassword() {
               ctaText: 'Continue',
               ctaTo: '/auth/login',
               classNameBtn: 'nb-btn-outline',
+              showBtn: true
             })
             /* dispatch(auth.actions.login(access)) */
           })

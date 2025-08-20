@@ -101,6 +101,7 @@ const RegitrationWizard: FC = () => {
           body: 'Our review process may take up to 30 days. Please note that we may request additional documentation to support your eligibility, if needed.',
           ctaText: 'LOGIN',
           ctaTo: '/auth/login',
+          showBtn : false
         })
       }
     } catch (error) {
