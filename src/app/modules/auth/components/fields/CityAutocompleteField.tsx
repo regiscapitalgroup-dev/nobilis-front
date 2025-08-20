@@ -62,7 +62,7 @@ export default function CityAutocompleteField({
   return (
     <div className='nb-autocomplete'>
       <input
-        className='nb-autocomplete-input'
+        className='nb-autocomplete-input input-text-style'
         value={field.value || ''}
         placeholder={placeholder}
         onChange={(e) => {
@@ -80,24 +80,24 @@ export default function CityAutocompleteField({
         <div className='nb-autocomplete-menu'>
           {/* 🔹 NO mostrar “Buscando…” si no hay búsqueda activa */}
           {loading && enableSearch && (
-            <div className='nb-autocomplete-item'>Buscando…</div>
+            <div className='nb-autocomplete-item input-text-style'>Buscando…</div>
           )}
 
           {/* Mensaje de guía si exiges mínimo de caracteres y aún no se cumple */}
           {!enableSearch && minChars > 0 && (query.trim().length < minChars) && (
-            <div className='nb-autocomplete-item'>
+            <div className='nb-autocomplete-item input-text-style'>
               Escribe al menos {minChars} caracteres…
             </div>
           )}
 
           {/* Mostrar error solo en búsqueda activa (no en listado inicial) */}
           {error && enableSearch && (
-            <div className='nb-autocomplete-item'>Error cargando ciudades</div>
+            <div className='nb-autocomplete-item input-text-style'>Error cargando ciudades</div>
           )}
 
           {/* “Sin resultados” solo cuando hay búsqueda activa */}
           {!loading && enableSearch && !error && visible.length === 0 && (
-            <div className='nb-autocomplete-item'>Sin resultados</div>
+            <div className='nb-autocomplete-item input-text-style'>Sin resultados</div>
           )}
 
           {/* Opciones (iniciales o de búsqueda) */}
@@ -106,7 +106,7 @@ export default function CityAutocompleteField({
               {visible.map((label) => (
                 <div
                   key={label}
-                  className='nb-autocomplete-item'
+                  className='nb-autocomplete-item input-text-style'
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
                     helpers.setValue(label) // guarda el string en Formik

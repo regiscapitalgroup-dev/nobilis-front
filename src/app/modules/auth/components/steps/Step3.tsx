@@ -58,7 +58,7 @@ const Step3: FC<Step3Props> = ({goPrev, goNext}) => {
               name='linkVerify'
               autoComplete='off'
               inputMode='url'
-              className='form-control form-control-underline nb-proof__input w-100'
+              className='form-control form-control-underline nb-proof__input w-100 input-text-style'
               placeholder='(e.g., LinkedIn, Fortune 500, official awards, or other reputable listings)'
             />
           </div>

@@ -36,14 +36,13 @@ export function ResetPassword() {
   const navigate = useHistory()
 
   const {token} = useParams<{token: string}>()
-  const {user} = useParams<{user: string}>()  
+  const {user} = useParams<{user: string}>()
   const formik = useFormik<IUpdatePassword>({
     initialValues: {
       ...passwordUpdateData,
     },
     validationSchema: resetPasswordSchema,
     onSubmit: async (values) => {
-      
       setLoading(true)
 
       if (token) {
@@ -111,11 +110,7 @@ export function ResetPassword() {
                 <input
                   {...formik.getFieldProps('newPassword')}
                   className={clsx(
-                    'form-control form-control-lg form-control-underline',
-                    {'is-invalid': formik.touched.newPassword && formik.errors.newPassword},
-                    {
-                      'is-valid': formik.touched.newPassword && !formik.errors.newPassword,
-                    }
+                    'form-control form-control-lg form-control-underline input-text-style'
                   )}
                   type={showPwd ? 'text' : 'password'}
                   autoComplete='off'
@@ -131,7 +126,7 @@ export function ResetPassword() {
               </div>
               {formik.touched.newPassword && formik.errors.newPassword && (
                 <div className='fv-plugins-message-container'>
-                  <span role='alert' className='text-danger fs-8'>
+                  <span role='alert' className='input-text-style fs-8'>
                     {formik.errors.newPassword}
                   </span>
                 </div>
@@ -154,15 +149,7 @@ export function ResetPassword() {
                   autoComplete='off'
                   {...formik.getFieldProps('passwordConfirmation')}
                   className={clsx(
-                    'form-control form-control-lg form-control-underline',
-                    {
-                      'is-invalid':
-                        formik.touched.passwordConfirmation && formik.errors.passwordConfirmation,
-                    },
-                    {
-                      'is-valid':
-                        formik.touched.passwordConfirmation && !formik.errors.passwordConfirmation,
-                    }
+                    'form-control form-control-lg form-control-underline input-text-style'
                   )}
                 />
                 <button
@@ -178,7 +165,7 @@ export function ResetPassword() {
               {formik.touched.passwordConfirmation && formik.errors.passwordConfirmation && (
                 <div className='fv-plugins-message-container'>
                   <div className='fv-help-block'>
-                    <span role='alert' className='text-danger fs-8'>
+                    <span role='alert' className='input-text-style fs-8'>
                       {formik.errors.passwordConfirmation}
                     </span>
                   </div>

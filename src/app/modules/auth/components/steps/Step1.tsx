@@ -65,11 +65,11 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <Field
               type='text'
               autoComplete='off'
-              className={'form-control form-control-lg form-control-underline'}
+              className={'form-control form-control-lg form-control-underline input-text-style'}
               name='firstName'
             />
             <div className='fv-plugins-message-container'>
-              <div className='fv-help-block text-danger fs-8'>
+              <div className='fv-help-block input-text-style fs-8'>
                 <ErrorMessage name='firstName' />
               </div>
             </div>
@@ -79,11 +79,11 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <Field
               type='text'
               autoComplete='off'
-              className={'form-control form-control-lg form-control-underline'}
+              className={'form-control form-control-lg form-control-underline input-text-style'}
               name='lastName'
             />
             <div className='fv-plugins-message-container'>
-              <div className='fv-help-block text-danger fs-8'>
+              <div className='fv-help-block input-text-style fs-8'>
                 <ErrorMessage name='lastName' />
               </div>
             </div>
@@ -108,7 +108,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
               />
 
               <div className='fv-plugins-message-container'>
-                <div className='fv-help-block text-danger fs-8'>
+                <div className='fv-help-block input-text-style fs-8'>
                   <ErrorMessage name='phoneNumber' />
                 </div>
               </div>
@@ -120,11 +120,11 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <Field
               type='text'
               autoComplete='off'
-              className={'form-control form-control-lg form-control-underline'}
+              className={'form-control form-control-lg form-control-underline input-text-style'}
               name='email'
             />
             <div className='fv-plugins-message-container'>
-              <div className='fv-help-block text-danger fs-8'>
+              <div className='fv-help-block input-text-style fs-8'>
                 <ErrorMessage name='email' />
               </div>
             </div>
@@ -138,7 +138,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <label className='form-label nb-tag'>OCCUPATION</label>
             <Field
               type='text'
-              className={'form-control form-control-lg form-control-underline'}
+              className={'form-control form-control-lg form-control-underline input-text-style'}
               name='occupation'
             />
           </div>
@@ -162,7 +162,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <div className='position-relative mb-3'>
               <Field
                 type='text'
-                className={'form-control form-control-lg form-control-underline'}
+                className={'form-control form-control-lg form-control-underline input-text-style'}
                 name='referenced'
               />
             </div>
