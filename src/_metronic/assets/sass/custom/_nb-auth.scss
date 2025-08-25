@@ -1,0 +1,210 @@
+/* ==================== NOBILIS – AUTH (FIGMA 1:1) ==================== */
+
+/* ---------- Shell / fondo blanco siempre ---------- */
+.auth-shell{
+  position: relative;
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  background: #fff !important;
+  overflow: hidden;
+}
+
+/* ---------- HERO: franja 355px, centrada y anclada abajo (igual Figma) ---------- */
+.nb-hero {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 355px !important; /* altura exacta */
+  max-height: 355px !important;
+  overflow: hidden;
+  background: none !important; /* anula cualquier background viejo */
+  z-index: 0;
+  pointer-events: none;
+}
+.nb-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* recorte correcto en todos los anchos */
+  object-position: center 50%; /* Centrar verticalmente para mantener la composición */
+  filter: grayscale(100%);
+  display: block;
+}
+
+/* Ajustes responsive para mantener la composición */
+@media (max-width: 1400px) {
+  .nb-hero__img {
+    object-position: center 50%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .nb-hero__img {
+    object-position: center 50%;
+  }
+}
+
+@media (max-width: 992px) {
+  .nb-hero__img {
+    object-position: center 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .nb-hero__img {
+    object-position: center 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .nb-hero__img {
+    object-position: center 50%;
+  }
+}
+
+@media (max-width: 1280px) {
+  .nb-hero {
+    height: 355px !important;
+    max-height: 355px !important;
+  }
+  .nb-hero__img {
+    object-position: center 50%;
+  }
+}
+/* ---------- Contenido por encima del hero ---------- */
+.auth-shell .d-flex.flex-center{
+  min-height: 100vh;
+  padding: 40px 15px 20px !important;
+  position: relative;
+  z-index: 1;
+}
+@media (min-width: 992px){
+  .auth-shell .d-flex.flex-center{ padding: 60px 15px 40px !important; }
+}
+
+/* ---------- Card (sombra/padding Figma) ---------- */
+.nb-auth-card{
+  box-shadow: 0 10px 45px rgba(0,0,0,.08);
+  background: #fff;
+  position: relative;
+  z-index: 2;
+}
+.nb-auth-card--p60{ padding: 60px !important; }
+
+/* ---------- Form 520 ---------- */
+.nb-form-520{
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+/* ---------- Header ---------- */
+.nb-auth-header{
+  align-self: stretch;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; gap: 10px !important; margin: 0 !important;
+}
+.nb-auth-header > *{ margin: 0 !important; }
+
+/* ---------- Campos ---------- */
+.nb-fields-section{ align-self: stretch; display: flex; flex-direction: column; gap: 15px; }
+.nb-field{ align-self: stretch; display: flex; flex-direction: column; gap: 9px; margin: 0 !important; }
+.nb-password-section{ align-self: stretch; display: flex; flex-direction: column; gap: 20px; }
+.nb-password-section .nb-field{ margin: 0; }
+.nb-field-stack{ align-self: stretch; display: flex; flex-direction: column; gap: 5px; }
+
+/* Labels con asterisco como Figma (no rojo de Metronic) */
+.nb-tag{
+  font-family: var(--nb-font-body);
+  font-size: 10px; font-weight: 500; line-height: 18.5px;
+  letter-spacing: 1.5px; text-transform: uppercase; color: #808080; margin: 0;
+}
+.nb-tag::after{ content: "*"; margin-left: 0; color: currentColor; }
+
+/* Inputs underline */
+.form-control-underline{
+  align-self: stretch; height: 48px !important; padding: 5px 0 !important;
+  background: #fff !important; border: 0 !important;
+  border-bottom: 1px solid #D7D7D7 !important; border-radius: 0 !important;
+  box-shadow: none !important;
+  font-family: var(--nb-font-body); font-size: 14px; font-weight: 300; line-height: 19.6px; color: #151515;
+}
+.form-control-underline:focus{ border-bottom-color: #151515 !important; box-shadow: none !important; outline: none !important; }
+
+/* Ojo password */
+.nb-input-wrap{ position: relative; align-self: stretch; display: flex; align-items: center; }
+.nb-input-eye{
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  width: 18px; height: 18px; background: transparent; border: 0; padding: 0;
+  display: flex; align-items: center; justify-content: center; color: #B4B4B4; cursor: pointer; gap: 10px;
+}
+
+/* ---------- Link Forgot ---------- */
+.nb-auth-links{ align-self: flex-start; margin: 0; }
+.nb-link-underline{
+  display: inline-flex; align-items: center; gap: 5px;
+  border-bottom: 1px solid #151515; text-decoration: none !important;
+  font-family: var(--nb-font-heading); font-size: 12px; font-weight: 500; line-height: 22.2px; text-transform: uppercase; color: #151515;
+}
+.nb-link-underline:hover{ opacity: .85; }
+
+/* ---------- Botones ---------- */
+.nb-auth-actions{ align-self: stretch; display: flex; flex-direction: column; gap: 15px; margin: 0; }
+.nb-btn-primary{
+  align-self: stretch; padding: 10px 20px;
+  background: #151515 !important; border: 1px solid #151515 !important; border-radius: 0 !important;
+  display: inline-flex; justify-content: center; align-items: center; gap: 4px;
+  font-family: var(--nb-font-heading); font-size: 12px; font-weight: 500; line-height: 22.2px; text-transform: uppercase; color: #fff !important; text-decoration: none !important;
+}
+.nb-btn-primary:hover{ opacity: .95; }
+.nb-btn-outline{
+  align-self: stretch; padding: 10px 20px;
+  background: #fff !important; border: 1px solid #151515 !important; border-radius: 0 !important;
+  display: inline-flex; justify-content: center; align-items: center; gap: 5px;
+  font-family: var(--nb-font-heading); font-size: 12px; font-weight: 500; line-height: 22.2px; text-transform: uppercase; color: #151515 !important; text-decoration: none !important;
+}
+.nb-btn-icon{ width: 12px; height: 3px; display: inline-block; }
+.nb-btn-icon--white{ filter: invert(1) brightness(2); }
+.nb-btn-icon--black{ filter: none; }
+.nb-btn-primary:disabled, .nb-btn-outline:disabled{ opacity: .6; cursor: not-allowed; }
+
+/* ---------- Errores ---------- */
+.fv-plugins-message-container{ margin-top: 5px; }
+.fv-plugins-message-container .input-text-style{ font-family: var(--nb-font-body); font-size: 12px; font-weight: 300; color: #151515; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 991px){ .nb-auth-card--p60{ padding: 40px !important; } }
+@media (max-width: 576px){
+  .auth-shell .d-flex.flex-center{ padding: 30px 15px 20px !important; }
+  .nb-auth-card--p60{ padding: 30px 20px !important; }
+  .form-control-underline{ height: 44px !important; }
+  .nb-form-520{ gap: 30px; }
+  .nb-fields-section{ gap: 12px; }
+}
+@media (max-width: 768px){ .nb-form-520{ gap: 35px; } }
+
+/* ---------- Metronic overrides mínimos ---------- */
+.auth-shell .card{ background: #fff !important; border: none !important; }
+.auth-shell .card-flush{ border-radius: 0 !important; }
+.nb-form-520 .form-control:focus{ box-shadow: none !important; border-color: transparent !important; }
+.nb-form-520 .btn:focus, .nb-form-520 .btn:active{ box-shadow: none !important; }
+
+/* Fallback sin gap */
+.nb-auth-stack{ display: flex; flex-direction: column; gap: 40px; width: 100%; }
+.nb-auth-stack > * + *{ margin-top: 40px; }
+.nb-fields-section{ display: flex; flex-direction: column; gap: 15px; }
+.nb-fields-section > * + *{ margin-top: 15px; }
+@supports (gap: 1px){
+  .nb-auth-stack > * + *, .nb-fields-section > * + *{ margin-top: 0; }
+}
+
+/* Root */
+#root{ min-height: 100vh !important; min-height: 100dvh !important; }
+
+/* Si hay toolbar/header fijos de Metronic */
+body[class*="toolbar-enabled"] .auth-shell,
+body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }

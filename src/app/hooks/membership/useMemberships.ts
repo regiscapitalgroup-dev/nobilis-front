@@ -15,7 +15,7 @@ export const useMemberships = (isActive: boolean) => {
         setLoading(true);
         const data = await getAllMemberships();
         if (isMounted) {
-          setMemberships(data);
+          setMemberships(data.data);
         }
       } catch (err) {
         if (isMounted) {

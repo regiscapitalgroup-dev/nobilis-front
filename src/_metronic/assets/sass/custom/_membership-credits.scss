@@ -1,0 +1,210 @@
+/* ===== Shell (1065px) ===== */
+.lp-shell{
+  width:100%;
+  max-width:1065px;
+  margin:0 auto;
+  padding:0 16px 50px 16px; /* Agregamos padding inferior para el sombreado */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:60px; /* Cambiado de 40px a 60px para coincidir con Figma */
+}
+
+/* ===== Hero ===== */
+.lp-hero{
+  max-width:631px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+.lp-title{
+  width:623px;
+  text-align:center;
+  color:var(--nb-black,#151515);
+  font-family:'Oswald',sans-serif;
+  font-weight:500;
+  font-size:40px;
+  line-height:48px;
+  margin:0;
+}
+.lp-sub{
+  text-align:center;
+  color:var(--nb-gray,#808080);
+  font-family:'Satoshi',sans-serif;
+  font-weight:300;
+  font-size:14px;
+  line-height:19.6px;
+  margin:0;
+}
+
+/* ===== Card (namespaced) ===== */
+.lp-card{
+  background:#fff;
+  position:relative;
+  z-index:1;
+  width: 100%;
+  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
+}
+.lp-card--outline{
+  border:1px solid var(--nb-border,#D7D7D7);
+}
+.lp-card--pad40{
+  padding:40px;
+}
+
+/* ===== Table (sin bordes entre filas) ===== */
+.lp-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+}
+.lp-table thead th{
+  padding:20px;
+  font-family:'Satoshi',sans-serif;
+  font-weight:500;
+  font-size:10px;
+  line-height:1.85;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--nb-black,#151515);
+  vertical-align:middle;
+  border:0;
+}
+
+/* Removemos todos los bordes entre filas */
+.lp-table tbody tr + tr td{
+  border-top: none; /* Removido el borde */
+}
+.lp-table tbody td{
+  border:0;
+  padding:0;
+}
+
+/* ===== Fila con hover exacto (sombra + outline, SIN border-radius) ===== */
+.lp-row-inner{
+  display:grid;
+  grid-template-columns:40% 27% 33%;
+  gap:0;
+  padding:15px 20px;
+  outline:1px solid transparent;
+  outline-offset:-1px;
+  background:transparent;
+  box-shadow:none;
+  transition:box-shadow .15s ease, outline-color .15s ease, background .15s ease;
+}
+.lp-row-inner:hover{
+  background:#fff;
+  box-shadow:0px 2px 2px rgba(0,0,0,0.10);
+  outline-color:#B4B4B4;
+}
+
+/* texto de celdas */
+.lp-row-inner .lp-col{
+  font-family:'Satoshi',sans-serif;
+  font-weight:300;
+  font-size:12px;
+  line-height:16.8px;
+  color:var(--nb-black,#151515);
+  word-break:break-word;
+}
+
+/* ===== Responsive ===== */
+@media (max-width:1200px){
+  .lp-card--pad40{
+    padding:32px;
+  }
+  .lp-title{
+    font-size:36px;
+    line-height:44px;
+    width:100%;
+  }
+  .lp-shell{
+    gap:50px; /* Ajuste proporcional */
+  }
+}
+@media (max-width:992px){
+  .lp-card--pad40{
+    padding:28px;
+  }
+  .lp-title{
+    font-size:32px;
+    line-height:40px;
+  }
+  .lp-shell{
+    gap:45px; /* Ajuste proporcional */
+  }
+}
+@media (max-width:768px){
+  .lp-card--pad40{
+    padding:20px;
+  }
+  .lp-title{
+    font-size:28px;
+    line-height:34px;
+  }
+  .lp-sub{
+    font-size:13px;
+    line-height:18px;
+  }
+  .lp-shell{
+    gap:40px; /* Ajuste proporcional */
+  }
+
+  .lp-table thead{
+    display:none;
+  }
+  .lp-table, .lp-table tbody, .lp-table tr, .lp-table td{
+    display:block;
+    width:100%;
+  }
+  .lp-table tbody tr + tr td{
+    border-top: none; /* Sin bordes en mobile tampoco */
+  }
+
+  .lp-row-inner{
+    grid-template-columns:1fr;
+    padding:12px 0;
+    outline-offset:0;
+  }
+  .lp-row-inner .lp-col + .lp-col{
+    margin-top:8px;
+  }
+
+  /* etiquetas de columna */
+  .lp-row-inner .lp-col::before{
+    display:block;
+    margin-bottom:4px;
+    color:var(--nb-black,#151515);
+    opacity:.6;
+    font-family:'Satoshi',sans-serif;
+    font-weight:500;
+    font-size:10px;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    content:'';
+  }
+  .lp-row-inner .lp-col-activity::before{
+    content:'Activity';
+  }
+  .lp-row-inner .lp-col-rate::before{
+    content:'Credit Earning Rate';
+  }
+  .lp-row-inner .lp-col-notes::before{
+    content:'Notes';
+  }
+}
+@media (max-width:420px){
+  .lp-title{
+    font-size:24px;
+    line-height:30px;
+  }
+  .lp-card--pad40{
+    padding:16px;
+  }
+  .lp-shell{
+    gap:35px; /* Ajuste proporcional */
+  }
+}

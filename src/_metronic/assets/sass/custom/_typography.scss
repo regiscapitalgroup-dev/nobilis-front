@@ -56,3 +56,72 @@ $nb-heading-sizes: (
   @extend .nb-heading-sm;          /* usa Oswald 500 en 12px; cambia por md/lg si quieres */
   @extend .nb-text-uppercase;
 }
+
+.nobilis-text {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;         
+  font-size: 19.71px;
+  line-height: 120%;
+  letter-spacing: 0.22em;   
+  text-transform: uppercase;
+  color: #151515;
+  padding: 4px 12px;       
+  border-radius: 4px;      
+}
+
+
+
+/* === Texto Oswald 500 – 22px centrado (Figma) === */
+.nb-text-oswald-22 {
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 500 !important;
+  font-style: normal !important;  /* en CSS no existe 'Medium', es normal */
+  font-size: 22px !important;
+  line-height: 120% !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  color: #151515 !important;
+}
+/* Texto para Initiation Fee u otros labels similares */
+.nb-text-oswald-18-tag {
+  font-family: 'Oswald', sans-serif !important;
+  font-weight: 500 !important;
+  font-style: normal !important;    /* en CSS es normal, no 'Medium' */
+  font-size: 18px !important;
+  line-height: 120% !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+
+  color: #808080 !important;   /* fondo gris */
+  display: inline-flex !important;  /* centra bien el contenido */
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4px 12px !important;     /* espacio interno como en Figma */
+  border-radius: 4px !important;    /* bordes redondeados suaves */
+  box-sizing: border-box;
+}
+
+.nbq-option__title {
+  font-family: "Satoshi", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-weight: 900 !important;          
+  font-size: 12px !important;
+  line-height: 1.85 !important;         
+  letter-spacing: 0.15em !important;   
+  text-transform: uppercase !important;
+  vertical-align: bottom !important;    
+  color: #151515 !important;       
+  display: inline-flex;                 
+  align-items: flex-end;                
+}
+
+.nb-text-body-sm {
+  font-family: "Satoshi", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-weight: 300 !important;     /* Light */
+  font-style: normal !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;     /* 140% */
+  letter-spacing: 0 !important;
+  vertical-align: middle !important;
+}

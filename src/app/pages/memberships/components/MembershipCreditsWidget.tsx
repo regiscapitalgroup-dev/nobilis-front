@@ -1,110 +1,85 @@
 import React, {RefObject} from 'react'
 import credits from '../helper/credit-detail.json'
+
+type CreditItem = {
+  activity: string
+  creditEarningRate: string
+  notes: string
+}
+
 type Props = {
   refToScroll: RefObject<HTMLDivElement>
 }
 
 const MembershipCreditsWidget: React.FC<Props> = ({refToScroll}) => {
+  const rows: CreditItem[] = (credits as CreditItem[]) || []
+
+  const rolloverRow: CreditItem = {
+    activity: 'Credit Rollover (Excess over 25K)',
+    creditEarningRate:
+      `up to $25K  -  $1 = 1 Credits\n` +
+      `$25K to $75K  -  $1 = 0.5 Credits\n` +
+      `$75K+  -  $1 = 0 Credits`,
+    notes: 'Points are valid for 3 years from when they are earned.',
+  }
+
   return (
-    <div className='col-xl-12'>
-      <div className={`card card-xxl-stretch mb-5 mb-xl-8 bg-dark`} ref={refToScroll}>
-        {/* begin::Header */}
-        <div className='card-header align-items-center flex-column pt-5 border-0'>
-          <h3 className='card-title '>
-            <span className='card-label fw-bolder fs-3 mb-1 text-white'>
-              Built-in credit system structure
-            </span>
-          </h3>
-          <h3>
-            <span className='text-muted text-center mt-1 fw-bold fs-7'>
-              Nobilis is a member-led community where active participation elevates recognition
-              <br />
-              &nbsp;&nbsp;&nbsp;&nbsp;creates value for others, and offers reductions on the annual
-              membership fee.
-            </span>
-          </h3>
-        </div>
-        {/* end::Header */}
-        {/* begin::Body */}
-        <div className='card-body py-3'>
-          {/* begin::Table container */}
-          <div className='table-responsive'>
-            {/* begin::Table */}
-            <table className='table table-striped table-dark  align-middle gs-0 gy-4'>
-              {/* begin::Table head */}
-              <thead>
-                <tr className='fw-bolder text-muted'>
-                  <th className='min-w-200px'>Activity</th>
-                  <th className='min-w-200px'>Credit Eaming Rate</th>
-                  <th className='min-w-300px'>Notes</th>
-                </tr>
-              </thead>
-              {/* end::Table head */}
-              {/* begin::Table body */}
+    <div className='lp-shell' ref={refToScroll}>
+      {/* Header Figma */}
+      <div className='lp-hero'>
+        <h2 className='lp-title'>Loyalty program</h2>
+        <p className='lp-sub'>
+          The loyalty program rewards active participation with credits that can cover up to 3 years
+          of membership fees and offer discounts on experiences
+        </p>
+      </div>
 
-              <tbody>
-                {credits.map((item, index) => (
-                  <tr key={index}>
-                    <td>
-                      <div className='d-flex align-items-center'>
-                        <div className='d-flex justify-content-start flex-column'>
-                          <span className='text-white fw-bolder text-hover-secondary fs-8'>
-                            {item.activity}
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span className='text-white fw-bolder text-hover-secondary d-block fs-8'>
-                        {item.creditEarningRate}
-                      </span>
-                    </td>
-                    <td className='d-flex align-items-center'>
-                      <div className='d-flex justify-content-start flex-column'>
-                        <span className='text-white fw-bolder text-hover-secondary fs-8'>
-                          {item.notes}
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+      {/* Card */}
+      <div className='lp-card lp-card--pad40 lp-card--outline'>
+        <table className='lp-table'>
+          <colgroup>
+            <col style={{width: '40%'}} />
+            <col style={{width: '27%'}} />
+            <col style={{width: '33%'}} />
+          </colgroup>
 
-                <tr>
-                  <td>
-                    <div className='d-flex align-items-center'>
-                      <div className='d-flex justify-content-start flex-column'>
-                        <span className='text-white fw-bolder text-hover-secondary fs-8'>
-                          Credit Rollover (Excess over 25K)
-                        </span>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <span  className='text-white fw-bolder text-hover-secondary fs-8'>
-                      <div>up to $25K - $1 = 1 Credits</div>
-                      <br />
-                      <div>25K to $75K- $1 = 1 Credits</div>
-                      <br />
-                      <div>up to $75K+ - $1 = 0 Credits</div>
-                    </span>
-                  </td>
-                  <td className='d-flex align-items-center'>
-                    <div className='d-flex justify-content-start flex-column'>
-                      <span className='text-white fw-bolder text-hover-secondary fs-8'>
-                        Points are valid for 3 years from when they are earned
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+          <thead>
+            <tr>
+              <th>Activity</th>
+              <th>Credit Earning Rate</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
 
-              {/* end::Table body */}
-            </table>
-            {/* end::Table */}
-          </div>
-          {/* end::Table container */}
-        </div>
-        {/* begin::Body */}
+          <tbody>
+            {rows.map((item, idx) => (
+              <tr key={idx}>
+                <td colSpan={3}>
+                  <div className='lp-row-inner'>
+                    <div className='lp-col lp-col-activity'>{item.activity}</div>
+                    <div className='lp-col lp-col-rate'>{item.creditEarningRate}</div>
+                    <div className='lp-col lp-col-notes'>{item.notes}</div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+
+            {/* Rollover */}
+            <tr>
+              <td colSpan={3}>
+                <div className='lp-row-inner'>
+                  <div className='lp-col lp-col-activity'>{rolloverRow.activity}</div>
+                  <div className='lp-col lp-col-rate'>
+                    {rolloverRow.creditEarningRate.split('\n').map((l, i) => (
+                      <div key={i}>{l}</div>
+                    ))}
+                  </div>
+                  <div className='lp-col lp-col-notes'>{rolloverRow.notes}</div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   )

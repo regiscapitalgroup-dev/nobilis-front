@@ -1,0 +1,485 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
+@import url('https://fonts.cdnfonts.com/css/satoshi');
+
+// Colors
+$color-primary: #151515;
+$color-secondary: #808080;
+$color-bg-light: #F5F5F5;
+$color-border: #D7D7D7;
+$color-checkbox: #460107;
+$color-white: #FFFFFF;
+
+// Fonts
+$font-oswald: 'Oswald', sans-serif;
+$font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+// Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Layout general
+.payment-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background: $color-white;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+}
+
+// ================= LEFT SIDE =================
+.payment-summary-section {
+  width: 730px;
+  height: 906px;
+  padding: 10px 100px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: $color-white;
+
+  .summary-wrapper {
+    width: 442px;
+    height: 766px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  // LOGO
+  .nobilis-logo {
+    width: 100%;
+    font-family: $font-oswald;
+    font-size: 34.72px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: $color-primary;
+    line-height: 41.67px;
+    letter-spacing: 7.64px;
+  }
+
+  // Middle Section
+  .summary-middle {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+  }
+
+  // PAY NOBILIS card
+  .price-card {
+    width: 100%;
+    padding: 20px;
+    background: $color-bg-light;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__label {
+      font-family: $font-satoshi;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: $color-secondary;
+      letter-spacing: 1.5px;
+      line-height: 18.5px;
+    }
+
+    &__amount {
+      font-family: $font-oswald;
+      font-size: 32px;
+      font-weight: 500;
+      color: $color-primary;
+      line-height: 38.4px;
+      text-align: left; // 🔥 ahora alineado a la izquierda
+    }
+
+    &__freq {
+      font-family: $font-satoshi;
+      font-size: 12px;
+      font-weight: 300;
+      color: $color-secondary;
+      line-height: 16.8px;
+    }
+  }
+
+  // Order details
+  .order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    &__items {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    &__extra {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+
+  .order-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    &__info {
+      width: 162px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    &__title {
+      font-family: $font-satoshi;
+      font-size: 14px;
+      font-weight: 700;
+      color: $color-primary;
+      line-height: 19.6px;
+    }
+
+    &__qty {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      span {
+        font-size: 12px;
+        font-family: $font-satoshi;
+        font-weight: 300;
+        color: $color-secondary;
+        line-height: 16.8px;
+      }
+
+      strong {
+        font-size: 12px;
+        font-family: $font-satoshi;
+        font-weight: 700;
+        color: $color-secondary;
+        line-height: 16.8px;
+      }
+    }
+
+    &__amount {
+      font-family: $font-satoshi;
+      font-size: 14px;
+      font-weight: 700;
+      color: $color-primary;
+      line-height: 19.6px;
+    }
+
+    &--light {
+      .order-row__title,
+      .order-row__amount {
+        font-weight: 300;
+        color: $color-secondary;
+      }
+    }
+  }
+
+  .order-total {
+    display: flex;
+    justify-content: space-between;
+    font-family: $font-satoshi;
+    font-size: 14px;
+    font-weight: 700;
+    color: $color-primary;
+    line-height: 19.6px;
+  }
+
+  .powered-by {
+    font-size: 11px;
+    font-family: $font-satoshi;
+    color: $color-secondary;
+    display: flex;
+    gap: 12px;
+    opacity: 0.6;
+
+    strong {
+      font-weight: 600;
+    }
+
+    .divider {
+      color: $color-border;
+    }
+
+    a {
+      text-decoration: none;
+      color: $color-secondary;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// ================= RIGHT SIDE =================
+// ❌ No tocamos nada de aquí todavía
+.payment-form-section {
+  width: 710px;
+  height: 906px;
+  padding: 10px 100px;
+  background: $color-white;
+  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+
+  .form-wrapper {
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+// ================= RIGHT SIDE =================
+.payment-form-section {
+  width: 710px;
+  height: 906px;
+  padding: 10px 100px;
+  background: $color-white;
+  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+
+  .form-wrapper {
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  // -------- Or pay with card --------
+  .form-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid $color-border;
+    }
+
+    .form-header__text {
+      font-size: 12px;
+      font-family: $font-satoshi;
+      font-weight: 300;
+      color: $color-primary;
+      margin: 0 12px;
+      white-space: nowrap;
+    }
+  }
+
+  // -------- Section titles --------
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; // menos espacio entre título y campos
+
+    &__title {
+      font-size: 18px;
+      font-family: $font-oswald;
+      font-weight: 500;
+      color: $color-primary;
+      margin-bottom: 5px;
+    }
+  }
+
+  // -------- Labels --------
+  .form-label {
+    font-size: 10px;
+    font-family: $font-satoshi;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: $color-secondary;
+    line-height: 18.5px;
+    margin-bottom: 5px;
+  }
+
+  // -------- Inputs --------
+  .form-input {
+    width: 100%;
+    height: 48px;
+    border: none;
+    border-bottom: 1px solid $color-border;
+    font-size: 12px;
+    font-family: $font-satoshi;
+    font-weight: 300;
+    color: $color-primary;
+    background: transparent;
+    outline: none;
+    padding: 0;
+
+    &::placeholder {
+      color: $color-secondary;
+      font-weight: 300;
+    }
+
+    &:focus {
+      border-bottom-color: $color-primary;
+    }
+  }
+
+  // -------- Select Country --------
+  .select-wrapper {
+    width: 100%; // ahora al 100% del ancho
+    border-bottom: 1px solid $color-border;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 5px 0;
+
+    select {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-size: 12px;
+      font-family: $font-satoshi;
+      font-weight: 300;
+      color: $color-primary;
+      outline: none;
+      appearance: none;
+    }
+  }
+
+  // -------- Manual address link --------
+  .manual-entry-btn {
+    font-size: 12px;
+    font-family: $font-satoshi;
+    font-weight: 300;
+    color: $color-primary;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+
+  // -------- Card input --------
+  .card-input-wrapper {
+    height: 48px;
+    border-bottom: 1px solid $color-border;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    .StripeElement {
+      width: 100%;
+      font-size: 12px;
+      font-family: $font-satoshi;
+    }
+  }
+
+  // -------- Checkbox --------
+  .nbq-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+
+    input[type='checkbox'] {
+      width: 18px;
+      height: 18px;
+      accent-color: $color-checkbox;
+    }
+
+    .nb-body {
+      font-size: 12px;
+      font-family: $font-satoshi;
+      font-weight: 300;
+      color: $color-primary;
+      cursor: pointer;
+    }
+  }
+
+  // -------- Submit button --------
+  .submit-button {
+    width: 100%;
+    height: 48px;
+    background: $color-primary;
+    color: $color-white;
+    font-size: 12px;
+    font-family: $font-oswald;
+    font-weight: 500;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+}
+
+.nb-country-autocomplete {
+  width: 100%;
+  position: relative;
+
+  .nb-country-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d7d7d7;
+    height: 48px;
+    padding: 0 5px;
+  }
+
+  .nb-country-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 700;
+    color: #151515;
+
+    &::placeholder {
+      color: #808080;
+      font-weight: 300;
+    }
+  }
+
+  .nb-country-icon {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  .nb-country-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #d7d7d7;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .nb-country-item {
+    padding: 10px;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+  }
+}

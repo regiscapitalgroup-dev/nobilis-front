@@ -1,0 +1,276 @@
+/* ===== Tokens Figma ===== */
+:root{
+  --nb-black:#151515; --nb-gray:#808080; --nb-border:#D7D7D7;
+  --nb-shadow:0 10px 45px rgba(0,0,0,.08);
+
+  /* anchos exactos */
+  --nb-shell-w:1226px;
+  --nb-feature-w:200px;
+  --nb-card-sm:285px;
+  --nb-card-lg:345px;
+
+  --nb-row-min:44px;
+  --nb-head-h:174px;
+  --nb-btn-row-h:88px;
+
+  /* botón */
+  --nb-btn-w:263px; --nb-btn-w-active:309px;
+  --nb-btn-h:42px; --nb-btn-py:10px; --nb-btn-px:20px;
+  --nb-btn-gap:4px; --nb-btn-gap-active:5px;
+}
+
+/* ===== Tipos EXACTOS (Figma) ===== */
+.nb-oswald-22{ font-family:"Oswald",sans-serif; font-weight:500; font-size:22px; line-height:26.4px; color:#151515; }
+.nb-oswald-18{ font-family:"Oswald",sans-serif; font-weight:500; font-size:18px; line-height:21.6px; color:#808080; }
+.nb-oswald-12{ font-family:"Oswald",sans-serif; font-weight:500; font-size:12px; line-height:22.2px; text-transform:uppercase; color:#151515; }
+
+.nb-satoshi-14-300{ font-family:"Satoshi",sans-serif; font-weight:300; font-size:14px; line-height:19.6px; color:#151515; }
+.nb-satoshi-12-900-up{ font-family:"Satoshi",sans-serif; font-weight:900; font-size:12px; line-height:22.2px; letter-spacing:1.8px; text-transform:uppercase; color:#151515; }
+.nb-satoshi-12-600{ font-family:"Satoshi",sans-serif; font-weight:600; font-size:12px; line-height:1; color:#151515; }
+
+.nb-inter-24-700{ font-family:"Inter",sans-serif; font-weight:700; font-size:24px; line-height:44.4px; color:#151515; }
+
+/* ===== Header (631px) ===== */
+.nb-ms-shell{ width:100%; }
+.nb-ms-header{ width:min(631px,100%); margin:0 auto 60px; display:flex; flex-direction:column; gap:10px; text-align:center; }
+.nb-ms-title{ font-family:"Oswald",sans-serif; font-weight:500; font-size:40px; line-height:48px; color:var(--nb-black); margin:0; }
+.nb-ms-sub{ font-family:"Satoshi",sans-serif; font-weight:300; font-size:14px; line-height:19.6px; color:#808080; margin:0; }
+
+/* ===== Zoom wrapper: escala sin scroll ===== */
+.nb-zoom{
+  width:var(--nb-shell-w);
+  margin:0 auto;
+  transform-origin: top center;
+}
+@media (max-width: 1226px){ .nb-zoom{ transform: scale(calc(100vw / 1226)); } }
+/* fijar altura en móviles largos: opcional si usas contenedor con overflow hidden */
+
+/* ===== Board (labels + deck) ===== */
+.nb-board{
+  display:grid;
+  grid-template-columns: var(--nb-feature-w) 1fr;
+  column-gap:0;                 /* SIN espacio con la primera card */
+  align-items:stretch;
+  overflow:visible;
+}
+.nb-labels{
+  display:grid; grid-auto-rows:minmax(var(--nb-row-min),auto);
+  background:#fff; box-shadow:var(--nb-shadow);
+}
+.nb-labels__head{
+  height:var(--nb-head-h); padding:20px;
+  display:flex; align-items:flex-end; border-bottom:1px solid var(--nb-border);
+  background:#fff;            /* siempre blanco */
+}
+.nbq-option__title{ font-family:"Satoshi",sans-serif; font-weight:900; font-size:12px; letter-spacing:1.8px; text-transform:uppercase; color:#151515; }
+
+.nb-l-row{ height:44px; padding:12px 16px; display:flex; align-items:center; border-bottom:1px solid var(--nb-border); background:#fff; }
+.nb-l-row--section{ height:56px; padding:12px 16px; display:flex; align-items:center; background:#fff; border-top:1px solid var(--nb-border); border-bottom:1px solid var(--nb-border); }
+.nb-labels__btnrow{ height:var(--nb-btn-row-h); border-bottom:1px solid var(--nb-border); background:#fff; }
+
+/* ===== Deck ===== */
+.nb-deck{
+  display:flex; align-items:stretch; gap:16px;   /* separación entre cards */
+  padding-left:0;                                /* pegado a labels */
+  overflow:visible;
+}
+
+/* ===== Cards ===== */
+.nb-plan{
+  position:relative; background:#fff; border:1px solid var(--nb-border);
+  /* display:grid; grid-auto-rows:minmax(var(--nb-row-min),auto); box-shadow:var(--nb-shadow); */
+  transform-origin:center top; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  overflow:hidden;
+}
+.nb-plan > *{ position:relative; z-index:1; }
+
+.nb-plan--sm{ width:var(--nb-card-sm); }
+.nb-plan--lg{ width:var(--nb-card-lg); }
+
+.nb-plan__head{
+  height:var(--nb-head-h); padding:20px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+  border-bottom:1px solid var(--nb-border); text-align:center; background:#fff;
+}
+.nb-head__divider{ width:144px; height:1px; background:#D7D7D7; }
+.nb-head__price{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+.nb-head__tag{
+  width:245px; height:42px; padding:10px; background:#F5F5F5; color:#808080;
+  font-family:"Oswald",sans-serif; font-weight:500; font-size:18px; line-height:21.6px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+.nb-plan__row{ height:44px; padding:12px 16px; display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--nb-border); background:#fff; }
+.nb-plan__row--section{ height:56px; border-top:1px solid var(--nb-border); border-bottom:1px solid var(--nb-border); background:#fff; }
+.nb-plan__btnrow{ height:var(--nb-btn-row-h); display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--nb-border); background:#fff; }
+
+/* chips / checks */
+.nb-check{ font-family:"Inter",sans-serif; font-weight:700; font-size:24px; line-height:44.4px; color:#151515; }
+.nb-chip{ display:inline-block; padding:6px 10px; border:1px solid var(--nb-border); border-radius:6px; font:600 12px/1 "Satoshi",sans-serif; background:#fff; color:#151515; }
+.nb-empty{ display:inline-block; width:1px; height:1px; }
+
+/* ===== Botón ===== */
+.nb-select-btn{
+  width:var(--nb-btn-w); height:var(--nb-btn-h); padding:var(--nb-btn-py) var(--nb-btn-px);
+  background:#D7D7D7; color:#808080; border:0; cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--nb-btn-gap);
+  font-family:"Oswald",sans-serif; font-weight:500; font-size:12px; line-height:22.2px; text-transform:uppercase;
+  transition:background-color .18s ease, color .18s ease;
+}
+.nb-select-btn .txt-active{ display:none; }
+.nb-select-btn .txt-inactive{ display:inline; }
+
+/* ===== HOVER (solo alto, NO ancho) ===== */
+.nb-plan:hover::before,
+.nb-plan.is-hot::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background: linear-gradient(207deg,#540008 0%, #151515 100%);
+}
+.nb-plan:hover,
+.nb-plan.is-hot{
+  transform: translateY(-18px) scaleY(1.035);           /* crece a lo largo */
+  box-shadow: 0 4px 12px rgba(0,0,0,.20);
+  border-color: rgba(255,255,255,.12);
+}
+
+/* Celdas transparentes y CENTRADAS en hover */
+.nb-plan:hover .nb-plan__head,
+.nb-plan:hover .nb-plan__row,
+.nb-plan:hover .nb-plan__btnrow,
+.nb-plan.is-hot .nb-plan__head,
+.nb-plan.is-hot .nb-plan__row,
+.nb-plan.is-hot .nb-plan__btnrow{
+  background: transparent !important;
+  border-color: rgba(255,255,255,.12) !important;
+  display:flex !important; align-items:center !important; justify-content:center !important; text-align:center !important;
+}
+
+/* textos blancos en hover */
+.nb-plan:hover .nb-oswald-22,
+.nb-plan:hover .nb-inter-24-700,
+.nb-plan:hover .nb-satoshi-14-300,
+.nb-plan.is-hot .nb-oswald-22,
+.nb-plan.is-hot .nb-inter-24-700,
+.nb-plan.is-hot .nb-satoshi-14-300{
+  color:#fff !important; -webkit-text-fill-color:#fff;
+}
+
+/* divider y tag como Figma en hover */
+.nb-plan:hover .nb-head__divider,
+.nb-plan.is-hot .nb-head__divider{ background:#494949; }
+.nb-plan:hover .nb-head__tag,
+.nb-plan.is-hot .nb-head__tag{ background:#FFFFFF0D; color:#FFFFFF80; }
+
+/* chip translúcida en hover */
+.nb-plan:hover .nb-chip,
+.nb-plan.is-hot .nb-chip{ background:rgba(255,255,255,.20); color:#fff; border-color:rgba(255,255,255,.30); }
+
+/* botón blanco en hover */
+.nb-plan:hover .nb-select-btn,
+.nb-plan.is-hot .nb-select-btn{
+  background:#fff; color:#151515;
+}
+/* Botón SELECT PLAN con estética del login (outline negro) */
+.nb-select-btn.is-active{
+  background:#fff !important;
+  color:#151515 !important;
+  border:1px solid #151515 !important;  /* <-- borde como el login */
+}
+
+/* Colocar texto+icono en línea y centrados cuando está activo */
+.nb-select-btn .txt-active{
+  display:none;
+  align-items:center;
+  gap:5px;
+}
+.nb-select-btn.is-active .txt-active{ display:inline-flex; }
+.nb-select-btn .txt-inactive{ display:inline-flex; }
+.nb-select-btn.is-active .txt-inactive{ display:none; }
+
+/* === FIX GAP COLUMNA LABELS vs CARD 1 === */
+.nb-board{
+  column-gap: 0 !important;          /* sin espacio entre columnas */
+}
+
+/* el “haze” que se ve como hueco era la sombra de la columna de labels */
+.nb-labels{
+  box-shadow: none !important;        /* quita el degradado claro del borde derecho */
+  border-right: 1px solid var(--nb-border) !important;  /* pega visualmente con la card */
+  margin-right: 0 !important;
+}
+
+/* la fila de REQUIREMENT debe ser blanca como el resto, sin separación extra */
+.nb-l-row--section{
+  background: #fff !important;
+  border-top: 1px solid var(--nb-border) !important;
+  border-bottom: 1px solid var(--nb-border) !important;
+  margin: 0 !important;
+}
+
+/* por si algún estilo dejó sangría en el deck */
+.nb-deck{
+  margin-left: 0 !important;
+}
+.nb-disclaimers{
+  width:100%;
+  margin-top:12px;
+}
+
+.nb-disclaimer{
+  color:#151515;
+  font-family:"Satoshi", sans-serif;
+  font-weight:300;
+  font-size:14px;
+  line-height:19.6px;
+  word-wrap:break-word;
+}
+
+
+
+
+
+
+
+
+.membership-shell {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.nb-membership-hero {
+  will-change: transform;
+  contain: paint;
+  position: relative;
+  overflow: hidden;
+  height: 355px;
+  z-index: 0;
+}
+
+.nb-membership-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(100%);
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Responsivo */
+@media (max-width: 1200px) {
+  .nb-membership-hero {
+    height: 280px !important;
+  }
+}
+@media (max-width: 768px) {
+  .nb-membership-hero {
+    height: 220px !important;
+  }
+}
+@media (max-width: 480px) {
+  .nb-membership-hero {
+    height: 180px !important;
+  }
+}
