@@ -10,6 +10,10 @@ import Swal from 'sweetalert2'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {useHistory} from 'react-router-dom'
 
+type WizardProps = {
+  onStepChange?: (current: number, total: number) => void
+}
+
 const FormObserver: FC<{setFormValues: (values: ICreateAccount) => void}> = ({setFormValues}) => {
   const formik = useFormikContext()
   useEffect(() => {
@@ -18,7 +22,11 @@ const FormObserver: FC<{setFormValues: (values: ICreateAccount) => void}> = ({se
   return null
 }
 
-const RegitrationWizard: FC = () => {
+const RegitrationWizard:FC<WizardProps> = ({onStepChange}) => {
+
+  const emitStep = (s: number, t: number) => {
+    window.dispatchEvent(new CustomEvent('nb:stepper', {detail: {step: s, total: t}}))
+  }
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const stepper = useRef<StepperComponent | null>(null)
   const formikRef = useRef<any>(null)
@@ -32,6 +40,8 @@ const RegitrationWizard: FC = () => {
   const [totalSteps, setTotalSteps] = useState<number>(3)
 
   const navigate = useHistory()
+
+
 
   const loadStepper = () => {
     stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement)
@@ -48,6 +58,7 @@ const RegitrationWizard: FC = () => {
     stepper.current.goPrev()
     setCurrentStep(stepper.current.currentStepIndex)
     setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex - 1])
+    emitStep(stepper.current.currentStepIndex, stepper.current.totatStepsNumber ?? 3) 
   }
 
   const submitStep = (values: ICreateAccount, actions: FormikValues) => {
@@ -59,9 +70,11 @@ const RegitrationWizard: FC = () => {
     if (stepper.current.currentStepIndex !== stepper.current.totatStepsNumber) {
       stepper.current.goNext()
       setCurrentStep(stepper.current.currentStepIndex)
+      emitStep(stepper.current.currentStepIndex, stepper.current.totatStepsNumber ?? 3) 
     } else {
       stepper.current.goto(1)
       actions.resetForm()
+      emitStep(1, stepper.current.totatStepsNumber ?? 3)
     }
   }
 
@@ -76,7 +89,11 @@ const RegitrationWizard: FC = () => {
     setTotalSteps(s.totatStepsNumber ?? 3)
     setCurrentStep(s.currentStepIndex)
 
-    const onChanged = () => setCurrentStep(s.currentStepIndex)
+    const onChanged = () => {
+      setCurrentStep(s.currentStepIndex)
+      setTotalSteps(s.totatStepsNumber ?? 3)
+      emitStep(s.currentStepIndex, s.totatStepsNumber ?? 3) // 🔔 por si se navega desde botones data-kt
+    }
     s.on('kt.stepper.changed', onChanged)
     return () => {
       try {
@@ -156,10 +173,6 @@ const RegitrationWizard: FC = () => {
         <div className='stepper-item' data-kt-stepper-element='nav'>
           <h3 className='text-muted fs-5 visually-hidden'>Step 3</h3>
         </div>
-      </div>
-
-      <div className='text-center form-label nb-tag'>
-        STEP {currentStep}/{totalSteps}
       </div>
 
       <Formik
