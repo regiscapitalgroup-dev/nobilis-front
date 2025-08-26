@@ -1,0 +1,1199 @@
+/* ============================
+   Contenedor principal
+============================= */
+.profile-shell {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+}
+
+/* Imagen de fondo tipo Payment */
+.profile-hero {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 355px;
+  z-index: 0;
+  overflow: hidden;
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(100%);
+  }
+}
+
+/* Contenido */
+.profile-content {
+  position: relative;
+  z-index: 1;
+  width: 846px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  padding: 48px 0 100px;
+}
+
+/* Logo */
+.profile-logo {
+  font-size: 19.71px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 4.34px;
+  color: #151515;
+}
+
+/* Encabezados */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.profile-step {
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  text-transform: uppercase;
+  color: #808080;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+}
+
+.profile-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: #151515;
+  line-height: 40px;
+}
+
+.profile-subtitle {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 19.6px;
+  color: #151515;
+}
+
+/* ============================
+   Card de formulario
+============================= */
+.profile-card {
+  width: 100%;
+  background: white;
+  padding: 60px;
+  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Form Groups */
+.profile-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.profile-form-group label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #808080;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  font-family: 'Satoshi', sans-serif;
+}
+
+.profile-form-group input {
+  height: 48px;
+  border: none;
+  border-bottom: 1px solid #d7d7d7;
+  padding: 15px 0;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  color: #151515;
+  outline: none;
+  width: 100%;
+}
+
+.profile-form-group input::placeholder {
+  color: #b4b4b4;
+}
+
+.profile-form-group small {
+  font-size: 10px;
+  color: #808080;
+  font-style: italic;
+  font-family: 'Satoshi', sans-serif;
+  line-height: 1.4;
+  font-weight: 300;
+}
+
+.profile-form-row {
+  display: flex;
+  gap: 40px;
+}
+
+/* Inputs con iconos */
+.profile-form-date {
+  position: relative;
+
+  input {
+    padding-right: 40px;
+  }
+
+  .profile-icon {
+    position: absolute;
+    right: 0;
+    bottom: 15px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ============================
+   Checkboxes estilo Figma
+============================= */
+.profile-checkbox-row {
+  display: flex;
+  gap: 40px;
+  margin-top: 10px;
+}
+
+.profile-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Satoshi', sans-serif;
+}
+
+.profile-checkbox input {
+  display: none;
+}
+
+.profile-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d7d7d7;
+  border-radius: 2px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-checkbox input:checked + .profile-checkbox-box {
+  background: #151515;
+  border-color: #151515;
+}
+
+.profile-checkbox input:checked + .profile-checkbox-box::after {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  left: 3px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.profile-checkbox-label {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 19.6px;
+  color: #151515;
+  font-family: 'Satoshi', sans-serif;
+}
+
+
+/* ============================
+   Links
+============================= */
+.profile-link {
+  font-size: 12px;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #151515;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .profile-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ============================
+   Botón continuar
+============================= */
+.profile-btn-continue,
+.btn.nb-btn-outline {
+  border: 1px solid #151515;
+  padding: 12px 20px;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.profile-btn-arrow {
+  width: 12px;
+  height: 2px;
+  background: #151515;
+  display: inline-block;
+}
+
+/* ============================
+   Responsive
+============================= */
+@media (max-width: 1200px) {
+  .profile-content {
+    width: 90%;
+    gap: 50px;
+  }
+  .profile-hero {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-content {
+    width: 100%;
+    padding: 32px 16px 80px;
+    gap: 30px;
+  }
+
+  .profile-hero {
+    height: 220px;
+    opacity: 0.35;
+  }
+
+  .profile-title {
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  .profile-card {
+    padding: 24px 16px;
+    gap: 18px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .profile-form-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 20px 12px;
+    gap: 16px;
+  }
+  .profile-title {
+    font-size: 22px;
+  }
+}
+.profile-social-link {
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  color: #808080;            /* gris medio */
+  text-decoration: underline;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-social-link:hover {
+  color: #808080;            /* al pasar hover, se vuelve negro */
+}
+
+.profile-checkbox-row {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 15px 0;
+  width: 100%;
+}
+
+.profile-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 19.6px;
+  color: #151515;
+  cursor: pointer;
+}
+
+.profile-checkbox input {
+  display: none; /* ocultamos el nativo */
+}
+
+.profile-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d7d7d7;
+  border-radius: 2px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-checkbox input:checked + .profile-checkbox-box {
+  background: #151515;
+  border-color: #151515;
+}
+
+.profile-checkbox input:checked + .profile-checkbox-box::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.profile-checkbox-label {
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.6px;
+  word-wrap: break-word;
+}
+/* Grupo de campo con icono */
+.profile-form-date {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  label {
+    color: #808080;
+    font-size: 10px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 18.5px;
+    letter-spacing: 1.5px;
+  }
+
+  .profile-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 15px 0;
+    border-bottom: 1px solid #d7d7d7;
+    background: #fff;
+    gap: 9px;
+  }
+
+  .profile-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'Satoshi', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 16.8px;
+    color: #151515;
+    background: transparent;
+  }
+
+  .profile-input::placeholder {
+    color: #b4b4b4;
+  }
+
+  .profile-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  small {
+    color: #808080;
+    font-size: 10px;
+    font-family: 'Satoshi', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 14px;
+    margin-top: 5px;
+  }
+}
+
+/* Contenedor con la línea inferior */
+.profile-input-wrapper {
+  width: 100%;
+  border-bottom: 1px solid #d7d7d7;
+  background: white;
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  height: 48px;
+}
+
+/* Container principal */
+.profile-input {
+  width: 100% !important;
+  border: none !important;
+  background: transparent !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Input */
+.profile-input input {
+  border: none !important;
+  outline: none !important;
+  width: 100% !important;         /* ocupa todo el ancho */
+  background: transparent !important;
+
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 300 !important;
+  line-height: 16.8px !important;
+  color: #151515 !important;
+  padding-left: 0 !important;     /* elimina el espacio fantasma */
+}
+
+/* Placeholder */
+.profile-input input::placeholder {
+  color: #b4b4b4 !important;
+  font-family: 'Satoshi', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 300 !important;
+}
+
+/* Ocultar dropdown y prefijo */
+.profile-input .flag-dropdown,
+.profile-input .selected-flag {
+  display: none !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Grupo con label + input + hint */
+.profile-form-date {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.profile-form-date label {
+  color: #808080;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 18.5px;
+  letter-spacing: 1.5px;
+}
+
+.profile-form-date .profile-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 48px;
+  padding: 15px 0;
+  border-bottom: 1px solid #d7d7d7;
+  background: #fff;
+  position: relative;
+}
+
+/* Input type="date" */
+.profile-input-date {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  color: #151515;
+}
+
+/* Posicionar el ícono nativo al final */
+.profile-input-date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+/* hint */
+.profile-form-date small {
+  color: #808080;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 14px;
+  margin-top: 5px;
+}
+
+/* Grupo de formulario */
+.profile-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+/* Label principal */
+.profile-form-group > label {
+  color: #808080;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  line-height: 18.5px;
+  letter-spacing: 1.5px;
+}
+
+/* Contenedor de los checkboxes */
+.profile-checkbox-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 0;
+}
+
+/* Cada checkbox individual */
+.profile-checkbox {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Ocultar el checkbox nativo */
+.profile-checkbox input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Checkbox personalizado */
+.profile-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  border: 2px solid #D7D7D7;
+  background: transparent;
+  position: relative;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+/* Estado checked */
+.profile-checkbox input[type="checkbox"]:checked + .profile-checkbox-box {
+  background: #151515;
+  border-color: #151515;
+}
+
+/* Checkmark */
+.profile-checkbox input[type="checkbox"]:checked + .profile-checkbox-box::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Texto del checkbox */
+.profile-checkbox-row > div {
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.60px;
+  word-wrap: break-word;
+}
+
+/* Texto de ayuda */
+.profile-form-group small {
+  color: #808080;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 14px;
+  margin-top: 5px;
+}
+
+/* ============================
+   Language autocomplete
+============================= */
+/* Language autocomplete - Exacto de Figma */
+/* Language autocomplete - Exacto de Figma */
+.nb-language-autocomplete {
+  position: relative;
+  width: 100%;
+}
+
+.nb-language-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 48px;
+  align-items: center;
+  padding: 10px 0;
+  font-family: 'Satoshi', sans-serif;
+  border-bottom: 1px solid #d7d7d7;
+}
+
+/* Chip seleccionado - Exacto de Figma */
+.nb-language-chip {
+  width: auto;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: #F5F5F5;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: inline-flex;
+  border-radius: 0;
+  border: none;
+}
+
+.nb-language-chip-text {
+  color: #151515;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 400;
+  line-height: 14px;
+  word-wrap: break-word;
+}
+
+.nb-language-chip-remove {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nb-language-chip-remove svg {
+  width: 14px;
+  height: 14px;
+}
+
+.nb-language-input {
+  flex: 1;
+  border: none !important;
+  outline: none;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  color: #151515;
+  min-width: 120px;
+  background: transparent;
+  height: auto !important;
+  padding: 0 !important;
+}
+
+.nb-language-input::placeholder {
+  color: #b4b4b4;
+}
+
+/* Dropdown - Exacto de Figma */
+.nb-language-menu {
+  width: 100%;
+  padding: 20px;
+  left: 0;
+  top: calc(100% + 4px);
+  position: absolute;
+  background: white;
+  outline: 1px #E9E9E9 solid;
+  outline-offset: -1px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  display: inline-flex;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.nb-language-item {
+  align-self: stretch;
+  cursor: pointer;
+  color: #151515;
+  font-size: 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 16.80px;
+  word-wrap: break-word;
+}
+
+/* Sin hover */
+.nb-language-item:hover {
+  background: none;
+}
+
+
+
+/* ProfileStep2 Container - Exacto de Figma */
+/* ProfileStep2 Container - Exacto de Figma */
+.profile-step2-container {
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  background: white;
+  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  display: inline-flex;
+}
+
+.profile-step2-content {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 40px;
+  display: flex;
+}
+
+/* Upload Section */
+.photo-upload-section {
+  align-self: stretch;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  display: flex;
+}
+
+.photo-upload-label {
+  align-self: stretch;
+  color: #808080;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 18.50px;
+  letter-spacing: 1.50px;
+  word-wrap: break-word;
+}
+
+.photo-upload-area {
+  width: 726px;  
+  height: 216px;     
+  height: 216px;
+  background: #F5F5F5;
+  border: 1px dashed  #D7D7D7;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  display: flex;                
+  justify-content: center;      
+  align-items: center;          
+  position: relative;
+}
+
+
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; 
+}
+.upload-icon {
+  width: 54px;
+  height: 54px;
+  display: flex;            
+  justify-content: center;  
+  align-items: center;      
+}
+
+.camera-icon {
+  width: 24px;   
+  height: 24px;
+  display: block;
+}
+
+.camera-icon-css {
+  width: 54px;
+  height: 54px;
+  position: relative;
+}
+
+.camera-icon-css::before {
+  content: '';
+  width: 40.50px;
+  height: 13.50px;
+  position: absolute;
+  left: 6.75px;
+  top: 33.75px;
+  outline: 2px #808080 solid;
+  outline-offset: -1px;
+}
+
+.camera-icon-css::after {
+  content: '';
+  width: 22.50px;
+  height: 11.25px;
+  position: absolute;
+  left: 15.75px;
+  top: 6.75px;
+  outline: 2px #808080 solid;
+  outline-offset: -1px;
+}
+
+.upload-text {
+  color: #808080;
+  font-size: 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 16.80px;
+  word-wrap: break-word;
+}
+
+.upload-button {
+  border-bottom: 1px #151515 solid;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.upload-button span {
+  text-align: center;
+  color: #151515;
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 22.20px;
+  word-wrap: break-word;
+}
+
+/* Examples Section */
+.photo-examples-section {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 40px;
+  display: flex;
+}
+
+.examples-group {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  display: flex;
+}
+
+.examples-label {
+  align-self: stretch;
+  color: #808080;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 18.50px;
+  letter-spacing: 1.50px;
+  word-wrap: break-word;
+}
+
+.examples-images {
+  align-self: stretch;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  display: inline-flex;
+}
+
+.example-image {
+  width: 231px;
+  height: 304px;
+  position: relative;
+}
+
+.example-image:nth-child(2) {
+  width: 232px;
+}
+
+.example-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.example-image.bw img {
+  filter: grayscale(100%);
+}
+
+.photo-requirements {
+  width: 726px;              
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;                
+  margin: 0 auto;           
+}
+
+.requirements-left {
+  width: 287px;             
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.requirements-right {
+  width: 273px;             
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.requirement-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.check-icon {
+  width: 15px;
+  height: 16px;
+  background: #F5F5F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #151515;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 22.2px;
+}
+
+.requirement-row span {
+  color: #151515;
+  font-size: 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 16.8px;
+}
+
+
+/* Navigation */
+.step2-navigation {
+  align-self: stretch;
+  justify-content: space-between;
+  align-items: center;
+  display: inline-flex;
+}
+
+.back-button {
+  border-bottom: 1px #151515 solid;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  cursor: pointer;
+  /* padding: 5px 0; */
+}
+
+.back-button span {
+  text-align: center;
+  color: #151515;
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 22.20px;
+  word-wrap: break-word;
+}
+
+.finish-button {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  outline: 1px #151515 solid;
+  outline-offset: -1px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  background: white;
+  border: none;
+  cursor: pointer;
+}
+
+.finish-button span {
+  text-align: center;
+  color: #151515;
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 22.20px;
+  word-wrap: break-word;
+}
+
+.finish-arrow {
+  width: 12px;
+  height: 3px;
+  outline: 1px #151515 solid;
+  outline-offset: -0.50px;
+  background: #151515;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-step2-container {
+    padding: 30px;
+    gap: 40px;
+  }
+  
+  .examples-images {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .example-image {
+    width: 150px;
+    height: 200px;
+  }
+  
+  .photo-requirements {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .requirements-left,
+  .requirements-right {
+    width: 100%;
+  }
+}
+
+.photo-preview-container {
+  width: 305px;
+  height: 400px;
+  position: relative;
+  background: #f3f3f3;
+  overflow: hidden; /* solo aplica a la imagen, no oculta las acciones ahora */
+}
+
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-edit-btn {
+  position: absolute;
+  top: 15px;   
+  right: 15px; 
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;  
+  padding: 0;
+  cursor: pointer;
+}
+
+
+.photo-actions {
+  margin-top: 10px; 
+  display: flex;
+  gap: 15px;
+}
+
+.action-btn {
+  border: none;
+  background: none;
+  border-bottom: 1px solid #151515;
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Cuando el modal esté abierto, todas las miniaturas se ven como la del centro */
+.examples-images.bw-all .example-image img {
+  filter: grayscale(100%);
+}
+
+/* (opcional) transiciones suaves */
+.examples-images .example-image img {
+  transition: filter .2s ease;
+}
