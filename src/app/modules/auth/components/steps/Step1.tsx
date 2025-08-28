@@ -4,9 +4,7 @@ import {ErrorMessage, Field, useField, useFormikContext} from 'formik'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import {existUserName} from '../../redux/AuthCRUD'
-import {KTSVG} from '../../../../../_metronic/helpers'
 import CityAutocompleteField from '../fields/CityAutocompleteField'
-import {Link} from 'react-router-dom'
 
 const Step1: FC<{goNext: () => void}> = ({goNext}) => {
   const formik = useFormikContext<any>()

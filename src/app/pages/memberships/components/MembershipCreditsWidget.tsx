@@ -1,4 +1,4 @@
-import React, {RefObject} from 'react'
+import React, {RefObject, useEffect} from 'react'
 import credits from '../helper/credit-detail.json'
 
 type CreditItem = {
@@ -22,6 +22,10 @@ const MembershipCreditsWidget: React.FC<Props> = ({refToScroll}) => {
       `$75K+  -  $1 = 0 Credits`,
     notes: 'Points are valid for 3 years from when they are earned.',
   }
+
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior: 'smooth'})
+  }, [])
 
   return (
     <div className='lp-shell' ref={refToScroll}>
