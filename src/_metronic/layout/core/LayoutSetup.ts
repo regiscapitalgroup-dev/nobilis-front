@@ -109,6 +109,11 @@ export class LayoutSetup {
   }
 
   private static initHeader(config: IHeader): void {
+
+    if ((config as any).display === false) {
+      return
+    }
+    
     LayoutSetup.classes.headerContainer.push(
       config.width === 'fluid' ? 'container-fluid' : 'container'
     )

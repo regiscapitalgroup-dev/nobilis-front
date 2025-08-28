@@ -1,58 +1,53 @@
-// CityAutocompleteField.tsx
 import React, {useMemo, useState, useEffect} from 'react'
 import {useField} from 'formik'
-import { useCitiesField } from '../../../../hooks/components/useCitiesField'
+import {useCitiesField} from '../../../../hooks/components/useCitiesField'
 
-function highlight(label: string, q: string) {
-  if (!q) return label
-  const i = label.toLowerCase().indexOf(q.toLowerCase())
-  if (i === -1) return label
-  const before = label.slice(0, i)
-  const match = label.slice(i, i + q.length)
-  const after = label.slice(i + q.length)
+const highlightMatch = (text: string, query: string) => {
+  if (!query) return text
+  const safe = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const regex = new RegExp(`(${safe})`, 'gi')
+  const parts = text.split(regex)
   return (
     <>
-      {before}
-      <strong>{match}</strong>
-      {after}
+      {parts.map((part, i) =>
+        regex.test(part) ? (
+          <span key={i} style={{fontWeight: 700}}>{part}</span>
+        ) : (
+          <span key={i} style={{fontWeight: 300}}>{part}</span>
+        )
+      )}
     </>
   )
 }
 
-export default function CityAutocompleteField({
-  name,
-  placeholder = '',
-  minChars = 0, // 0 = carga listado inicial; 2 = espera a que escriban 2+ chars
-}: {
+type Props = {
   name: string
   placeholder?: string
   minChars?: number
-}) {
+}
+
+export default function CityAutocompleteField({
+  name,
+  placeholder = 'Type city…',
+  minChars = 0,
+}: Props) {
   const [field, , helpers] = useField<string | undefined>(name)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
 
-  // Debounce para el término escrito
+  // debounce
   const [debounced, setDebounced] = useState('')
   useEffect(() => {
-    const id = setTimeout(() => setDebounced(query.trim()), 250)
+    const id = setTimeout(() => setDebounced(query.trim()), 200)
     return () => clearTimeout(id)
   }, [query])
 
-  // 🔹 Solo consideramos “búsqueda activa” si hay texto y cumple minChars
   const enableSearch = debounced.length >= minChars && debounced.length > 0
   const searchTerm = enableSearch ? debounced : undefined
 
-  // Llama al hook: sin search = listado inicial; con search = filtrado
   const {cities, loading, error} = useCitiesField(searchTerm)
+  const items = useMemo<string[]>(() => (Array.isArray(cities) ? cities : []), [cities])
 
-  // Normaliza (endpoint: string[])
-  const items = useMemo<string[]>(
-    () => (Array.isArray(cities) ? cities : []),
-    [cities]
-  )
-
-  // Lista visible (top 10)
   const visible = useMemo(() => {
     if (!enableSearch) return items.slice(0, 10)
     const q = debounced.toLowerCase()
@@ -60,61 +55,57 @@ export default function CityAutocompleteField({
   }, [items, enableSearch, debounced])
 
   return (
-    <div className='nb-autocomplete'>
-      <input
-        className='nb-autocomplete-input input-text-style'
-        value={field.value || ''}
-        placeholder={placeholder}
-        onChange={(e) => {
-          const v = e.target.value
-          helpers.setValue(v)   // mantiene lo que escribes en Formik
-          setQuery(v)           // dispara búsqueda (debounced)
-          setOpen(true)
-        }}
-        onFocus={() => setOpen(true)}
-        onBlur={() => setTimeout(() => setOpen(false), 120)}
-        autoComplete='off'
-      />
+    <div className='nb-language-autocomplete'>
+      <div className='nb-language-wrapper'>
+        <input
+          className='nb-language-input'
+          value={field.value || ''}
+          onChange={(e) => {
+            const v = e.target.value
+            helpers.setValue(v)        
+            setQuery(v)               
+            setOpen(true)
+          }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 120)}
+          autoComplete='off'
+        />
+      </div>
 
       {open && (
-        <div className='nb-autocomplete-menu'>
-          {/* 🔹 NO mostrar “Buscando…” si no hay búsqueda activa */}
+        <div className='nb-language-menu'>
           {loading && enableSearch && (
-            <div className='nb-autocomplete-item input-text-style'>Buscando…</div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Buscando…</div>
           )}
 
-          {/* Mensaje de guía si exiges mínimo de caracteres y aún no se cumple */}
-          {!enableSearch && minChars > 0 && (query.trim().length < minChars) && (
-            <div className='nb-autocomplete-item input-text-style'>
+          {!enableSearch && minChars > 0 && query.trim().length < minChars && (
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>
               Escribe al menos {minChars} caracteres…
             </div>
           )}
 
-          {/* Mostrar error solo en búsqueda activa (no en listado inicial) */}
           {error && enableSearch && (
-            <div className='nb-autocomplete-item input-text-style'>Error cargando ciudades</div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Error cargando ciudades</div>
           )}
 
-          {/* “Sin resultados” solo cuando hay búsqueda activa */}
           {!loading && enableSearch && !error && visible.length === 0 && (
-            <div className='nb-autocomplete-item input-text-style'>Sin resultados</div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Sin resultados</div>
           )}
 
-          {/* Opciones (iniciales o de búsqueda) */}
           {!loading && !error && visible.length > 0 && (
             <>
               {visible.map((label) => (
                 <div
                   key={label}
-                  className='nb-autocomplete-item input-text-style'
+                  className='nb-language-item'
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
-                    helpers.setValue(label) // guarda el string en Formik
+                    helpers.setValue(label)  
                     setQuery(label)
                     setOpen(false)
                   }}
                 >
-                  {highlight(label, enableSearch ? debounced : '')}
+                  {highlightMatch(label, enableSearch ? debounced : '')}
                 </div>
               ))}
             </>

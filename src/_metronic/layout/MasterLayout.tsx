@@ -20,23 +20,25 @@ const MasterLayout: React.FC = ({children}) => {
   return (
     <PageDataProvider>
       <div className='page d-flex flex-row flex-column-fluid'>
-        <AsideDefault />
+        {/* <AsideDefault /> */}
         <div className='wrapper d-flex flex-column flex-row-fluid' id='kt_wrapper'>
-          <HeaderWrapper />
-
+          {/*  <HeaderWrapper /> */}
+          {/* <div id='j' className='nb-ms-header'>
+            <div className='nb-ms-kicker mt-10'>NOBILIS</div>
+          </div> */}
           <div id='kt_content' className='content d-flex flex-column flex-column-fluid'>
-            <Toolbar />
+            {/* <Toolbar /> */}
             <div className='post d-flex flex-column-fluid' id='kt_post'>
               <Content>{children}</Content>
             </div>
           </div>
-          <Footer />
+          {/*  <Footer /> */}
         </div>
       </div>
 
       {/* begin:: Drawers */}
       <ActivityDrawer />
-     {/*  <ExploreMain /> */}
+      {/*  <ExploreMain /> */}
       <DrawerMessenger />
       {/* end:: Drawers */}
 

@@ -1,0 +1,269 @@
+/* ==========================================================================
+   NOBILIS UI – Base reusable styles (nb-ui.css)
+   Cargar DESPUÉS de Metronic para sobrescribir.
+   ========================================================================== */
+
+/* ========== 1) Design Tokens / Variables ========== */
+:root {
+    /* Paleta */
+    --nb-black: #151515;
+    --nb-white: #ffffff;
+    --nb-text: #151515;
+    --nb-muted: #808080;
+    --nb-border: #D7D7D7;
+  
+    /* Tipografía */
+    --nb-font-heading: "Oswald", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    --nb-font-body: "Satoshi", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  
+    /* Sombra / Radios */
+    --nb-shadow-lg: 0px 10px 45px rgba(0, 0, 0, 0.08);
+    --nb-radius-0: 0;
+    --nb-radius-10: 10px;
+  
+    /* Botones */
+    --nb-btn-h: 42px;
+    --nb-btn-pad-y: 10px;
+    --nb-btn-pad-x: 20px;
+    --nb-btn-gap: 6px;
+  
+    /* Inputs */
+    --nb-input-h: 48px;
+    --nb-input-focus: var(--nb-black);
+  }
+  
+  /* ========== 2) Utilidades y resets ========== */
+  .nb-text-center { text-align: center !important; }
+  .nb-muted { color: var(--nb-muted) !important; }
+  .nb-shadow-lg { box-shadow: var(--nb-shadow-lg) !important; }
+  .nb-border { border: 1px solid var(--nb-border) !important; }
+  .nb-rounded { border-radius: var(--nb-radius-10) !important; }
+  .nb-rounded-0 { border-radius: var(--nb-radius-0) !important; }
+  .nb-img { display: inline-block; max-width: 100%; height: auto; }
+  
+  /* ========== 3) Tipografías ========== */
+  .nb-heading-h1 {
+    font-family: var(--nb-font-heading);
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 1.2;
+    color: var(--nb-text);
+  }
+  .nb-heading-h2 {
+    font-family: var(--nb-font-heading);
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 48px;
+    color: var(--nb-text);
+  }
+  .nb-heading-h3 {
+    font-family: var(--nb-font-heading);
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 34px;
+    color: var(--nb-text);
+  }
+  .nb-heading-md {
+    font-family: var(--nb-font-heading);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 22.2px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--nb-btn-gap);
+  }
+  
+  .nb-subtitle {
+    font-family: var(--nb-font-body);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 19.6px;
+    color: var(--nb-text);
+    opacity: .8;
+  }
+  .nb-body {
+    font-family: var(--nb-font-body);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--nb-text);
+  }
+  
+  /* Texto superior “NOBILIS” */
+  .nb-logo-text {
+    color: var(--nb-text);
+    font-family: var(--nb-font-heading);
+    font-size: 19.71px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 23.66px;
+    letter-spacing: 4.34px;
+  }
+  
+  /* Labels (EMAIL*, PASSWORD*) */
+  .nb-tag {
+    font-family: var(--nb-font-body);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 10px;
+    line-height: 18.5px;
+    font-weight: 500;
+    color: var(--nb-muted);
+  }
+  
+  /* ========== 4) Cards genéricas ========== */
+  .nb-card {
+    background: var(--nb-white);
+    box-shadow: var(--nb-shadow-lg);
+    border-radius: var(--nb-radius-10);
+  }
+  
+  /* ========== 5) Inputs subrayados ========== */
+  .form-control-underline {
+    background: var(--nb-white) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--nb-border) !important;
+    border-radius: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    height: var(--nb-input-h) !important;
+    box-shadow: none !important;
+  
+    font-family: var(--nb-font-body);
+    font-size: 14px;
+    line-height: 19.6px;
+    font-weight: 300;
+    color: var(--nb-text);
+  }
+  .form-control-underline:focus {
+    border-bottom-color: var(--nb-input-focus) !important;
+    box-shadow: none !important;
+  }
+  
+  .input-text-style {
+    font-family: var(--nb-font-body);
+    font-size: 14px;
+    line-height: 19.6px;
+    font-weight: 300;
+  }
+  
+  .nb-input-wrap { position: relative; }
+  .nb-input-eye {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    padding: 0;
+    height: var(--nb-input-h);
+    display: flex;
+    align-items: center;
+    color: #b4b4b4;
+    cursor: pointer;
+  }
+  
+  /* Errores */
+  .nb-error {
+    font-family: var(--nb-font-body);
+    font-size: 12px;
+    line-height: 16px;
+    color: #D14343;
+  }
+  
+  /* ========== 6) Link subrayado (FORGOT PASSWORD?) ========== */
+  .nb-link-underline {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-bottom: 1px solid var(--nb-black);
+    text-transform: uppercase;
+  
+    font-family: var(--nb-font-heading);
+    font-size: 12px;
+    line-height: 22.2px;
+    font-weight: 500;
+    color: var(--nb-black);
+    text-decoration: none !important;
+  }
+  .nb-link-underline:hover { opacity: .85; }
+  
+  /* ========== 7) Botones (base + variantes) ========== */
+  .nb-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: var(--nb-btn-h);
+    padding: var(--nb-btn-pad-y) var(--nb-btn-pad-x);
+    gap: var(--nb-btn-gap);
+    text-decoration: none !important;
+  
+    font-family: var(--nb-font-heading);
+    font-size: 12px;
+    line-height: 22.2px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  
+  /* Para que funcione aunque no agregues .nb-btn en el JSX */
+  .nb-btn-primary,
+  .nb-btn-outline {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: var(--nb-btn-h);
+    padding: var(--nb-btn-pad-y) var(--nb-btn-pad-x);
+    gap: var(--nb-btn-gap);
+  
+    font-family: var(--nb-font-heading);
+    font-size: 12px;
+    line-height: 22.2px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  
+  /* Primario (negro) */
+  .nb-btn-primary {
+    background: var(--nb-black) !important;
+    border: 1px solid var(--nb-black) !important;
+    color: var(--nb-white) !important;
+  }
+  .nb-btn-primary:hover { opacity: .95; }
+  
+  /* Outline (blanco con borde negro) */
+  .nb-btn-outline {
+    background: var(--nb-white) !important;
+    border: 1px solid var(--nb-black) !important;
+    color: var(--nb-black) !important;
+  }
+  
+  
+  /* Icono vectorial al lado del texto (Figma) */
+  .nb-btn-icon { width: 12px; height: 3px; display: inline-block; }
+  /* Si tu SVG base es NEGRO:
+     - en primario debe verse BLANCO (invertimos) */
+  .nb-btn-icon--white { filter: invert(1) brightness(2); }
+  /* En outline lo dejamos NEGRO tal cual */
+  .nb-btn-icon--black { filter: none; }
+  
+  /* Deshabilitados */
+  .nb-btn-primary:disabled,
+  .nb-btn-outline:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+  }
+  
+  /* ========== 8) Responsivo ========== */
+  @media (max-width: 576px) {
+    .nb-heading-h2 { font-size: 28px; line-height: 34px; }
+    .nb-subtitle { font-size: 13px; }
+    .form-control-underline { height: 44px !important; }
+  }
+  
+  /* ========== 9) Accesibilidad ========== */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+  

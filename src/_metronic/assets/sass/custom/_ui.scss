@@ -47,34 +47,7 @@
   }
   
   /* Botón borde negro (secundario) */
-  .nb-btn-outline{
-    background: #fff !important;
-    color: $nb-black !important;
-    border: 1px solid $nb-black !important;
-    border-radius: 2px !important;
-    height: 46px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .04em;
   
-    /* &::after{
-      content: " \2192";
-      margin-left: .35rem;
-      transition: transform .15s ease;
-      display: inline-block;
-    }
-    &:hover{ background: $gray-100 !important; }
-    &:hover::after{ transform: translateX(2px); } */
-
-    position: relative;
-    & .indicator-label::after{
-      content: " \2192";                 /* → */
-      margin-left: .35rem;
-      transition: transform .15s ease;
-      display: inline-block;
-    }
-    &:hover .indicator-label::after{ transform: translateX(2px); }
-  }
   
   /* Card blanca con sombra suave como el mock */
   .nb-auth-card{
@@ -410,4 +383,17 @@
   input.form-control-underline {
     padding-left: 0 !important;
   }
+}
+
+.auth-card {
+  width: 640px;
+  min-height: 539px;        
+  background: #fff;
+  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
+  border-radius: 0px;      
+  display: flex;            
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;               /* por encima del fondo fijo */
 }

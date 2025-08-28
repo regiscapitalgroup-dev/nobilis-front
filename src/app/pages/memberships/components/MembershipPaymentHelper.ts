@@ -4,7 +4,8 @@ export interface IMembershipPayment {
   cardHoldName: string,  
   invoice: boolean,
   paymentMethodId: string,
-  price_id: string
+  price_id: string,
+  country: string
 }
 
 const cardNameHolderRegex = /^[A-Za-z\s]+$/;
@@ -18,7 +19,8 @@ const inits: IMembershipPayment = {
   cardHoldName: "",
   invoice: false,
   paymentMethodId: "" ,
-  price_id: ""
+  price_id: "",
+  country: ""
 }
 
 export { membershipPaymentSchemas, inits }
