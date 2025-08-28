@@ -25,15 +25,15 @@ const Step1Schema = Yup.object().shape({
   email: Yup.string().email('Email inválido'),
   dateOfBirth: Yup.string(),
   phone: Yup.string(),
- /*  preferredContactMethod: Yup.array().min(1, 'Selecciona al menos uno'), */
   languageSpoken: Yup.array(),
   cityCountry: Yup.string(),
 })
 
 export default function ProfileStep1({initialData, onSubmit}: Props) {
   const [isModalOpen, setModalOpen] = useState(false)
+
   const [socialMediaItems, setSocialMediaItems] = useState<SocialMediaItem[]>(
-    initialData.socialMedia || []
+    initialData.social_media_profiles  || []
   )
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(
     initialData.languageSpoken || []
@@ -57,7 +57,7 @@ export default function ProfileStep1({initialData, onSubmit}: Props) {
     const formData = {
       ...values,
       languageSpoken: selectedLanguages,
-      socialMedia: socialMediaItems,
+      social_media_profiles : socialMediaItems,
     }
     onSubmit(formData)
   }
@@ -124,12 +124,20 @@ export default function ProfileStep1({initialData, onSubmit}: Props) {
             <div className='profile-form-group'>
               <label>Phone</label>
               <div className='profile-input-wrapper'>
-                <PhoneInput
-                  country='us'
-                  placeholder='+1'
-                  containerClass='profile-input'
-                  disableDropdown
-                />
+                <Field name='phone'>
+                  {({field, form, meta}: any) => (
+                    <PhoneInput
+                      country='us'
+                      placeholder='+1'
+                      containerClass='profile-input'
+                      disableDropdown
+                      value={field.value || ''} 
+                      onChange={(val: string) => form.setFieldValue(field.name, val)} 
+                      onBlur={() => form.setFieldTouched(field.name, true)}
+                    />
+                  )}
+                </Field>
+                              
               </div>
               <small>This information will not be displayed to public</small>
             </div>

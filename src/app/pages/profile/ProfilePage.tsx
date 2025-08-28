@@ -2,9 +2,14 @@ import React, {useLayoutEffect, useState} from 'react'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import ProfileStep1 from './components/steps/ProfileStep1'
 import ProfileStep2 from './components/steps/ProfileStep2'
+import { SocialProfile, UserProfile } from './models/ProfileModel'
+import { updateUserProfile } from '../../services/profileService'
+import { shallowEqual, useSelector } from 'react-redux'
+import { RootState } from '../../../setup'
+import { useHistory } from 'react-router-dom'
+import { UserModel } from '../../modules/auth/models/UserModel'
 
 type ProfileData = {
-  // Step 1
   introductionHeadline: string
   alias: string
   name: string
@@ -13,29 +18,53 @@ type ProfileData = {
   phone: string
   preferredContactMethod: string[]
   languageSpoken: string[]
-  socialMedia: any[]
+  social_media_profiles: any[]
   cityCountry: string
-
-  // Step 2 (agregar campos según necesites)
-  // profession: string
-  // experience: string
-  // etc...
 }
 
 export default function ProfileBasePage() {
   const [currentStep, setCurrentStep] = useState(1)
+  const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel;
+  const navigate = useHistory();
+  const fullName = `${user.firstName} ${user.lastName}`
   const [profileData, setProfileData] = useState<ProfileData>({
     introductionHeadline: '',
     alias: '',
-    name: '',
-    email: '',
+    name: fullName,
+    email: user?.email,
     dateOfBirth: '',
     phone: '',
     preferredContactMethod: [],
     languageSpoken: [],
-    socialMedia: [],
+    social_media_profiles: [],
     cityCountry: '',
   })
+
+  const mapToApiPayload = (
+    data: ProfileData,
+    photoFile?: File | null
+  ): UserProfile => {
+    const social_media_profiles: SocialProfile[] | undefined =
+      (data.social_media_profiles || [])
+        .filter((x: any) => x?.url)
+        .map((x: any) => ({
+          platform_name: String(x.name ?? "").trim(),
+          profile_url: String(x.url ?? "").trim(),
+        }));
+
+    return {
+      introduction_headline: data.introductionHeadline ?? "",
+      alias_title: data.alias ?? "",
+      profile_picture: photoFile ?? "", 
+      birthday: data.dateOfBirth ?? "",
+      phone_number: data.phone ?? "",
+      city: data.cityCountry ?? "",
+      languages: (data.languageSpoken ?? []) as string[],
+      social_media_profiles,
+      street:'',
+      postal_code:''
+    };
+  };
 
   useLayoutEffect(() => {
     if (currentStep === 1  || currentStep === 2  ) {
@@ -50,10 +79,19 @@ export default function ProfileBasePage() {
     setCurrentStep(2)
   }
 
-  const handleStep2Submit = (data: Partial<ProfileData>) => {
+  const handleStep2Submit = async(data: { photo?: File | null }) => {
     const finalData = {...profileData, ...data}
-    console.log('Final profile data:', finalData)
-    // Aquí enviarías los datos al servidor
+    setProfileData(finalData)
+
+    try {
+      const payload = mapToApiPayload(finalData, data.photo ?? null)
+      const resp = await updateUserProfile( payload)
+      
+
+    } catch (err) {
+      console.error('Error actualizando perfil:', err)
+    } finally {
+    }
   }
 
   const goBackToStep1 = () => {

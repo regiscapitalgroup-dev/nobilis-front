@@ -4,6 +4,7 @@ import {LayoutSplashScreen} from '../../../../_metronic/layout/core'
 import * as auth from './AuthRedux'
 import {getUserByToken} from './AuthCRUD'
 import {RootState} from '../../../../setup'
+import { setAuthToken } from '../../../helpers/apiClient'
 
 const mapState = (state: RootState) => ({auth: state.auth})
 const connector = connect(mapState, auth.actions)
@@ -13,8 +14,8 @@ const AuthInit: FC<PropsFromRedux> = (props) => {
   const didRequest = useRef(false)
   const dispatch = useDispatch()
   const [showSplashScreen, setShowSplashScreen] = useState(true)
-  const accessToken = useSelector<RootState>(({auth}) => auth.accessToken, shallowEqual)
-
+  const accessToken = useSelector<RootState>(({auth}) => auth.accessToken, shallowEqual) as string | undefined
+  setAuthToken(accessToken || null);
   // We should request user by authToken before rendering the application
   useEffect(() => {
     const requestUser = async () => {

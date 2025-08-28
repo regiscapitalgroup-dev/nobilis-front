@@ -19,23 +19,23 @@ const Step3: FC<Step3Props> = ({goPrev, goNext}) => {
           <div className='nb3-hint'>Select all that apply</div>
 
           {/* === Opciones === */}
-          {items.map((opt) => (
-  <label className='nbq-option mb-2' key={opt.code}>
-    <span className='nbq-check'>
-      <Field className='form-check-input' type='checkbox' name={opt.code} />
-    </span>
-    <span className='nbq-option__text nb-body'>
-      {opt.title ? (
-        <>
-          {opt.title}
-          {opt.description && <><br /><small>{opt.description}</small></>}
-        </>
-      ) : (
-        opt.description
-      )}
-    </span>
-  </label>
-))}
+          <div className='nb-step3 nb3-scope'>
+            {/* … */}
+            {items.map((opt) => (
+              <label className='nbq-option mb-2' key={opt.code}>
+                <span className='nbq-check nb3-check'>
+                  <Field className='form-check-input' type='checkbox' name={opt.code} />
+                </span>
+                <span className='nbq-option__stack nbq-grow'>
+                  <span className='nbq-option__title'>{opt.title ?? opt.description ?? ''}</span>
+                  {opt.title && opt.description && (
+                    <span className='nbq-option__desc'>{opt.description}</span>
+                  )}
+                </span>
+              </label>
+            ))}
+            {/* … */}
+          </div>
 
           {/* Hint + input con underline */}
           <div className='nb-proof mt-6 mb-15'>

@@ -11,5 +11,6 @@ export interface MembershipDetailModel {
     priceDescription: string
     features: string[],
     requirements: string[],
-    stripePlanId: string
+    stripePlanId: string, 
+    shipping: number
 }

@@ -483,3 +483,10 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     }
   }
 }
+
+.nbq-check-payment {
+  position: relative;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+

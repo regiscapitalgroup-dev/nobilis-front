@@ -28,10 +28,10 @@ export const useMemberships = (isActive: boolean) => {
       }
     };
 
-    if (isActive) {
+    /* if (isActive) {
       fetchMemberships();
-    }
-
+    } */
+      fetchMemberships();
     return () => {
       isMounted = false;
     };

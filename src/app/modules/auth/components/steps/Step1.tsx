@@ -1,7 +1,6 @@
 import {FC, useState} from 'react'
 import Swal from 'sweetalert2'
 import {ErrorMessage, Field, useField, useFormikContext} from 'formik'
-import {FooterTitle, HeaderText} from '../helper/header-text'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import {existUserName} from '../../redux/AuthCRUD'

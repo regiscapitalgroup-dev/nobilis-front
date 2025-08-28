@@ -17,15 +17,24 @@ const PaymentFailurePage: React.FC = () => {
         </p>
 
         {/* Actions */}
-        <div className='payment-card__actions'>
-          <button className='payment-card__link'>CONTACT SUPPORT</button>
-          <Link to='/profile' className='btn nb-btn-outline'>
-            <span className='nb-heading-md'>Retry</span>
-            <img
-              src='/media/svg/nobilis/vector1.svg'
-              alt=''
-              className='nb-btn-icon nb-btn-icon--black'
-            />
+        {/* Actions */}
+        <div className='payment-card__actions pf-actions'>
+          <button type='button' className='pf-link-btn'>
+            <span>CONTACT SUPPORT</span>
+            <img 
+            src='/media/svg/nobilis/vector1.svg' 
+            alt='' 
+            className='nb-btn-icon nb-btn-icon--black' 
+          />
+          </button>
+
+          <Link to='/profile' className='pf-outline-btn'>
+            <span>RETRY</span>
+            <img 
+            src='/media/svg/nobilis/vector1.svg' 
+            alt='' 
+            className='nb-btn-icon nb-btn-icon--black' 
+          />
           </Link>
         </div>
       </div>

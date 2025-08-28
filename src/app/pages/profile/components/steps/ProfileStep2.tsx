@@ -25,6 +25,17 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
     zoom: 1,
     straighten: 0,
   })
+  const [loading, setLoading] = useState(false)
+
+  const handleFinishClick = async () => {
+    try {
+      setLoading(true)
+       await onSubmit({ photo: selectedPhoto })
+      window.location.reload();
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleFileSelect = (file: File) => {
     if (file && file.type.startsWith('image/')) {
@@ -205,13 +216,39 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
                 <span>back</span>
               </button>
 
-              <button type='submit' onClick={() => handleSubmit({})} className='finish-button'>
+              {/* <button type='submit' onClick={() => handleSubmit({})} className='finish-button'>
                 <span>finish</span>
                 <img
                   src='/media/svg/nobilis/vector1.svg'
                   alt=''
                   className='nb-btn-icon nb-btn-icon--black'
                 />
+              </button> */}
+              <button
+                type='button'
+                onClick={handleFinishClick}
+                className='finish-button'
+                disabled={loading}              
+              >
+                {!loading ? (
+                  <>
+                    <span>finish</span>
+                    <img
+                      src='/media/svg/nobilis/vector1.svg'
+                      alt=''
+                      className='nb-btn-icon nb-btn-icon--black'
+                    />
+                  </>
+                ) : (
+                  <span className='indicator-progress nb-heading-md'>
+                    Please wait...
+                    <span
+                      className='spinner-border spinner-border-sm align-middle ms-2'
+                      role='status'
+                      aria-hidden='true'
+                    />
+                  </span>
+                )}
               </button>
             </div>
           </div>
@@ -226,7 +263,7 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
           onConfirm={(edited, values) => {
             setPhotoPreview(edited)
             /* setEditValues(values) */
-            setEditValues({ brightness: 100, contrast: 100, zoom: 1, straighten: 0 })
+            setEditValues({brightness: 100, contrast: 100, zoom: 1, straighten: 0})
             setShowEditModal(false)
           }}
         />

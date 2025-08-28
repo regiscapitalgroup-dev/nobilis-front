@@ -5,11 +5,22 @@ import {MembershipDetailModel} from '../models/MembershipModel'
 import {CardElement, useElements, useStripe} from '@stripe/react-stripe-js'
 import {useSubscription} from '../../../hooks/subscription/useSubscription '
 import CountryAutocompleteFieldStandalone from './fields/CountryAutocompleteField'
-import { useHistory } from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
+import {formatCurrencyUSD} from '../../../helpers/FormatCurrency'
 
 type Props = {
   membership?: MembershipDetailModel | null | undefined
   handleCancelSelected: () => void
+}
+
+type CheckoutPayload = {
+  price_id: string
+  paymentMethodId: string
+  membership_id: number | null
+  email: string
+  name: string
+  address: string
+  country: string
 }
 
 const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelected}) => {
@@ -22,7 +33,7 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
   const [name, setName] = useState('')
   const [address, setAddress] = useState('')
   const [country, setCountry] = useState('United States')
-
+  const [billingIsSameAsShipping, setBillingIsSameAsShipping] = useState(false)
   const scrollTopRef = useRef<HTMLDivElement>(null)
 
   const navigate = useHistory()
@@ -56,42 +67,73 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
     []
   )
 
+  const buildCheckoutPayload = (args: {paymentMethodId: string}): CheckoutPayload => {
+    return {
+      price_id: membership?.stripePlanId ?? '',
+      paymentMethodId: args.paymentMethodId,
+      membership_id: Number(membership?.id) ?? 0,
+      email: email,
+      name: name,
+      address: address,
+      country: country,
+    }
+  }
+
   const formik = useFormik({
     initialValues: inits,
-    validationSchema: membershipPaymentSchemas[0],
+    /* validationSchema: membershipPaymentSchemas[0], */
     onSubmit: async (values) => {
       setLoading(true)
       try {
         if (!stripe || !elements) throw new Error('Stripe.js has not loaded yet.')
         const cardElement = elements.getElement(CardElement)
         if (!cardElement) throw new Error('CardElement is not available.')
-  
+
         const {error, paymentMethod} = await stripe.createPaymentMethod({
           type: 'card',
           card: cardElement,
           billing_details: {name: values.cardHoldName || name, email},
         })
-  
+
         if (error) {
-          navigate.push('/payment/failure')  
+          navigate.push('/payment/error')
           return
         }
-  
+
+        const payload = buildCheckoutPayload({
+          paymentMethodId: paymentMethod?.id ?? '',
+        })
+
         await subscribe({
           ...values,
-          paymentMethodId: paymentMethod?.id ?? '',
-          price_id: membership?.stripePlanId ?? ''
+          ...payload,
         })
-  
+
         navigate.push('/payment/success')
-  
       } catch (err: any) {
-        navigate.push('/payment/failure')  
+        navigate.push('/payment/failure')
       } finally {
         setLoading(false)
       }
     },
   })
+
+  const calculateTotal = (shipping: number = 0, priceMembership: number = 0): number => {
+    const a = Number(shipping) || 0
+    const b = Number(priceMembership) || 0
+
+    const total = +(a + b).toFixed(2)
+    return total
+  }
+
+  const total = React.useMemo(
+    () =>
+      calculateTotal(
+        membership?.shipping, // o el campo que uses para shipping/fee
+        Number(membership?.price)
+      ),
+    [membership?.shipping, membership?.price, membership?.priceStr]
+  )
 
   return (
     <div className='payment-layout' ref={scrollTopRef}>
@@ -104,7 +146,7 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
             <div className='price-card'>
               <div className='price-card__label'>PAY NOBILIS</div>
               <div className='price-card__content'>
-                <div className='price-card__amount'>USD $12.000</div>
+                <div className='price-card__amount'>USD {formatCurrencyUSD(membership?.price)}</div>
                 <div className='price-card__freq'>Annually</div>
               </div>
             </div>
@@ -119,12 +161,16 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
                       <strong>1</strong>
                     </div>
                   </div>
-                  <div className='order-row__amount'>USD $11.000</div>
+                  <div className='order-row__amount'>
+                    USD {formatCurrencyUSD(membership?.price)}
+                  </div>
                 </div>
 
                 <div className='order-row'>
                   <div className='order-row__title order-row__title--single'>Subtotal</div>
-                  <div className='order-row__amount'>USD $11.000</div>
+                  <div className='order-row__amount'>
+                    USD {formatCurrencyUSD(membership?.price)}
+                  </div>
                 </div>
               </div>
 
@@ -141,7 +187,7 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
 
               <div className='order-total'>
                 <div className='order-total__label'>Total</div>
-                <div className='order-total__amount'>USD $12.000</div>
+                <div className='order-total__amount'>USD {formatCurrencyUSD(total)}</div>
               </div>
             </div>
           </div>
@@ -217,7 +263,7 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
 
               <div className='form-group'>
                 <label className='form-label'>CARD INFORMATION</label>
-                <div className='card-input-wrapper'>
+                <div className='card-input-wrapper mb-10'>
                   <CardElement
                     id='card-element'
                     options={cardStyles as any}
@@ -226,17 +272,17 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
                 </div>
 
                 <div className='fv-row mb-10'>
-                  <div className='nbq-check'>
+                  <div className='nbq-check' style={{justifyContent: 'start'}}>
                     <input
                       className='form-check-input '
                       type='checkbox'
-                      value=''
                       id='flexCheckDefault'
-                      onChange={(e) => {}}
+                      checked={billingIsSameAsShipping}
+                      onChange={(e) => setBillingIsSameAsShipping(e.target.checked)}
                     />
-                    <label className='nb-body nb-center ms-3'>
+                    <label className='nb-body nb-center '>
                       <a className='nb-body ' onClick={() => {}}>
-                      Billing address is same as shipping
+                        Billing address is same as shipping
                       </a>
                     </label>
                   </div>
@@ -244,9 +290,21 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
               </div>
             </div>
 
-            {/* Submit Button */}
             <button type='submit' className='submit-button' disabled={loading}>
-              {loading ? 'PROCESSING...' : 'PAY USD $12.000'}
+              {!loading ? (
+                <>
+                  <span className='nb-heading-md'>{` PAY USD ${formatCurrencyUSD(total)}`}</span>
+                </>
+              ) : (
+                <span className='indicator-progress nb-heading-md'>
+                  Please wait...
+                  <span
+                    className='spinner-border spinner-border-sm align-middle ms-2'
+                    role='status'
+                    aria-hidden='true'
+                  />
+                </span>
+              )}
             </button>
           </form>
         </div>

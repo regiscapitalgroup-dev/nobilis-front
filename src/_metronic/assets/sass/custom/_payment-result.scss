@@ -176,3 +176,62 @@
     gap: 16px;
   }
 }
+
+/* ----- Payment Failure actions (scoped) ----- */
+.pf-actions{
+  width:100%;
+  display:flex;
+  justify-content:space-between;  /* como en figma: extremos */
+  align-items:center;
+  gap:24px;
+}
+
+/* "Contact support" subrayado + iconito */
+.pf-link-btn{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:0;
+  background:transparent;
+  border:0;
+  border-bottom:1px solid #151515;
+  color:#151515;
+  font-family:'Oswald', sans-serif;
+  font-weight:500;
+  font-size:12px;
+  line-height:22.2px;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+
+/* Botón outline + iconito */
+.pf-outline-btn{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:10px 20px;
+  border:1px solid #151515;
+  color:#151515;
+  text-decoration:none;
+  font-family:'Oswald', sans-serif;
+  font-weight:500;
+  font-size:12px;
+  line-height:22.2px;
+  text-transform:uppercase;
+}
+
+/* Línea pequeña del icono a la derecha de los textos */
+.pf-line-icon{
+  width:12px;
+  height:3px;
+  border:1px solid #151515;
+}
+
+/* Hovers (opcionales) */
+.pf-outline-btn:hover{ background:#f7f7f7; }
+.pf-link-btn:hover{ opacity:.85; }
+
+/* Responsive pequeño */
+@media (max-width: 480px){
+  .pf-actions{ gap:16px; }
+}

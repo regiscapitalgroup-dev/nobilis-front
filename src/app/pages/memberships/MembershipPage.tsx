@@ -80,6 +80,12 @@ const MembershipPage: FC = () => {
     }
   }
 
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({top: 0, behavior: 'smooth'})
+    })
+  }, [])
+
   return (
     <div className='membership-shell d-flex flex-column'>
       {/* HERO SOLO SI NO ESTAMOS EN EL PAYMENT */}
@@ -99,59 +105,54 @@ const MembershipPage: FC = () => {
           />
         </div>
       )}
-  
+
       <div
         className='d-flex flex-column'
         style={{
           position: 'relative',
           zIndex: 1,
-          paddingTop: '48px',
+          /*  paddingTop: '48px', */
           paddingBottom: '100px',
           minHeight: '100vh',
         }}
       >
         <div className='container-fluid'>
           <div className='row g-5 g-xl-8'>
-            {subscription ? (
+            {membership ? (
+              // Pago cuando ya elegiste un plan
               <div className='col-12'>
-                <MembershipWelcomeWidget subscriptionDetail={subscription} />
+                <Elements stripe={stripePromise}>
+                  <MembershipPaymentWidget
+                    membership={membership}
+                    handleCancelSelected={handleCancelSelected} // <-- debe poner membership a null
+                  />
+                </Elements>
               </div>
-            ) : membership == null ? (
+            ) : (
+              // Listado de planes
               <>
-                {Array.isArray(memberships) && memberships.length ? (
+                {Array.isArray(memberships) && memberships.length && (
                   <>
                     <div className='col-12'>
                       <MembershipWidget
                         memberships={memberships}
                         loading={loading}
                         handleScroll={handleSectionScroll}
-                        handleMembershipSelected={handleMembershipSelected}
+                        handleMembershipSelected={handleMembershipSelected} // <-- aquí seteas el plan seleccionado
                       />
                     </div>
                     <div className='col-12'>
                       <MembershipCreditsWidget refToScroll={secondSecctionRef} />
                     </div>
                   </>
-                ) : (
-                  <div className='col-12'>{/* <NoMembershipsFound /> */}</div>
                 )}
               </>
-            ) : (
-              <div className='col-12'>
-                <Elements stripe={stripePromise}>
-                  <MembershipPaymentWidget
-                    membership={membership}
-                    handleCancelSelected={handleCancelSelected}
-                  />
-                </Elements>
-              </div>
             )}
           </div>
         </div>
       </div>
     </div>
   )
-  
 }
 
 export {MembershipPage}

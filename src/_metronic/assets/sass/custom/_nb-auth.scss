@@ -420,7 +420,7 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
 
 
 /* === STEP 2 – Figma exacto === */
-.nb-step2 {}
+/* .nb-step2 {} */
 
 /* Título de bloque */
 .nb-step2 .nbq-title{
@@ -772,6 +772,590 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
   text-transform: none !important;
 }
 
+/* =========================
+   STEP 3 (solo estilos nuevos)
+========================== */
+/* ========== STEP 3: opción estilo Figma ========== */
+.nb-step3 .nb3-opt{
+  width:100%;
+  padding:20px;
+  outline:1px #D7D7D7 solid;
+  outline-offset:-1px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:20px;
+  background:#fff;
+}
+
+/* Checkbox 18×18 con borde gris */
+.nb-step3 .nb3-opt .form-check-input{
+  width:18px; height:18px;
+  border:2px solid #B4B4B4;
+  border-radius:2px;
+  background:#fff;
+  box-shadow:none;
+  margin:0;            /* alinea con el gap */
+}
+/* (opcional) marcado en vino + "check" */
+.nb-step3 .nb3-opt .form-check-input:checked{
+  background:#460107;
+  border-color:#460107;
+  position:relative;
+}
+.nb-step3 .nb3-opt .form-check-input:checked::after{
+  content:"";
+  position:absolute;
+  left:4.5px; top:5px;
+  width:9.33px; height:6.42px;
+  border:1.5px solid #fff;
+  border-top:0; border-right:0;
+  transform:rotate(-45deg);
+}
+
+/* Stack de textos */
+.nb-step3 .nb3-opt__stack{
+  flex:1 1 0;
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* Título (bold) */
+.nb-step3 .nb3-opt__title{
+  color:#151515;
+  font-size:14px;
+  font-family:'Satoshi', sans-serif;
+  font-weight:700;
+  line-height:19.6px;
+}
+
+/* Descripción UNA línea con ellipsis (según pediste) */
+.nb-step3 .nb3-opt__desc{
+  color:#808080;
+  font-size:12px;
+  font-family:'Satoshi', sans-serif;
+  font-weight:300;
+  line-height:16.8px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* separación vertical entre tarjetas (si quieres 15px) */
+.nb-step3 .nb3-opt + .nb3-opt{ margin-top:15px; }
+
+/* Step 3 — pequeños textos exactos Figma */
+.nb3-hint {
+  width: 100%;
+  color: #151515;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 14px;
+  margin: 0;
+  /* si quieres que no se parta nunca: */
+  white-space: nowrap;
+}
+
+/* "If applicable…" – una sola línea */
+.nb3-proof-text {
+  width: 100%;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.6px;
+  margin: 0;
+  white-space: nowrap;         /* 1 línea */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Input underline + placeholder exactos */
+.nb3-proof-input {
+  width: 100%;
+  height: 48px;
+  padding: 15px 0;             /* Figma */
+  background: #fff !important;
+  border: 0 !important;
+  border-bottom: 1px solid #D7D7D7 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  color: #151515;
+}
+.nb3-proof-input:focus {
+  border-bottom-color: #151515 !important;
+  outline: none;
+  box-shadow: none;
+}
+.nb3-proof-input::placeholder {
+  color: #B4B4B4;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  opacity: 1;                 
+}
+.nb3-opt-title,
+.nb3-opt-desc,
+.nb3-opt-text {
+  text-transform: none !important;
+  letter-spacing: 0;        
+}
+
+.nbq-option .nb3-opt-title,
+.nbq-option .nb3-opt-desc,
+.nbq-option .nb3-opt-text {
+  text-transform: none !important;
+}
+
+/* =========================
+   STEP 3 (solo estilos nuevos)
+========================== */
+/* ========== STEP 3: opción estilo Figma ========== */
+.nb-step3 .nb3-opt{
+  width:100%;
+  padding:20px;
+  outline:1px #D7D7D7 solid;
+  outline-offset:-1px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:20px;
+  background:#fff;
+}
+
+/* Checkbox 18×18 con borde gris */
+.nb-step3 .nb3-opt .form-check-input{
+  width:18px; height:18px;
+  border:2px solid #B4B4B4;
+  border-radius:2px;
+  background:#fff;
+  box-shadow:none;
+  margin:0;            /* alinea con el gap */
+}
+/* (opcional) marcado en vino + "check" */
+.nb-step3 .nb3-opt .form-check-input:checked{
+  background:#460107;
+  border-color:#460107;
+  position:relative;
+}
+.nb-step3 .nb3-opt .form-check-input:checked::after{
+  content:"";
+  position:absolute;
+  left:4.5px; top:5px;
+  width:9.33px; height:6.42px;
+  border:1.5px solid #fff;
+  border-top:0; border-right:0;
+  transform:rotate(-45deg);
+}
+
+/* Stack de textos */
+.nb-step3 .nb3-opt__stack{
+  flex:1 1 0;
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* Título (bold) */
+.nb-step3 .nb3-opt__title{
+  color:#151515;
+  font-size:14px;
+  font-family:'Satoshi', sans-serif;
+  font-weight:700;
+  line-height:19.6px;
+}
+
+/* Descripción UNA línea con ellipsis (según pediste) */
+.nb-step3 .nb3-opt__desc{
+  color:#808080;
+  font-size:12px;
+  font-family:'Satoshi', sans-serif;
+  font-weight:300;
+  line-height:16.8px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* separación vertical entre tarjetas (si quieres 15px) */
+.nb-step3 .nb3-opt + .nb3-opt{ margin-top:15px; }
+
+/* Step 3 — pequeños textos exactos Figma */
+.nb3-hint {
+  width: 100%;
+  color: #151515;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 14px;
+  margin: 0;
+  /* si quieres que no se parta nunca: */
+  white-space: nowrap;
+}
+
+/* "If applicable…" – una sola línea */
+.nb3-proof-text {
+  width: 100%;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.6px;
+  margin: 0;
+  white-space: nowrap;         /* 1 línea */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Input underline + placeholder exactos */
+.nb3-proof-input {
+  width: 100%;
+  height: 48px;
+  padding: 15px 0;             /* Figma */
+  background: #fff !important;
+  border: 0 !important;
+  border-bottom: 1px solid #D7D7D7 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  color: #151515;
+}
+.nb3-proof-input:focus {
+  border-bottom-color: #151515 !important;
+  outline: none;
+  box-shadow: none;
+}
+.nb3-proof-input::placeholder {
+  color: #B4B4B4;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  opacity: 1;                 
+}
+.nb3-opt-title,
+.nb3-opt-desc,
+.nb3-opt-text {
+  text-transform: none !important;
+  letter-spacing: 0;        
+}
+
+.nbq-option .nb3-opt-title,
+.nbq-option .nb3-opt-desc,
+.nbq-option .nb3-opt-text {
+  text-transform: none !important;
+}
+
+/* =========================
+   STEP 3 (solo estilos nuevos)
+========================== */
+/* ========== STEP 3: opción estilo Figma ========== */
+.nb-step3 .nb3-opt{
+  width:100%;
+  padding:20px;
+  outline:1px #D7D7D7 solid;
+  outline-offset:-1px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:20px;
+  background:#fff;
+}
+
+/* Checkbox 18×18 con borde gris */
+.nb-step3 .nb3-opt .form-check-input{
+  width:18px; height:18px;
+  border:2px solid #B4B4B4;
+  border-radius:2px;
+  background:#fff;
+  box-shadow:none;
+  margin:0;            /* alinea con el gap */
+}
+/* (opcional) marcado en vino + "check" */
+.nb-step3 .nb3-opt .form-check-input:checked{
+  background:#460107;
+  border-color:#460107;
+  position:relative;
+}
+.nb-step3 .nb3-opt .form-check-input:checked::after{
+  content:"";
+  position:absolute;
+  left:4.5px; top:5px;
+  width:9.33px; height:6.42px;
+  border:1.5px solid #fff;
+  border-top:0; border-right:0;
+  transform:rotate(-45deg);
+}
+
+/* Stack de textos */
+.nb-step3 .nb3-opt__stack{
+  flex:1 1 0;
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* Título (bold) */
+.nb-step3 .nb3-opt__title{
+  color:#151515;
+  font-size:14px;
+  font-family:'Satoshi', sans-serif;
+  font-weight:700;
+  line-height:19.6px;
+}
+
+/* Descripción UNA línea con ellipsis (según pediste) */
+.nb-step3 .nb3-opt__desc{
+  color:#808080;
+  font-size:12px;
+  font-family:'Satoshi', sans-serif;
+  font-weight:300;
+  line-height:16.8px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* separación vertical entre tarjetas (si quieres 15px) */
+.nb-step3 .nb3-opt + .nb3-opt{ margin-top:15px; }
+
+/* Step 3 — pequeños textos exactos Figma */
+.nb3-hint {
+  width: 100%;
+  color: #151515;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 14px;
+  margin: 0;
+  /* si quieres que no se parta nunca: */
+  white-space: nowrap;
+}
+
+/* "If applicable…" – una sola línea */
+.nb3-proof-text {
+  width: 100%;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.6px;
+  margin: 0;
+  white-space: nowrap;         /* 1 línea */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Input underline + placeholder exactos */
+.nb3-proof-input {
+  width: 100%;
+  height: 48px;
+  padding: 15px 0;             /* Figma */
+  background: #fff !important;
+  border: 0 !important;
+  border-bottom: 1px solid #D7D7D7 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  color: #151515;
+}
+.nb3-proof-input:focus {
+  border-bottom-color: #151515 !important;
+  outline: none;
+  box-shadow: none;
+}
+.nb3-proof-input::placeholder {
+  color: #B4B4B4;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  opacity: 1;                 
+}
+.nb3-opt-title,
+.nb3-opt-desc,
+.nb3-opt-text {
+  text-transform: none !important;
+  letter-spacing: 0;        
+}
+
+.nbq-option .nb3-opt-title,
+.nbq-option .nb3-opt-desc,
+.nbq-option .nb3-opt-text {
+  text-transform: none !important;
+}
+
+/* =========================
+   STEP 3 (solo estilos nuevos)
+========================== */
+/* ========== STEP 3: opción estilo Figma ========== */
+.nb-step3 .nb3-opt{
+  width:100%;
+  padding:20px;
+  outline:1px #D7D7D7 solid;
+  outline-offset:-1px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:20px;
+  background:#fff;
+}
+
+/* Checkbox 18×18 con borde gris */
+.nb-step3 .nb3-opt .form-check-input{
+  width:18px; height:18px;
+  border:2px solid #B4B4B4;
+  border-radius:2px;
+  background:#fff;
+  box-shadow:none;
+  margin:0;            /* alinea con el gap */
+}
+/* (opcional) marcado en vino + "check" */
+.nb-step3 .nb3-opt .form-check-input:checked{
+  background:#460107;
+  border-color:#460107;
+  position:relative;
+}
+.nb-step3 .nb3-opt .form-check-input:checked::after{
+  content:"";
+  position:absolute;
+  left:4.5px; top:5px;
+  width:9.33px; height:6.42px;
+  border:1.5px solid #fff;
+  border-top:0; border-right:0;
+  transform:rotate(-45deg);
+}
+
+/* Stack de textos */
+.nb-step3 .nb3-opt__stack{
+  flex:1 1 0;
+  display:inline-flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+/* Título (bold) */
+.nb-step3 .nb3-opt__title{
+  color:#151515;
+  font-size:14px;
+  font-family:'Satoshi', sans-serif;
+  font-weight:700;
+  line-height:19.6px;
+}
+
+/* Descripción UNA línea con ellipsis (según pediste) */
+.nb-step3 .nb3-opt__desc{
+  color:#808080;
+  font-size:12px;
+  font-family:'Satoshi', sans-serif;
+  font-weight:300;
+  line-height:16.8px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+/* separación vertical entre tarjetas (si quieres 15px) */
+.nb-step3 .nb3-opt + .nb3-opt{ margin-top:15px; }
+
+/* Step 3 — pequeños textos exactos Figma */
+.nb3-hint {
+  width: 100%;
+  color: #151515;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 14px;
+  margin: 0;
+  /* si quieres que no se parta nunca: */
+  white-space: nowrap;
+}
+
+/* "If applicable…" – una sola línea */
+.nb3-proof-text {
+  width: 100%;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.6px;
+  margin: 0;
+  white-space: nowrap;         /* 1 línea */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Input underline + placeholder exactos */
+.nb3-proof-input {
+  width: 100%;
+  height: 48px;
+  padding: 15px 0;             /* Figma */
+  background: #fff !important;
+  border: 0 !important;
+  border-bottom: 1px solid #D7D7D7 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  color: #151515;
+}
+.nb3-proof-input:focus {
+  border-bottom-color: #151515 !important;
+  outline: none;
+  box-shadow: none;
+}
+.nb3-proof-input::placeholder {
+  color: #B4B4B4;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16.8px;
+  opacity: 1;                 
+}
+.nb3-opt-title,
+.nb3-opt-desc,
+.nb3-opt-text {
+  text-transform: none !important;
+  letter-spacing: 0;        
+}
+
+.nbq-option .nb3-opt-title,
+.nbq-option .nb3-opt-desc,
+.nbq-option .nb3-opt-text {
+  text-transform: none !important;
+}
+
 /* ---------- STEP 3: estilos de selección (igual Step2) ---------- */
 
 /* Contenedor seleccionado (mismo realce que step 2) */
@@ -807,7 +1391,7 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
   content: '';
   position: absolute;
   width: 9.33px; height: 6.42px;
-  left: 3.5px; top: 3px;
+  left: 5px; top: 6px;
   border: 1.5px solid #fff;
   border-top: 0; border-left: 0;
   transform: rotate(45deg);
@@ -899,7 +1483,7 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
   height: 7px;
   border: solid white;
   border-width: 0 2px 2px 0;
-  transform: translate(-50%, -60%) rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 /* Estilo del texto */
@@ -909,3 +1493,92 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
   line-height: 1.4;
   flex: 1;
 }
+
+/* ===== STEP 3 — scope aislado ===== */
+.nb3-scope .nbq-option{
+  display:flex; align-items:center;
+  gap:20px; padding:20px;
+  outline:1px #D7D7D7 solid; outline-offset:-1px;
+  background:#fff;
+}
+
+/* Checkbox: caja fija 18x18 para que el texto NO se mueva */
+.nb3-scope .nb3-check{
+  position:relative; flex:0 0 18px; width:18px; height:18px;
+}
+
+/* Input ocupa el área pero no se ve; mantiene accesibilidad */
+.nb3-scope .nb3-check .form-check-input{
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  position:absolute; inset:0; margin:0; opacity:0; cursor:pointer;
+}
+
+/* Cuadro base gris (siempre mismo tamaño) */
+.nb3-scope .nb3-check::before{
+  content:''; position:absolute; inset:0;
+  background:#fff; border:2px solid #B4B4B4; border-radius:2px;
+}
+
+.nb3-scope .nb3-check::after{
+  content:'';
+  position:absolute;
+  width:9.33px; 
+  height:6.42px;
+  border:1.5px solid transparent;  
+  border-top:0; 
+  border-left:0;
+  left: 6px !important; 
+  top: 4px !important;
+  transform:rotate(45deg);
+  pointer-events:none;
+}
+
+/* Cuando está marcado: fondo vino + paloma blanca */
+.nb3-scope .nb3-check:has(.form-check-input:checked)::before{
+  background:#460107; 
+  border-color:#460107;
+}
+.nb3-scope .nb3-check:has(.form-check-input:checked)::after{
+  border-color:#fff;
+}
+
+/* —— STEP 3: usa el input nativo y la misma palomita que Step 2 —— */
+
+/* 1) Anula los pseudos del contenedor que dibujan otro check */
+.nb-step3 .nbq-check::before,
+.nb-step3 .nbq-check::after {
+  content: none !important;
+}
+
+/* 2) Vuelve visible el input (el global lo pone opacity:0 y position:absolute) */
+.nb-step3 .nbq-check .form-check-input{
+  position: relative !important;   /* ancla del ::after */
+  opacity: 1 !important;
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  border: 2px solid #B4B4B4;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: none;
+}
+
+/* 3) Estado checked: relleno vino + palomita blanca CENTRADA (igual Step 2) */
+.nb-step3 .nbq-check .form-check-input:checked{
+  background: #460107;
+  border-color: #460107;
+}
+.nb-step3 .nbq-check .form-check-input:checked::after{
+  content: '' !important;
+  position: absolute;
+  left: 5px;                 /* MISMO offset que Step 2 */
+  top: 6px;
+  width: 9.33px;
+  height: 6.42px;
+  border: 1.5px solid #fff;
+  border-top: 0;
+  border-left: 0;
+  transform: rotate(45deg);
+}
+
