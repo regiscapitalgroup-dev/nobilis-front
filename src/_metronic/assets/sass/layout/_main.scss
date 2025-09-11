@@ -1,10 +1,11 @@
 //
 // Main
 //
+$nb-body-bg: #ffffff;
 
 // Body
 body {
-  background-color: $page-bg;
+  background-color: $nb-body-bg;
 }
 
 // Font color from Content background color

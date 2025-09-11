@@ -4,15 +4,17 @@ export interface SocialProfile {
   }
   
   export interface UserProfile {
+    name: string;
+    email: string;
     introduction_headline: string;
     alias_title: string;
     profile_picture: File | string;
     birthday: string;
     phone_number: string;
-    street: string;
     city: string;
-    postal_code: string;
     languages: string[];
     social_media_profiles?: SocialProfile[];
+    prefered_email: boolean;
+    preferred_phone: boolean;
   }
   

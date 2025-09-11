@@ -117,6 +117,7 @@ export interface ILayout {
   sidebar?: ISidebar
   main?: IMain
   pageTitle?: IPageTitle
+  expFooter? : IHeader
 }
 
 export interface ILayoutCSSClasses {

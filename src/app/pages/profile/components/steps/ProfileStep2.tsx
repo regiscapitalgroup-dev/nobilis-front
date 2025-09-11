@@ -1,8 +1,9 @@
 import React, {useState, useRef} from 'react'
-import {Formik, Form} from 'formik'
+import {Formik} from 'formik'
 import * as Yup from 'yup'
 import {KTSVG, toAbsoluteUrl} from '../../../../../_metronic/helpers'
 import EditPhotoModal from '../modals/EditPhotoModal'
+import {useHistory} from 'react-router-dom'
 
 type Props = {
   initialData: any
@@ -19,6 +20,7 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [showEditModal, setShowEditModal] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const navigate = useHistory()
   const [editValues, setEditValues] = useState({
     brightness: 100,
     contrast: 100,
@@ -30,8 +32,9 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
   const handleFinishClick = async () => {
     try {
       setLoading(true)
-       await onSubmit({ photo: selectedPhoto })
-      window.location.reload();
+      await onSubmit({photo: selectedPhoto})
+      navigate.push('/biography')
+
     } finally {
       setLoading(false)
     }
@@ -228,7 +231,7 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
                 type='button'
                 onClick={handleFinishClick}
                 className='finish-button'
-                disabled={loading}              
+                disabled={loading}
               >
                 {!loading ? (
                   <>

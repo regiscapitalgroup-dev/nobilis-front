@@ -2,74 +2,74 @@ import React, {useLayoutEffect, useState} from 'react'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import ProfileStep1 from './components/steps/ProfileStep1'
 import ProfileStep2 from './components/steps/ProfileStep2'
-import { SocialProfile, UserProfile } from './models/ProfileModel'
-import { updateUserProfile } from '../../services/profileService'
-import { shallowEqual, useSelector } from 'react-redux'
-import { RootState } from '../../../setup'
-import { useHistory } from 'react-router-dom'
-import { UserModel } from '../../modules/auth/models/UserModel'
+import {SocialProfile, UserProfile} from './models/ProfileModel'
+import {updateUserProfile} from '../../services/profileService'
+import {shallowEqual, useSelector} from 'react-redux'
+import {RootState} from '../../../setup'
+import {useHistory} from 'react-router-dom'
+import {UserModel} from '../../modules/auth/models/UserModel'
 
 type ProfileData = {
-  introductionHeadline: string
-  alias: string
+  introduction_headline: string
+  alias_title: string
   name: string
   email: string
-  dateOfBirth: string
-  phone: string
-  preferredContactMethod: string[]
+  birthday: string
+  phone_number: string
+  preferred_phone: boolean
+  prefered_email: boolean
   languageSpoken: string[]
   social_media_profiles: any[]
-  cityCountry: string
+  city: string
 }
 
 export default function ProfileBasePage() {
   const [currentStep, setCurrentStep] = useState(1)
-  const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel;
-  const navigate = useHistory();
+  const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const navigate = useHistory()
   const fullName = `${user.firstName} ${user.lastName}`
   const [profileData, setProfileData] = useState<ProfileData>({
-    introductionHeadline: '',
-    alias: '',
+    introduction_headline: '',
+    alias_title: '',
     name: fullName,
     email: user?.email,
-    dateOfBirth: '',
-    phone: '',
-    preferredContactMethod: [],
+    birthday: '',
+    phone_number: '',
+    preferred_phone: false,
+    prefered_email: false,
     languageSpoken: [],
     social_media_profiles: [],
-    cityCountry: '',
+    city: '',
   })
 
-  const mapToApiPayload = (
-    data: ProfileData,
-    photoFile?: File | null
-  ): UserProfile => {
-    const social_media_profiles: SocialProfile[] | undefined =
-      (data.social_media_profiles || [])
-        .filter((x: any) => x?.url)
-        .map((x: any) => ({
-          platform_name: String(x.name ?? "").trim(),
-          profile_url: String(x.url ?? "").trim(),
-        }));
+  const mapToApiPayload = (data: ProfileData, photoFile?: File | null): UserProfile => {
+    const social_media_profiles: SocialProfile[] | undefined = (data.social_media_profiles || [])
+      .filter((x: any) => x?.url)
+      .map((x: any) => ({
+        platform_name: String(x.name ?? '').trim(),
+        profile_url: String(x.url ?? '').trim(),
+      }))
 
     return {
-      introduction_headline: data.introductionHeadline ?? "",
-      alias_title: data.alias ?? "",
-      profile_picture: photoFile ?? "", 
-      birthday: data.dateOfBirth ?? "",
-      phone_number: data.phone ?? "",
-      city: data.cityCountry ?? "",
+      name: data.name ?? '',
+      email: data.email ?? '',
+      introduction_headline: data.introduction_headline ?? '',
+      alias_title: data.alias_title ?? '',
+      profile_picture: photoFile ?? '',
+      birthday: data.birthday ?? '',
+      phone_number: data.phone_number ?? '',
+      city: data.city ?? '',
       languages: (data.languageSpoken ?? []) as string[],
-      social_media_profiles,
-      street:'',
-      postal_code:''
-    };
-  };
+      social_media_profiles,      
+      prefered_email: data.prefered_email ?? false,
+      preferred_phone: data.preferred_phone ?? false,
+    }
+  }
 
   useLayoutEffect(() => {
-    if (currentStep === 1  || currentStep === 2  ) {
+    if (currentStep === 1 || currentStep === 2) {
       requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+        window.scrollTo({top: 0, behavior: 'smooth'})
       })
     }
   }, [currentStep])
@@ -79,15 +79,13 @@ export default function ProfileBasePage() {
     setCurrentStep(2)
   }
 
-  const handleStep2Submit = async(data: { photo?: File | null }) => {
+  const handleStep2Submit = async (data: {photo?: File | null}) => {
     const finalData = {...profileData, ...data}
     setProfileData(finalData)
 
     try {
       const payload = mapToApiPayload(finalData, data.photo ?? null)
-      const resp = await updateUserProfile( payload)
-      
-
+      await updateUserProfile(payload)
     } catch (err) {
       console.error('Error actualizando perfil:', err)
     } finally {

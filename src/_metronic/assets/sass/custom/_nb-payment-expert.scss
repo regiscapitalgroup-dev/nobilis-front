@@ -1,0 +1,198 @@
+.paym-exp__layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.paym-exp__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 100px 80px;
+  width: 100%;
+  gap: 40px;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    padding: 60px 40px;
+    gap: 60px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 40px 20px;
+  }
+}
+
+/* FORM LEFT */
+.paym-exp__form {
+  width: 738px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.paym-exp__intro-label {
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #808080;
+  letter-spacing: 1.5px;
+}
+
+.paym-exp__intro-title {
+  font-size: 46px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  color: #151515;
+  line-height: 50.6px;
+
+  @media (max-width: 600px) {
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+.paym-exp__intro-desc {
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  color: #151515;
+  line-height: 19.6px;
+}
+
+.paym-exp__group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.paym-exp__label {
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #808080;
+  letter-spacing: 1.5px;
+}
+
+.paym-exp__input,
+.paym-exp__textarea {
+  border: none;
+  border-bottom: 1px solid #d7d7d7;
+  padding: 15px 0;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #151515;
+
+  &::placeholder {
+    color: #b4b4b4;
+  }
+
+  &:focus {
+    outline: none; // ❌ no highlight
+  }
+}
+
+.paym-exp__textarea {
+  height: 165px;
+  resize: none;
+}
+
+/* FEES BOX */
+.paym-exp__right {
+  width: 413px;
+  max-width: 100%;
+  padding: 40px;
+  background: white;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9e9e9;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.paym-exp__fees {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.paym-exp__fee-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Satoshi', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #808080;
+  line-height: 1.4;
+
+  &.total {
+    span:first-child {
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: #808080;
+    }
+
+    span:last-child {
+      font-size: 22px;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
+      color: #151515;
+    }
+  }
+}
+
+.paym-exp__note {
+  font-size: 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  color: #b4b4b4;
+  line-height: 16.8px;
+}
+
+.paym-exp__checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  input {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #dfdfdf;
+    border-radius: 2px;
+    margin-top: 2px;
+  }
+}
+
+.paym-exp__checkbox-label {
+  font-size: 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  color: #151515;
+  line-height: 16.8px;
+}
+
+/* BUTTON */
+.paym-exp__btn {
+  height: 52px;
+  border: 1px solid #151515;
+  background: white;
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #151515;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  /* &:hover {
+    background: #151515;
+    color: white;
+  } */
+}

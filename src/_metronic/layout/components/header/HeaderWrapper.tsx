@@ -1,18 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import clsx from 'clsx'
 import React, {useEffect} from 'react'
-import {Link, useLocation} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+import clsx from 'clsx'
 import {MenuComponent} from '../../../assets/ts/components'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
-import {Header} from './Header'
-import {DefaultTitle} from './page-title/DefaultTitle'
-import {Topbar} from './Topbar'
+import {KTSVG} from '../../../helpers'
 
 export function HeaderWrapper() {
   const {pathname} = useLocation()
   const {config, classes, attributes} = useLayout()
-  const {header, aside} = config
+  const {aside} = config
 
   useEffect(() => {
     MenuComponent.reinitialization()
@@ -20,67 +16,52 @@ export function HeaderWrapper() {
 
   return (
     <div
-      id='kt_header'
-      className={clsx('header', classes.header.join(' '), 'align-items-stretch')}
-      {...attributes.headerMenu}
-    >
-      <div
-        className={clsx(
-          classes.headerContainer.join(' '),
-          'd-flex align-items-stretch justify-content-between'
-        )}
-      >
-        {/* begin::Aside mobile toggle */}
-        {aside.display && (
-          <div className='d-flex align-items-center d-lg-none ms-n3 me-1' title='Show aside menu'>
-            <div
-              className='btn btn-icon btn-active-secondary w-30px h-30px w-md-40px h-md-40px'
-              id='kt_aside_mobile_toggle'
-            >
-              <KTSVG path='/media/icons/duotune/abstract/abs015.svg' className='svg-icon-2x mt-1' />
-            </div>
-          </div>
-        )}
-        {/* end::Aside mobile toggle */}
-        {/* begin::Logo */}
-        {!aside.display && (
-          <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
-            <Link to='/dashboard' className='d-lg-none'>
-              <img alt='Logo' src={toAbsoluteUrl('/media/logos/20.svg')} className='h-30px' />
-            </Link>
-          </div>
-        )}
-        {/* end::Logo */}
+    id='kt_header'
+    className={clsx('header nb-header align-items-center')}
+    {...attributes.headerMenu}
+  >
+    <div className='container-fluid d-flex align-items-center justify-content-between'>
+      {/* LOGO */}
+      <div className='nb-header__logo'>NOBILIS</div>
 
-        {/* {aside.display && (
-          <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
-            <Link to='/' className='d-lg-none'>
-              <img alt='Logo' src={toAbsoluteUrl('/media/logos/logo-2.svg')} className='h-30px' />
-            </Link>
-          </div>
-        )} */}
+      {/* CENTRO */}
+      <div className='nb-header__center'>
+        <div className='nb-header__tabs'>
+          <span className='nb-header__tabs-item nb-header__tabs-item--active'>MEMBERS</span>
+          <span className='nb-header__tabs-item nb-header__tabs-item--inactive'>INVITATIONS</span>
+        </div>
 
-        {/* begin::Wrapper */}
-        <div className='d-flex align-items-stretch justify-content-between flex-lg-grow-1'>
-          {/* begin::Navbar */}
-          {header.left === 'menu' && (
-            <div className='d-flex align-items-stretch' id='kt_header_nav'>
-              <Header />
-            </div>
-          )}
-
-          {header.left === 'page-title' && (
-            <div className='d-flex align-items-center' id='kt_header_nav'>
-              <DefaultTitle />
-            </div>
-          )}
-
-          <div className='d-flex align-items-stretch flex-shrink-0'>
-            <Topbar />
+        <div className='nb-header__search'>
+          <input 
+            type="text" 
+            className='nb-header__search-field' 
+            placeholder="Where" 
+          />
+          <input 
+            type="text" 
+            className='nb-header__search-field' 
+            placeholder="Keywords" 
+          />
+          <div className='nb-header__search-icon'>
+            <KTSVG path='/media/icons/duotune/general/gen021.svg' className='svg-icon-2' />
           </div>
         </div>
-        {/* end::Wrapper */}
+      </div>
+
+      {/* DERECHA */}
+      <div className='nb-header__right'>
+        <span className='nb-header__right-link'>Community</span>
+        <span className='nb-header__right-link'>Expertise</span>
+        <div className='nb-header__right-avatar'>
+          <KTSVG path='/media/svg/nobilis/bell.svg' className='svg-icon-1' />
+          <span className='badge'>2</span>
+        </div>
+        <div className='nb-header__right-avatar'>
+          <img src='https://placehold.co/32x32' alt='User' />
+          <span className='badge'>2</span>
+        </div>
       </div>
     </div>
+  </div>
   )
 }

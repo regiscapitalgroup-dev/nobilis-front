@@ -75,21 +75,21 @@ export default function CityAutocompleteField({
       {open && (
         <div className='nb-language-menu'>
           {loading && enableSearch && (
-            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Buscando…</div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Searching…</div>
           )}
 
           {!enableSearch && minChars > 0 && query.trim().length < minChars && (
             <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>
-              Escribe al menos {minChars} caracteres…
+              Write at least {minChars} characters…
             </div>
           )}
 
           {error && enableSearch && (
-            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Error cargando ciudades</div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Error loading cities</div>
           )}
 
           {!loading && enableSearch && !error && visible.length === 0 && (
-            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Sin resultados</div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>No results</div>
           )}
 
           {!loading && !error && visible.length > 0 && (

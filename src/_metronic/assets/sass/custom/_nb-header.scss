@@ -1,0 +1,127 @@
+#kt_header.nb-header {
+  height: 90px;
+  padding: 20px 80px;
+  background: #fff;
+  border-bottom: 1px solid #F2F2F2;
+
+  .container-fluid {
+    padding: 0;
+    width: 100%;
+  }
+
+  .nb-header__logo {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 19.71px;
+    line-height: 23.66px;
+    letter-spacing: 4.34px;
+    text-transform: uppercase;
+    color: #1E1E1E;
+  }
+
+  .nb-header__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    .nb-header__tabs {
+      display: flex;
+      gap: 20px;
+
+      &-item {
+        font-family: 'Oswald', sans-serif;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14.4px;
+        text-transform: capitalize;
+
+        &--active {
+          color: #151515;
+        }
+
+        &--inactive {
+          color: #B4B4B4;
+        }
+      }
+    }
+
+    .nb-header__search {
+      width: 355px;
+      padding: 10px 10px 10px 15px;
+      background: #fff;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      &-field {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        
+        font-family: 'Satoshi', sans-serif;
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 16.8px;
+        color: #151515;
+
+        &::placeholder {
+          color: #B4B4B4;
+        }
+      }
+
+      &-icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .nb-header__right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    &-link {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 22.2px;
+      text-transform: uppercase;
+      color: #151515;
+    }
+
+    &-avatar {
+      position: relative;
+
+      img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+
+      .badge {
+        position: absolute;
+        top: -4px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #A50F0F;
+        color: #fff;
+        font-family: 'Satoshi', sans-serif;
+        font-weight: 300;
+        font-size: 10px;
+        line-height: 14px;
+      }
+    }
+  }
+}

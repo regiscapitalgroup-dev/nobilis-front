@@ -1,0 +1,434 @@
+// ExperiencesSection.module.scss - ARCHIVO FINAL
+// Variables exactas del Figma
+$experiences-bg-color: #151515;
+$experiences-gradient: linear-gradient(180deg, rgba(164, 131, 96, 0) 0%, rgba(164, 131, 96, 0.11) 85%, rgba(164, 131, 96, 0) 100%);
+$experiences-text-color: white;
+$experiences-padding: 80px;
+$experiences-gap: 20px;
+$card-width: 400px;
+$card-height: 420px;
+$card-overlay-height: 210px;
+$avatar-size: 18px;
+
+// Typography exacta del Figma
+$title-font: 'Cormorant SC', serif;
+$subtitle-font: 'Satoshi', sans-serif;
+$content-font: 'Oswald', sans-serif;
+
+// Breakpoints
+$breakpoint-lg: 1200px;
+$breakpoint-md: 992px;
+$breakpoint-sm: 768px;
+
+// Main wrapper
+.experiencesWrapper {
+  width: 100%;
+  background: $experiences-bg-color;
+  position: relative;
+}
+
+// Background decoration - imagen decorativa detrás del texto
+.backgroundDecoration {
+  width: 188px;
+  height: 197px;
+  left: 14px;
+  top: 14px;
+  position: absolute;
+  opacity: 0.04;
+ 
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.experiencesContainer {
+  width: 100%;
+  padding: $experiences-padding;
+  background: $experiences-gradient;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: $experiences-gap;
+  position: relative;
+  z-index: 2;
+
+  @media (max-width: $breakpoint-lg) {
+    padding: 60px 40px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: 40px 20px;
+  }
+}
+
+// Header section
+.experiencesHeader {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: $experiences-gap;
+}
+
+.experiencesHeaderContent {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.experiencesTitle {
+  align-self: stretch;
+  color: $experiences-text-color;
+  font-size: 28px;
+  font-family: $title-font;
+  font-weight: 500;
+  line-height: 33.6px;
+  word-wrap: break-word;
+}
+
+.experiencesSubtitle {
+  align-self: stretch;
+  color: $experiences-text-color;
+  font-size: 12px;
+  font-family: $subtitle-font;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 22.2px;
+  letter-spacing: 1.8px;
+  word-wrap: break-word;
+}
+
+// Cards grid (scroll horizontal)
+.experiencesGrid {
+  align-self: stretch;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: $experiences-gap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Experience card
+.experienceCard {
+  width: $card-width;
+  height: $card-height;
+  position: relative;
+  flex-shrink: 0;
+
+  @media (max-width: $breakpoint-md) {
+    width: 350px;
+    height: 370px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    width: 320px;
+    height: 340px;
+  }
+}
+
+.experienceImageContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.experienceImage {
+  width: $card-width;
+  height: $card-height;
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: cover;
+  background: radial-gradient(ellipse 61.38% 61.38% at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 100%);
+
+  @media (max-width: $breakpoint-md) {
+    width: 350px;
+    height: 370px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    width: 320px;
+    height: 340px;
+  }
+}
+
+.experienceOverlay {
+  width: $card-width;
+  height: $card-overlay-height;
+  padding: 20px;
+  position: absolute;
+  left: 0;
+  top: $card-overlay-height;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.80) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+
+  @media (max-width: $breakpoint-md) {
+    width: 350px;
+    height: 170px;
+    top: 200px;
+    padding: 15px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    width: 320px;
+    height: 150px;
+    top: 190px;
+    padding: 12px;
+  }
+}
+
+// Badge "New"
+.experienceBadge {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.experienceBadgeText {
+  color: $experiences-text-color;
+  font-size: 10px;
+  font-family: $subtitle-font;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 18.5px;
+  letter-spacing: 1.5px;
+  word-wrap: break-word;
+}
+
+// Authors section
+.experienceAuthors {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.experienceAuthor {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.experienceAuthorAvatar {
+  width: $avatar-size;
+  height: $avatar-size;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.experienceAuthorName {
+  text-align: center;
+  color: $experiences-text-color;
+  font-size: 12px;
+  font-family: $title-font;
+  font-weight: 500;
+  line-height: 22.2px;
+  word-wrap: break-word;
+}
+
+// Experience title
+.experienceTitle {
+  align-self: stretch;
+  text-align: center;
+  color: $experiences-text-color;
+  font-size: 22px;
+  font-family: $content-font;
+  font-weight: 500;
+  line-height: 26.4px;
+  word-wrap: break-word;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+// Agregar estos estilos al final de tu archivo ExperiencesSection.module.scss
+
+// Separador entre header y carrusel
+.experiencesSeparator {
+  width: 100%;
+  height: 0.5px;
+  background-color: #494949;
+  margin: 10px 0;
+}
+
+// Wrapper del carrusel con controles
+.carouselWrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+// Botones de navegación del carrusel
+.carouselButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .svg-icon-2 {
+    color: white;
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    width: 40px;
+    height: 40px;
+    
+    .svg-icon-2 {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.carouselButtonPrev {
+  left: -25px;
+  
+  @media (max-width: $breakpoint-lg) {
+    left: -20px;
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    left: -20px;
+  }
+}
+
+.carouselButtonNext {
+  right: -25px;
+  
+  @media (max-width: $breakpoint-lg) {
+    right: -20px;
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    right: -20px;
+  }
+}
+
+// Actualizar el grid para comportamiento de carrusel
+.experiencesGrid {
+  align-self: stretch;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: $experiences-gap;
+  overflow-x: hidden; // Cambiar de auto a hidden
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  transition: transform 0.3s ease;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Indicadores de dots
+.carouselDots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  align-self: stretch;
+}
+
+.carouselDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.2);
+  }
+
+  &.active {
+    background: white;
+    transform: scale(1.3);
+  }
+}
+
+// Mejorar responsive para el carrusel
+@media (max-width: $breakpoint-lg) {
+  .carouselWrapper {
+    gap: 15px;
+  }
+  
+  .experiencesGrid {
+    gap: 15px;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .carouselWrapper {
+    gap: 10px;
+  }
+  
+  .experiencesGrid {
+    gap: 10px;
+  }
+  
+  .carouselDots {
+    margin-top: 15px;
+  }
+}
