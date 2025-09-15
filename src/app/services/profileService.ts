@@ -1,5 +1,7 @@
+import { AxiosResponse } from "axios";
 import apiClient from "../helpers/apiClient";
 import { UserProfile } from "../pages/profile/models/ProfileModel";
+import { ExperienceFooterModel } from "../../_metronic/layout/components/models/ExperienceModel";
 
 
 function toUserProfileFormData(data: UserProfile): FormData {
@@ -10,9 +12,11 @@ function toUserProfileFormData(data: UserProfile): FormData {
     fd.append("alias_title", data.alias_title);
     fd.append("birthday", data.birthday);
     fd.append("phone_number", data.phone_number);
-    fd.append("street", data.street);
     fd.append("city", data.city);
-    fd.append("postal_code", data.postal_code);
+    fd.append("name", data.name);
+    fd.append("email", data.email);
+    fd.append("preferred_phone", data.preferred_phone.toString());
+    fd.append("prefered_email", data.prefered_email.toString());
 
     if (data.profile_picture instanceof File) {
         fd.append("profile_picture", data.profile_picture, data.profile_picture.name);
@@ -45,3 +49,14 @@ export async function updateUserProfile(
     return data;
 }
 
+export const getProfileByUser = async () => {
+    const response = await apiClient.get('/full-profile/');
+    return response.data;
+};
+
+export const getUserExperiences = async (): Promise<ExperienceFooterModel[]> => {
+    const response = await apiClient.get('/experiences/');
+    return response.data?.results;
+  };
+  
+  

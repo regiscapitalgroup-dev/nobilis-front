@@ -1,35 +1,21 @@
-import React, {Suspense, lazy} from 'react'
+import React, {Suspense} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {FallbackView} from '../../_metronic/partials'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
-import {MenuTestPage} from '../pages/MenuTestPage'
-import PaymentSuccessPage from '../pages/memberships/components/messages/PaymentSuccess'
-
+import { DashboardCoreWrapper } from '../pages/dashboardCore/DashboardCoreWrapper'
+import { BiographyWrapper } from '../pages/biography/BiographyWrapper'
+import { PaymentExpertWrapper } from '../pages/paymentExpert/PaymentExpertWrapper'
 
 export function PrivateRoutes() {
-  const BuilderPageWrapper = lazy(() => import('../pages/layout-builder/BuilderPageWrapper'))
-  const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
-  /* const ProfilePage = lazy(() => import('../pages/profile/ProfilePage')) */
-
-  const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
-  const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
-  const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
-  /* const PaymentSuccessPage = lazy(() => import('../pages/memberships/components/messages/PaymentSuccess')) */
-
-
   return (
     <Suspense fallback={<FallbackView />}>
       <Switch>
-        <Route path='/dashboard' component={DashboardWrapper} />
-        <Route path='/builder' component={BuilderPageWrapper} />
-        <Route path='/crafted/pages/wizards' component={WizardsPage} />
-        <Route path='/crafted/widgets' component={WidgetsPage} />
-        <Route path='/crafted/account' component={AccountPage} />
-        <Route path='/apps/chat' component={ChatPage} />
-        <Route path='/menu-test' component={MenuTestPage} />
-    {/*     <Route path="/payment" render={() => <PaymentSuccessPage />} /> */}
-        <Redirect from='/auth' to='/dashboard' />
-        <Redirect exact from='/' to='/dashboard' />
+        <Route path='/plans' component={DashboardWrapper} />
+        <Route path='/dashboard' component={DashboardCoreWrapper} />
+        <Route path='/biography' component={BiographyWrapper} />
+        <Route path='/expert' component={PaymentExpertWrapper} />
+        <Redirect from='/auth' to='/plans' />
+        <Redirect exact from='/' to='/plans' />
         <Redirect to='error/404' />
       </Switch>
     </Suspense>

@@ -15,24 +15,47 @@ import {
   InviteUsers,
   UpgradePlan,
 } from '../partials'
+import {useLocation} from 'react-router-dom'
+import {getLayoutConfig} from '../../app/config/routeLayouts'
+import {ExperiencesSection} from './components/ExperiencesSection'
 
 const MasterLayout: React.FC = ({children}) => {
+  const location = useLocation()
+  const layoutConfig = getLayoutConfig(location.pathname)
+  const {
+    showHeader,
+    showAside,
+    showFooter = false,
+    showToolbar = false,
+    showExpFooter,
+  } = layoutConfig
+
   return (
     <PageDataProvider>
       <div className='page d-flex flex-row flex-column-fluid'>
-        {/* <AsideDefault /> */}
+        {showAside && <AsideDefault />}
         <div className='wrapper d-flex flex-column flex-row-fluid' id='kt_wrapper'>
-          {/*  <HeaderWrapper /> */}
+          {showHeader && <HeaderWrapper />}
           {/* <div id='j' className='nb-ms-header'>
             <div className='nb-ms-kicker mt-10'>NOBILIS</div>
           </div> */}
           <div id='kt_content' className='content d-flex flex-column flex-column-fluid'>
-            {/* <Toolbar /> */}
+            {showToolbar && <Toolbar />}
             <div className='post d-flex flex-column-fluid' id='kt_post'>
               <Content>{children}</Content>
             </div>
           </div>
-          {/*  <Footer /> */}
+
+          {showExpFooter && (
+            <>
+              <ExperiencesSection />
+            </>
+          )}
+          {showFooter && (
+            <>
+              <Footer />
+            </>
+          )}
         </div>
       </div>
 
