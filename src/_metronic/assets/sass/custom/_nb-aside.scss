@@ -1,0 +1,511 @@
+/* Estilos para el layout personalizado */
+
+/* Contenedor principal de la página */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container principal para aside y contenido */
+.main-container {
+  display: flex;
+  flex: 1;
+  min-height: 0; /* Permite que los flex children se contraigan */
+}
+
+/* Container del aside */
+.aside-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Modificaciones para el aside */
+#kt_aside {
+  height: 100% !important;
+  min-height: auto !important;
+  position: relative !important;
+}
+
+/* Container del contenido principal */
+.content-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Previene overflow */
+}
+
+/* Cuando hay aside visible */
+.content-container.with-aside {
+  margin-left: 0; /* Resetea cualquier margin left del template original */
+}
+
+/* Cuando no hay aside */
+.content-container.full-width {
+  width: 100%;
+}
+
+/* Ajustes para el contenido */
+#kt_content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#kt_post {
+  flex: 1;
+}
+
+/* Media queries para responsive */
+@media (max-width: 991.98px) {
+  .aside-container {
+    position: absolute;
+    z-index: 200;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+  
+  .content-container.with-aside {
+    margin-left: 0;
+  }
+}
+
+/* Ajustes específicos para metronic - más conservadores */
+.page .wrapper {
+  margin-left: 0 !important;
+}
+
+/* Asegurar que el aside no tenga position fixed pero preserve otros estilos */
+.page .aside {
+  position: relative !important;
+}
+
+
+/* CSS para corregir el header en el nuevo layout */
+/* Forzar que el header ocupe todo el ancho */
+.page #kt_header {
+  width: 100% !important;
+  position: relative !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  transform: none !important;
+}
+
+/* Asegurar que container-fluid realmente ocupe todo el ancho */
+.page #kt_header .container-fluid {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+/* Mantener el aside relativo y sin afectar el header */
+.page #kt_aside {
+  position: relative !important;
+  height: auto !important;
+}
+
+/* Eliminar margin left del wrapper */
+.page .wrapper {
+  margin-left: 0 !important;
+}
+
+/* Asegurar que el header tenga el z-index correcto */
+.page .nb-header {
+  z-index: 100;
+  position: relative;
+}
+
+/* Custom Aside Menu Styles - Override Metronic */
+
+/* Forzar el fondo gris en todo el aside */
+.aside,
+#kt_aside,
+.aside-menu,
+#kt_aside_menu,
+#kt_aside_menu_wrapper,
+.nb-aside-menu {
+  background: #F5F5F5 !important;
+  background-color: #F5F5F5 !important;
+}
+
+/* Resetear todos los estilos de Metronic */
+.nb-aside-menu .menu,
+.nb-aside-menu .menu-item,
+.nb-aside-menu .menu-link,
+.nb-aside-menu .menu-title {
+  all: unset !important;
+  display: flex !important;
+}
+
+/* Main aside menu container */
+.nb-aside-menu {
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  gap: 40px !important;
+  padding: 15px 30px 30px 30px !important;
+  background: #F5F5F5 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* Aside content wrapper */
+.nb-aside-content {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  gap: 15px !important;
+  width: 100% !important;
+}
+
+/* Menu Section */
+.nb-menu-section {
+  width: 220px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  gap: 15px !important;
+}
+
+/* Section Header */
+.nb-menu-section-header {
+  align-self: stretch !important;
+  padding: 0 10px !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.nb-menu-section-title {
+ 
+  color: #B4B4B4 !important;
+  font-size: 12px !important;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  line-height: 22.20px !important;
+  letter-spacing: 1.80px !important;
+  word-wrap: break-word !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Section Content */
+.nb-menu-section-content {
+  align-self: stretch !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+}
+
+/* Menu Item Base */
+.nb-menu-item {
+  align-self: stretch !important;
+  height: 32px !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  margin: 0 !important;
+  text-decoration: none !important;
+}
+
+/* Menu Item INACTIVO */
+.nb-menu-item--inactive {
+  padding: 5px 10px !important;
+  gap: 10px !important;
+}
+
+/* Menu Item ACTIVO - con sombra */
+.nb-menu-item--active {
+  padding: 0 0 0 10px !important;
+ 
+  gap: 5px !important;
+}
+
+/* Menu Icon Container */
+.nb-menu-icon {
+  width: 20px !important;
+  height: 20px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Menu Icon SVG */
+.nb-menu-icon .svg-icon-1 {
+  width: 20px !important;
+  height: 20px !important;
+  color: #808080 !important;
+  fill: #808080 !important;
+}
+
+/* Menu Icon activo */
+.nb-menu-item--active .nb-menu-icon .svg-icon-1 {
+  color: #151515 !important;
+  fill: #151515 !important;
+}
+
+/* Menu Link */
+.nb-menu-link {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-decoration: none !important;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: inherit !important;
+}
+
+/* Menu Link inactivo */
+.nb-menu-item--inactive .nb-menu-link {
+  flex: 1 !important;
+  gap: 0 !important;
+}
+
+/* Menu Link activo CON BORDE */
+.nb-menu-item--active .nb-menu-link {
+  flex: 1 !important;
+  align-self: stretch !important;
+  padding: 0 15px !important;
+  outline: 1px #151515 solid !important;
+  outline-offset: -1px !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+/* Menu Title */
+.nb-menu-title {
+  color: #151515 !important;
+  font-size: 12px !important;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  text-transform: uppercase !important;
+  line-height: 16.80px !important;
+  word-wrap: break-word !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+/* Title activo - peso bold */
+.nb-menu-item--active .nb-menu-title {
+  font-weight: 700 !important;
+}
+
+/* Title inactivo - peso light */
+.nb-menu-item--inactive .nb-menu-title {
+  font-weight: 300 !important;
+}
+
+/* Menu Badge */
+.nb-menu-badge {
+  height: 16px !important;
+  padding: 0 5px !important;
+  background: #A50F0F !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-left: auto !important;
+  flex-shrink: 0 !important;
+}
+
+.nb-badge {
+  color: white !important;
+  font-size: 10px !important;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 300 !important;
+  line-height: 14px !important;
+  word-wrap: break-word !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Separator */
+.nb-menu-separator {
+  align-self: stretch !important;
+  height: 0 !important;
+  outline: 1px #D7D7D7 solid !important;
+  outline-offset: -0.5px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* HOVER EFFECTS - Solo funciona en items inactivos */
+.nb-menu-item--inactive:hover {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.nb-menu-item--inactive:hover .nb-menu-title {
+  color: #000 !important;
+  font-weight: 400 !important;
+}
+
+.nb-menu-item--inactive:hover .nb-menu-link {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Los iconos NO cambian en hover */
+.nb-menu-item--inactive:hover .nb-menu-icon .svg-icon-1 {
+  color: #808080 !important;
+  fill: #808080 !important;
+}
+
+/* User Card Container */
+.nb-menu-user-card {
+  width: 220px !important;
+  padding-left: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  margin-top: auto !important;
+}
+
+.nb-user-card {
+  align-self: stretch !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* Ya no necesitamos los estilos del header */
+.nb-user-card-header {
+  display: none !important; /* Ocultar por si acaso queda algo */
+}
+
+.nb-user-card-label {
+  display: none !important; /* Ocultar por si acaso queda algo */
+}
+
+.nb-user-card-content {
+  align-self: stretch !important;
+  padding: 15px !important;
+  background: white !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  gap: 15px !important;
+  width: 100% !important;
+}
+
+.nb-user-card-info {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.nb-user-card-name {
+  color: #262626 !important;
+  font-size: 18px !important;
+  font-family: 'Oswald', serif !important;
+  font-weight: 500 !important;
+  line-height: 21.60px !important;
+  word-wrap: break-word !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nb-user-card-field {
+  border-radius: 5px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+.nb-user-card-field-label {
+  color: #B4B4B4 !important;
+  font-size: 12px !important;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 300 !important;
+  line-height: 16.80px !important;
+  word-wrap: break-word !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nb-user-card-field-value {
+  color: #262626 !important;
+  font-size: 12px !important;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 300 !important;
+  line-height: 16.80px !important;
+  word-wrap: break-word !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nb-user-card-separator {
+  align-self: stretch !important;
+  height: 0 !important;
+  outline: 1px #E9E9E9 solid !important;
+  outline-offset: -0.5px !important;
+  width: 100% !important;
+}
+
+.nb-user-card-availability {
+  display: inline-flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 5px !important;
+  width: auto !important;
+}
+
+.nb-clock-icon {
+  width: 14px !important;
+  height: 14px !important;
+  color: #151515 !important;
+  fill: #151515 !important;
+  flex-shrink: 0 !important;
+}
+
+.nb-availability-text {
+  color: #151515 !important;
+  font-size: 12px !important;
+  font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-weight: 300 !important;
+  line-height: 16.80px !important;
+  word-wrap: break-word !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');

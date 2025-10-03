@@ -1,7 +1,7 @@
 import {FC, useEffect, useRef} from 'react'
 import {useLayout} from '../../../_metronic/layout/core'
 import {UserProfileProvider} from '../../context/UserProfileContext'
-import { PaymentExpertPage } from './PaymentExpertPage'
+import {PaymentExpertPage} from './PaymentExpertPage'
 
 const PaymentExpertWrapper: FC = () => {
   const {config, setLayout} = useLayout()
@@ -12,11 +12,11 @@ const PaymentExpertWrapper: FC = () => {
 
     setLayout({
       ...config,
-      header: {...config.header, display: true}, 
-      aside: {...config.aside, display: false}, 
+      header: {...config.header, display: true},
+      aside: {...config.aside, display: false},
       toolbar: {...config.toolbar, display: false},
       footer: {...config.footer, display: true},
-      expFooter: {...config.footer, display: false}
+      expFooter: {...config.footer, display: false},
     })
 
     return () => setLayout(restoreRef.current)
@@ -24,11 +24,9 @@ const PaymentExpertWrapper: FC = () => {
 
   return (
     <>
-      <div className='nb-app-container'>
-        <UserProfileProvider>
-          <PaymentExpertPage />
-        </UserProfileProvider>
-      </div>
+      <UserProfileProvider>
+        <PaymentExpertPage />
+      </UserProfileProvider>
     </>
   )
 }

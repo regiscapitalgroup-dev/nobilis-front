@@ -5,6 +5,15 @@ import {LifestyleTab} from './tabs/LifestyleTab'
 import {RecognitionTab} from './tabs/RecognitionTab'
 import {ExpertiseTab} from './tabs/ExpertiseTab'
 import {useUserProfileContext} from '../../../context/UserProfileContext'
+import InfoAdminTab from './tabs/InfoAdminTab'
+import InfoFamilyTab from './tabs/InfoFamilyTab'
+import {useIntroduction} from '../../../hooks/introduction/useIntroduction'
+import {shallowEqual, useSelector} from 'react-redux'
+import {RootState} from '../../../../setup'
+import {UserModel} from '../../../modules/auth/models/UserModel'
+import {hasPermission} from '../../../utils/permissions'
+import {Permission} from '../../../constants/roles'
+import {KTSVG} from '../../../../_metronic/helpers'
 
 const tabs = [
   {id: 'bio', label: 'Biography'},
@@ -15,8 +24,11 @@ const tabs = [
 ]
 
 const BiographyTabs: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('bio')
+  const [activeTab, setActiveTab] = useState('ini')
   const {data} = useUserProfileContext()
+  const {collection} = useIntroduction()
+  const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const canEditBio = hasPermission(user, Permission.EDIT_BIOGRAPHY)
 
   const getYouTubeId = (url: string) => {
     if (!url) return null
@@ -57,6 +69,16 @@ const BiographyTabs: React.FC = () => {
               {index < tabs.length - 1 && <div className='bio-tabs__separator' />}
             </div>
           ))}
+
+          {canEditBio && (
+            <div className='bio-tabs-actions-wrapper'>
+              <button className='bio-tabs__confidential-btn'>Confidential Info</button>
+              <button className='bio-edit-underline-btn'>
+                <span>EDIT</span>
+                <KTSVG path='/media/svg/nobilis/vector1.svg' />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Tabs Content */}
@@ -66,6 +88,13 @@ const BiographyTabs: React.FC = () => {
           {activeTab === 'lifestyle' && <LifestyleTab />}
           {activeTab === 'recognition' && <RecognitionTab />}
           {activeTab === 'expertise' && <ExpertiseTab />}
+
+          {activeTab === 'ini' && (
+            <div className='bio-tabs__panel--two-col'>
+              <InfoAdminTab />
+              <InfoFamilyTab />
+            </div>
+          )}
 
           {/* {activeTab === 'bio' && (
             <div className='bio-gallery-section'>

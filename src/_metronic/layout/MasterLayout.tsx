@@ -7,21 +7,22 @@ import {ScrollTop} from './components/ScrollTop'
 import {Content} from './components/Content'
 import {MasterInit} from './MasterInit'
 import {PageDataProvider} from './core'
-import {
-  DrawerMessenger,
-  /* ExploreMain, */
-  ActivityDrawer,
-  Main,
-  InviteUsers,
-  UpgradePlan,
-} from '../partials'
+import {DrawerMessenger, ActivityDrawer, Main, InviteUsers, UpgradePlan} from '../partials'
 import {useLocation} from 'react-router-dom'
 import {getLayoutConfig} from '../../app/config/routeLayouts'
 import {ExperiencesSection} from './components/ExperiencesSection'
+import {shallowEqual, useSelector} from 'react-redux'
+import {RootState} from '../../setup'
+import {UserModel} from '../../app/modules/auth/models/UserModel'
+import {hasRole} from '../../app/utils/permissions'
+import {UserRole} from '../../app/constants/roles'
 
 const MasterLayout: React.FC = ({children}) => {
   const location = useLocation()
-  const layoutConfig = getLayoutConfig(location.pathname)
+
+  const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const isAdmin = hasRole(user, UserRole.ADMIN)
+  const layoutConfig = getLayoutConfig(location.pathname, isAdmin)
   const {
     showHeader,
     showAside,
@@ -32,36 +33,41 @@ const MasterLayout: React.FC = ({children}) => {
 
   return (
     <PageDataProvider>
-      <div className='page d-flex flex-row flex-column-fluid'>
-        {showAside && <AsideDefault />}
-        <div className='wrapper d-flex flex-column flex-row-fluid' id='kt_wrapper'>
-          {showHeader && <HeaderWrapper />}
-          {/* <div id='j' className='nb-ms-header'>
-            <div className='nb-ms-kicker mt-10'>NOBILIS</div>
-          </div> */}
-          <div id='kt_content' className='content d-flex flex-column flex-column-fluid'>
-            {showToolbar && <Toolbar />}
-            <div className='post d-flex flex-column-fluid' id='kt_post'>
-              <Content>{children}</Content>
-            </div>
-          </div>
+      <div className='page d-flex flex-column min-vh-100' style={{position: 'relative'}}>
+        {/* Header - mantiene estilos originales pero ocupa todo el ancho */}
+        {showHeader && <HeaderWrapper />}
 
-          {showExpFooter && (
-            <>
-              <ExperiencesSection />
-            </>
-          )}
-          {showFooter && (
-            <>
-              <Footer />
-            </>
-          )}
+        {/* Container principal */}
+        <div className='d-flex flex-row flex-fill' style={{position: 'relative'}}>
+          {/* Aside */}
+          {showAside && <AsideDefault />}
+
+          {/* Contenido principal */}
+          <div
+            className='wrapper d-flex flex-column flex-fill'
+            id='kt_wrapper'
+            style={{
+              marginLeft: showAside ? '0' : '0', // Sin margin left forzado
+              minWidth: 0, // Previene overflow
+            }}
+          >
+            <div id='kt_content' className='content d-flex flex-column flex-fill'>
+              {showToolbar && <Toolbar />}
+              <div className='post d-flex flex-column flex-fill' id='kt_post'>
+                <Content>{children}</Content>
+              </div>
+            </div>
+
+            {showExpFooter && <ExperiencesSection />}
+          </div>
         </div>
+
+        {/* Footer - ocupa todo el ancho */}
+        {showFooter && <Footer />}
       </div>
 
       {/* begin:: Drawers */}
       <ActivityDrawer />
-      {/*  <ExploreMain /> */}
       <DrawerMessenger />
       {/* end:: Drawers */}
 

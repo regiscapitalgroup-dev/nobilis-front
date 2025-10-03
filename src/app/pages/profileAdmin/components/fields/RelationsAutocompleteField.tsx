@@ -1,0 +1,121 @@
+import React, {useMemo, useState, useEffect} from 'react'
+import {useField} from 'formik'
+import { useRelationField } from '../../../../hooks/components/useRelationField'
+
+const highlightMatch = (text: string, query: string) => {
+  if (!query) return text
+  const safe = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const regex = new RegExp(`(${safe})`, 'gi')
+  const parts = text.split(regex)
+  return (
+    <>
+      {parts.map((part, i) =>
+        regex.test(part) ? (
+          <span key={i} style={{fontWeight: 700}}>{part}</span>
+        ) : (
+          <span key={i} style={{fontWeight: 300}}>{part}</span>
+        )
+      )}
+    </>
+  )
+}
+
+type Item = {
+  id: number
+  name: string
+  description?: string
+}
+
+type Props = {
+  name: string
+  placeholder?: string
+  minChars?: number
+}
+
+export default function RelationAutocompleteField({
+  name,
+  minChars = 0,
+}: Props) {
+  const [field, , helpers] = useField<string | undefined>(name)
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+
+  // debounce
+  const [debounced, setDebounced] = useState('')
+  useEffect(() => {
+    const id = setTimeout(() => setDebounced(query.trim()), 200)
+    return () => clearTimeout(id)
+  }, [query])
+
+  const enableSearch = debounced.length >= minChars && debounced.length > 0
+
+  const {collection, loading, error} = useRelationField()
+  const items = useMemo<Item[]>(() => (Array.isArray(collection) ? collection : []), [collection])
+
+  const visible = useMemo(() => {
+    if (!enableSearch) return items.slice(0, 10)
+    const q = debounced.toLowerCase()
+    return items.filter((c) => c.name.toLowerCase().includes(q)).slice(0, 10)
+  }, [items, enableSearch, debounced])
+
+  return (
+    <div className='nb-language-autocomplete'>
+      <div className='nb-language-wrapper'>
+        <input
+          className='nb-language-input'
+          value={field.value || ''}
+          onChange={(e) => {
+            const v = e.target.value
+            helpers.setValue(v)        
+            setQuery(v)               
+            setOpen(true)
+          }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 120)}
+          autoComplete='off'
+        />
+      </div>
+
+      {open && (
+        <div className='nb-language-menu'>
+          {loading && enableSearch && (
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Searching…</div>
+          )}
+
+          {!enableSearch && minChars > 0 && query.trim().length < minChars && (
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>
+              Write at least {minChars} characters…
+            </div>
+          )}
+
+          {error && enableSearch && (
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Error loading</div>
+          )}
+
+          {!loading && enableSearch && !error && visible.length === 0 && (
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>No results</div>
+          )}
+
+          {!loading && !error && visible.length > 0 && (
+            <>
+              {visible.map((item) => (
+                <div
+                  key={item.id}
+                  className='nb-language-item'
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={() => {
+                    helpers.setValue(item.name)  
+                    setQuery(item.name)
+                    setOpen(false)
+                  }}
+                >
+                  {highlightMatch(item.name, enableSearch ? debounced : '')}
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}

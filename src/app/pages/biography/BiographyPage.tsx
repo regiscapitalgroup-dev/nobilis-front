@@ -1,10 +1,12 @@
-import {FC, useEffect, useState} from 'react'
+import {FC, useEffect, useRef, useState} from 'react'
 import {KTSVG, toAbsoluteUrl} from '../../../_metronic/helpers'
 import {BiographyTabs} from './components/BiographyTabs'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {UserModel} from '../../modules/auth/models/UserModel'
 import {useUserProfileContext} from '../../context/UserProfileContext'
+import {hasPermission} from '../../utils/permissions'
+import {Permission} from '../../constants/roles'
 
 const socials = [
   {icon: '/media/svg/nobilis/instagram.svg'},
@@ -15,9 +17,12 @@ const socials = [
 const BiographyPage: FC = () => {
   const {data} = useUserProfileContext()
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const canEditImage = hasPermission(user, Permission.EDIT_PROFILE_IMAGE)
   const fullName = `${user.firstName} ${user.lastName}`
   const [isMember, setIsMember] = useState<boolean>(false)
   const [isExpert, setIsExpert] = useState<boolean>(false)
+  const [profileImage, setProfileImage] = useState<string>(toAbsoluteUrl('/media/people3.png'))
+  const [isUploading, setIsUploading] = useState<boolean>(false)
 
   useEffect(() => {
     if (data?.subscription) setIsMember(true)
@@ -25,8 +30,59 @@ const BiographyPage: FC = () => {
     if (data?.expertise) setIsExpert(true)
   }, [data])
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    const previousImage = profileImage
+
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const imageUrl = e.target?.result as string
+      setProfileImage(imageUrl)
+      console.log('Nueva imagen:', imageUrl)
+    }
+    reader.readAsDataURL(file)
+
+    setIsUploading(true)
+
+    try {
+      console.log('Imagen subida exitosamente')
+    } catch (error) {
+      console.error('Error al subir la imagen:', error)
+      alert('Error al subir la imagen. Por favor intenta de nuevo.')
+
+      setProfileImage(previousImage)
+    } finally {
+      setIsUploading(false)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+    }
+  }
+
   return (
     <>
+      <div className='profile-completion-banner'>
+        <div className='profile-completion-banner__content'>
+          <div className='profile-completion-banner__text'>
+            <p className='profile-completion-banner__title'>
+              Complete your profile yourself or order professional service.
+            </p>
+            <p className='profile-completion-banner__subtitle'>
+              Earn 1000 Credits, learn <span className='underline'>Loyalty Program</span>
+            </p>
+          </div>
+        </div>
+
+        <button className='profile-completion-banner__btn'>
+          <span>GET PROFESSIONAL SERVICE</span>
+          <KTSVG path='/media/svg/nobilis/vector1.svg' />
+        </button>
+      </div>
+
       <div className='biography'>
         <div className='biography__watermark'>
           <img src={toAbsoluteUrl('/media/svg/nobilis/mark_bg.svg')} alt='watermark' />
@@ -114,14 +170,42 @@ const BiographyPage: FC = () => {
             </div>
           </div>
         </div>
-
-        {/* RIGHT */}
         <div className='biography__right'>
           <div className='bg-block'></div>
-          <img src={toAbsoluteUrl('/media/people3.png')} alt='profile' />
+
+          <input
+            ref={fileInputRef}
+            type='file'
+            accept='image/*'
+            style={{display: 'none'}}
+            onChange={handleImageChange}
+          />
+
+          <img src={profileImage} alt='profile' />
+
+          {canEditImage && (
+            <>
+              <a className='biography__edit-btn' onClick={() => fileInputRef.current?.click()}>
+                <KTSVG path='/media/svg/nobilis/edit-img.svg' />
+              </a>
+            </>
+          )}
+
           <div className='quote'>
             <span>{data?.picFooter}</span>
           </div>
+          {canEditImage && (
+            <div className='biography__edit-container'>
+              <button
+                className='biography__edit-link'
+                onClick={() => fileInputRef.current?.click()}
+                type='button'
+              >
+                <span>EDIT</span>
+                <KTSVG path='/media/svg/nobilis/vector1.svg' />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

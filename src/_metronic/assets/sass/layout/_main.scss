@@ -30,7 +30,7 @@ body {
     // Aside default enabled and aside fixed modes
     .aside-enabled.aside-fixed & {
       transition: padding-left get($aside-config, transition-speed) ease;
-      padding-left: get($aside-config, width);
+      /* padding-left: get($aside-config, width); */
     }
 
     // Aside default enabled, aside fixed and aside minimize modes

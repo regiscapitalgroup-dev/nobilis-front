@@ -1,123 +1,164 @@
-/* eslint-disable react/jsx-no-target-blank */
-/* import React from 'react' */
-import {useIntl} from 'react-intl'
-/* import {KTSVG} from '../../../helpers'
-import {AsideMenuItemWithSub} from './AsideMenuItemWithSub' */
+import React from 'react'
 import {AsideMenuItem} from './AsideMenuItem'
+import {AsideUserCard} from './AsideUserCard'
 
 export function AsideMenuMain() {
-  const intl = useIntl()
-
   return (
-    <>
-      <AsideMenuItem
-        to='/dashboard'
-        icon='/media/icons/duotune/art/art002.svg'
-        title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
-        fontIcon='bi-app-indicator'
-        
-      />
-     {/*  <AsideMenuItem
-        to='/builder'
-        icon='/media/icons/duotune/general/gen019.svg'
-        title='Layout Builder'
-        fontIcon='bi-layers'
-      />
-      <div className='menu-item'>
-        <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Crafted</span>
-        </div>
-      </div>
-      <AsideMenuItemWithSub
-        to='/crafted/pages'
-        title='Pages'
-        fontIcon='bi-archive'
-        icon='/media/icons/duotune/general/gen022.svg'
-      >
-        <AsideMenuItemWithSub to='/crafted/pages/profile' title='Profile' hasBullet={true}>
-          <AsideMenuItem to='/crafted/pages/profile/overview' title='Overview' hasBullet={true} />
-          <AsideMenuItem to='/crafted/pages/profile/projects' title='Projects' hasBullet={true} />
-          <AsideMenuItem to='/crafted/pages/profile/campaigns' title='Campaigns' hasBullet={true} />
-          <AsideMenuItem to='/crafted/pages/profile/documents' title='Documents' hasBullet={true} />
-          <AsideMenuItem
-            to='/crafted/pages/profile/connections'
-            title='Connections'
-            hasBullet={true}
-          />
-        </AsideMenuItemWithSub>
+    <div className="nb-aside-menu">
+      <div className="nb-aside-content">
+        {/* MY ACCOUNT Section */}
+        <div className="nb-menu-section">
+          <div className="nb-menu-section-header">
+            <span className="nb-menu-section-title">MY ACCOUNT</span>
+          </div>
+          <div className="nb-menu-section-content">
+            <AsideMenuItem
+              to='/admin/overview'
+              title='MY PROFILE'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/user_nb.svg'
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='MY TEAM'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/team_nb.svg'
 
-        <AsideMenuItemWithSub to='/crafted/pages/wizards' title='Wizards' hasBullet={true}>
-          <AsideMenuItem
-            to='/crafted/pages/wizards/horizontal'
-            title='Horizontal'
-            hasBullet={true}
-          />
-          <AsideMenuItem to='/crafted/pages/wizards/vertical' title='Vertical' hasBullet={true} />
-        </AsideMenuItemWithSub>
-      </AsideMenuItemWithSub>
-      <AsideMenuItemWithSub
-        to='/crafted/accounts'
-        title='Accounts'
-        icon='/media/icons/duotune/communication/com006.svg'
-        fontIcon='bi-person'
-      >
-        <AsideMenuItem to='/crafted/account/overview' title='Overview' hasBullet={true} />
-        <AsideMenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
-      </AsideMenuItemWithSub>
-      <AsideMenuItemWithSub
-        to='/error'
-        title='Errors'
-        fontIcon='bi-sticky'
-        icon='/media/icons/duotune/general/gen040.svg'
-      >
-        <AsideMenuItem to='/error/404' title='Error 404' hasBullet={true} />
-        <AsideMenuItem to='/error/500' title='Error 500' hasBullet={true} />
-      </AsideMenuItemWithSub>
-      <AsideMenuItemWithSub
-        to='/crafted/widgets'
-        title='Widgets'
-        icon='/media/icons/duotune/general/gen025.svg'
-        fontIcon='bi-layers'
-      >
-        <AsideMenuItem to='/crafted/widgets/lists' title='Lists' hasBullet={true} />
-        <AsideMenuItem to='/crafted/widgets/statistics' title='Statistics' hasBullet={true} />
-        <AsideMenuItem to='/crafted/widgets/charts' title='Charts' hasBullet={true} />
-        <AsideMenuItem to='/crafted/widgets/mixed' title='Mixed' hasBullet={true} />
-        <AsideMenuItem to='/crafted/widgets/tables' title='Tables' hasBullet={true} />
-        <AsideMenuItem to='/crafted/widgets/feeds' title='Feeds' hasBullet={true} />
-      </AsideMenuItemWithSub>
-      <div className='menu-item'>
-        <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Apps</span>
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='REFER A MEMBER'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/ref_member_nb.svg'
+
+            />
+          </div>
+        </div>
+
+        {/* Separator */}
+        <div className="nb-menu-separator"></div>
+
+        {/* MY HOSTING Section */}
+        <div className="nb-menu-section">
+          <div className="nb-menu-section-header">
+            <span className="nb-menu-section-title">MY HOSTING</span>
+          </div>
+          <div className="nb-menu-section-content">
+            <AsideMenuItem
+              to='/dashboard'
+              title='MY EXPERIENCES'
+              showIcon={true}
+              showBadge={true}
+              badgeCount={2}
+              isSelected={false}
+              icon='/media/svg/nobilis/exp_nb.svg'
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='MY INTRODUCTIONS'
+              showIcon={true}
+              showBadge={true}
+              badgeCount={2}
+              isSelected={false}
+              icon='/media/svg/nobilis/intro_nb.svg'
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='MY EXPERTISE'
+              showIcon={true}
+              showBadge={true}
+              badgeCount={2}
+              isSelected={false}
+              icon='/media/svg/nobilis/expert_nb.svg'
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='MY MASTERMIND CIRCLES'
+              showIcon={true}
+              showBadge={true}
+              badgeCount={2}
+              isSelected={false}
+              icon='/media/svg/nobilis/mem_cir_nb.svg'
+            />
+          </div>
+        </div>
+
+        {/* Separator */}
+        <div className="nb-menu-separator"></div>
+
+        {/* ACTIVITY Section */}
+        <div className="nb-menu-section">
+          <div className="nb-menu-section-header">
+            <span className="nb-menu-section-title">ACTIVITY</span>
+          </div>
+          <div className="nb-menu-section-content">
+            <AsideMenuItem
+              to='/dashboard'
+              title='MY BOOKING'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/master_nb.svg'
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='INVITATIONS'
+              showIcon={true}
+              showBadge={true}
+              badgeCount={2}
+              isSelected={false}
+              icon='/media/svg/nobilis/book_nb.svg'
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='WISHLIST'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/invitation_nb.svg'
+            />
+          </div>
+        </div>
+
+        {/* Separator */}
+        <div className="nb-menu-separator"></div>
+
+        {/* MEMBERSHIP & FINANCE Section */}
+        <div className="nb-menu-section">
+          <div className="nb-menu-section-header">
+            <span className="nb-menu-section-title">MEMBERSHIP & FINANCE</span>
+          </div>
+          <div className="nb-menu-section-content">
+            <AsideMenuItem
+              to='/dashboard'
+              title='MY MEMBERSHIP'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/wis_nb.svg'
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='PAYMENTS'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/member_nb.svg'
+            />
+            <AsideMenuItem
+              to='/dashboard'
+              title='FINANCIAL OVERVIEW'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/payment_nb.svg'
+            />
+          </div>
         </div>
       </div>
-      <AsideMenuItemWithSub
-        to='/apps/chat'
-        title='Chat'
-        fontIcon='bi-chat-left'
-        icon='/media/icons/duotune/communication/com012.svg'
-      >
-        <AsideMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
-        <AsideMenuItem to='/apps/chat/group-chat' title='Group Chart' hasBullet={true} />
-        <AsideMenuItem to='/apps/chat/drawer-chat' title='Drawer Chart' hasBullet={true} />
-      </AsideMenuItemWithSub>
-      <div className='menu-item'>
-        <div className='menu-content'>
-          <div className='separator mx-1 my-4'></div>
-        </div>
+
+      {/* User Card at the bottom */}
+      <div className="nb-menu-user-card">
+        <AsideUserCard />
       </div>
-      <div className='menu-item'>
-        <a
-          target='_blank'
-          className='menu-link'
-          href={process.env.REACT_APP_PREVIEW_DOCS_URL + '/docs/changelog'}
-        >
-          <span className='menu-icon'>
-            <KTSVG path='/media/icons/duotune/general/gen005.svg' className='svg-icon-2' />
-          </span>
-          <span className='menu-title'>Changelog {process.env.REACT_APP_VERSION}</span>
-        </a>
-      </div> */}
-    </>
+    </div>
   )
 }

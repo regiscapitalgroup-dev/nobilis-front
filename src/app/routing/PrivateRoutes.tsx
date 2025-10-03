@@ -5,6 +5,13 @@ import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import { DashboardCoreWrapper } from '../pages/dashboardCore/DashboardCoreWrapper'
 import { BiographyWrapper } from '../pages/biography/BiographyWrapper'
 import { PaymentExpertWrapper } from '../pages/paymentExpert/PaymentExpertWrapper'
+import { CalendarWrapper } from '../pages/calendar/CalendarWrapper'
+import { ProfileAdminWrapper } from '../pages/profileAdmin/ProfileAdminWrapper'
+import { BiographyFormWrapper } from '../pages/biography/BiographyFormWrapper'
+import { PaymentExpertMessageWrapper } from '../pages/paymentExpert/PaymentExpertMessageWrapper'
+import { ExpertiseWrapper } from '../pages/expertise/ExpertiseWrapper'
+import { RecognitionWrapper } from '../pages/recognition/RecognitionWrapper'
+import { TeamWrapper } from '../pages/team/TeamWrapper'
 
 export function PrivateRoutes() {
   return (
@@ -12,8 +19,16 @@ export function PrivateRoutes() {
       <Switch>
         <Route path='/plans' component={DashboardWrapper} />
         <Route path='/dashboard' component={DashboardCoreWrapper} />
+        <Route path='/biography/overview' component={BiographyFormWrapper} />
         <Route path='/biography' component={BiographyWrapper} />
+        <Route path='/calendar' component={CalendarWrapper} />
+        <Route path='/admin/overview' component={ProfileAdminWrapper} />
+        <Route path='/expert/success' component={PaymentExpertMessageWrapper} />
         <Route path='/expert' component={PaymentExpertWrapper} />
+        <Route path='/expertise' component={ExpertiseWrapper} />
+        <Route path='/recognition' component={RecognitionWrapper} />
+        <Route path='/team' component={TeamWrapper} />
+
         <Redirect from='/auth' to='/plans' />
         <Redirect exact from='/' to='/plans' />
         <Redirect to='error/404' />

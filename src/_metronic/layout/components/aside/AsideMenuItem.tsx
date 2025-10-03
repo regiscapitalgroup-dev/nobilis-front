@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
 import {checkIsActive, KTSVG} from '../../../helpers'
-import {useLayout} from '../../core'
 
 type Props = {
   to: string
@@ -11,6 +10,10 @@ type Props = {
   icon?: string
   fontIcon?: string
   hasBullet?: boolean
+  showBadge?: boolean
+  badgeCount?: number
+  showIcon?: boolean
+  isSelected?: boolean
 }
 
 const AsideMenuItem: React.FC<Props> = ({
@@ -20,28 +23,38 @@ const AsideMenuItem: React.FC<Props> = ({
   icon,
   fontIcon,
   hasBullet = false,
+  showBadge = false,
+  badgeCount = 0,
+  showIcon = false,
+  isSelected = false,
 }) => {
   const {pathname} = useLocation()
-  const isActive = checkIsActive(pathname, to)
-  const {config} = useLayout()
-  const {aside} = config
+  const isActive = isSelected || checkIsActive(pathname, to)
 
   return (
-    <div className='menu-item'>
-      <Link className={clsx('menu-link without-sub ', {active: isActive})} to={to}>
-        {hasBullet && (
-          <span className='menu-bullet'>
-            <span className='bullet bullet-dot'></span>
-          </span>
-        )}
-        {icon && aside.menuIcon === 'svg' && (
-          <span className='menu-icon'>
-            <KTSVG path={icon} className='svg-icon-2' />
-          </span>
-        )}
-        {fontIcon && aside.menuIcon === 'font' && <i className={clsx('bi fs-3', fontIcon)}></i>}
-        <span className='menu-title'>{title}</span>
+    <div className={clsx('nb-menu-item', {
+      'nb-menu-item--active': isActive,
+      'nb-menu-item--inactive': !isActive
+    })}>
+      {/* Icon container - only shown when needed */}
+      {showIcon && icon && (
+        <div className='nb-menu-icon'>
+          <KTSVG path={icon} className='svg-icon-1' />
+        </div>
+      )}
+      
+      <Link className='nb-menu-link' to={to}>        
+        {/* Title */}
+        <div className='nb-menu-title'>{title}</div>
       </Link>
+      
+      {/* Badge */}
+      {showBadge && badgeCount > 0 && (
+        <div className='nb-menu-badge'>
+          <span className='nb-badge'>{badgeCount}</span>
+        </div>
+      )}
+      
       {children}
     </div>
   )
