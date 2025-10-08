@@ -1,5 +1,6 @@
 export enum UserRole {
     ADMIN = 'ADMIN',
+    FINAL_USER = 'FINAL_USER',
 }
 
 export enum Permission {
@@ -12,4 +13,5 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
         Permission.EDIT_PROFILE_IMAGE,
         Permission.EDIT_BIOGRAPHY,
     ],
+    [UserRole.FINAL_USER]:[]
 }
