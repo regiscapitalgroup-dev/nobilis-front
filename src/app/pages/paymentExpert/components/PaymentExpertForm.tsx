@@ -16,7 +16,7 @@ const PaymentExpertForm: FC = () => {
 
   const handleSubmit = (values: PaymentExpertModel & {introductionCost?: string}) => {
     console.log('Submitting form data:', values)
-    setSubmitted(true) // ✅ cambia el contenido de la card al hacer submit
+    setSubmitted(true) 
   }
 
   return (

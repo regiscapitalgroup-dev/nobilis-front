@@ -59,6 +59,8 @@ const ROUTE_LAYOUT_MAP: Record<string, LayoutConfig> = {
   '/expertise': LAYOUT_CONFIGS.PROFILE,
   '/recognition': LAYOUT_CONFIGS.PROFILE,
   '/team': LAYOUT_CONFIGS.PROFILE,
+  '/references': LAYOUT_CONFIGS.PROFILE,
+  '/experiences': LAYOUT_CONFIGS.PROFILE,
   'payment/expert/success': LAYOUT_CONFIGS.HEADER_FOOTER_,
 
   '/biography': LAYOUT_CONFIGS.HEADER_FOOTER,

@@ -5,7 +5,6 @@ import {MembershipPaymentWidget} from './components/MembershipPaymentWidget'
 import {loadStripe} from '@stripe/stripe-js'
 import {Elements} from '@stripe/react-stripe-js'
 import {MembershipDetailModel} from './models/MembershipModel'
-import {MembershipWelcomeWidget} from './components/MembershipWelcomeWidget'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {useMemberships} from '../../hooks/membership/useMemberships'
@@ -87,67 +86,67 @@ const MembershipPage: FC = () => {
   }, [])
 
   return (
-    <div className='membership-shell d-flex flex-column'>
-      {/* HERO SOLO SI NO ESTAMOS EN EL PAYMENT */}
-      {membership == null && (
-        <div aria-hidden='true' className='nb-membership-hero' style={getImageStyle()}>
-          <img
-            className='nb-membership-hero__img'
-            src={toAbsoluteUrl('/media/login-room.png')}
-            alt=''
-            loading='eager'
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-            }}
-          />
-        </div>
-      )}
+    <div className='nb-app-container'>
+      <div className='membership-shell d-flex flex-column'>
+        {/* HERO SOLO SI NO ESTAMOS EN EL PAYMENT */}
+        {membership == null && (
+          <div aria-hidden='true' className='nb-membership-hero' style={getImageStyle()}>
+            <img
+              className='nb-membership-hero__img'
+              src={toAbsoluteUrl('/media/login-room.png')}
+              alt=''
+              loading='eager'
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+              }}
+            />
+          </div>
+        )}
 
-      <div
-        className='d-flex flex-column'
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          /*  paddingTop: '48px', */
-          paddingBottom: '100px',
-          minHeight: '100vh',
-        }}
-      >
-        <div className='container-fluid'>
-          <div className='row g-5 g-xl-8'>
-            {membership ? (
-              // Pago cuando ya elegiste un plan
-              <div className='col-12'>
-                <Elements stripe={stripePromise}>
-                  <MembershipPaymentWidget
-                    membership={membership}
-                    handleCancelSelected={handleCancelSelected} // <-- debe poner membership a null
-                  />
-                </Elements>
-              </div>
-            ) : (
-              // Listado de planes
-              <>
-                {Array.isArray(memberships) && memberships.length && (
-                  <>
-                    <div className='col-12'>
-                      <MembershipWidget
-                        memberships={memberships}
-                        loading={loading}
-                        handleScroll={handleSectionScroll}
-                        handleMembershipSelected={handleMembershipSelected} // <-- aquí seteas el plan seleccionado
-                      />
-                    </div>
-                    <div className='col-12'>
-                      <MembershipCreditsWidget refToScroll={secondSecctionRef} />
-                    </div>
-                  </>
-                )}
-              </>
-            )}
+        <div
+          className='d-flex flex-column'
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            paddingBottom: '100px',
+            minHeight: '100vh',
+          }}
+        >
+          <div className='container-fluid'>
+            <div className='row g-5 g-xl-8'>
+              {membership ? (
+                <div className='col-12'>
+                  <Elements stripe={stripePromise}>
+                    <MembershipPaymentWidget
+                      membership={membership}
+                      handleCancelSelected={handleCancelSelected} 
+                    />
+                  </Elements>
+                </div>
+              ) : (
+                // Listado de planes
+                <>
+                  {Array.isArray(memberships) && memberships.length && (
+                    <>
+                      <div className='col-12'>
+                        <MembershipWidget
+                          memberships={memberships}
+                          loading={loading}
+                          handleScroll={handleSectionScroll}
+                          handleMembershipSelected={handleMembershipSelected} 
+                        />
+                      </div>
+                      <div className='col-12'>
+                        <MembershipCreditsWidget refToScroll={secondSecctionRef} />
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

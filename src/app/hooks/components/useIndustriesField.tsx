@@ -13,8 +13,8 @@ export const useIndustriesField = () => {
       try {
         setLoading(true);
         setError(null);
-        const { results } = await getIndustries();
-        if (isMounted) setCollection(Array.isArray(results) ? results : []);
+        const response = await getIndustries();
+        if (isMounted) setCollection(Array.isArray(response) ? response : []);
       } catch (err) {
         if (isMounted) setError(err as Error);
       } finally {

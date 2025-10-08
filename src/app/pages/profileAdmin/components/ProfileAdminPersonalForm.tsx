@@ -1,8 +1,35 @@
-import {FC} from 'react'
+import {FC, useState} from 'react'
 import {Formik, Form, Field} from 'formik'
 import {KTSVG} from '../../../../_metronic/helpers'
+import {HobbiesAutocompleteField} from './fields/HobbiesAutocompleteField'
+import CityAutocompleteField from '../../../modules/auth/components/fields/CityAutocompleteField'
+import ClubesAutocompleteField from './fields/ClubesAutocompleteField'
+import {updateProfilePersonal} from '../../../services/profileAdminService'
+import {useHistory} from 'react-router-dom'
 
 const ProfileAdminPersonalForm: FC = () => {
+  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([])
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
+  const navigate = useHistory()
+
+  const toggleInterest = (interest: string) => {
+    setSelectedInterests((prev) =>
+      prev.includes(interest) ? prev.filter((i) => i !== interest) : [...prev, interest]
+    )
+  }
+
+  const allInterests = [
+    'Building Relationships',
+    'Continuous Learning',
+    'Art/Music/Craft Creation',
+    'Family',
+    'Health and Wellness',
+    'Spiritual Growth',
+    'World Exploration',
+    'Nature',
+  ]
+
   return (
     <div className='pf-personal'>
       <Formik
@@ -12,8 +39,25 @@ const ProfileAdminPersonalForm: FC = () => {
           city: '',
           interests: [],
         }}
-        onSubmit={(values) => {
-          console.log('Form submit', values)
+        onSubmit={async (values, {resetForm}) => {
+          try {
+            setLoading(true)
+
+            const payload = {
+              ...values,
+              hobbies: selectedHobbies,
+              interests: selectedInterests,
+            }
+
+            await updateProfilePersonal(payload)
+            setLoading(false)
+
+            navigate.push('/biography')
+          } catch (error: any) {
+            console.log(error)
+          } finally {
+            setLoading(false)
+          }
         }}
       >
         {() => (
@@ -27,7 +71,10 @@ const ProfileAdminPersonalForm: FC = () => {
                 <div className='pf-personal__title'>Your Hobbies</div>
                 <div className='pf-personal__field'>
                   <label className='pf-personal__label'>List your hobbies</label>
-                  <Field name='hobbies' className='pf-personal__input' placeholder='Singing' />
+                  <HobbiesAutocompleteField
+                    values={selectedHobbies}
+                    onChange={setSelectedHobbies}
+                  />
                 </div>
               </div>
 
@@ -40,15 +87,15 @@ const ProfileAdminPersonalForm: FC = () => {
                 <div className='pf-personal__row'>
                   <div className='pf-personal__field'>
                     <label className='pf-personal__label'>Club Name</label>
-                    <Field
+                    {/*  <Field
                       name='clubName'
-                      className='pf-personal__input'
-                      placeholder='e.g. Chess Club'
-                    />
+                      className='pf-personal__input'                      
+                    /> */}
+                    <ClubesAutocompleteField name='clubName' />
                   </div>
                   <div className='pf-personal__field'>
                     <label className='pf-personal__label'>City</label>
-                    <Field name='city' className='pf-personal__input' placeholder='e.g. New York' />
+                    <CityAutocompleteField name='city' />
                   </div>
                 </div>
                 <div className='pf-personal__add'>+ Add more</div>
@@ -62,26 +109,16 @@ const ProfileAdminPersonalForm: FC = () => {
                 <div className='pf-personal__desc'>Select all that apply</div>
 
                 <div className='pf-personal__tags'>
-                  {[
-                    'Building Relationships',
-                    'Continuous Learning',
-                    'Art/Music/Craft Creation',
-                    'Family',
-                    'Health and Wellness',
-                    'Spiritual Growth',
-                    'World Exploration',
-                    'Nature',
-                  ].map((interest) => (
-                    <label
+                  {allInterests.map((interest) => (
+                    <div
                       key={interest}
+                      onClick={() => toggleInterest(interest)}
                       className={`pf-personal__tag ${
-                        ['Family', 'Spiritual Growth'].includes(interest)
-                          ? 'pf-personal__tag--selected'
-                          : ''
+                        selectedInterests.includes(interest) ? 'pf-personal__tag--selected' : ''
                       }`}
                     >
                       {interest}
-                    </label>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -89,16 +126,41 @@ const ProfileAdminPersonalForm: FC = () => {
 
             {/* Actions */}
             <div className='pf-personal__actions'>
-              <button type='button' className='pf-personal__btn pf-personal__btn--secondary'>
+              <button
+                type='button'
+                className='pf-personal__btn pf-personal__btn--secondary'
+                onClick={() => {
+                  navigate.push('/biography')
+                }}
+              >
                 Cancel
               </button>
-              <button type='submit' className='pf-personal__btn pf-personal__btn--primary'>
-                Save changes
-                <img
-                  src='/media/svg/nobilis/vector1.svg'
-                  alt=''
-                  className='nb-btn-icon nb-btn-icon--white'
-                />
+
+              <button
+                type='submit'
+                className='pf-personal__btn pf-personal__btn--primary'
+                disabled={loading}
+                aria-busy={loading ? 'true' : 'false'}
+              >
+                {!loading ? (
+                  <div className='pf-btn-inner'>
+                    <span>save changes</span>
+                    <img
+                      src='/media/svg/nobilis/vector1.svg'
+                      alt=''
+                      className='nb-btn-icon nb-btn-icon--white'
+                    />
+                  </div>
+                ) : (
+                  <span className='indicator-progress'>
+                    Please wait...
+                    <span
+                      className='spinner-border spinner-border-sm align-middle ms-2'
+                      role='status'
+                      aria-hidden='true'
+                    />
+                  </span>
+                )}
               </button>
             </div>
           </Form>

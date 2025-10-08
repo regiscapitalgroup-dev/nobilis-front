@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import apiClient from "../helpers/apiClient";
 import { UserProfile } from "../pages/profile/models/ProfileModel";
 import { ExperienceFooterModel } from "../../_metronic/layout/components/models/ExperienceModel";
@@ -57,6 +56,20 @@ export const getProfileByUser = async () => {
 export const getUserExperiences = async (): Promise<ExperienceFooterModel[]> => {
     const response = await apiClient.get('/experiences/');
     return response.data?.results;
-  };
-  
-  
+};
+
+
+
+export async function updateProfileImg(image: File) {
+    const formData = new FormData()
+    formData.append('profile_picture', image)
+
+    const { data } = await apiClient.put('/profile/picture/', formData, {
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+        },
+    })
+
+    return data
+}

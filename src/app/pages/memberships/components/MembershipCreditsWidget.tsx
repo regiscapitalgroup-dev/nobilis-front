@@ -23,9 +23,9 @@ const MembershipCreditsWidget: React.FC<Props> = ({refToScroll}) => {
     notes: 'Points are valid for 3 years from when they are earned.',
   }
 
-  useEffect(() => {
+/*   useEffect(() => {
     window.scrollTo({top: 0, behavior: 'smooth'})
-  }, [])
+  }, []) */
 
   return (
     <div className='lp-shell' ref={refToScroll}>

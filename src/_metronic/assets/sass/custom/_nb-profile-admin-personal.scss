@@ -165,4 +165,40 @@
       height: auto;
     }
   }
-  
+  /* ✅ Estado seleccionado para intereses */
+.pf-personal__tag--selected {
+  border: 1px solid #808080;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ✅ Botón “Save changes” idéntico al diseño */
+.pf-personal__btn--primary {
+  background: #151515;
+  color: white;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  .pf-btn-inner {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    span {
+      text-transform: uppercase;
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 22.2px;
+      color: white;
+    }
+
+    .pf-btn-line {
+      width: 12px;
+      height: 3px;
+      border: 1px solid white;
+    }
+  }
+}

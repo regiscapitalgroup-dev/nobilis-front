@@ -4,6 +4,8 @@ import {LanguageAutocompleteField} from '../../profile/components/fields/Languag
 import {useState} from 'react'
 import SocialMediaModal from '../../profile/components/SocialMediaModal'
 import {KTSVG, toAbsoluteUrl} from '../../../../_metronic/helpers'
+import {updateProfile} from '../../../services/profileAdminService'
+import { useHistory } from 'react-router-dom'
 
 type SocialMediaItem = {
   id: string
@@ -13,6 +15,7 @@ type SocialMediaItem = {
 }
 
 const ProfileAdminForm: React.FC = () => {
+  const navigate = useHistory();
   const [socialMediaItems, setSocialMediaItems] = useState<SocialMediaItem[]>([])
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([])
   const [isModalOpen, setModalOpen] = useState(false)
@@ -35,27 +38,27 @@ const ProfileAdminForm: React.FC = () => {
 
   const cards = [
     {
-      id: 'general',
+      id: '1',
       title: 'General Introductions',
       desc: 'Connect with fellow members in your area or those traveling nearby for informal meetings (e.g., lunch, dinner, cultural gatherings) to build relationships organically.',
     },
     {
-      id: 'investment',
+      id: '2',
       title: 'Investment Opportunities',
       desc: 'Receive curated proposals and introductions related to exclusive investment opportunities.',
     },
     {
-      id: 'business',
+      id: '3',
       title: 'Business Participation',
       desc: 'Open to employment, executive roles, advisory positions, or active involvement in select ventures.',
     },
     {
-      id: 'impact',
+      id: '4',
       title: 'Impact Initiatives',
       desc: 'Be introduced to members leading non-profit or purpose-driven initiatives where your expertise, resources, or time could make a difference.',
     },
     {
-      id: 'personal',
+      id: '5',
       title: 'Personal Relationships',
       desc: 'Open to curated introductions with potential for a meaningful relationship or life partner.',
     },
@@ -64,13 +67,6 @@ const ProfileAdminForm: React.FC = () => {
     setSelectedCards((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]))
   }
 
-  const selectAll = () => {
-    if (selectedCards.length === cards.length) {
-      setSelectedCards([]) // desmarca todos si ya estaban
-    } else {
-      setSelectedCards(cards.map((c) => c.id)) // marca todos
-    }
-  }
   return (
     <Formik
       initialValues={{
@@ -79,9 +75,7 @@ const ProfileAdminForm: React.FC = () => {
         surname: '',
         headline: '',
         residence: '',
-        language: '',
         guidingPrinciple: '',
-        introductions: ['general'],
         annualLimit: 'noLimit',
         quarterlyReports: 'yes',
       }}
@@ -89,8 +83,28 @@ const ProfileAdminForm: React.FC = () => {
         name: Yup.string().required('Required'),
         surname: Yup.string().required('Required'),
       })}
-      onSubmit={(values) => {
-        console.log('Submit values 👉', values)
+      onSubmit={async (values) => {
+        try {
+          setLoading(true)
+
+          const payload = {
+            ...values,
+            quarterlyReports: values.quarterlyReports === 'yes',
+            introductions: selectedCards,
+            languages: selectedLanguages,
+            social_media_profiles: socialMediaItems.map((item) => ({
+              platform_name: item.name,
+              profile_url: item.url,
+            })),
+          }        
+          await updateProfile(payload)
+          navigate.push('/biography')
+          setLoading(false)
+
+        } catch (error) {
+          console.log(error)
+          setLoading(false)
+        }
       }}
     >
       {({values, setFieldValue}) => (
@@ -139,7 +153,6 @@ const ProfileAdminForm: React.FC = () => {
 
             <div className='form-field'>
               <label className='field-label'>Language spoken</label>
-              {/* <Field name="language" className="input" placeholder="English, Spanish..." /> */}
               <LanguageAutocompleteField
                 values={selectedLanguages}
                 onChange={setSelectedLanguages}
@@ -181,11 +194,11 @@ const ProfileAdminForm: React.FC = () => {
           <div className='guiding-principle-field'>
             <label className='gp-label'>Guiding Principle</label>
             <Field
-              name='introduction_headline'
+              name='guidingPrinciple'
               maxLength={MAX_LENGTH}
               onChange={(e: any) => {
                 const value = e.target.value
-                setFieldValue('introduction_headline', value)
+                setFieldValue('guidingPrinciple', value)
                 setCountLength(value.length)
               }}
               className='gp-input'
@@ -217,9 +230,7 @@ const ProfileAdminForm: React.FC = () => {
               additional areas in which you are open to receiving curated connections.
             </p>
 
-            <p className='intro-mgmt__hint cursor-pointer' onClick={selectAll}>
-              Select all that apply
-            </p>
+            <p className='intro-mgmt__hint cursor-pointer'>Select all that apply</p>
 
             <div className='intro-mgmt__cards'>
               {cards.map((card) => (
@@ -279,7 +290,9 @@ const ProfileAdminForm: React.FC = () => {
 
           {/* Buttons */}
           <div className='form-actions'>
-            <button type='button' className='btn-secondary'>
+            <button type='button' className='btn-secondary' onClick={()=> {
+              navigate.push('/biography')
+            }}>
               Cancel
             </button>
             <button

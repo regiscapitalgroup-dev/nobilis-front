@@ -9,15 +9,11 @@ export const mockQualifications: QualificationModel[] = [
   ];
   
 export async function createReference(payload: ReferenceModel) {
-  const { data } = await apiClient.post(`/users/references/`, payload, {
-    headers: { Accept: "application/json" },
-  });
+  const { data } = await apiClient.post(`/users/references/`, payload);
   return data;
 }
 
 export async function getQualifications(): Promise<QualificationModel[]> {
-    const { data } = await apiClient.get(`/references/qualifications`, {
-      headers: { Accept: "application/json" },
-    });
+    const { data } = await apiClient.get(`/references/qualifications`, );
     return data;
   }

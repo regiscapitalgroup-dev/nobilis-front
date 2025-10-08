@@ -14,6 +14,11 @@ import {UserModel} from '../../../modules/auth/models/UserModel'
 import {hasPermission} from '../../../utils/permissions'
 import {Permission} from '../../../constants/roles'
 import {KTSVG} from '../../../../_metronic/helpers'
+import {useHistory} from 'react-router-dom'
+
+interface BiographyTabsProps {
+  onTabChange?: (tabId: string) => void
+}
 
 const tabs = [
   {id: 'bio', label: 'Biography'},
@@ -23,12 +28,13 @@ const tabs = [
   {id: 'expertise', label: 'Expertise'},
 ]
 
-const BiographyTabs: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('ini')
+const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
   const {data} = useUserProfileContext()
-  const {collection} = useIntroduction()
+  /* const {collection} = useIntroduction() */
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const canEditBio = hasPermission(user, Permission.EDIT_BIOGRAPHY)
+  const [activeTab, setActiveTab] = useState(canEditBio ? 'ini' : 'bio')
+  const navigate = useHistory()
 
   const getYouTubeId = (url: string) => {
     if (!url) return null
@@ -53,6 +59,11 @@ const BiographyTabs: React.FC = () => {
     return 'https://via.placeholder.com/640x360'
   }
 
+  const handleTabClick = (tabId: string) => {
+    setActiveTab(tabId)
+    onTabChange?.(tabId)
+  }
+
   return (
     <>
       <div className='bio-tabs'>
@@ -62,7 +73,7 @@ const BiographyTabs: React.FC = () => {
             <div key={tab.id} className='bio-tabs__header-item'>
               <div
                 className={`bio-tabs__item ${activeTab === tab.id ? 'active' : ''}`}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => handleTabClick(tab.id)}
               >
                 {tab.label}
               </div>
@@ -72,8 +83,27 @@ const BiographyTabs: React.FC = () => {
 
           {canEditBio && (
             <div className='bio-tabs-actions-wrapper'>
-              <button className='bio-tabs__confidential-btn'>Confidential Info</button>
-              <button className='bio-edit-underline-btn'>
+              <button
+                className='bio-tabs__confidential-btn'
+                onClick={() => navigate.push('/admin/overview/confidential')}
+              >
+                Confidential Info
+              </button>
+              <button
+                className='bio-edit-underline-btn'
+                onClick={() => {
+                  const routes: Record<string, string> = {
+                    bio: '/biography/overview',
+                    overview: '/admin/overview/professional',
+                    lifestyle: '/admin/overview/personal',
+                   /*  recognition: '/admin/overview/recognition',
+                    expertise: '/admin/overview/expertise', */
+                  }
+          
+                  const route = routes[activeTab] || '/admin/overview/profile'
+                  navigate.push(route)
+                }}
+              >
                 <span>EDIT</span>
                 <KTSVG path='/media/svg/nobilis/vector1.svg' />
               </button>

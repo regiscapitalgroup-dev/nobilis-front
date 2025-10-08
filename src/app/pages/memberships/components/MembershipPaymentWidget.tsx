@@ -39,9 +39,8 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
   const navigate = useHistory()
 
   useEffect(() => {
-    if (membership) {
-      scrollTopRef.current?.scrollTo({behavior: 'smooth', top: 0})
-    }
+    console.log(membership)
+    scrollTopRef.current?.scrollTo({behavior: 'smooth', top: 0})
   }, [membership])
 
   const cardStyles = useMemo(
@@ -269,23 +268,6 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
                     options={cardStyles as any}
                     className='stripe-card-element'
                   />
-                </div>
-
-                <div className='fv-row mb-10'>
-                  <div className='nbq-check' style={{justifyContent: 'start'}}>
-                    <input
-                      className='form-check-input '
-                      type='checkbox'
-                      id='flexCheckDefault'
-                      checked={billingIsSameAsShipping}
-                      onChange={(e) => setBillingIsSameAsShipping(e.target.checked)}
-                    />
-                    <label className='nb-body nb-center '>
-                      <a className='nb-body ' onClick={() => {}}>
-                        Billing address is same as shipping
-                      </a>
-                    </label>
-                  </div>
                 </div>
               </div>
             </div>

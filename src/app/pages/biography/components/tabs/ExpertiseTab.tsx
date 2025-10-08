@@ -1,13 +1,14 @@
-import {FC} from 'react'
+import { FC } from 'react'
+import { useUserProfileContext } from '../../../../context/UserProfileContext'
 
 interface ServiceCardProps {
   title: string
   description: string
   rate: string
-  rateType: string
+  rateType?: string
 }
 
-const ServiceCard: FC<ServiceCardProps> = ({title, description, rate, rateType}) => {
+const ServiceCard: FC<ServiceCardProps> = ({ title, description, rate, rateType }) => {
   return (
     <div className='service-card'>
       <div className='service-card__title'>{title}</div>
@@ -18,7 +19,8 @@ const ServiceCard: FC<ServiceCardProps> = ({title, description, rate, rateType})
         <div className='service-card__rate'>
           <div className='service-card__rate-label'>Rate</div>
           <div className='service-card__rate-value'>
-            {rate}/{rateType}
+            {rate}
+            {rateType ? `/${rateType}` : ''}
           </div>
         </div>
       </div>
@@ -27,31 +29,26 @@ const ServiceCard: FC<ServiceCardProps> = ({title, description, rate, rateType})
 }
 
 const ExpertiseTab: FC = () => {
-  const services = [
-    {
-      title: 'Professional Knowledge Sharing',
-      description:
-        "I'm available to share insights on building founder-led companies, long-term brand strategy, and scaling philanthropic ventures with integrity. I've mentored early-stage leaders, advised family offices, and spoken at private leadership summits — and I welcome thoughtful exchanges around these topics.",
-      rate: '$23',
-      rateType: 'hour',
-    },
-    {
-      title: 'Strategic Marketing Consultation',
-      description:
-        "I offer expertise in digital marketing strategies, brand positioning, and consumer engagement. My experience includes working with startups to enhance their online presence and optimize their marketing funnels. I'm open to discussing innovative marketing approaches that drive results.",
-      rate: '$23',
-      rateType: 'project',
-    },
-  ]
+  const { data } = useUserProfileContext()
+
+  const services = data?.expertise || []
+
+  if (!services.length) {
+    return (
+      <div className='expertise-tab'>
+        <div className='expertise-tab__empty'>No expertise information available.</div>
+      </div>
+    )
+  }
 
   return (
     <div className='expertise-tab'>
       <div className='expertise-tab__services'>
-        {services.map((service, index) => (
+        {services.map((service: any, index: number) => (
           <ServiceCard
             key={index}
             title={service.title}
-            description={service.description}
+            description={service.content}
             rate={service.rate}
             rateType={service.rateType}
           />
@@ -61,4 +58,4 @@ const ExpertiseTab: FC = () => {
   )
 }
 
-export {ExpertiseTab}
+export { ExpertiseTab }

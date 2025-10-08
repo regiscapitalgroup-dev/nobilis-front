@@ -4,10 +4,10 @@ import clsx from 'clsx'
 import {MenuComponent} from '../../../assets/ts/components'
 import {useLayout} from '../../core'
 import {KTSVG} from '../../../helpers'
-import { HeaderUserMenu } from '../../../partials'
-import { UserModel } from '../../../../app/modules/auth/models/UserModel'
-import { shallowEqual, useSelector } from 'react-redux'
-import { RootState } from '../../../../setup'
+import {HeaderUserMenu} from '../../../partials'
+import {UserModel} from '../../../../app/modules/auth/models/UserModel'
+import {shallowEqual, useSelector} from 'react-redux'
+import {RootState} from '../../../../setup'
 
 export function HeaderWrapper() {
   const {pathname} = useLocation()
@@ -63,13 +63,13 @@ export function HeaderWrapper() {
         <div className='nb-header__right'>
           <span className='nb-header__right-link'>Community</span>
           <span className='nb-header__right-link'>Expertise</span>
-          
+
           {/* NOTIFICATIONS */}
           <div className='nb-header__right-avatar'>
             <KTSVG path='/media/svg/nobilis/bell.svg' className='svg-icon-1' />
-            <span className='badge'>2</span>
+           {/*  <span className='badge'>2</span> */}
           </div>
-          
+
           {/* USER MENU */}
           <div className='nb-header__right-avatar position-relative'>
             <div
@@ -79,8 +79,8 @@ export function HeaderWrapper() {
               data-kt-menu-placement='bottom-end'
               data-kt-menu-flip='bottom'
             >
-              <img src='https://placehold.co/32x32' alt='User' />
-              <span className='badge'>2</span>
+              <img src={user.profilePicture ? user.profilePicture : 'https://placehold.co/32x32'} alt='User' />
+             {/*  <span className='badge'>2</span> */}
             </div>
             <HeaderUserMenu />
           </div>

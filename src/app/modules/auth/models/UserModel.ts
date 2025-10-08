@@ -4,4 +4,5 @@ export interface UserModel {
   lastName: string
   pic: string,
   role: string
+  profilePicture: string;
 }

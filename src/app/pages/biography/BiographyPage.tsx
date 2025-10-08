@@ -7,6 +7,8 @@ import {UserModel} from '../../modules/auth/models/UserModel'
 import {useUserProfileContext} from '../../context/UserProfileContext'
 import {hasPermission} from '../../utils/permissions'
 import {Permission} from '../../constants/roles'
+import {useHistory} from 'react-router-dom'
+import {updateProfileImg} from '../../services/profileService'
 
 const socials = [
   {icon: '/media/svg/nobilis/instagram.svg'},
@@ -21,14 +23,24 @@ const BiographyPage: FC = () => {
   const fullName = `${user.firstName} ${user.lastName}`
   const [isMember, setIsMember] = useState<boolean>(false)
   const [isExpert, setIsExpert] = useState<boolean>(false)
-  const [profileImage, setProfileImage] = useState<string>(toAbsoluteUrl('/media/people3.png'))
+  const [profileImage, setProfileImage] = useState<string>(toAbsoluteUrl(''))
   const [isUploading, setIsUploading] = useState<boolean>(false)
+  const navigate = useHistory()
+  const [module, setModule] = useState<string>('')
 
   useEffect(() => {
     if (data?.subscription) setIsMember(true)
 
     if (data?.expertise) setIsExpert(true)
   }, [data])
+
+  useEffect(() => {
+    if (data?.profilePicture && typeof data.profilePicture === 'string' && data.profilePicture.trim() !== '') {
+      setProfileImage(data.profilePicture)
+    } else {
+      setProfileImage(toAbsoluteUrl('/media/people3.png'))
+    }
+  }, [data?.profilePicture])
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -42,17 +54,15 @@ const BiographyPage: FC = () => {
     reader.onload = (e) => {
       const imageUrl = e.target?.result as string
       setProfileImage(imageUrl)
-      console.log('Nueva imagen:', imageUrl)
     }
     reader.readAsDataURL(file)
 
     setIsUploading(true)
 
     try {
-      console.log('Imagen subida exitosamente')
+      await updateProfileImg(file)
     } catch (error) {
-      console.error('Error al subir la imagen:', error)
-      alert('Error al subir la imagen. Por favor intenta de nuevo.')
+      console.error('Error to upload:', error)
 
       setProfileImage(previousImage)
     } finally {
@@ -63,9 +73,13 @@ const BiographyPage: FC = () => {
     }
   }
 
+  const handleModule = async (module: string) => {
+    setModule(module)
+  }
+
   return (
     <>
-      <div className='profile-completion-banner'>
+      {/* <div className='profile-completion-banner'>
         <div className='profile-completion-banner__content'>
           <div className='profile-completion-banner__text'>
             <p className='profile-completion-banner__title'>
@@ -81,7 +95,7 @@ const BiographyPage: FC = () => {
           <span>GET PROFESSIONAL SERVICE</span>
           <KTSVG path='/media/svg/nobilis/vector1.svg' />
         </button>
-      </div>
+      </div> */}
 
       <div className='biography'>
         <div className='biography__watermark'>
@@ -198,7 +212,7 @@ const BiographyPage: FC = () => {
             <div className='biography__edit-container'>
               <button
                 className='biography__edit-link'
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => navigate.push('/admin/overview/profile')}
                 type='button'
               >
                 <span>EDIT</span>
@@ -209,7 +223,7 @@ const BiographyPage: FC = () => {
         </div>
       </div>
 
-      <BiographyTabs />
+      <BiographyTabs onTabChange={handleModule} />
     </>
   )
 }

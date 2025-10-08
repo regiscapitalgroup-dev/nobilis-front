@@ -183,3 +183,43 @@
     }
   }
     
+
+  /* ✅ Estado seleccionado para los intereses */
+.pf-chip.is-selected {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #808080;
+  font-weight: 700;
+}
+
+/* ✅ Botón “Save changes” igual al diseño Figma */
+.pf-btn--save {
+  background: #151515;
+  color: white;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 20px;
+
+  .pf-btn-inner {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    span {
+      text-transform: uppercase;
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 22.2px;
+      color: white;
+    }
+
+    .pf-btn-line {
+      width: 12px;
+      height: 3px;
+      border: 1px solid white;
+    }
+  }
+}

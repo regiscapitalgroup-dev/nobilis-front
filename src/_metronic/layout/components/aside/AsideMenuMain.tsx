@@ -13,7 +13,7 @@ export function AsideMenuMain() {
           </div>
           <div className="nb-menu-section-content">
             <AsideMenuItem
-              to='/admin/overview'
+              to='/admin/overview/profile'
               title='MY PROFILE'
               showIcon={true}
               isSelected={false}
@@ -24,7 +24,7 @@ export function AsideMenuMain() {
               title='MY TEAM'
               showIcon={true}
               isSelected={false}
-              icon='/media/svg/nobilis/team_nb.svg'
+              icon='/media/svg/nobilis/team_nb.svg'              
 
             />
             <AsideMenuItem
@@ -52,16 +52,17 @@ export function AsideMenuMain() {
               title='MY EXPERIENCES'
               showIcon={true}
               showBadge={true}
-              badgeCount={2}
+              /* badgeCount={2} */
               isSelected={false}
               icon='/media/svg/nobilis/exp_nb.svg'
+              
             />
             <AsideMenuItem
               to='/dashboard'
               title='MY INTRODUCTIONS'
               showIcon={true}
               showBadge={true}
-              badgeCount={2}
+             /*  badgeCount={2} */
               isSelected={false}
               icon='/media/svg/nobilis/intro_nb.svg'
             />
@@ -70,7 +71,7 @@ export function AsideMenuMain() {
               title='MY EXPERTISE'
               showIcon={true}
               showBadge={true}
-              badgeCount={2}
+              /* badgeCount={2} */
               isSelected={false}
               icon='/media/svg/nobilis/expert_nb.svg'
             />
@@ -79,7 +80,7 @@ export function AsideMenuMain() {
               title='MY MASTERMIND CIRCLES'
               showIcon={true}
               showBadge={true}
-              badgeCount={2}
+              /* badgeCount={2} */
               isSelected={false}
               icon='/media/svg/nobilis/mem_cir_nb.svg'
             />
@@ -107,7 +108,7 @@ export function AsideMenuMain() {
               title='INVITATIONS'
               showIcon={true}
               showBadge={true}
-              badgeCount={2}
+              /* badgeCount={2} */
               isSelected={false}
               icon='/media/svg/nobilis/book_nb.svg'
             />

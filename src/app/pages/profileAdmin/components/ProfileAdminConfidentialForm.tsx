@@ -6,34 +6,78 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import RelationAutocompleteField from './fields/RelationsAutocompleteField'
 import {MultipleCitiesAutocompleteField} from './fields/MultipleCitiesAutocompleteField'
+import {useUserProfileContext} from '../../../context/UserProfileContext'
+import {updateProfileConfidential} from '../../../services/profileAdminService'
+import {useHistory} from 'react-router-dom'
 
 const ProfileConfidentialForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [selectedCities, setSelecteCities] = useState<string[]>([])
+  const {data} = useUserProfileContext()
+  const navigate = useHistory()
 
   return (
     <Formik
+      enableReinitialize
       initialValues={{
-        email: 'jhondoe@email.com',
-        dob: '',
-        phone: '',
+        email: data?.email || '',
+        dob: data?.birthday || '',
+        phone: data?.phoneNumber || '',
         contactMethods: [],
         address: '',
         cityCountry: '',
-        citiesOfInterest: [''], // 👈 importante: ya existe el array
+        citiesOfInterest: [],
         partnerName: '',
         partnerSurname: '',
-        relatives: [{name: '', surname: '', yearOfBirth: '', relation: ''}],
+        relatives: [
+          {
+            name: '',
+            surname: '',
+            yearOfBirth: '',
+            relation: { id: 0, name: '' }, 
+          },
+        ],
       }}
       validationSchema={Yup.object({
         email: Yup.string().email('Invalid email').required('Required'),
       })}
-      onSubmit={(values) => {
-        console.log('Confidential Submit 👉', values)
+      onSubmit={async (values, {resetForm}) => {
+        try {
+          setLoading(true)
+
+          const payload = {
+            email: values.email,
+            birthday: values.dob,
+            phone_number: values.phone,
+            contact_methods: values.contactMethods,
+            address: values.address,
+            city_country: values.cityCountry,
+            cities_of_interest: selectedCities,
+            partner: {
+              name: values.partnerName,
+              surname: values.partnerSurname,
+            },
+            relatives: values.relatives
+              .filter((r) => r.name.trim() || r.surname.trim())
+              .map((r) => ({
+                first_name: r.name,
+                last_name: r.surname,
+                year_of_birth: Number(r.yearOfBirth),
+                relationship_id: r.relation?.id || null,
+              })),
+          }
+
+          await updateProfileConfidential(payload)
+          navigate.push('/biography')
+        } catch (error: any) {
+          console.error(error)
+        } finally {
+          setLoading(false)
+        }
       }}
     >
-      {({values, setFieldValue}) => (
-        <Form className='profile-confidential-form  profile-form-base'>
+      {({values}) => (
+        <Form className='profile-confidential-form profile-form-base'>
           {/* Header */}
           <div className='confidential-header'>
             <h2 className='confidential-header__title'>Edit Confidential Profile Details</h2>
@@ -47,13 +91,11 @@ const ProfileConfidentialForm: React.FC = () => {
           <div className='form-section'>
             <h3 className='section-title'>General Information</h3>
 
-            {/* Email */}
             <div className='form-field'>
               <label className='field-label'>Email</label>
               <Field name='email' className='input' disabled />
             </div>
 
-            {/* DOB & Phone */}
             <div className='form-row'>
               <div className='form-field'>
                 <label className='field-label'>Date of Birth</label>
@@ -63,8 +105,8 @@ const ProfileConfidentialForm: React.FC = () => {
               <div className='form-field'>
                 <label className='field-label'>Phone</label>
                 <div className='profile-input-wrapper'>
-                  <Field name='phone_number'>
-                    {({field, form, meta}: any) => (
+                  <Field name='phone'>
+                    {({field, form}: any) => (
                       <PhoneInput
                         country='us'
                         placeholder='+1'
@@ -80,7 +122,6 @@ const ProfileConfidentialForm: React.FC = () => {
               </div>
             </div>
 
-            {/* Preferred Contact */}
             <div className='form-field'>
               <span className='field-subtitle'>Preferred Contact Method</span>
               <div className='checkbox-group'>
@@ -112,10 +153,11 @@ const ProfileConfidentialForm: React.FC = () => {
 
             <div className='form-field'>
               <label className='field-label'>City & Country</label>
-              <CityAutocompleteField name='city' />
+              <CityAutocompleteField name='cityCountry' />
             </div>
           </div>
 
+          {/* Section: Cities of Interest */}
           <div className='form-section'>
             <div className='section-header'>
               <h3 className='section-title'>Cities of Interest – often in</h3>
@@ -125,7 +167,6 @@ const ProfileConfidentialForm: React.FC = () => {
             </div>
 
             <MultipleCitiesAutocompleteField values={selectedCities} onChange={setSelecteCities} />
-
             <div className='form-add'>+ Add more</div>
           </div>
 
@@ -138,8 +179,9 @@ const ProfileConfidentialForm: React.FC = () => {
               <p className='partner-desc'>
                 If your partner meets Nobilis’ qualifications, they are eligible for a Life Partner
                 Discount on their own Nobilis account. If not, or not willing to create the account,
-                they can be linked to your profile and join you in Nobilis Experiences alongside
-                your closest relatives (parents, siblings) and children (up to 21 years old). <br />
+                they can be linked to your profile and join you in Nobilis Experiences alongside your
+                closest relatives (parents, siblings) and children (up to 21 years old).
+                <br />
                 <br />
                 Relationships must have lasted at least one year to qualify.
               </p>
@@ -158,44 +200,60 @@ const ProfileConfidentialForm: React.FC = () => {
           </div>
 
           {/* Section: Relatives */}
-
           <div className='form-section'>
             <div className='section-header'>
               <h3 className='section-title'>Your Relatives</h3>
               <p className='section-desc'>
                 Nobilis supports you and your family in enjoying quality time together and within
-                the community. To include your loved ones, please register your closest relatives
-                (parents, siblings) and children (up to 21 years old).
+                the community. To include your loved ones, please register your closest relatives.
               </p>
             </div>
 
-            {values.relatives.map((relative, index) => (
-              <div key={index} className='form-grid-2x2'>
-                <div className='form-field'>
-                  <label className='field-label'>Name</label>
-                  <Field name={`relatives.${index}.name`} className='input' />
-                </div>
-                <div className='form-field'>
-                  <label className='field-label'>Surname</label>
-                  <Field name={`relatives.${index}.surname`} className='input' />
-                </div>
-                <div className='form-field'>
-                  <label className='field-label'>Year of Birth</label>
-                  <Field name={`relatives.${index}.yearOfBirth`} className='input' />
-                </div>
-                <div className='form-field'>
-                  <label className='field-label'>Relation</label>
-                  <RelationAutocompleteField name='relation' />
-                </div>
-              </div>
-            ))}
+            <FieldArray name='relatives'>
+              {({push}) => (
+                <>
+                  {values.relatives.map((relative, index) => (
+                    <div key={index} className='form-grid-2x2'>
+                      <div className='form-field'>
+                        <label className='field-label'>Name</label>
+                        <Field name={`relatives.${index}.name`} className='input' />
+                      </div>
+                      <div className='form-field'>
+                        <label className='field-label'>Surname</label>
+                        <Field name={`relatives.${index}.surname`} className='input' />
+                      </div>
+                      <div className='form-field'>
+                        <label className='field-label'>Year of Birth</label>
+                        <Field name={`relatives.${index}.yearOfBirth`} className='input' />
+                      </div>
+                      <div className='form-field'>
+                        <label className='field-label'>Relation</label>
+                        <RelationAutocompleteField name={`relatives.${index}.relation`} />
+                      </div>
+                    </div>
+                  ))}
 
-            <div className='form-add'>+ Add more relatives</div>
+                  <div
+                    className='form-add'
+                    onClick={() =>
+                      push({
+                        name: '',
+                        surname: '',
+                        yearOfBirth: '',
+                        relation: { id: 0, name: '' },
+                      })
+                    }
+                  >
+                    + Add more relatives
+                  </div>
+                </>
+              )}
+            </FieldArray>
           </div>
 
           {/* Actions */}
           <div className='form-actions'>
-            <button type='button' className='btn-secondary'>
+            <button type='button' className='btn-secondary' onClick={() => navigate.push('/biography')}>
               Cancel
             </button>
             <button
@@ -203,7 +261,6 @@ const ProfileConfidentialForm: React.FC = () => {
               className='btn nb-btn-primary'
               disabled={loading}
               aria-busy={loading ? 'true' : 'false'}
-              aria-live='polite'
             >
               {!loading ? (
                 <>
@@ -215,7 +272,14 @@ const ProfileConfidentialForm: React.FC = () => {
                   />
                 </>
               ) : (
-                <span>Please wait...</span>
+                <span className='indicator-progress nb-heading-md'>
+                  Please wait...
+                  <span
+                    className='spinner-border spinner-border-sm align-middle ms-2'
+                    role='status'
+                    aria-hidden='true'
+                  />
+                </span>
               )}
             </button>
           </div>

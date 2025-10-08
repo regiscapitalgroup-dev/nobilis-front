@@ -12,7 +12,8 @@ const loginSchema = Yup.object().shape({
   password: Yup.string().required('This field is required'),
 })
 
-const initialValues = { email: 'omar.espinoza@outlook.com', password: 'tomachangotubanana' }
+/* const initialValues = { email: 'omar.espinoza@outlook.com', password: 'tomachangotubanana' } */
+const initialValues = {email: '', password: ''}
 
 export function Login() {
   const [loading, setLoading] = useState(false)
@@ -26,17 +27,24 @@ export function Login() {
       setLoading(true)
       setTimeout(() => {
         login(values.email, values.password)
-          .then((data) => { dispatch(auth.actions.login(data.access)); setLoading(false) })
-          .catch(() => { setLoading(false); setSubmitting(false); alert('an error has occurred') })
+          .then((data) => {
+            dispatch(auth.actions.login(data.access))
+            setLoading(false)
+          })
+          .catch(() => {
+            setLoading(false)
+            setSubmitting(false)
+            alert('an error has occurred')
+          })
       }, 1000)
     },
   })
 
   return (
-    <form 
-      className='form nb-form-520' 
-      onSubmit={formik.handleSubmit} 
-      noValidate 
+    <form
+      className='form nb-form-520'
+      onSubmit={formik.handleSubmit}
+      noValidate
       id='kt_login_signin_form'
     >
       {/* Header (gap 10 entre título y subtítulo) */}
@@ -60,7 +68,9 @@ export function Login() {
           </div>
           {formik.touched.email && formik.errors.email && (
             <div className='fv-plugins-message-container'>
-              <span role='alert' className='input-text-style'>{formik.errors.email}</span>
+              <span role='alert' className='input-text-style'>
+                {formik.errors.email}
+              </span>
             </div>
           )}
         </div>
@@ -90,7 +100,9 @@ export function Login() {
             </div>
             {formik.touched.password && formik.errors.password && (
               <div className='fv-plugins-message-container'>
-                <span role='alert' className='input-text-style'>{formik.errors.password}</span>
+                <span role='alert' className='input-text-style'>
+                  {formik.errors.password}
+                </span>
               </div>
             )}
           </div>
@@ -116,18 +128,18 @@ export function Login() {
           {!loading ? (
             <>
               <span className='nb-heading-md'>LOG IN</span>
-              <img 
-                src='/media/svg/nobilis/vector1.svg' 
-                alt='' 
-                className='nb-btn-icon nb-btn-icon--white' 
+              <img
+                src='/media/svg/nobilis/vector1.svg'
+                alt=''
+                className='nb-btn-icon nb-btn-icon--white'
               />
             </>
           ) : (
             <span className='indicator-progress nb-heading-md'>
               Please wait...
-              <span 
-                className='spinner-border spinner-border-sm align-middle ms-2' 
-                role='status' 
+              <span
+                className='spinner-border spinner-border-sm align-middle ms-2'
+                role='status'
                 aria-hidden='true'
               />
             </span>
@@ -136,10 +148,10 @@ export function Login() {
 
         <Link to='/auth/registration' className='btn nb-btn-outline'>
           <span className='nb-heading-md'>REQUEST MEMBERSHIP</span>
-          <img 
-            src='/media/svg/nobilis/vector1.svg' 
-            alt='' 
-            className='nb-btn-icon nb-btn-icon--black' 
+          <img
+            src='/media/svg/nobilis/vector1.svg'
+            alt=''
+            className='nb-btn-icon nb-btn-icon--black'
           />
         </Link>
       </div>

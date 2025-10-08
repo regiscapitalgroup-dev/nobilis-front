@@ -1,6 +1,11 @@
 import React from 'react';
+import { useUserProfileContext } from '../../../../context/UserProfileContext';
 
 const InfoFamilyTab = () => {
+  const { data } = useUserProfileContext();
+
+  const relatives = data?.relatives ?? [];
+
   return (
     <div className="family-card">
       {/* Title */}
@@ -11,52 +16,32 @@ const InfoFamilyTab = () => {
       {/* Partner */}
       <div className="partner">
         <span className="field-label">Life Partner / Spouse</span>
-        <span className="field-value">Hannah Rostchild</span>
+        <span className="field-value">
+          {`${data?.lifePartnerName} ${data?.lifePartnerLastname}`|| 'Not specified'}
+        </span>
       </div>
 
       {/* Relatives */}
       <div className="relatives">
         <span className="relatives-label">Relatives</span>
 
-        <div className="relative-item">
-          <div className="relative-info">
-            <span className="relative-name">Zara Chen</span>
-            <span className="relative-birth">Born in 2024</span>
-          </div>
-          <span className="relative-type">Children</span>
-        </div>
-
-        <div className="relative-item">
-          <div className="relative-info">
-            <span className="relative-name">Elara Vivienne</span>
-            <span className="relative-birth">Born in 2022</span>
-          </div>
-          <span className="relative-type">Children</span>
-        </div>
-
-        <div className="relative-item">
-          <div className="relative-info">
-            <span className="relative-name">Mila Reynolds</span>
-            <span className="relative-birth">Born in 2022</span>
-          </div>
-          <span className="relative-type">Mother</span>
-        </div>
-
-        <div className="relative-item">
-          <div className="relative-info">
-            <span className="relative-name">Jasper Orion</span>
-            <span className="relative-birth">Born in 2021</span>
-          </div>
-          <span className="relative-type">Father</span>
-        </div>
-
-        <div className="relative-item">
-          <div className="relative-info">
-            <span className="relative-name">Lyra Mae</span>
-            <span className="relative-birth">Born in 2023</span>
-          </div>
-          <span className="relative-type">Sister</span>
-        </div>
+        {relatives.length > 0 ? (
+          relatives.map((relative) => (
+            <div key={relative.id} className="relative-item">
+              <div className="relative-info">
+                <span className="relative-name">
+                  {relative.firstName} {relative.lastName}
+                </span>
+                <span className="relative-birth">
+                  Born in {relative.yearOfBirth}
+                </span>
+              </div>
+              <span className="relative-type">{relative.relationship}</span>
+            </div>
+          ))
+        ) : (
+          <p className="no-relatives">No relatives added yet.</p>
+        )}
       </div>
     </div>
   );

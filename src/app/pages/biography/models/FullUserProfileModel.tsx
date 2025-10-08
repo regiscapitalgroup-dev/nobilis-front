@@ -1,5 +1,6 @@
 export interface FullUserProfileModel {
     user: number;
+    email: string;
     introductionHeadline: string;
     aliasTitle: string;
     profilePicture: string;
@@ -17,7 +18,11 @@ export interface FullUserProfileModel {
     expertise: Expertise[];
     videos: Video[];
     subscription: Subscription | null;
-    picFooter: string
+    picFooter: string;
+    relatives: Relative[],
+    lifePartnerName: string;
+    lifePartnerLastname: string;
+    postalAddress: string;
   }
   
   export interface SocialMediaProfile {
@@ -99,5 +104,15 @@ export interface FullUserProfileModel {
   
   export interface Subscription {
     
+  }
+  
+  export interface Relative {
+    id: number;
+    user: number;
+    firstName: string;
+    lastName: string;
+    yearOfBirth: number;
+    relationship: string;
+    createdAt: string;
   }
   

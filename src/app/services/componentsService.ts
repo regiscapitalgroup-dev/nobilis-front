@@ -18,8 +18,9 @@ export const getRelations = async () => {
 };
 
 
-export const getIndustries = async () => {
-    const { data } = await apiClient.get('/industries/');
+export const getIndustries = async (search?: string) => {
+    const params = search && search.trim() ? { search: search.trim() } : undefined;
+    const { data } = await apiClient.get('/catalog/industries/');
     return data;
 };
 
@@ -29,11 +30,16 @@ export const getProfessionalInterests = async () => {
 };
 
 export const getHobbies = async () => {
-    const { data } = await apiClient.get('/hobbies/');
+    const { data } = await apiClient.get('catalog/hobbies/');
     return data;
 };
 
 export const getPersonalInterests = async () => {
     const { data } = await apiClient.get('/personal-interests/');
+    return data;
+};
+
+export const getClubes = async (search?: string) => {
+    const { data } = await apiClient.get('catalog/clubs/');
     return data;
 };

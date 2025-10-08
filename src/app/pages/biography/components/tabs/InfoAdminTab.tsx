@@ -1,6 +1,12 @@
 import React from 'react';
+import { useUserProfileContext } from '../../../../context/UserProfileContext';
+import { formatDateStr } from '../../../../helpers/FormatDate';
 
 const InfoAdminTab = () => {
+
+  const {data} = useUserProfileContext()
+
+
   return (
     <div className="info-card bio-tabs__panel">
       {/* General Information */}
@@ -9,15 +15,15 @@ const InfoAdminTab = () => {
         <div className="section-content">
           <div className="field">
             <span className="field-label">Date of birth</span>
-            <span className="field-value">18 August 1973</span>
+            <span className="field-value">{formatDateStr(data?.birthday ?? "")}</span>
           </div>
           <div className="field">
             <span className="field-label">Phone</span>
-            <span className="field-value">+578 23728137</span>
+            <span className="field-value">{data?.phoneNumber}</span>
           </div>
           <div className="field">
             <span className="field-label">E-mail</span>
-            <span className="field-value">fredrick123@gmail.com</span>
+            <span className="field-value">{data?.email}</span>
           </div>
           <div className="field">
             <span className="field-label">Preferred Contact Method</span>
@@ -33,15 +39,15 @@ const InfoAdminTab = () => {
           <div className="address-block">
             <span className="address-label">Postal Address</span>
             <div className="address-value">
-              <p>927 Park Avenue, NY 10028</p>
-              <p className="muted">New York, United States</p>
+              <p>{data?.postalAddress}</p>
+              <p className="muted">{data?.city}</p>
             </div>
           </div>
 
           <div className="address-block">
             <span className="address-label">Primary residence</span>
             <div className="address-value">
-              <p>New York, United States</p>
+              <p>{data?.city}</p>
             </div>
           </div>
 

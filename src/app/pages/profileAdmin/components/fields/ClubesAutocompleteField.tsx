@@ -1,6 +1,6 @@
-import React, { useMemo, useState, useEffect } from 'react'
-import { useField } from 'formik'
-import { useRelationField } from '../../../../hooks/components/useRelationField'
+import React, {useMemo, useState, useEffect} from 'react'
+import {useField} from 'formik'
+import { useClubesField } from '../../../../hooks/components/useClubesField'
 
 const highlightMatch = (text: string, query: string) => {
   if (!query) return text
@@ -11,23 +11,13 @@ const highlightMatch = (text: string, query: string) => {
     <>
       {parts.map((part, i) =>
         regex.test(part) ? (
-          <span key={i} style={{ fontWeight: 700 }}>
-            {part}
-          </span>
+          <span key={i} style={{fontWeight: 700}}>{part}</span>
         ) : (
-          <span key={i} style={{ fontWeight: 300 }}>
-            {part}
-          </span>
+          <span key={i} style={{fontWeight: 300}}>{part}</span>
         )
       )}
     </>
   )
-}
-
-type Item = {
-  id: number
-  name: string
-  description?: string
 }
 
 type Props = {
@@ -36,11 +26,12 @@ type Props = {
   minChars?: number
 }
 
-export default function RelationAutocompleteField({
+export default function ClubesAutocompleteField({
   name,
+  placeholder = 'Type',
   minChars = 0,
 }: Props) {
-  const [field, , helpers] = useField<{ id: number; name: string } | undefined>(name)
+  const [field, , helpers] = useField<string | undefined>(name)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
 
@@ -52,14 +43,15 @@ export default function RelationAutocompleteField({
   }, [query])
 
   const enableSearch = debounced.length >= minChars && debounced.length > 0
+  const searchTerm = enableSearch ? debounced : undefined
 
-  const { collection, loading, error } = useRelationField()
-  const items = useMemo<Item[]>(() => (Array.isArray(collection) ? collection : []), [collection])
+  const { collection, loading, error} = useClubesField(searchTerm)
+  const items = useMemo<string[]>(() => (Array.isArray(collection) ? collection : []), [collection])
 
   const visible = useMemo(() => {
     if (!enableSearch) return items.slice(0, 10)
     const q = debounced.toLowerCase()
-    return items.filter((c) => c.name.toLowerCase().includes(q)).slice(0, 10)
+    return items.filter((c) => c.toLowerCase().includes(q)).slice(0, 10)
   }, [items, enableSearch, debounced])
 
   return (
@@ -67,12 +59,12 @@ export default function RelationAutocompleteField({
       <div className='nb-language-wrapper'>
         <input
           className='nb-language-input'
-          placeholder='Select relation'
-          value={field.value?.name || ''}
+          value={field.value || ''}
           onChange={(e) => {
             const v = e.target.value
-            setQuery(v)
-            helpers.setValue(undefined) 
+            helpers.setValue(v)        
+            setQuery(v)               
+            setOpen(true)
           }}
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 120)}
@@ -83,43 +75,37 @@ export default function RelationAutocompleteField({
       {open && (
         <div className='nb-language-menu'>
           {loading && enableSearch && (
-            <div className='nb-language-item' style={{ color: '#808080', cursor: 'default' }}>
-              Searching…
-            </div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Searching…</div>
           )}
 
           {!enableSearch && minChars > 0 && query.trim().length < minChars && (
-            <div className='nb-language-item' style={{ color: '#808080', cursor: 'default' }}>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>
               Write at least {minChars} characters…
             </div>
           )}
 
           {error && enableSearch && (
-            <div className='nb-language-item' style={{ color: '#808080', cursor: 'default' }}>
-              Error loading
-            </div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>Error loading cities</div>
           )}
 
           {!loading && enableSearch && !error && visible.length === 0 && (
-            <div className='nb-language-item' style={{ color: '#808080', cursor: 'default' }}>
-              No results
-            </div>
+            <div className='nb-language-item' style={{color: '#808080', cursor: 'default'}}>No results</div>
           )}
 
           {!loading && !error && visible.length > 0 && (
             <>
-              {visible.map((item) => (
+              {visible.map((label) => (
                 <div
-                  key={item.id}
+                  key={label}
                   className='nb-language-item'
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => {
-                    helpers.setValue({ id: item.id, name: item.name }) 
-                    setQuery(item.name)
+                    helpers.setValue(label)  
+                    setQuery(label)
                     setOpen(false)
                   }}
                 >
-                  {highlightMatch(item.name, enableSearch ? debounced : '')}
+                  {highlightMatch(label, enableSearch ? debounced : '')}
                 </div>
               ))}
             </>

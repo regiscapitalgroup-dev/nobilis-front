@@ -1,6 +1,6 @@
 import React, {useMemo, useState, useEffect} from 'react'
 import {KTSVG, toAbsoluteUrl} from '../../../../../_metronic/helpers'
-import { useCitiesField } from '../../../../hooks/components/useCitiesField'
+import {useIndustriesField} from '../../../../hooks/components/useIndustriesField'
 
 type Props = {
   values: string[]
@@ -9,14 +9,17 @@ type Props = {
   minChars?: number
 }
 
-export function MultipleCitiesAutocompleteField({
+export function IndustriesAutocompleteField({
   values,
   onChange,
+  placeholder = 'Type...',
   minChars = 0,
 }: Props) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const{cities} = useCitiesField(query)
+
+  const {collection} = useIndustriesField()
+
   // debounce
   const [debounced, setDebounced] = useState('')
   useEffect(() => {
@@ -27,9 +30,9 @@ export function MultipleCitiesAutocompleteField({
   const enableSearch = debounced.length >= minChars && debounced.length > 0
 
   const visible = useMemo(() => {
-    if (!enableSearch) return cities?.slice(0, 10)
+    if (!enableSearch) return collection.slice(0, 10)
     const q = debounced.toLowerCase()
-    return cities?.filter((c) => c.toLowerCase().includes(q)).slice(0, 10)
+    return collection.filter((c) => c.toLowerCase().includes(q)).slice(0, 10)
   }, [enableSearch, debounced])
 
   const highlightMatch = (text: string, query: string) => {

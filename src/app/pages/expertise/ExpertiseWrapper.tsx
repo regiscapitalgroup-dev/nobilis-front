@@ -1,10 +1,10 @@
 import { FC } from "react";
-import ExpertiseForm from "./components/ExpertiseForm";
+import { ExpertisePage } from "./ExpertisePage";
 
 const ExpertiseWrapper: FC = () => {
   return (
     <div>
-      <ExpertiseForm />
+      <ExpertisePage />
     </div>
   )
 }

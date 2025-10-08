@@ -10,8 +10,8 @@ type Props = {
   handleMembershipSelected: (data: MembershipDetailModel | null) => void
 }
 
-const uniq = (arr: string[]) => Array.from(new Set(arr.filter(Boolean)))
 const SECTION_REQ = '__SECTION_REQUIREMENTS__'
+const REQUIREMENT_ROW = '__REQUIREMENT_ROW__'
 
 const MembershipWidget: React.FC<Props> = ({
   memberships,
@@ -43,11 +43,6 @@ const MembershipWidget: React.FC<Props> = ({
     []
   )
 
-  const allRequirements = useMemo(
-    () => uniq(memberships.flatMap((m: any) => (m.requirements ?? []) as string[])),
-    [memberships]
-  )
-
   const headRef = useRef<HTMLDivElement | null>(null)
   const labelRefs = useRef<HTMLDivElement[]>([])
   const [headH, setHeadH] = useState<number>(174)
@@ -55,9 +50,10 @@ const MembershipWidget: React.FC<Props> = ({
   const zoomRef = useRef<HTMLDivElement | null>(null)
   const boardRef = useRef<HTMLDivElement | null>(null)
 
+  // Ahora solo tenemos: features + section header + UNA fila de requirement
   const labelRows = useMemo(
-    () => [...allBooleanFeatures, SECTION_REQ, ...allRequirements],
-    [allBooleanFeatures, allRequirements]
+    () => [...allBooleanFeatures, SECTION_REQ, REQUIREMENT_ROW],
+    [allBooleanFeatures]
   )
 
   useEffect(() => {
@@ -131,10 +127,7 @@ const MembershipWidget: React.FC<Props> = ({
   }
 
   const getSpecialText = (m: any, label: string): string | null => {
-    // Solo para memberIntroduction, revisa si hay un texto especial
     if (label === 'memberIntroduction') {
-      // Revisa si este plan específico debe mostrar "3 Complimentary"
-      // Basado en los datos, el plan "Founding Member*" y "Electi+" tienen este texto
       if (m.title === 'Founding Member*' || m.title === 'Electi+') {
         return '3 Complimentary'
       }
@@ -142,14 +135,19 @@ const MembershipWidget: React.FC<Props> = ({
     return null
   }
 
-  const getRequirementText = (m: any, requirement: string): string => {
-    // Para requirements, mostramos diferentes textos según el plan
-    if (requirement === 'Active participation in Nobilis (25k Credits)') {
-      if (m.title === 'Electi') return 'Required**'
-      if (m.title === 'Founding Member*') return 'Required**'
-      if (m.title === 'Electi+') return 'Not Required'
+  const getRequirementText = (m: any): string => {
+    // Extraemos el primer requirement del array
+    if (m.requirements && m.requirements.length > 0) {
+      const fullReq = m.requirements[0]
+      // Formato: "Active participation in Nobilis (25k Credits)|Required"
+      const parts = fullReq.split('|')
+      if (parts.length === 2) {
+        const status = parts[1].trim()
+        if (status === 'Required') return 'Required**'
+        if (status === 'Not Required') return 'Not Required'
+      }
     }
-    return requirement
+    return ''
   }
 
   const toggleSelect = (idx: number, m: any) => {
@@ -186,16 +184,32 @@ const MembershipWidget: React.FC<Props> = ({
                 <span className='nbq-option__title'>BENEFITS</span>
               </div>
 
-              {labelRows.map((label, i) =>
-                label === SECTION_REQ ? (
-                  <div
-                    key={`lbl-sec-${i}`}
-                    ref={(el) => (labelRefs.current[i] = el!)}
-                    className='nb-l-row nb-l-row--section'
-                  >
-                    <span className='nbq-option__title'>REQUIREMENT</span>
-                  </div>
-                ) : (
+              {labelRows.map((label, i) => {
+                if (label === SECTION_REQ) {
+                  return (
+                    <div
+                      key={`lbl-sec-${i}`}
+                      ref={(el) => (labelRefs.current[i] = el!)}
+                      className='nb-l-row nb-l-row--section'
+                    >
+                      <span className='nbq-option__title'>REQUIREMENT</span>
+                    </div>
+                  )
+                }
+                
+                if (label === REQUIREMENT_ROW) {
+                  return (
+                    <div
+                      key={`lbl-req-${i}`}
+                      ref={(el) => (labelRefs.current[i] = el!)}
+                      className='nb-l-row nb-satoshi-14-300'
+                    >
+                      Active participation in Nobilis (25 K Credits)
+                    </div>
+                  )
+                }
+
+                return (
                   <div
                     key={`lbl-${label}`}
                     ref={(el) => (labelRefs.current[i] = el!)}
@@ -204,7 +218,7 @@ const MembershipWidget: React.FC<Props> = ({
                     {getLabelDisplayName(label)}
                   </div>
                 )
-              )}
+              })}
               <div className='nb-labels__btnrow' />
             </div>
 
@@ -252,11 +266,10 @@ const MembershipWidget: React.FC<Props> = ({
                         )
                       }
 
-                      // Si es un requirement, mostramos texto
-                      if (allRequirements.includes(label)) {
-                        const requirementText = getRequirementText(m, label)
+                      if (label === REQUIREMENT_ROW) {
+                        const requirementText = getRequirementText(m)
                         return (
-                          <div key={`${m.id}-${label}`} className='nb-plan__row'>
+                          <div key={`${m.id}-requirement`} className='nb-plan__row'>
                             <span className='nb-requirement-text'>{requirementText}</span>
                           </div>
                         )
@@ -285,7 +298,6 @@ const MembershipWidget: React.FC<Props> = ({
                         )
                       }
 
-                      // Si no es un campo booleano conocido, muestra vacío
                       return (
                         <div key={`${m.id}-${label}`} className='nb-plan__row'>
                           <span className='nb-empty' />
@@ -305,14 +317,12 @@ const MembershipWidget: React.FC<Props> = ({
                           toggleSelect(idx, m)
                         }}
                       >
-                        {/* Estado por defecto */}
                         <span className='txt-inactive'>
                           <div className='nb-inactive-button'>
                             <div className='nb-inactive-button-text'>INACTIVE</div>
                           </div>
                         </span>
 
-                        {/* Estado en hover/seleccionado — estilos del login + SVG */}
                         <span className='txt-active'>
                           <span className='nb-heading-md'>SELECT PLAN</span>
                           <img
