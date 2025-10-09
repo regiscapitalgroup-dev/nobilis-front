@@ -43,3 +43,9 @@ export const getClubes = async (search?: string) => {
     const { data } = await apiClient.get('catalog/clubs/');
     return data;
 };
+
+export const getRateExpertise = async () => {
+    const { data } = await apiClient.get('catalog/rate-expertise/');
+    return data;
+};
+

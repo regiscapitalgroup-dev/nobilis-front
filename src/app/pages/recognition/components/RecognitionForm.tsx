@@ -1,12 +1,14 @@
 import {FC, useState} from 'react'
-import {Formik, Form, Field, FieldArray} from 'formik'
+import {Formik, Form, Field, FieldArray, FormikProps} from 'formik'
 import * as Yup from 'yup'
 import {RecognitionModel} from '../models/RecognitionModel'
-import Swal from 'sweetalert2'
 import {updateUserRecognition} from '../../../services/recognitionService'
+import {useHistory} from 'react-router-dom'
 
 const RecognitionForm: FC = () => {
   const [loading, setLoading] = useState(false)
+  const navigate = useHistory()
+
   const initialValues: RecognitionModel = {
     recognitions: [{description: '', link: ''}],
     links: [{url: ''}],
@@ -27,27 +29,17 @@ const RecognitionForm: FC = () => {
   })
 
   const handleSubmit = async (values: RecognitionModel) => {
-    console.log('Form values:', values)
     setLoading(true)
     await updateUserRecognition(values)
       .then(() => {
         setLoading(false)
+        navigate.push('/biography')
       })
       .catch((error) => {
         setLoading(false)
         const errorMessage = error.response?.data?.error || error.message || 'Unknown error'
         console.log('error', error)
         console.log('error.response?.data?.error', error.response?.data?.error)
-        Swal.fire({
-          title: 'An error has occurred.',
-          html: `
-                        <div class="fs-6">${errorMessage}.</div>
-                        `,
-          icon: 'error',
-          showConfirmButton: false,
-          timer: 3000,
-          allowOutsideClick: false,
-        })
       })
   }
 
@@ -58,39 +50,66 @@ const RecognitionForm: FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({values}) => (
+        {({values}: FormikProps<RecognitionModel>) => (
           <Form className='recognition-form__container'>
             <h2 className='recognition-form__title'>Edit Your Recognition</h2>
 
-            {/* Reconocimientos */}
+            {/* Recognitions Section */}
             <div className='recognition-form__section'>
-              <h3 className='recognition-form__section-title'>
-                Highlight Your Top Accomplishments
-              </h3>
-              <p className='recognition-form__section-subtitle'>
-                List your most significant achievements—awards, recognitions, or major projects that
-                reflect your journey. Include web links if available.
-              </p>
+              <div className='recognition-form__section-header'>
+                <h3 className='recognition-form__section-title'>
+                  Highlight Your Top Accomplishments
+                </h3>
+                <p className='recognition-form__section-subtitle'>
+                  List 3-9 of your most significant achievements, including awards, recognitions, or
+                  major projects
+                </p>
+              </div>
 
               <FieldArray name='recognitions'>
                 {({push}) => (
                   <div className='recognition-form__group'>
-                    {values.recognitions.map((_, index) => (
+                    {values.recognitions.map((recognition, index) => (
                       <div key={index} className='recognition-form__recognition-item'>
                         <label className='recognition-form__label'>Recognition {index + 1}</label>
-                        <Field
-                          as='textarea'
-                          name={`recognitions.${index}.description`}
-                          placeholder='Describe your recognition'
-                          maxLength={500}
-                          className='recognition-form__input'
-                        />
-                        <Field
-                          type='text'
-                          name={`recognitions.${index}.link`}
-                          placeholder='https://'
-                          className='recognition-form__input'
-                        />
+                        <div className='recognition-form__field-container'>
+                          <div className='recognition-form__field-wrapper'>
+                            <div className='recognition-form__textarea-wrapper'>
+                              <Field
+                                as='textarea'
+                                name={`recognitions.${index}.description`}
+                                placeholder='Describe your recognition'
+                                maxLength={500}
+                                className='recognition-form__textarea'
+                              />
+                            </div>
+                            <div className='recognition-form__counter'>
+                              <span className='recognition-form__counter-placeholder'>
+                                Description
+                              </span>
+                              <span className='recognition-form__counter-text'>
+                                {recognition.description?.length || 0}/500
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className='recognition-form__link-wrapper'>
+                            <Field
+                              type='text'
+                              name={`recognitions.${index}.link`}
+                              placeholder='https://'
+                              className='recognition-form__link-input'
+                            />
+                          </div>
+                        </div>
+
+                        {recognition.description && (
+                          <p className='recognition-form__link-explanation'>
+                            The link will be seamlessly integrated into the text, enabling visitors
+                            to click on the achievement description. You may remove it by deleting
+                            the corresponding text.
+                          </p>
+                        )}
                       </div>
                     ))}
                     <button
@@ -105,13 +124,15 @@ const RecognitionForm: FC = () => {
               </FieldArray>
             </div>
 
-            {/* Links */}
+            {/* Additional Links Section */}
             <div className='recognition-form__section'>
-              <h3 className='recognition-form__section-title'>Additional Links</h3>
-              <p className='recognition-form__section-subtitle'>
-                Share links to articles, profiles, or content that best represent your expertise and
-                vision.
-              </p>
+              <div className='recognition-form__section-header'>
+                <h3 className='recognition-form__section-title'>Additional Links</h3>
+                <p className='recognition-form__section-subtitle'>
+                  Share links to articles, profiles, or content that best represent your expertise
+                  and vision.
+                </p>
+              </div>
 
               <FieldArray name='links'>
                 {({push}) => (
@@ -119,12 +140,14 @@ const RecognitionForm: FC = () => {
                     {values.links.map((_, index) => (
                       <div key={index} className='recognition-form__link-item'>
                         <label className='recognition-form__label'>Link {index + 1}</label>
-                        <Field
-                          type='text'
-                          name={`links.${index}.url`}
-                          placeholder='Input link here'
-                          className='recognition-form__input'
-                        />
+                        <div className='recognition-form__additional-link-wrapper'>
+                          <Field
+                            type='text'
+                            name={`links.${index}.url`}
+                            placeholder='Input link here'
+                            className='recognition-form__additional-link-input'
+                          />
+                        </div>
                       </div>
                     ))}
                     <button
@@ -139,11 +162,14 @@ const RecognitionForm: FC = () => {
               </FieldArray>
             </div>
 
-            {/* Botones */}
+            {/* Action Buttons */}
             <div className='recognition-form__actions'>
               <button
                 type='button'
                 className='recognition-form__btn recognition-form__btn--secondary'
+                onClick={() => {
+                  navigate.push('/biography')
+                }}
               >
                 Cancel
               </button>

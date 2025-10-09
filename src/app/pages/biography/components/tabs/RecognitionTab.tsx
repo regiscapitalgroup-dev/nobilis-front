@@ -11,15 +11,15 @@ const RecognitionTab: FC = () => {
           <div className='recognition-title'>Top Accomplishments</div>
           <div className='recognition-accomplishments'>
             {data?.recognition &&
-              data.recognition.topAccomplishments.map((item, index) => {
+              data.recognition?.topAccomplishments.map((item:any, index) => {
                 return (
                   <>
                     <div className='recognition-accomplishment-item'>
                       <div className='recognition-accomplishment-content'>
-                        <p>{item}</p>
+                      <p>{item?.desc}</p>
                       </div>
                     </div>
-                    {index < data.recognition.topAccomplishments.length - 1 && (
+                    {index < data.recognition?.topAccomplishments.length - 1 && (
                       <div className='recognition-separator' />
                     )}
                   </>
@@ -33,7 +33,7 @@ const RecognitionTab: FC = () => {
         <div className='recognition-title'>additional Links</div>
         <div className='recognition-links'>
           {data?.recognition &&
-            data.recognition.additionalLinks.map((item) => {
+            data.recognition?.additionalLinks.map((item) => {
               return (
                 <>
                   <div className='recognition-link-item'>

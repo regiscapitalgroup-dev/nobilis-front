@@ -96,8 +96,8 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
                     bio: '/biography/overview',
                     overview: '/admin/overview/professional',
                     lifestyle: '/admin/overview/personal',
-                   /*  recognition: '/admin/overview/recognition',
-                    expertise: '/admin/overview/expertise', */
+                    recognition: '/recognition',
+                    expertise: '/expertise',
                   }
           
                   const route = routes[activeTab] || '/admin/overview/profile'

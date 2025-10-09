@@ -1,12 +1,9 @@
 import apiClient from "../helpers/apiClient";
-import { ExpertiseModel } from "../pages/expertise/models/ExpertiseModel";
 
 
 export async function updateUserExpertise(
-    payload: ExpertiseModel
+    payload: any
 ) {
-    const { data } = await apiClient.put(`/users/expertise/`, payload, {
-        headers: { Accept: 'application/json' },
-    });
+    const { data } = await apiClient.put(`profile/expertise/`, payload);
     return data;
 }

@@ -1,29 +1,32 @@
-import { FC, useState } from "react";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
-import { ReferenceModel } from "../models/ReferencesModel";
-import { createReference } from "../../../services/referencesService";
-import ReferencesCard from "./ReferencesCard";
+import {FC, useState} from 'react'
+import {Formik, Form, Field} from 'formik'
+import * as Yup from 'yup'
+import {ReferenceModel} from '../models/ReferencesModel'
+import {createReference} from '../../../services/referencesService'
+import PhoneInput from 'react-phone-input-2'
+import SelectInviteeQualificationsField from './fields/SelectInviteeQualificationsField'
+import { useHistory } from 'react-router-dom'
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Required"),
-  surname: Yup.string().required("Required"),
-  phone: Yup.string().required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  qualifications: Yup.string().required("Required"),
-});
+  name: Yup.string().required('Required'),
+  surname: Yup.string().required('Required'),
+  phone: Yup.string().required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+  qualifications: Yup.string().required('Required'),
+})
 
 const ReferencesForm: FC = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const navigate = useHistory();
 
   return (
-    <div className="references-form">
-      <h2 className="references-form__title">Refer a Member</h2>
-      <p className="references-form__subtitle">
-        When you refer someone to Nobilis, the invited individual will be reviewed.
-        Once approved by the Nobilis Members Committee and after they accept and pay
-        the initiation fee, you will receive platform credits following their onboarding:
-        750 (HA), 1500 (UHA), or 3000 (LT), depending on their membership tier.
+    <div className='references-form'>
+      <h2 className='references-form__title'>Refer a Member</h2>
+      <p className='references-form__subtitle'>
+        When you refer someone to Nobilis, the invited individual will be reviewed. Once approved by
+        the Nobilis Members Committee and after they accept and pay the initiation fee, you will
+        receive platform credits following their onboarding: 750 (HA), 1500 (UHA), or 3000 (LT),
+        depending on their membership tier.
         <br />
         <br />
         HA=High Achiever, UHA=Ultra High Achiever, LT=Legacy Tier
@@ -31,81 +34,91 @@ const ReferencesForm: FC = () => {
 
       <Formik
         initialValues={{
-          name: "",
-          surname: "",
-          phone: "",
-          email: "",
-          qualifications: "",
+          name: '',
+          surname: '',
+          phone: '',
+          email: '',
+          qualifications: '',
         }}
         validationSchema={validationSchema}
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async (values, {resetForm}) => {
           try {
-            setLoading(true);
+            setLoading(true)
             await createReference(values as ReferenceModel);
-            resetForm();
+            navigate.push('/biography')
           } catch (err) {
-            console.error("Error creating reference:", err);
+            console.error('Error creating reference:', err)
           } finally {
-            setLoading(false);
+            setLoading(false)
           }
         }}
       >
         {() => (
-          <Form className="references-form__container">
-            <div className="references-form__row">
-              <div className="references-form__field">
+          <Form className='references-form__container'>
+            <div className='references-form__row'>
+              <div className='references-form__field'>
                 <label>Name</label>
-                <Field name="name" className="references-form__input" />
+                <Field name='name' className='references-form__input' />
               </div>
-              <div className="references-form__field">
+              <div className='references-form__field'>
                 <label>Surname</label>
-                <Field name="surname" className="references-form__input" />
+                <Field name='surname' className='references-form__input' />
               </div>
             </div>
 
-            <div className="references-form__row">
-              <div className="references-form__field">
+            <div className='references-form__row'>
+              <div className='references-form__field'>
                 <label>Phone Number</label>
-                <Field name="phone" className="references-form__input" />
+                <div className='profile-input-wrapper'>
+                  <Field name='phone'>
+                    {({field, form}: any) => (
+                      <PhoneInput
+                        country='us'
+                        placeholder='+1'
+                        containerClass='profile-input'
+                        disableDropdown
+                        value={field.value || ''}
+                        onChange={(val: string) => form.setFieldValue(field.name, val)}
+                        onBlur={() => form.setFieldTouched(field.name, true)}
+                      />
+                    )}
+                  </Field>
+                </div>
               </div>
-              <div className="references-form__field">
+              <div className='references-form__field'>
                 <label>Email</label>
-                <Field name="email" className="references-form__input" />
+                <Field name='email' className='references-form__input' />
               </div>
             </div>
 
-            <div className="references-form__row">
-              <div className="references-form__field">
-                <label>Select Invitee Qualifications</label>
-                <Field
-                  as="textarea"
-                  name="qualifications"
-                  placeholder='e.g. "Family office strategy", "Dialogue on investment & innovation"'
-                  className="references-form__input"
-                />
-              </div>
+            <div className='references-form__row'>
+              <SelectInviteeQualificationsField
+                name='qualifications'
+                label='Select Invitee Qualifications to Nobilis'
+                placeholder='e.g. "Family office strategy", "Dialogue on investment & innovation"'
+              />
             </div>
 
-            <div className="references-form__actions">
+            <div className='references-form__actions'>
               <button
-                type="submit"
-                className="btn nb-btn-primary"
+                type='submit'
+                className='btn nb-btn-primary'
                 disabled={loading}
                 aria-busy={loading}
               >
                 {!loading ? (
                   <>
-                    <span className="nb-heading-md">refer a member</span>
+                    <span className='nb-heading-md'>refer a member</span>
                     <img
-                      src="/media/svg/nobilis/vector1.svg"
-                      alt=""
-                      className="nb-btn-icon nb-btn-icon--white"
+                      src='/media/svg/nobilis/vector1.svg'
+                      alt=''
+                      className='nb-btn-icon nb-btn-icon--white'
                     />
                   </>
                 ) : (
-                  <span className="indicator-progress nb-heading-md">
+                  <span className='indicator-progress nb-heading-md'>
                     Please wait...
-                    <span className="spinner-border spinner-border-sm align-middle ms-2" />
+                    <span className='spinner-border spinner-border-sm align-middle ms-2' />
                   </span>
                 )}
               </button>
@@ -113,13 +126,8 @@ const ReferencesForm: FC = () => {
           </Form>
         )}
       </Formik>
-
-      {/* Cards con calificaciones */}
-      <div className="references-form__cards">
-        <ReferencesCard/>
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default ReferencesForm;
+export default ReferencesForm

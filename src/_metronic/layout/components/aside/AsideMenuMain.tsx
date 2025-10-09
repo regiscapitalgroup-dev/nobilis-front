@@ -20,7 +20,7 @@ export function AsideMenuMain() {
               icon='/media/svg/nobilis/user_nb.svg'
             />
             <AsideMenuItem
-              to='/dashboard'
+              to='/team'
               title='MY TEAM'
               showIcon={true}
               isSelected={false}
@@ -28,7 +28,7 @@ export function AsideMenuMain() {
 
             />
             <AsideMenuItem
-              to='/dashboard'
+              to='/references'
               title='REFER A MEMBER'
               showIcon={true}
               isSelected={false}
@@ -48,7 +48,7 @@ export function AsideMenuMain() {
           </div>
           <div className="nb-menu-section-content">
             <AsideMenuItem
-              to='/dashboard'
+              to='/experiences'
               title='MY EXPERIENCES'
               showIcon={true}
               showBadge={true}

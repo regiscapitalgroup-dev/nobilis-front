@@ -5,15 +5,11 @@ import { TeamModel } from "../pages/team/models/TeamModel";
 export async function createUserTeam(
     payload: TeamModel
 ) {
-    const { data } = await apiClient.post(`/users/team/`, payload, {
-        headers: { Accept: 'application/json' },
-    });
+    const { data } = await apiClient.post(`/users/team/`, payload);
     return data;
 }
 
 export async function getUserTeam(): Promise<TeamModel[]> {
-    const { data } = await apiClient.get(`/users/team/`, {
-      headers: { Accept: "application/json" },
-    });
+    const { data } = await apiClient.get(`/users/team/`,);
     return data;
-  }
+}
