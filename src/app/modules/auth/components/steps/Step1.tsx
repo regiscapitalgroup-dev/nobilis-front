@@ -1,5 +1,4 @@
 import {FC, useState} from 'react'
-import Swal from 'sweetalert2'
 import {ErrorMessage, Field, useField, useFormikContext} from 'formik'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
@@ -25,21 +24,9 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
           })
           .catch((error) => {
             setLoading(false)
-            /*   goNext() */
             const errorMessage = error.response?.data?.error || error.message || 'Unknown error'
-            console.log('error', error)
+            console.log('error', errorMessage)
             console.log('error.response?.data?.error', error.response?.data?.error)
-            Swal.fire({
-              /* theme: 'dark', */
-              title: 'An error has occurred.',
-              html: `
-                        <div class="fs-6">${errorMessage}.</div>
-                        `,
-              icon: 'error',
-              showConfirmButton: false,
-              timer: 3000,
-              allowOutsideClick: false,
-            })
           })
       }
     })
@@ -55,7 +42,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <Field
               type='text'
               autoComplete='off'
-              className={'form-control form-control-lg form-control-underline input-text-style'}
+              className='form-control form-control-lg form-control-underline input-text-style'
               name='firstName'
             />
             <div className='fv-plugins-message-container'>
@@ -96,12 +83,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
                 onChange={(value) => helpers.setValue(value)}
                 disableDropdown
               />
-
-              <div className='fv-plugins-message-container'>
-                <div className='fv-help-block input-text-style fs-8'>
-                  <ErrorMessage name='phoneNumber' />
-                </div>
-              </div>
+              <div className='fv-plugins-message-container'></div>
             </div>
           </div>
           <div className='col-xl-6'>
@@ -133,14 +115,8 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             />
           </div>
           <div className='col-xl-6'>
-            <label className='form-label nb-tag-no-required'>CITY</label>
-
-            <div className=''>
-              <CityAutocompleteField
-                name='city' // guarda el nombre (label) en country
-                /* options={COUNTRY_OPTIONS} */
-              />
-            </div>
+            <label className='form-label nb-tag-no-required'>Country</label>
+            <CityAutocompleteField name='city' />
           </div>
         </div>
         {/* end::Form group OCCUPATION-CITY*/}
@@ -186,12 +162,12 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             >
               {!loading && (
                 <>
-                <span className='indicator-label nb-heading-md'>JOIN THE WAITING LIST</span>
-                <img
-                src='/media/svg/nobilis/vector1.svg'
-                alt=''
-                className='nb-btn-icon nb-btn-icon--black'
-              />
+                  <span className='indicator-label nb-heading-md'>JOIN THE WAITING LIST</span>
+                  <img
+                    src='/media/svg/nobilis/vector1.svg'
+                    alt=''
+                    className='nb-btn-icon nb-btn-icon--black'
+                  />
                 </>
               )}
               {loading && (
@@ -200,7 +176,6 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
                   <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                 </span>
               )}
-             
             </button>
           </div>
         </div>

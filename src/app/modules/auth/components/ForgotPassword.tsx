@@ -91,17 +91,14 @@ export function ForgotPassword() {
             placeholder=''
             autoComplete='off'
             {...formik.getFieldProps('email')}
-            className={clsx(
-              'form-control form-control-lg form-control-underline input-text-style',
-              
-            )}
+            className={clsx('form-control form-control-lg form-control-underline input-text-style')}
           />
           {formik.touched.email && formik.errors.email && (
             <div className='fv-plugins-message-container'>
-              <div className='fv-help-block fs-8'>
-                <span role='alert' className='input-text-style'>
+              <div className='fv-help-block'>
+                <div className='fv-help-block input-text-style fs-8 input-text-style'>
                   {formik.errors.email}
-                </span>
+                </div>
               </div>
             </div>
           )}
@@ -115,7 +112,17 @@ export function ForgotPassword() {
             id='kt_password_reset_submit'
             className='btn nb-btn-primary w-100 mb-5'
           >
-            {!loading && <span className='indicator-label nb-heading-md'>send recovery email</span>}
+            {!loading && (
+              <>
+                <span className=' nb-heading-md'>send recovery email</span>
+                <img
+                  src='/media/svg/nobilis/vector1.svg'
+                  alt=''
+                  className='nb-btn-icon nb-btn-icon--white'
+                />
+              </>
+            )}
+
             {loading && (
               <span className='indicator-progress nb-heading-md' style={{display: 'block'}}>
                 Please wait...

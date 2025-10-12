@@ -3,7 +3,6 @@ import {useHistory, useParams} from 'react-router-dom'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {IUpdatePassword, updatePassword} from '../models/UserSettingsModel'
-import Swal from 'sweetalert2'
 import {activateAccount} from '../redux/AuthCRUD'
 import {TermsConditionsModal} from './_modals/TermsConditionsModal'
 import {HeaderText} from './helper/header-text'
@@ -25,12 +24,11 @@ export function CreatePassword() {
   const [loading, setLoading] = useState<boolean>(false)
   const [passwordUpdateData, setPasswordUpdateData] = useState<IUpdatePassword>(updatePassword)
   const [accepted, setAccepted] = useState<boolean>(false)
-  const {token, user} = useParams<{token: string, user:string}>()
+  const {token, user} = useParams<{token: string; user: string}>()
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [showPwd, setShowPwd] = useState(false)
   const [showPwd2, setShowPwd2] = useState(false)
   const navigate = useHistory()
-
 
   const formik = useFormik<IUpdatePassword>({
     initialValues: {
@@ -53,21 +51,12 @@ export function CreatePassword() {
               ctaText: 'Continue',
               ctaTo: '/auth/login',
               classNameBtn: 'nb-btn-outline',
-              showBtn: true
+              showBtn: true,
             })
             /* dispatch(auth.actions.login(access)) */
           })
           .catch(() => {
             setLoading(false)
-            Swal.fire({
-              title: `
-                      <div className="fs-9">An error has occurred.</div>
-                      `,
-              icon: 'error',
-              showConfirmButton: false,
-              timer: 1000,
-              allowOutsideClick: false,
-            })
           })
       }
     },
@@ -81,7 +70,6 @@ export function CreatePassword() {
         id='kt_login_password_reset_form'
         onSubmit={formik.handleSubmit}
       >
-
         <HeaderText
           title={`Welcome to Nobilis, ${user}! Honored to have you among the world’s most accomplished`}
           subtitle='To begin, please reset your password.'
@@ -121,7 +109,7 @@ export function CreatePassword() {
             <input
               type={showPwd2 ? 'text' : 'password'}
               autoComplete='off'
-              className='form-control form-control-lg form-control-underline'
+              className='form-control form-control-lg form-control-underline  input-text-style'
               id='confirmpassword'
               {...formik.getFieldProps('passwordConfirmation')}
             />
@@ -144,28 +132,25 @@ export function CreatePassword() {
           )}
         </div>
         <div className='fv-row mb-10'>
-          <div className='nbq-check'>
-            <input
-              className='form-check-input '
-              type='checkbox'
-              value=''
-              id='flexCheckDefault'
-              onChange={(e) => {
-                setAccepted(e.target.checked)
-              }}
-            />
-            <label className='nb-body nb-center ms-3'>
-              I agree to the Nobilis{' '}
-              <a
-                className='nb-body nb-link-underline cursor-pointer '
-                onClick={() => {
-                  setOpenModal(true)
+          <label className='d-flex align-items-center gap-2 cursor-pointer'>
+            <span className='nbq-check nb3-check' style={{flexShrink: 0}}>
+              <input
+                className='form-check-input'
+                type='checkbox'
+                id='flexCheckDefault'
+                checked={accepted}
+                onChange={(e) => {
+                  setAccepted(e.target.checked)
                 }}
-              >
-                Member´s Terms and Condition.
+              />
+            </span>
+            <span className='nb-checkbox-text'>
+              I agree to the Nobilis{' '}
+              <a className='nb-checkbox-link cursor-pointer' onClick={() => setOpenModal(true)}>
+                Member's Terms and Condition.
               </a>
-            </label>
-          </div>
+            </span>
+          </label>
         </div>
 
         {/* end::Form group */}
@@ -178,7 +163,17 @@ export function CreatePassword() {
             className='btn nb-btn-outline w-100  nb-heading-md'
             disabled={!accepted}
           >
-            {!loading && <span className='indicator-label'>CHANGE PASSWORD</span>}
+            {!loading && (
+              <>
+                <span className='indicator-label'>CHANGE PASSWORD</span>
+                <img
+                  src='/media/svg/nobilis/vector1.svg'
+                  alt=''
+                  className='nb-btn-icon nb-btn-icon--black'
+                />
+              </>
+            )}
+
             {loading && (
               <span className='indicator-progress nb-heading-md' style={{display: 'block'}}>
                 Please wait...

@@ -1,10 +1,10 @@
 import {FC} from 'react'
-import {Field, FieldProps} from 'formik'
+import {Field} from 'formik'
 import questions from '../helper/json-data/section1.json'
 
-type Step3Props = {goPrev: () => void; goNext: () => void}
+type Step3Props = {goPrev: () => void; goNext: () => void,loading?: boolean }
 
-const Step3: FC<Step3Props> = ({goPrev, goNext}) => {
+const Step3: FC<Step3Props> = ({goPrev, goNext, loading}) => {
   const items = (questions?.[2]?.section03 ?? []) as {
     code: string
     title?: string
@@ -18,6 +18,8 @@ const Step3: FC<Step3Props> = ({goPrev, goNext}) => {
         <div className='mb-0 fv-row'>
           <div className='nb3-hint'>Select all that apply</div>
 
+
+
           {/* === Opciones === */}
           <div className='nb-step3 nb3-scope'>
             {/* … */}
@@ -27,7 +29,7 @@ const Step3: FC<Step3Props> = ({goPrev, goNext}) => {
                   <Field className='form-check-input' type='checkbox' name={opt.code} />
                 </span>
                 <span className='nbq-option__stack nbq-grow'>
-                  <span className='nbq-option__title'>{opt.title ?? opt.description ?? ''}</span>
+                  <span className='nbq-option__title_v2'>{opt.title ?? opt.description ?? ''}</span>
                   {opt.title && opt.description && (
                     <span className='nbq-option__desc'>{opt.description}</span>
                   )}
@@ -81,16 +83,32 @@ const Step3: FC<Step3Props> = ({goPrev, goNext}) => {
               className='nbq-back'
               data-kt-stepper-action='previous'
               onClick={goPrev}
+              disabled={loading}  // ← deshabilitar durante loading
             >
               BACK
             </button>
-            <button type='button' className='nbq-next' onClick={goNext}>
-              <span>Next</span>
-              <img
-                src='/media/svg/nobilis/vector1.svg'
-                alt=''
-                className='nb-btn-icon nb-btn-icon--black'
-              />
+            
+            <button 
+              type='button' 
+              className='nbq-next' 
+              onClick={goNext}
+              disabled={loading}  // ← deshabilitar durante loading
+            >
+              {loading ? (
+                <>
+                  <span>Submitting...</span>
+                  <span className='spinner-border spinner-border-sm ms-2'></span>
+                </>
+              ) : (
+                <>
+                  <span>Next</span>  {/* ← cambiar a "Submit" en step 3 */}
+                  <img
+                    src='/media/svg/nobilis/vector1.svg'
+                    alt=''
+                    className='nb-btn-icon nb-btn-icon--black'
+                  />
+                </>
+              )}
             </button>
           </div>
         </div>

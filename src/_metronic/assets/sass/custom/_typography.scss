@@ -116,6 +116,20 @@ $nb-heading-sizes: (
   align-items: flex-end;                
 }
 
+.nbq-option__title_v2 {
+  font-family: "Satoshi", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  line-height: 19.6px !important;
+  letter-spacing: 0 !important;
+  color: #151515 !important;
+  display: inline-flex;
+  align-items: flex-start;
+  vertical-align: baseline !important;
+  word-wrap: break-word !important;
+}
+
+
 .nb-text-body-sm {
   font-family: "Satoshi", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
   font-weight: 300 !important;     /* Light */

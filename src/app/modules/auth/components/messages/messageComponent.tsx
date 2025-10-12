@@ -12,7 +12,7 @@ type MessageState = {
 export function MessageComponent() {
   const {state} = useLocation<MessageState>()
   const {
-    title = 'Thank you. We have received your application',
+    title = '',
     body = 'Our review process may take up to 30 days. Please note that we may request additional documentation to support your eligibility, if needed.',
     ctaText = 'LOGIN',
     ctaTo = '/auth/login',
@@ -24,18 +24,11 @@ export function MessageComponent() {
     <div className='w-100 p-5'>
       {/* begin::Heading */}
       <div className='text-center mb-10'>
-        <h2 className='nb-heading-h2 nb-text-center mb-3'>
-          {/* Thank you. We have received your application */}
-          {title}
-        </h2>
+        <h2 className='nb-heading-h2 nb-text-center mb-3'>{title}</h2>
       </div>
       {/* begin::Heading */}
       <div className='text-center'>
-        <div className='nb-body nb-center nb-muted'>
-          {/*  Our review process may take up to 30 days. Please note that we may request additional
-          documentation to support your eligibility, if needed. */}
-          {body}
-        </div>
+        <div className='nb-body nb-center nb-muted'>{body}</div>
 
         <div className='nb-divider my-6' aria-hidden='true'>
           <span className='nb-divider__line' />

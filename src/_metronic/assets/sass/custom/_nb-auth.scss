@@ -172,9 +172,7 @@
 .nb-btn-icon--black{ filter: none; }
 .nb-btn-primary:disabled, .nb-btn-outline:disabled{ opacity: .6; cursor: not-allowed; }
 
-/* ---------- Errores ---------- */
-.fv-plugins-message-container{ margin-top: 5px; }
-.fv-plugins-message-container .input-text-style{ font-family: var(--nb-font-body); font-size: 12px; font-weight: 300; color: #151515; }
+
 
 /* ---------- Responsivo ---------- */
 @media (max-width: 991px){ .nb-auth-card--p60{ padding: 40px !important; } }
@@ -1387,7 +1385,7 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
   border-color: #460107;
   position: relative;
 }
-.nb3-scope .nbq-check .form-check-input:checked::after{
+/* .nb3-scope .nbq-check .form-check-input:checked::after{
   content: '';
   position: absolute;
   width: 9.33px; height: 6.42px;
@@ -1395,7 +1393,7 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
   border: 1.5px solid #fff;
   border-top: 0; border-left: 0;
   transform: rotate(45deg);
-}
+} */
 
 /* Tipos y hints tal cual pediste */
 .nb3-scope .nb3-hint{
@@ -1564,21 +1562,55 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
   box-shadow: none;
 }
 
-/* 3) Estado checked: relleno vino + palomita blanca CENTRADA (igual Step 2) */
-.nb-step3 .nbq-check .form-check-input:checked{
+
+/* ===== STEP 3: Checkbox custom con palomita centrada ===== */
+
+/* 1) Anula los pseudos globales que interfieren */
+.nb-step3 .nbq-check::before,
+.nb-step3 .nbq-check::after {
+  content: none !important;
+}
+
+/* 2) El input se vuelve visible y funciona como en Step 2 */
+.nb-step3 .nbq-check .form-check-input {
+  position: relative !important;
+  opacity: 1 !important;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  
+  border: 2px solid #B4B4B4;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+/* 3) Cuando está checked: fondo vino */
+.nb-step3 .nbq-check .form-check-input:checked {
   background: #460107;
   border-color: #460107;
 }
-.nb-step3 .nbq-check .form-check-input:checked::after{
-  content: '' !important;
-  position: absolute;
-  left: 5px;                 /* MISMO offset que Step 2 */
-  top: 6px;
-  width: 9.33px;
-  height: 6.42px;
-  border: 1.5px solid #fff;
-  border-top: 0;
-  border-left: 0;
-  transform: rotate(45deg);
-}
 
+/* 4) La palomita PERFECTAMENTE centrada */
+.nb-step3 .nbq-check .form-check-input:checked::after {
+  content: '';
+  position: absolute;
+  
+  /* Centrado absoluto */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  
+  /* Tamaño de la paloma */
+  width: 5px;
+  height: 9px;
+  
+  /* Dibuja solo borde derecho e inferior = ✓ */
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+}

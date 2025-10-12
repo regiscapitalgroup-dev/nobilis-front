@@ -118,3 +118,100 @@
   line-height: 140%;
   letter-spacing: 0%;
 }
+
+
+
+/* === Fallback de error visual automático (sin is-invalid) === */
+
+/* detecta cuando el contenedor de error tiene texto */
+.fv-plugins-message-container:has(.fv-help-block:not(:empty)) ~ .form-control-underline,
+.form-control-underline + .fv-plugins-message-container:has(.fv-help-block:not(:empty)) {
+  border-bottom-color: #A50F0F !important;
+}
+
+/* si el error está en un bloque aparte (como tu estructura actual) */
+.col-xl-6:has(.fv-help-block:not(:empty)) .form-control-underline,
+.col-xl-6:has(.fv-help-block:not(:empty)) .nb-phone .form-control {
+  border-bottom-color: #A50F0F !important;
+}
+
+/* mensaje rojo exacto */
+.fv-help-block:not(:empty),
+.nb-field-error:not(:empty) {
+  color: #A50F0F !important;
+  font-size: 10px !important;
+  font-family: 'Satoshi', sans-serif !important;
+  font-weight: 300 !important;
+  line-height: 14px !important;
+  margin-top: 4px !important;
+  min-height: 14px !important;
+}
+
+/* mantener alineación */
+.fv-plugins-message-container {
+  min-height: 18px !important;
+}
+/* Agrega esto a tu archivo CSS */
+
+/* Para CreatePassword: border rojo cuando hay error */
+.fv-row:has(.fv-help-block:not(:empty)) .form-control-underline {
+  border-bottom-color: #A50F0F !important;
+}
+
+/* Checkbox con texto alineado - estilo Figma */
+.nb-checkbox-text {
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.6px;
+}
+
+.nb-checkbox-text .nb-link-underline {
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  text-decoration: underline;
+  line-height: 19.6px;
+  border-bottom: none;
+}
+
+/* Asegurar que el label no tenga estilos raros */
+.fv-row label.d-flex {
+  margin-bottom: 0;
+  user-select: none;
+}
+
+/* El checkbox ya tiene los estilos correctos de nb3-check */
+.nbq-check.nb3-check {
+  flex-shrink: 0;
+  margin-right: 8px; /* gap entre checkbox y texto */
+}
+
+/* Texto del checkbox */
+.nb-checkbox-text {
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.6px;
+}
+
+/* Link subrayado SIN mayúsculas */
+.nb-checkbox-link {
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.6px;
+  text-decoration: underline;
+  text-transform: none !important; /* ← CLAVE: quita las mayúsculas */
+  border: none;
+}
+
+.nb-checkbox-link:hover {
+  opacity: 0.85;
+  color: #151515 !important;
+  text-decoration: underline !important; 
+}

@@ -6,7 +6,6 @@ import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Formik, Form, FormikValues, useFormikContext} from 'formik'
 import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizardHelper'
 import {register} from '../redux/AuthCRUD'
-import Swal from 'sweetalert2'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {useHistory} from 'react-router-dom'
 
@@ -22,8 +21,7 @@ const FormObserver: FC<{setFormValues: (values: ICreateAccount) => void}> = ({se
   return null
 }
 
-const RegitrationWizard:FC<WizardProps> = ({onStepChange}) => {
-
+const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
   const emitStep = (s: number, t: number) => {
     window.dispatchEvent(new CustomEvent('nb:stepper', {detail: {step: s, total: t}}))
   }
@@ -41,8 +39,6 @@ const RegitrationWizard:FC<WizardProps> = ({onStepChange}) => {
 
   const navigate = useHistory()
 
-
-
   const loadStepper = () => {
     stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement)
     if (stepper.current) {
@@ -58,7 +54,7 @@ const RegitrationWizard:FC<WizardProps> = ({onStepChange}) => {
     stepper.current.goPrev()
     setCurrentStep(stepper.current.currentStepIndex)
     setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex - 1])
-    emitStep(stepper.current.currentStepIndex, stepper.current.totatStepsNumber ?? 3) 
+    emitStep(stepper.current.currentStepIndex, stepper.current.totatStepsNumber ?? 3)
   }
 
   const submitStep = (values: ICreateAccount, actions: FormikValues) => {
@@ -70,7 +66,7 @@ const RegitrationWizard:FC<WizardProps> = ({onStepChange}) => {
     if (stepper.current.currentStepIndex !== stepper.current.totatStepsNumber) {
       stepper.current.goNext()
       setCurrentStep(stepper.current.currentStepIndex)
-      emitStep(stepper.current.currentStepIndex, stepper.current.totatStepsNumber ?? 3) 
+      emitStep(stepper.current.currentStepIndex, stepper.current.totatStepsNumber ?? 3)
     } else {
       stepper.current.goto(1)
       actions.resetForm()
@@ -108,43 +104,32 @@ const RegitrationWizard:FC<WizardProps> = ({onStepChange}) => {
       setLoading(true)
       await register(currentFormValues)
       setLoading(false)
-     
+
       if (stepper.current) {
         formikRef.current.resetForm()
         setSubmitButton(false)
 
         navigate.replace('/message', {
-          title: 'Thank you. We have received your application',
+          title: 'Thank you. We have received your\napplication',
           body: 'Our review process may take up to 30 days. Please note that we may request additional documentation to support your eligibility, if needed.',
           ctaText: 'LOGIN',
           ctaTo: '/auth/login',
-          showBtn : false
+          showBtn: false,
         })
       }
     } catch (error) {
       setLoading(false)
       console.error('Error al registrar:', error)
-      Swal.fire({
-        theme: 'dark',
-        title: `<div class="fs-4">An error has occurred.</div>`,
-        icon: 'error',
-        showConfirmButton: false,
-        timer: 1000,
-        allowOutsideClick: false,
-      })
     }
   }
 
-  /** submit usado por el botón "Submit" (si lo muestras) */
   const handleSubmit = async (event?: any) => {
     event?.preventDefault()
-    // valida antes de enviar
     await formikRef.current?.validateForm()
     if (!formikRef.current?.isValid) return
     await doRegister()
   }
 
-  /** NEXT inteligente: avanza o envía si es el último paso */
   const nextOrSubmit = async () => {
     if (!stepper.current) return
     const idx = stepper.current.currentStepIndex
@@ -194,7 +179,7 @@ const RegitrationWizard:FC<WizardProps> = ({onStepChange}) => {
             </div>
 
             <div data-kt-stepper-element='content'>
-              <Step3 goPrev={() => stepper.current?.goPrev()} goNext={nextOrSubmit} />
+              <Step3 goPrev={() => stepper.current?.goPrev()} goNext={nextOrSubmit}   loading={loading} />
             </div>
 
             {isSubmitButton && (
@@ -216,7 +201,7 @@ const RegitrationWizard:FC<WizardProps> = ({onStepChange}) => {
 
                 <div>
                   <button
-                    type='button' /* evitamos submit nativo y usamos handleSubmit */
+                    type='button'
                     className='btn btn-lg btn-light me-3'
                     onClick={handleSubmit}
                   >
