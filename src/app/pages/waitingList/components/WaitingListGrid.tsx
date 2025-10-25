@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Pagination from '../../components/Pagination'
 import ActionsDropdown from './Actionsdropdown'
 import {useUseWaitinListRequest} from '../../../hooks/waitingList/useWaitingList'
 import {ApproveModal} from '../modals/ApproveModal'
 import {acceptRequest, rejectedRequest} from '../../../services/waitingListService'
 import {DeclineModal} from '../modals/DeclineModal'
+import { MenuComponent } from '../../../../_metronic/assets/ts/components'
 
 export interface WaitlistUser {
   id: string
@@ -32,12 +33,15 @@ const WaitingListGrid: React.FC = () => {
   const totalPages = 12
 
   const toggleDropdown = (userId: string, status: string) => {
-    // No abrir dropdown si está approved
     if (status.toLowerCase() === 'approved') {
       return
     }
     setOpenDropdownId((prev) => (prev === userId ? null : userId))
   }
+
+  useEffect(() => {
+    MenuComponent.reinitialization();
+  }, [data]);
 
   const closeDropdown = () => {
     setOpenDropdownId(null)
@@ -51,12 +55,10 @@ const WaitingListGrid: React.FC = () => {
   }
 
   const handleDecline = async (reason: string, note: string) => {
-    console.log(reason)
-    console.log(note)
-    console.log(user)
-    await rejectedRequest(user,{
+    
+    await rejectedRequest(user, {
       rejection_reason: reason,
-      notes:note
+      notes: note,
     })
     setShowDeclineModal(false)
     setReload(Math.random() * 20)
@@ -191,43 +193,38 @@ const WaitingListGrid: React.FC = () => {
                     ))
                   : safeData.map((user: WaitlistUser, index: number) => {
                       const isApproved = user.status.toLowerCase() === 'approved'
-                      
+
                       return (
                         <div key={`actions-${index}`} className='table__cell table__cell--actions'>
-                          <div className='actions-wrapper'>
-                            <button
-                              className='actions-trigger'
-                              onClick={() => toggleDropdown(user.id, user.status)}
-                              aria-label='Actions menu'
-                              title='Actions'
-                              disabled={isApproved}
-                              style={{
-                                opacity: isApproved ? 0.4 : 1,
-                                cursor: isApproved ? 'not-allowed' : 'pointer',
-                              }}
+                          <button
+                            className='btn btn-sm btn-icon btn-light btn-active-light-primary'
+                            data-kt-menu-trigger='click'
+                            data-kt-menu-placement='bottom-end'
+                            disabled={isApproved}
+                            style={{
+                              opacity: isApproved ? 0.4 : 1,
+                              cursor: isApproved ? 'not-allowed' : 'pointer',
+                            }}
+                          >
+                            <svg
+                              width='18'
+                              height='18'
+                              viewBox='0 0 18 18'
+                              fill='none'
+                              xmlns='http://www.w3.org/2000/svg'
                             >
-                              <svg
-                                width='18'
-                                height='18'
-                                viewBox='0 0 18 18'
-                                fill='none'
-                                xmlns='http://www.w3.org/2000/svg'
-                              >
-                                <circle cx='9' cy='4' r='1.5' fill='#151515' />
-                                <circle cx='9' cy='9' r='1.5' fill='#151515' />
-                                <circle cx='9' cy='14' r='1.5' fill='#151515' />
-                              </svg>
-                            </button>
-                            {openDropdownId === user.id && !isApproved && (
-                              <>
-                                <div className='actions-overlay' onClick={closeDropdown}></div>
-                                <ActionsDropdown
-                                  onAccept={() => openModal(Number(user.id))}
-                                  onReject={() => openModalDecline(Number(user.id))}
-                                />
-                              </>
-                            )}
-                          </div>
+                              <circle cx='9' cy='4' r='1.5' fill='#151515' />
+                              <circle cx='9' cy='9' r='1.5' fill='#151515' />
+                              <circle cx='9' cy='14' r='1.5' fill='#151515' />
+                            </svg>
+                          </button>
+
+                          {!isApproved && (
+                            <ActionsDropdown
+                              onAccept={() => openModal(Number(user.id))}
+                              onReject={() => openModalDecline(Number(user.id))}
+                            />
+                          )}
                         </div>
                       )
                     })}
