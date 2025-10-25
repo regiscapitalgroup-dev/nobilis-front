@@ -1,6 +1,6 @@
 import {FC} from 'react'
-import ReferencesCard from './components/ReferencesCard'
 import ReferencesForm from './components/ReferencesForm'
+import ReferencesCard from './components/ReferencesCard'
 
 const ReferencesPage: FC = () => {
   return (
