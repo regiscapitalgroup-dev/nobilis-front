@@ -1,15 +1,15 @@
 import {FC} from 'react'
-import ReferencesForm from './components/ReferencesForm'
-import ReferencesCard from './components/ReferencesCard'
+/* import ReferencesForm from './components/ReferencesForm'
+import ReferencesCard from './components/ReferencesCard' */
 
 const ReferencesPage: FC = () => {
   return (
     <div className='references-page'>
       <div className='references-page__container'>
-        <ReferencesForm />
+        {/* <ReferencesForm /> */}
 
         <div className='references-page__cards'>
-          <ReferencesCard />
+         {/*  <ReferencesCard /> */}
         </div>
       </div>
     </div>
