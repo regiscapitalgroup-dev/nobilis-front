@@ -49,6 +49,7 @@ export const reducer = persistReducer(
       }
 
       case actionTypes.Logout: {
+        storage.removeItem('persist:v100-demo1-auth')
         return initialAuthState
       }
 

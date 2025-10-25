@@ -6,6 +6,7 @@
 // Bootstrap base colors
 $white: #ffffff !default;
 $black: #000000 !default;
+$nb-muted: #808080 !default;
 $gray-100: if(isDarkMode(), #1b1b29, #f5f8fa) !default;
 $gray-200: if(isDarkMode(), #2b2b40, #eff2f5) !default;
 $gray-300: if(isDarkMode(), #323248, #e4e6ef) !default;
@@ -15,7 +16,7 @@ $gray-600: if(isDarkMode(), #6d6d80, #7e8299) !default;
 $gray-700: if(isDarkMode(), #92929f, #5e6278) !default;
 $gray-800: if(isDarkMode(), #cdcdde, #3f4254) !default;
 $gray-900: if(isDarkMode(), #ffffff, #181c32) !default;
-$text-muted: $gray-500 !default;
+$text-muted: $nb-muted !default;
 
 // Bootstrap gray colors map
 $grays: (

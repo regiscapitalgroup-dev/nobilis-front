@@ -1,18 +1,24 @@
 import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
-import {Redirect, Switch} from 'react-router-dom'
 import * as auth from './redux/AuthRedux'
 
 export function Logout() {
   const dispatch = useDispatch()
+
   useEffect(() => {
-    dispatch(auth.actions.logout())
-    document.location.reload()
+    const handleLogout = async () => {
+      localStorage.removeItem('persist:v100-demo1-auth')
+      localStorage.removeItem('accessToken')
+
+      dispatch(auth.actions.logout())
+
+      await new Promise((resolve) => setTimeout(resolve, 100))
+
+      window.location.href = '/'
+    }
+
+    handleLogout()
   }, [dispatch])
 
-  return (
-    <Switch>
-      <Redirect to='/auth/login' />
-    </Switch>
-  )
+  return null
 }

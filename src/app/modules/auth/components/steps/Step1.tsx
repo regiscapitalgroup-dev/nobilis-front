@@ -9,7 +9,6 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
   const formik = useFormikContext<any>()
   const [field, meta, helpers] = useField('phoneNumber')
   const [loading, setLoading] = useState<boolean>(false)
-
   const handlerSubmit = (event: any) => {
     formik.validateForm().then(async (errors) => {
       if (Object.keys(errors).length === 0) {
@@ -31,7 +30,6 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
       }
     })
   }
-
   return (
     <>
       <div className='w-100 fv-plugins-bootstrap5 fv-plugins-framework '>
@@ -124,9 +122,11 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
         {/* begin::Form group REFERRED */}
         <div className='mb-10 fv-row'>
           <div className='mb-1'>
-            <label className='form-label nb-tag-no-required'>
-              Invited by (Please provide a name)
-            </label>
+            <div className='invited-by-label'>
+              <span className='invited-by-label__text'>Invited by </span>
+              <span className='invited-by-label__hint'>(Please provide a name)</span>
+            </div>
+
             <div className='position-relative mb-3'>
               <Field
                 type='text'

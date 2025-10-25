@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import * as auth from '../redux/AuthRedux'
 import {Link} from 'react-router-dom'
 
 const initialValues = {
@@ -36,27 +34,23 @@ const registrationSchema = Yup.object().shape({
 })
 
 export function Registration() {
-  const [loading, setLoading] = useState(false);
-  const [statusAlert, setStatusAlert] = useState<string>("");
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
+  const [statusAlert, setStatusAlert] = useState<string>('')
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
-    onSubmit: async(values, {setStatus, setSubmitting}) => {
-    
+    onSubmit: async (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       try {
-        formik.resetForm();
-        setLoading(false);
-        setStatusAlert("success")
-        setStatus("Registration process has been completed");
-
-        /*dispatch(auth.actions.login(response.data.accessToken));*/
+        formik.resetForm()
+        setLoading(false)
+        setStatusAlert('success')
+        setStatus('Registration process has been completed')
       } catch (error) {
-        setLoading(false);
-        setSubmitting(false);
-        setStatusAlert("danger")
-        setStatus("Registration process has broken");
+        setLoading(false)
+        setSubmitting(false)
+        setStatusAlert('danger')
+        setStatus('Registration process has broken')
       }
     },
   })
@@ -77,30 +71,10 @@ export function Registration() {
         {/* begin::Link */}
         <div className='text-gray-400 fw-bold fs-4'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          {/* <Link to='/auth/login' className='link-primary fw-bolder' style={{marginLeft: '5px'}}>
-            Forgot Password ?
-          </Link> */}
         </div>
         {/* end::Link */}
       </div>
       {/* end::Heading */}
-
-      {/* begin::Action 
-      <button type='button' className='btn btn-light-primary fw-bolder w-100 mb-10'>
-        <img
-          alt='Logo'
-          src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
-          className='h-20px me-3'
-        />
-        Sign in with Google
-      </button>
-       end::Action */}
-
-      {/*<div className='d-flex align-items-center mb-10'>
-        <div className='border-bottom border-gray-300 mw-50 w-100'></div>
-        <span className='fw-bold text-gray-400 fs-7 mx-2'>OR</span>
-        <div className='border-bottom border-gray-300 mw-50 w-100'></div>
-      </div>*/}
 
       {formik.status && (
         <div className={`mb-lg-15 alert alert-${statusAlert}`}>
@@ -233,36 +207,6 @@ export function Registration() {
         </span>
       </div>
 
-    
-
-      {/* begin::Form group */}
-      {/*<div className='fv-row mb-10'>
-        <div className='form-check form-check-custom form-check-solid'>
-          <input
-            className='form-check-input'
-            type='checkbox'
-            id='kt_login_toc_agree'
-            {...formik.getFieldProps('acceptTerms')}
-          />
-          <label
-            className='form-check-label fw-bold text-gray-700 fs-6'
-            htmlFor='kt_login_toc_agree'
-          >
-            I Agree the{' '}
-            <Link to='/auth/terms' className='ms-1 link-primary'>
-              terms and conditions
-            </Link>
-            .
-          </label>
-          {formik.touched.acceptTerms && formik.errors.acceptTerms && (
-            <div className='fv-plugins-message-container'>
-              <div className='fv-help-block'>
-                <span role='alert'>{formik.errors.acceptTerms}</span>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>*/}
       {/* end::Form group */}
 
       {/* begin::Form group */}
@@ -272,7 +216,6 @@ export function Registration() {
           id='kt_sign_up_submit'
           className='btn btn-lg btn-primary w-100 mb-5'
           disabled={formik.isSubmitting || !formik.isValid}
-          
         >
           {!loading && <span className='indicator-label'>Submit</span>}
           {loading && (

@@ -1,5 +1,5 @@
 import React, {Suspense, useEffect} from 'react'
-import {Redirect, Route, Switch, useHistory, useLocation} from 'react-router-dom'
+import {Redirect, Route, Switch, useHistory} from 'react-router-dom'
 import {FallbackView} from '../../_metronic/partials'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {DashboardCoreWrapper} from '../pages/dashboardCore/DashboardCoreWrapper'
@@ -17,27 +17,36 @@ import {ExperiecesWrapper} from '../pages/experiences/ExperiencesWrapper'
 import {shallowEqual, useSelector} from 'react-redux'
 import {UserRole} from '../constants/roles'
 import {RootState} from '../../setup'
+import {SuggestExperienceWrapper} from '../pages/experiences/SuggestExperienceWrapper'
+import {WaitingListWrapper} from '../pages/waitingList/WaitingListWrapper'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
   const history = useHistory()
-  const location = useLocation()
   const {subscription} = useSelector((state: RootState) => state.auth, shallowEqual)
 
   useEffect(() => {
-    if (location.pathname === '/' || location.pathname.startsWith('/auth')) {
-      if (user?.role === UserRole.ADMIN || (user?.role === UserRole.FINAL_USER && subscription)) {
-        history.replace('/biography')
-      } else {
-        history.replace('/plans')
-      }
+    if (!user) return
+
+    // Si es ADMIN → /biography
+    if (user.role === UserRole.ADMIN) {
+      history.replace('/biography')
+      return
     }
-  }, [user, history, location.pathname])
+
+    // Si NO es admin y TIENE suscripción → /biography
+    if (subscription) {
+      history.replace('/biography')
+      return
+    }
+
+    // Si NO tiene suscripción → /plans
+    history.replace('/plans')
+  }, [user, subscription, history])
 
   return (
     <Suspense fallback={<FallbackView />}>
       <Switch>
-        {/* Rutas disponibles para todos los usuarios autenticados */}
         <Route path='/plans' component={DashboardWrapper} />
         <Route path='/dashboard' component={DashboardCoreWrapper} />
         <Route path='/biography/overview' component={BiographyFormWrapper} />
@@ -50,11 +59,10 @@ export function PrivateRoutes() {
         <Route path='/recognition' component={RecognitionWrapper} />
         <Route path='/team' component={TeamWrapper} />
         <Route path='/references' component={ReferencesWrapper} />
+        <Route path='/experiences/create' component={SuggestExperienceWrapper} />
         <Route path='/experiences' component={ExperiecesWrapper} />
-
-        {/* Redirecciones seguras */}
-        <Redirect exact from='/' to='/plans' />
-        <Redirect to='error/404' />
+        <Route path='/waitinglist' component={WaitingListWrapper} />
+        <Redirect to='/error/404' />
       </Switch>
     </Suspense>
   )

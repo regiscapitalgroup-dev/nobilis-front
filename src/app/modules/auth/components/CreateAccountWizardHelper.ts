@@ -23,7 +23,8 @@ export interface ICreateAccount {
   executive: boolean;
   governor: boolean;
   linkVerify: string;
-  statusWaitingList: number
+  statusWaitingList: number;
+  income_range: string;
 }
 
 const createAccountSchemas = [
@@ -70,7 +71,8 @@ const inits: ICreateAccount = {
   executive: false,
   governor: false,
   linkVerify: "",
-  statusWaitingList: 0
+  statusWaitingList: 0,
+  income_range: ""
 }
 
 export { createAccountSchemas, inits }

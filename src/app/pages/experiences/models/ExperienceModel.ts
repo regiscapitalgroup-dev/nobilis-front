@@ -3,7 +3,7 @@ export interface ExperienceModel {
     title: string
     hostName: string
     hostAvatar: string
-    coHostAvatar: string
+    coHostAvatar?: string
     guests: number
     date: string
     daysLeft: number
@@ -11,5 +11,6 @@ export interface ExperienceModel {
     message: string
     imageUrl: string
     category: 'requests' | 'active' | 'past'
+    status?: 'default' | 'invite-only' | 'paused'
   }
   

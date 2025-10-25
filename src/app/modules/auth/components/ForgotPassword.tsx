@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {Link, useHistory} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {requestPassword} from '../redux/AuthCRUD'
 
@@ -21,7 +21,6 @@ export function ForgotPassword() {
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [errorAlert, setErrorAlert] = useState(false)
-  const navigate = useHistory()
 
   const formik = useFormik({
     initialValues,
@@ -32,16 +31,6 @@ export function ForgotPassword() {
         requestPassword(values.email)
           .then((result) => {
             setLoading(false)
-
-            /* navigate.replace('/message', {
-              title: 'Thank you. Your password has been reset',
-              body: 'Continue to log is using your new password.',
-              ctaText: 'Continue',
-              ctaTo: '/auth/login',
-              classNameBtn: 'nb-btn-outline',
-            }) */
-            setShowAlert(true)
-
             resetForm()
           })
           .catch(() => {
@@ -55,16 +44,6 @@ export function ForgotPassword() {
 
   return (
     <>
-      {errorAlert && (
-        <div className='alert alert-danger' role='alert'>
-          Something went wrong. Please try again or contact support if the problem persists.
-        </div>
-      )}
-      {/* {showAlert && (
-        <div className='alert alert-success' role='alert'>
-          Success! Please check your email. We have sent you a link to reset your password.
-        </div>
-      )} */}
       <form
         className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
         noValidate
@@ -73,11 +52,11 @@ export function ForgotPassword() {
       >
         <div className='text-center mb-10'>
           {/* begin::Title */}
-          <h1 className='nb-heading-h2 nb-text-center mb-3'>Forgot Password?</h1>
+          <h1 className='nb-heading-h2 nb-text-center mb-3'>Forgot password?</h1>
           {/* end::Title */}
 
           {/* begin::Link */}
-          <div className='nb-body nb-center nb-muted'>
+          <div className='nb-body nb-center'>
             Enter your email to receive a secure link to reset your password.
           </div>
           {/* end::Link */}
@@ -85,7 +64,7 @@ export function ForgotPassword() {
 
         {/* begin::Form group */}
         <div className='fv-row mb-10'>
-          <label className='form-label nb-tag required'>Email</label>
+          <label className='nb-tag'>EMAIL</label>
           <input
             type='email'
             placeholder=''

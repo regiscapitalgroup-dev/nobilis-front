@@ -17,9 +17,7 @@ export const getRelations = async () => {
     return data;
 };
 
-
-export const getIndustries = async (search?: string) => {
-    const params = search && search.trim() ? { search: search.trim() } : undefined;
+export const getIndustries = async () => {
     const { data } = await apiClient.get('/catalog/industries/');
     return data;
 };
@@ -39,7 +37,7 @@ export const getPersonalInterests = async () => {
     return data;
 };
 
-export const getClubes = async (search?: string) => {
+export const getClubes = async () => {
     const { data } = await apiClient.get('catalog/clubs/');
     return data;
 };

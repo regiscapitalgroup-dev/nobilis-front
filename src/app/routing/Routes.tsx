@@ -15,36 +15,38 @@ import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {RootState} from '../../setup'
 import PaymentPage from '../pages/memberships/PaymentPage'
 import ProfileForm from '../pages/profile/ProfilePage'
+import {PublicRoutes} from './PublicRoutes'
+import {WebSocketProvider} from '../context/WebSocketContext'
+import store from '../../setup/redux/Store'
 
 const Routes: FC = () => {
   const isAuthorized = useSelector<RootState>(({auth}) => auth.user, shallowEqual)
-
+  const {
+    auth: {accessToken},
+  } = store.getState()
+  const wsUrl = process.env.REACT_APP_API_URL ?? ''
   return (
     <Switch>
-      {!isAuthorized ? (
-        /*Render auth page when user at `/auth` and not authorized.*/
-        <Route>
-          <AuthPage />
+      {!isAuthorized && (
+        <Route path={['/', '/auth/login']}>
+          <PublicRoutes />
         </Route>
-      ) : (
-        /*Otherwise redirect to root page (`/`)*/
-        <Redirect from='/auth' to='/' />
       )}
 
       <Route path='/payment' component={PaymentPage} />
       <Route path='/profile' component={ProfileForm} />
-      
 
       <Route path='/error' component={ErrorsPage} />
       <Route path='/logout' component={Logout} />
 
       {!isAuthorized ? (
-        /*Redirect to `/auth` when user is not authorized*/
-        <Redirect to='/auth/login' />
+        <Redirect to='/' />
       ) : (
-        <MasterLayout>
-          <PrivateRoutes />
-        </MasterLayout>
+        <WebSocketProvider wsBaseUrl={wsUrl} token={accessToken ?? ''}>
+          <MasterLayout>
+            <PrivateRoutes />
+          </MasterLayout>
+        </WebSocketProvider>
       )}
     </Switch>
   )

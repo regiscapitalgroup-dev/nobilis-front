@@ -66,5 +66,44 @@
                 "description": "Regional or State Leaders or Heads of intergovernmental organizations"
             }
         ]
+    },
+    {
+        "section04": [
+            {
+                "code": "01",
+                "title": "",
+                "description": "Under $1 M"
+            },
+            {
+                "code": "02",
+                "title": "Impact Maker",
+                "description": "$1 M – $5 M"
+            },
+            {
+                "code": "03",
+                "title": "Executive",
+                "description": "$5 M – $30 M"
+            },
+            {
+                "code": "04",
+                "title": "Governor",
+                "description": "$30 M – $75 M"
+            },
+            {
+                "code": "05",
+                "title": "Governor",
+                "description": "$75 M – $150 M"
+            },
+            {
+                "code": "06",
+                "title": "",
+                "description": "$150 M – $500 M"
+            },
+            {
+                "code": "07",
+                "title": "Governor",
+                "description": "$500 M +"
+            }
+        ]
     }
 ]

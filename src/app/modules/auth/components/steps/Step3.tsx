@@ -83,7 +83,7 @@ const Step3: FC<Step3Props> = ({goPrev, goNext, loading}) => {
               className='nbq-back'
               data-kt-stepper-action='previous'
               onClick={goPrev}
-              disabled={loading}  // ← deshabilitar durante loading
+              disabled={loading}  
             >
               BACK
             </button>
@@ -92,7 +92,7 @@ const Step3: FC<Step3Props> = ({goPrev, goNext, loading}) => {
               type='button' 
               className='nbq-next' 
               onClick={goNext}
-              disabled={loading}  // ← deshabilitar durante loading
+              disabled={loading}  
             >
               {loading ? (
                 <>

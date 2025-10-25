@@ -8,6 +8,7 @@ import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizard
 import {register} from '../redux/AuthCRUD'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {useHistory} from 'react-router-dom'
+import { Step4 } from './steps/Step4'
 
 type WizardProps = {
   onStepChange?: (current: number, total: number) => void
@@ -88,7 +89,7 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
     const onChanged = () => {
       setCurrentStep(s.currentStepIndex)
       setTotalSteps(s.totatStepsNumber ?? 3)
-      emitStep(s.currentStepIndex, s.totatStepsNumber ?? 3) // 🔔 por si se navega desde botones data-kt
+      emitStep(s.currentStepIndex, s.totatStepsNumber ?? 3)
     }
     s.on('kt.stepper.changed', onChanged)
     return () => {
@@ -98,7 +99,6 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
     }
   }, [stepperRef])
 
-  /** --- EXTRA: request centralizado --- **/
   const doRegister = async () => {
     try {
       setLoading(true)
@@ -109,8 +109,8 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
         formikRef.current.resetForm()
         setSubmitButton(false)
 
-        navigate.replace('/message', {
-          title: 'Thank you. We have received your\napplication',
+        navigate.replace('/auth/message', {
+          title: 'Thank you. We have received\n your application',
           body: 'Our review process may take up to 30 days. Please note that we may request additional documentation to support your eligibility, if needed.',
           ctaText: 'LOGIN',
           ctaTo: '/auth/login',
@@ -158,6 +158,9 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
         <div className='stepper-item' data-kt-stepper-element='nav'>
           <h3 className='text-muted fs-5 visually-hidden'>Step 3</h3>
         </div>
+        <div className='stepper-item' data-kt-stepper-element='nav'>
+          <h3 className='text-muted fs-5 visually-hidden'>Step 4</h3>
+        </div>
       </div>
 
       <Formik
@@ -180,6 +183,10 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
 
             <div data-kt-stepper-element='content'>
               <Step3 goPrev={() => stepper.current?.goPrev()} goNext={nextOrSubmit}   loading={loading} />
+            </div>
+
+            <div data-kt-stepper-element='content'>
+              <Step4 goPrev={() => stepper.current?.goPrev()} goNext={nextOrSubmit}   loading={loading} />
             </div>
 
             {isSubmitButton && (

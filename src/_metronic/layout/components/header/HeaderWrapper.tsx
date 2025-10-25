@@ -1,23 +1,68 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useLocation} from 'react-router-dom'
 import clsx from 'clsx'
 import {MenuComponent} from '../../../assets/ts/components'
 import {useLayout} from '../../core'
 import {KTSVG} from '../../../helpers'
-import {HeaderUserMenu} from '../../../partials'
+import {HeaderNotificationsMenu, HeaderUserMenu} from '../../../partials'
 import {UserModel} from '../../../../app/modules/auth/models/UserModel'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../setup'
+import {useWebSocketContext} from '../../../../app/context/WebSocketContext'
+import {useUserNotifications} from '../../../../app/hooks/notifications/useNotifications'
 
 export function HeaderWrapper() {
   const {pathname} = useLocation()
   const {config, classes, attributes} = useLayout()
   const {aside} = config
   const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const {subscribe, isConnected} = useWebSocketContext()
+  
+  // 🔧 Obtenemos las notificaciones iniciales
+  const {data: initialNotifications} = useUserNotifications()
+  
+  const [notificationCount, setNotificationCount] = useState(0)
+  const [hasNewNotification, setHasNewNotification] = useState(false)
 
   useEffect(() => {
     MenuComponent.reinitialization()
   }, [pathname])
+
+  
+  useEffect(() => {
+    if (initialNotifications && Array.isArray(initialNotifications)) {
+      const unreadCount = initialNotifications.filter(n => !n.isRead).length
+      setNotificationCount(unreadCount)
+    }
+  }, [initialNotifications])
+
+  useEffect(() => {
+    if (!isConnected) return
+
+    const unsubscribe = subscribe('notification', (data) => {
+      console.log('Nueva notificación en header:', data)
+      
+      if (!data.is_read && data.is_read !== undefined) {
+        setNotificationCount((prev) => prev + 1)
+      } else {
+        setNotificationCount((prev) => prev + 1)
+      }
+      
+      setHasNewNotification(true)
+      
+      setTimeout(() => {
+        setHasNewNotification(false)
+      }, 500)
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [subscribe, isConnected])
+
+  const handleNotificationRead = () => {
+    setNotificationCount((prev) => Math.max(0, prev - 1))
+  }
 
   return (
     <div
@@ -66,8 +111,24 @@ export function HeaderWrapper() {
 
           {/* NOTIFICATIONS */}
           <div className='nb-header__right-avatar'>
-            <KTSVG path='/media/svg/nobilis/bell.svg' className='svg-icon-1' />
-           {/*  <span className='badge'>2</span> */}
+            <div
+              className='notification-icon-wrapper cursor-pointer'
+              data-kt-menu-trigger='click'
+              data-kt-menu-attach='parent'
+              data-kt-menu-placement='bottom-end'
+              data-kt-menu-flip='bottom'
+            >
+              <KTSVG path='/media/svg/nobilis/bell.svg' className='svg-icon-1' />
+              
+              {notificationCount > 0 && (
+                <div className={`notification-badge ${hasNewNotification ? 'notification-badge--new' : ''}`}>
+                  <span className='notification-badge__number'>
+                    {notificationCount > 99 ? '99+' : notificationCount}
+                  </span>
+                </div>
+              )}
+            </div>
+            <HeaderNotificationsMenu onNotificationRead={handleNotificationRead} />
           </div>
 
           {/* USER MENU */}
@@ -79,8 +140,10 @@ export function HeaderWrapper() {
               data-kt-menu-placement='bottom-end'
               data-kt-menu-flip='bottom'
             >
-              <img src={user.profilePicture ? user.profilePicture : 'https://placehold.co/32x32'} alt='User' />
-             {/*  <span className='badge'>2</span> */}
+              <img
+                src={user.profilePicture ? user.profilePicture : 'https://placehold.co/32x32'}
+                alt='User'
+              />
             </div>
             <HeaderUserMenu />
           </div>

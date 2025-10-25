@@ -1614,3 +1614,132 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
   border: solid #fff;
   border-width: 0 2px 2px 0;
 }
+
+
+.invited-by-label {
+  width: 100%;
+
+  &__text {
+    color: #808080;
+    font-size: 10px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 18.5px;
+    letter-spacing: 1.5px;
+  }
+
+  &__hint {
+    color: #B4B4B4;
+    font-size: 10px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 18.5px;
+    letter-spacing: 1.5px;
+  }
+}
+
+
+
+/* ===== STEP 4: ===== */
+
+.nb-step4 {
+  .nb4-title {
+    align-self: stretch;
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 22.2px;
+    letter-spacing: 1.8px;
+    word-wrap: break-word;
+    margin: 0 0 15px 0;
+  }
+
+  .nb4-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-self: stretch;
+  }
+
+  .nb4-option {
+    align-self: stretch;
+    padding: 20px;
+    outline: 1px solid #D7D7D7;
+    outline-offset: -1px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    cursor: pointer;
+    margin: 0;
+  }
+
+  .nb4-radio {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .nb4-radio input[type='radio'] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: absolute;
+    opacity: 0;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .nb4-radio::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 2px solid #DFDFDF;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
+
+  .nb4-radio::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: #460107;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s ease;
+  }
+
+  .nb4-radio:has(input[type='radio']:checked)::before {
+    border-color: #460107;
+  }
+
+  .nb4-radio:has(input[type='radio']:checked)::after {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .nb4-option__text {
+    flex: 1 1 0;
+    color: #151515;
+    font-size: 14px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 19.6px;
+    word-wrap: break-word;
+  }
+
+  
+}

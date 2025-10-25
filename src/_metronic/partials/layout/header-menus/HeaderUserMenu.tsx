@@ -13,12 +13,13 @@ const HeaderUserMenu: FC = () => {
     <div className='menu menu-sub menu-sub-dropdown custom-user-menu' data-kt-menu='true'>
       {/* UPGRADE SECTION */}
       <div className='custom-user-menu__upgrade'>
-        <div className='custom-user-menu__upgrade-text'>Upgrade to Electi ∞</div>
-        <div className='custom-user-menu__upgrade-price'>$ 5.000 + 20.000 Credits</div>
+        <div className='custom-user-menu__upgrade-text'>Comming soon</div>
+        {/* <div className='custom-user-menu__upgrade-text'>Upgrade to Electi ∞</div> */}
+       {/*  <div className='custom-user-menu__upgrade-price'>$ 5.000 + 20.000 Credits</div> */}
       </div>
 
       {/* MY PROFILE */}
-      <Link to='/admin/overview' className='custom-user-menu__item custom-user-menu__item--profile'>
+      <Link to='/admin/overview/profile' className='custom-user-menu__item custom-user-menu__item--profile'>
         <div className='custom-user-menu__icon'>
           <svg width='20' height='20' viewBox='0 0 20 20' fill='none'>
             <circle cx='10' cy='6.67' r='3.67' stroke='white' strokeWidth='1' />
@@ -33,20 +34,20 @@ const HeaderUserMenu: FC = () => {
       </Link>
 
       {/* MESSAGES */}
-      <div className='custom-user-menu__item'>
+      {/* <div className='custom-user-menu__item'>
         <div className='custom-user-menu__icon'>
           <KTSVG path={'/media/svg/nobilis/message.svg'} />
         </div>
         <span className='custom-user-menu__text custom-user-menu__text--dark'>MESSAGES</span>
-      </div>
+      </div> */}
 
       {/* CHANGE PASSWORD */}
-      <div className='custom-user-menu__item'>
+      {/* <div className='custom-user-menu__item'>
         <div className='custom-user-menu__icon'>
           <KTSVG path={'/media/svg/nobilis/change_pass.svg'} />
         </div>
         <span className='custom-user-menu__text custom-user-menu__text--dark'>CHANGE PASSWORD</span>
-      </div>
+      </div> */}
 
       {/* LOGOUT */}
       <Link to='/logout' className='custom-user-menu__item'>

@@ -1,0 +1,753 @@
+// src/app/components/modals/ApproveModal.scss
+
+// Backdrop oscuro
+.approve-modal-backdrop {
+  background: rgba(0, 0, 0, 0.50) !important;
+}
+
+// Modal dialog
+.approve-modal {
+  .modal-dialog {
+    max-width: 633px; 
+    width: 100%;
+    margin: auto;
+  }
+
+  // Elimina bordes y sombras de todos los elementos del modal
+  .modal-content {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
+
+// Contenido del modal
+.approve-modal-content {
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+// Cuerpo del modal - 553px width con padding 40px = 633px total
+.approve-modal-body {
+  width: 553px;
+  max-width: 100%;
+  padding: 40px;
+  background: white;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  display: flex;
+  box-sizing: content-box;
+  margin: 0 auto;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+// Título
+.approve-modal-title {
+  align-self: stretch;
+  text-align: center;
+  color: #262626;
+  font-size: 32px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  line-height: 38.40px;
+  word-wrap: break-word;
+}
+
+// Descripción
+.approve-modal-description {
+  align-self: stretch;
+  text-align: center;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.60px;
+  word-wrap: break-word;
+}
+
+// Contenedor de botones
+.approve-modal-actions {
+  align-self: stretch;
+  justify-content: space-between;
+  align-items: center;
+  display: inline-flex;
+  gap: 20px;
+}
+
+// Botón Cancel
+.approve-modal-btn-cancel {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  outline: 1px #151515 solid;
+  outline-offset: -1px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  flex: 0 0 auto;
+
+  .approve-modal-btn-text {
+    color: #151515;
+  }
+
+ /*  &:hover {
+    background: rgba(21, 21, 21, 0.05);
+  } */
+}
+
+// Botón Approve
+.approve-modal-btn-approve {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #151515;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  cursor: pointer;
+  border: none;
+  flex: 0 0 auto;
+
+  .approve-modal-btn-text {
+    color: white;
+  }
+
+  /* &:hover {
+    background: #333333;
+  } */
+}
+
+// Texto de botones
+.approve-modal-btn-text {
+  text-align: center;
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 22.20px;
+  word-wrap: break-word;
+  white-space: nowrap;
+}
+
+// Ícono (línea blanca)
+.approve-modal-btn-icon {
+  width: 12px;
+  height: 3px;
+  outline: 1px white solid;
+  outline-offset: -0.50px;
+  flex-shrink: 0;
+}
+
+// ============================================
+// RESPONSIVE DESIGN
+// ============================================
+
+// Tablets (768px - 991px)
+@media (max-width: 991px) {
+  .approve-modal {
+    .modal-dialog {
+      max-width: 90%;
+      margin: 1.75rem auto;
+    }
+  }
+
+  .approve-modal-body {
+    width: auto;
+    padding: 35px;
+    gap: 25px;
+  }
+
+  .approve-modal-title {
+    font-size: 28px;
+    line-height: 33.6px;
+  }
+
+  .approve-modal-description {
+    font-size: 13px;
+    line-height: 18.2px;
+  }
+}
+
+// Mobile Landscape (576px - 767px)
+@media (max-width: 767px) {
+  .approve-modal {
+    .modal-dialog {
+      max-width: 95%;
+      margin: 1rem auto;
+    }
+  }
+
+  .approve-modal-body {
+    width: auto;
+    padding: 30px;
+    gap: 20px;
+  }
+
+  .approve-modal-title {
+    font-size: 24px;
+    line-height: 28.8px;
+  }
+
+  .approve-modal-description {
+    font-size: 12px;
+    line-height: 16.8px;
+  }
+
+  .approve-modal-actions {
+    gap: 15px;
+  }
+}
+
+// Mobile Portrait (menos de 576px)
+@media (max-width: 575px) {
+  .approve-modal {
+    .modal-dialog {
+      max-width: 95%;
+      margin: 0.5rem auto;
+    }
+  }
+
+  .approve-modal-body {
+    width: auto;
+    padding: 25px 20px;
+    gap: 20px;
+  }
+
+  .approve-modal-title {
+    font-size: 22px;
+    line-height: 26.4px;
+  }
+
+  .approve-modal-description {
+    font-size: 12px;
+    line-height: 16.8px;
+  }
+
+  .approve-modal-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .approve-modal-btn-cancel,
+  .approve-modal-btn-approve {
+    width: 100%;
+  }
+}
+
+// Mobile muy pequeño (menos de 400px)
+@media (max-width: 399px) {
+  .approve-modal-body {
+    width: auto;
+    padding: 20px 15px;
+  }
+
+  .approve-modal-title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .approve-modal-description {
+    font-size: 11px;
+    line-height: 15.4px;
+  }
+
+  .approve-modal-btn-text {
+    font-size: 11px;
+  }
+}
+
+// src/app/components/modals/DeclineModal.scss
+
+// src/app/components/modals/DeclineModal.scss
+
+// Backdrop oscuro
+.decline-modal-backdrop {
+  background: rgba(0, 0, 0, 0.50) !important;
+}
+
+// Modal dialog
+.decline-modal {
+  .modal-dialog {
+    max-width: 633px; 
+    width: 100%;
+    margin: auto;
+  }
+
+  .modal-content {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
+
+// Contenido del modal
+.decline-modal-content {
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+// Cuerpo del modal
+.decline-modal-body {
+  width: 553px;
+  max-width: 100%;
+  padding: 40px;
+  background: white;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  display: flex;
+  box-sizing: content-box;
+  margin: 0 auto;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+// Título
+.decline-modal-title {
+  align-self: stretch;
+  text-align: center;
+  color: #262626;
+  font-size: 32px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  line-height: 38.40px;
+  word-wrap: break-word;
+}
+
+// Descripción
+.decline-modal-description {
+  align-self: stretch;
+  text-align: center;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 19.60px;
+  word-wrap: break-word;
+}
+
+// Formulario
+.decline-modal-form {
+  align-self: stretch;
+  padding: 20px;
+  outline: 1px #E9E9E9 solid;
+  outline-offset: -1px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  display: flex;
+}
+
+// Campo
+.decline-modal-field {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0;
+  display: flex;
+}
+
+// Label
+.decline-modal-label {
+  align-self: stretch;
+  color: #808080;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 18.50px;
+  letter-spacing: 1.50px;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 0;
+}
+
+// ====================================
+// SELECT PERSONALIZADO
+// ====================================
+
+.decline-modal-select-container {
+  align-self: stretch;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.decline-modal-select-header {
+  align-self: stretch;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px #D7D7D7 solid;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+  gap: 9px;
+
+  &:hover {
+    border-bottom-color: #151515;
+  }
+}
+
+.decline-modal-select-value {
+  flex: 1 1 0;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 400;
+  line-height: 19.60px;
+  word-wrap: break-word;
+}
+
+.decline-modal-select-arrow {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+
+  svg {
+    display: block;
+  }
+}
+
+// Dropdown del select
+.decline-modal-select-dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: white;
+  outline: 1px #E9E9E9 solid;
+  outline-offset: -1px;
+  padding: 20px;
+  flex-direction: column;
+  gap: 12px;
+  display: flex;
+  z-index: 1000;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.decline-modal-select-option {
+  align-self: stretch;
+  color: #151515;
+  font-size: 12px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 300;
+  line-height: 16.80px;
+  word-wrap: break-word;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: all 0.15s ease;
+
+  &:hover {
+    font-weight: 500;
+    padding-left: 4px;
+  }
+
+  &.selected {
+    font-weight: 700;
+  }
+}
+
+// ====================================
+// TEXTAREA
+// ====================================
+
+.decline-modal-textarea-container {
+  align-self: stretch;
+  flex-direction: column;
+  display: flex;
+  gap: 5px;
+}
+
+.decline-modal-textarea {
+  align-self: stretch;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: none;
+  border-bottom: 1px #D7D7D7 solid;
+  background: transparent;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi', sans-serif;
+  font-weight: 400;
+  line-height: 19.60px;
+  outline: none;
+  resize: none;
+  min-height: auto;
+  height: auto;
+
+  &:focus {
+    border-bottom-color: #151515;
+  }
+
+  &::placeholder {
+    color: #B4B4B4;
+    font-style: italic;
+  }
+}
+
+.decline-modal-textarea-footer {
+  align-self: stretch;
+  justify-content: space-between;
+  align-items: flex-start;
+  display: flex;
+}
+
+.decline-modal-textarea-hint {
+  color: #B4B4B4;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+.decline-modal-textarea-counter {
+  text-align: right;
+  color: #B4B4B4;
+  font-size: 10px;
+  font-family: 'Satoshi', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+// ====================================
+// BOTONES
+// ====================================
+
+.decline-modal-actions {
+  align-self: stretch;
+  justify-content: space-between;
+  align-items: center;
+  display: inline-flex;
+  gap: 20px;
+}
+
+.decline-modal-btn-cancel {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  outline: 1px #151515 solid;
+  outline-offset: -1px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  flex: 0 0 auto;
+
+  .decline-modal-btn-text {
+    color: #151515;
+  }
+
+  /* &:hover {
+    background: rgba(21, 21, 21, 0.05);
+  } */
+}
+
+.decline-modal-btn-decline {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #151515;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  cursor: pointer;
+  border: none;
+  flex: 0 0 auto;
+
+  .decline-modal-btn-text {
+    color: white;
+  }
+
+ /*  &:hover {
+    background: #333333;
+  } */
+}
+
+.decline-modal-btn-text {
+  text-align: center;
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 22.20px;
+  word-wrap: break-word;
+  white-space: nowrap;
+}
+
+.decline-modal-btn-icon {
+  width: 12px;
+  height: 3px;
+  outline: 1px white solid;
+  outline-offset: -0.50px;
+  flex-shrink: 0;
+}
+
+// ============================================
+// RESPONSIVE DESIGN
+// ============================================
+
+@media (max-width: 991px) {
+  .decline-modal {
+    .modal-dialog {
+      max-width: 90%;
+      margin: 1.75rem auto;
+    }
+  }
+
+  .decline-modal-body {
+    width: auto;
+    padding: 35px;
+    gap: 25px;
+  }
+
+  .decline-modal-title {
+    font-size: 28px;
+    line-height: 33.6px;
+  }
+
+  .decline-modal-description {
+    font-size: 13px;
+    line-height: 18.2px;
+  }
+}
+
+@media (max-width: 767px) {
+  .decline-modal {
+    .modal-dialog {
+      max-width: 95%;
+      margin: 1rem auto;
+    }
+  }
+
+  .decline-modal-body {
+    width: auto;
+    padding: 30px;
+    gap: 20px;
+  }
+
+  .decline-modal-title {
+    font-size: 24px;
+    line-height: 28.8px;
+  }
+
+  .decline-modal-description {
+    font-size: 12px;
+    line-height: 16.8px;
+  }
+
+  .decline-modal-actions {
+    gap: 15px;
+  }
+
+  .decline-modal-form {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 575px) {
+  .decline-modal {
+    .modal-dialog {
+      max-width: 95%;
+      margin: 0.5rem auto;
+    }
+  }
+
+  .decline-modal-body {
+    width: auto;
+    padding: 25px 20px;
+    gap: 20px;
+  }
+
+  .decline-modal-title {
+    font-size: 22px;
+    line-height: 26.4px;
+  }
+
+  .decline-modal-description {
+    font-size: 12px;
+    line-height: 16.8px;
+  }
+
+  .decline-modal-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .decline-modal-btn-cancel,
+  .decline-modal-btn-decline {
+    width: 100%;
+  }
+
+  .decline-modal-form {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 399px) {
+  .decline-modal-body {
+    width: auto;
+    padding: 20px 15px;
+  }
+
+  .decline-modal-title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .decline-modal-description {
+    font-size: 11px;
+    line-height: 15.4px;
+  }
+
+  .decline-modal-btn-text {
+    font-size: 11px;
+  }
+
+  .decline-modal-form {
+    padding: 12px;
+  }
+}

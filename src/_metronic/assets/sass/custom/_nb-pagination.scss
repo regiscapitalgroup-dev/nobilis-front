@@ -1,0 +1,148 @@
+.pagination {
+  align-self: stretch;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 30px;
+
+  &__controls {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &__button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+
+    &:disabled {
+      cursor: not-allowed;
+      
+      .pagination__svg {
+        opacity: 1;
+      }
+    }
+
+    &:not(:disabled):hover {
+      opacity: 0.7;
+    }
+  }
+
+  &__svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+
+  &__numbers {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__number {
+    color: #808080;
+    font-size: 12px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 16.8px;
+    word-wrap: break-word;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #151515;
+    }
+
+    &--active {
+      color: #151515;
+      font-weight: 700;
+    }
+  }
+
+  &__ellipsis {
+    color: #b4b4b4;
+    font-size: 12px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 16.8px;
+    word-wrap: break-word;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .pagination {
+    gap: 20px;
+    justify-content: center;
+
+    &__numbers {
+      gap: 10px;
+    }
+
+    &__number {
+      font-size: 11px;
+      padding: 3px 6px;
+    }
+
+    &__ellipsis {
+      font-size: 11px;
+    }
+
+    &__button {
+      width: 16px;
+      height: 16px;
+    }
+
+    &__svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 15px;
+    flex-wrap: wrap;
+
+    &__controls {
+      gap: 3px;
+    }
+
+    &__numbers {
+      gap: 8px;
+    }
+
+    &__number {
+      font-size: 10px;
+      padding: 2px 4px;
+    }
+
+    &__ellipsis {
+      font-size: 10px;
+    }
+
+    &__button {
+      width: 14px;
+      height: 14px;
+    }
+
+    &__svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}

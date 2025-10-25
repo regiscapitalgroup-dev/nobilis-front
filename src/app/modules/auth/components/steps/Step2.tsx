@@ -1,6 +1,5 @@
 import {FC} from 'react'
 import {Field} from 'formik'
-import {HeaderText} from '../helper/header-text'
 import questions from '../helper/json-data/section1.json'
 
 type Step2Props = {

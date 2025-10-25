@@ -1,4 +1,5 @@
 import {Link, useLocation} from 'react-router-dom'
+import {KTSVG} from '../../../../../_metronic/helpers'
 
 type MessageState = {
   title?: string
@@ -7,6 +8,7 @@ type MessageState = {
   ctaTo?: string
   classNameBtn?: string | null
   showBtn?: boolean
+  color?: string
 }
 
 export function MessageComponent() {
@@ -18,19 +20,20 @@ export function MessageComponent() {
     ctaTo = '/auth/login',
     classNameBtn = null,
     showBtn = true,
+    color,
   } = state || {}
 
   return (
     <div className='w-100 p-5'>
       {/* begin::Heading */}
-      <div className='text-center mb-10'>
-        <h2 className='nb-heading-h2 nb-text-center mb-3'>{title}</h2>
+      <div className='text-center mb-2'>
+        <h2 className='nb-heading-h2 nb-text-center' style={{whiteSpace: 'pre-line'}}>{title}</h2>
       </div>
       {/* begin::Heading */}
-      <div className='text-center'>
+      <div className='text-center '>
         <div className='nb-body nb-center nb-muted'>{body}</div>
 
-        <div className='nb-divider my-6' aria-hidden='true'>
+        <div className='nb-divider my-6 mb-10' aria-hidden='true'>
           <span className='nb-divider__line' />
           <span className='nb-divider__icon'>
             <svg className='nb-fleur' viewBox='0 0 24 25' xmlns='http://www.w3.org/2000/svg'>
@@ -43,12 +46,19 @@ export function MessageComponent() {
       {/* begin::Action */}
 
       {showBtn ? (
-        <div className='text-center'>
+        <div className='text-center mt-3'>
           <Link
             to={ctaTo}
             className={`btn w-100 mb-5 ${classNameBtn ? 'nb-btn-outline' : 'nb-btn-primary'}`}
           >
-            <span className='indicator-label nb-heading-md'> {ctaText}</span>
+            <span className='nb-heading-md'> {ctaText}</span>
+
+            <img
+              src='/media/svg/nobilis/vector1.svg'
+              alt=''
+              /* className='nb-btn-icon nb-btn-icon--black' */
+              className={`nb-btn-icon nb-btn-icon--${color == 'W' ? 'black' : 'white'}`}
+            />
           </Link>
         </div>
       ) : null}

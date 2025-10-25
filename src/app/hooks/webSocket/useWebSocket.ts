@@ -14,7 +14,6 @@ export const useWebSocket = (options: UseWebSocketOptions) => {
     const webSocketServiceRef = useRef<IWebSocketService | null>(null);
     const subscriptionsRef = useRef<Set<() => void>>(new Set());
 
-    // Inicializar el servicio
     const initializeService = useCallback(() => {
         if (!webSocketServiceRef.current) {
             const config: IWebSocketConfig = {
@@ -25,11 +24,10 @@ export const useWebSocket = (options: UseWebSocketOptions) => {
 
             webSocketServiceRef.current = new WebSocketService(config);
 
-            // Suscribirse a cambios de estado
             const unsubscribeStatus = webSocketServiceRef.current.subscribe(
                 'status_change',
                 (newStatus: WebSocketStatus) => {
-                    console.log('🔄 Status changed:', newStatus);
+                    console.log('Status changed:', newStatus);
                     setStatus(newStatus);
                 }
             );
@@ -45,7 +43,7 @@ export const useWebSocket = (options: UseWebSocketOptions) => {
             try {
                 await webSocketServiceRef.current.connect();
             } catch (error) {
-                console.error('❌ Error al conectar:', error);
+                console.error('Error al conectar:', error);
                 throw error;
             }
         }
@@ -69,7 +67,6 @@ export const useWebSocket = (options: UseWebSocketOptions) => {
             const unsubscribe = webSocketServiceRef.current.subscribe(event, callback);
             subscriptionsRef.current.add(unsubscribe);
 
-            // Retornar función que también limpia la referencia
             return () => {
                 unsubscribe();
                 subscriptionsRef.current.delete(unsubscribe);
@@ -78,23 +75,19 @@ export const useWebSocket = (options: UseWebSocketOptions) => {
         return () => { };
     }, [initializeService]);
 
-    // Efecto para auto-conectar y limpiar al desmontar
     useEffect(() => {
         if (options.autoConnect !== false) {
             connect().catch(error => {
-                console.error('❌ Auto-connect failed:', error);
+                console.error('Auto-connect failed:', error);
             });
         }
 
-        // Cleanup al desmontar
         return () => {
             console.log('🧹 Limpiando WebSocket hook...');
 
-            // Limpiar todas las suscripciones
             subscriptionsRef.current.forEach(unsubscribe => unsubscribe());
             subscriptionsRef.current.clear();
 
-            // Desconectar
             if (webSocketServiceRef.current) {
                 webSocketServiceRef.current.disconnect();
             }

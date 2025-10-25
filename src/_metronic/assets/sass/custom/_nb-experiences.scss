@@ -236,7 +236,6 @@
     flex: 1 1 0;
     padding: 20px;
     background: white;
-    outline: 1px #E9E9E9 solid;
     outline-offset: -1px;
     display: inline-flex;
     flex-direction: column;
@@ -360,6 +359,13 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 5px;
+    padding-bottom: 20px;
+  border-bottom: 1px solid #E9E9E9;
+  
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
   }
 
   &__label {
@@ -416,8 +422,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
-    position: relative;
-    left: -1px;
+    gap: 10;
   }
 
   &__actions {
@@ -642,7 +647,6 @@
     flex: 1 1 0;
     padding: 20px;
     background: white;
-    outline: 1px solid #E9E9E9;
     outline-offset: -1px;
     display: inline-flex;
     flex-direction: column;
@@ -847,5 +851,171 @@
       text-transform: uppercase;
       line-height: 22.2px;
     }
+  }
+}
+.nb-guests-dropdown {
+  &__label {
+    color: #B4B4B4 !important; 
+    font-size: 10px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 18.5px;
+    word-wrap: break-word;
+  }
+
+  &__value {
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 16.8px;
+    word-wrap: break-word;
+  }
+}
+.nb-experience-card__guests-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  position: relative;
+  cursor: pointer;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  span {
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 16.8px;
+    white-space: nowrap;
+  }
+
+  /* Info icon (el de la derecha) */
+  svg:last-child {
+    width: 12px;
+    height: 12px;
+    outline-offset: -0.5px;
+    border-radius: 2px;
+  }
+
+  /* Dropdown alignment fix */
+  .nb-guests-dropdown {
+    position: absolute;
+    top: 130%;
+    left: 0;
+  }
+}
+
+
+
+/* === ACTIVE CARD DISABLED STATE === */
+.nb-active-card--disabled {
+  .nb-active-card__image {
+    opacity: 0.5;
+  }
+
+  .nb-active-card__hosts {
+    opacity: 0.5;
+  }
+
+  .nb-active-card__info {
+    opacity: 0.5;
+  }
+
+  .nb-active-card__guests {
+    opacity: 0.5;
+  }
+
+  .nb-active-card__actions {
+    opacity: 0.5;
+  }
+
+  // El botón de editar permanece con opacidad normal (activo)
+  .nb-active-card__edit {
+    opacity: 1;
+  }
+}
+
+/* === BUTTON STYLES === */
+.nb-active-card__preview,
+.nb-active-card__invite {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nb-active-card__preview {
+  border-bottom: 1px solid #151515;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  span {
+    text-align: center;
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 22.2px;
+    word-wrap: break-word;
+  }
+}
+
+.nb-active-card__invite {
+  padding: 10px 20px;
+  outline: 1px solid #151515;
+  outline-offset: -1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  span {
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 22.2px;
+    word-wrap: break-word;
+  }
+}
+/* === VARIANTE PARA CARD DEFAULT (sin invite-only) === */
+.nb-active-card:not(.nb-active-card--invite-only):not(.nb-active-card--disabled) {
+  .nb-active-card__image {
+    height: 236px;
+
+    img {
+      height: 236px;
+    }
+  }
+
+  .nb-active-card__image-gradient {
+    top: 26px;
+  }
+}
+
+/* === VARIANTE PARA CARD INVITE-ONLY === */
+.nb-active-card--invite-only {
+  .nb-active-card__image {
+    height: 283px;
+
+    img {
+      height: 283px;
+    }
+  }
+
+  .nb-active-card__image-gradient {
+    top: 73px;
   }
 }

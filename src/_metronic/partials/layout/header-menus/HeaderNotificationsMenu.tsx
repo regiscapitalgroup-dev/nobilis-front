@@ -1,154 +1,139 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import clsx from 'clsx'
-import {FC} from 'react'
-import {Link} from 'react-router-dom'
-import {KTSVG, toAbsoluteUrl, defaultAlerts, defaultLogs} from '../../../helpers'
+import {FC, useEffect, useState} from 'react'
+import {Link, useHistory} from 'react-router-dom'
+import {useWebSocketContext} from '../../../../app/context/WebSocketContext'
+import {useUserNotifications} from '../../../../app/hooks/notifications/useNotifications'
+import {readNotification} from '../../../../app/services/notificationService'
 
-const HeaderNotificationsMenu: FC = () => (
-  <div
-    className='menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px'
-    data-kt-menu='true'
-  >
-    <div
-      className='d-flex flex-column bgi-no-repeat rounded-top'
-      style={{backgroundImage: `url('${toAbsoluteUrl('/media/misc/pattern-1.jpg')}')`}}
-    >
-      <h3 className='text-white fw-bold px-9 mt-10 mb-6'>
-        Notifications <span className='fs-8 opacity-75 ps-3'>24 reports</span>
-      </h3>
+interface NotificationItem {
+  id: number
+  verb: string
+  description?: string
+  timestamp?: string
+  isRead: boolean
+  type?: string
+}
 
-      <ul className='nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-bold px-9'>
-        <li className='nav-item'>
-          <a
-            className='nav-link text-white opacity-75 opacity-state-100 pb-4'
-            data-bs-toggle='tab'
-            href='#kt_topbar_notifications_1'
-          >
-            Alerts
-          </a>
-        </li>
+interface HeaderNotificationsMenuProps {
+  onNotificationRead?: () => void
+}
 
-        <li className='nav-item'>
-          <a
-            className='nav-link text-white opacity-75 opacity-state-100 pb-4 active'
-            data-bs-toggle='tab'
-            href='#kt_topbar_notifications_2'
-          >
-            Updates
-          </a>
-        </li>
+const HeaderNotificationsMenu: FC<HeaderNotificationsMenuProps> = ({onNotificationRead}) => {
+  const {subscribe, isConnected} = useWebSocketContext()
+  const {data} = useUserNotifications()
+  const navigate = useHistory()
+  const [notifications, setNotifications] = useState<NotificationItem[]>([])
 
-        <li className='nav-item'>
-          <a
-            className='nav-link text-white opacity-75 opacity-state-100 pb-4'
-            data-bs-toggle='tab'
-            href='#kt_topbar_notifications_3'
-          >
-            Logs
-          </a>
-        </li>
-      </ul>
-    </div>
+  useEffect(() => {
+    if (data && Array.isArray(data)) {
+      setNotifications(data)
+    }
+  }, [data])
 
-    <div className='tab-content'>
-      <div className='tab-pane fade' id='kt_topbar_notifications_1' role='tabpanel'>
-        <div className='scroll-y mh-325px my-5 px-8'>
-          {defaultAlerts.map((alert, index) => (
-            <div key={`alert${index}`} className='d-flex flex-stack py-4'>
-              <div className='d-flex align-items-center'>
-                <div className='symbol symbol-35px me-4'>
-                  <span className={clsx('symbol-label', `bg-light-${alert.state}`)}>
-                    {' '}
-                    <KTSVG
-                      path={`/media/${alert.icon}`}
-                      className={`svg-icon-2 svg-icon-${alert.state}`}
-                    />
-                  </span>
-                </div>
+  const pendingRequests = notifications.filter((n) => !n.isRead).length
 
-                <div className='mb-0 me-2'>
-                  <a href='#' className='fs-6 text-gray-800 text-hover-primary fw-bolder'>
-                    {alert.title}
-                  </a>
-                  <div className='text-gray-400 fs-7'>{alert.description}</div>
-                </div>
-              </div>
+  useEffect(() => {
+    if (!isConnected) {
+      console.log('WebSocket no conectado')
+      return
+    }
 
-              <span className='badge badge-light fs-8'>{alert.time}</span>
-            </div>
-          ))}
-        </div>
+    console.log('Suscribiéndose a notificaciones...')
 
-        <div className='py-3 text-center border-top'>
-          <Link
-            to='/crafted/pages/profile'
-            className='btn btn-color-gray-600 btn-active-color-primary'
-          >
-            View All <KTSVG path='/media/icons/duotune/arrows/arr064.svg' className='svg-icon-5' />
-          </Link>
+    const unsubscribe = subscribe('notification', (data) => {
+      console.log('Nueva notificación recibida:', data)
+
+      const newNotification: NotificationItem = {
+        id: data.id || Date.now(),
+        verb: data.verb || 'New notification',
+        description: data.description || data.message || '',
+        timestamp: data.timestamp || 'Now',
+        isRead: false,
+        type: data.type,
+      }
+
+      setNotifications((prev) => [newNotification, ...prev])
+    })
+
+    return () => {
+      console.log('Desuscribiéndose de notificaciones')
+      unsubscribe()
+    }
+  }, [subscribe, isConnected])
+
+  const handleMarkAsRead = async (notificationId: number) => {
+    const notification = notifications.find((n) => n.id === notificationId)
+
+    if (notification && !notification.isRead) {
+      setNotifications((prev) =>
+        prev.map((notif) => (notif.id === notificationId ? {...notif, isRead: true} : notif))
+      )
+
+      if (onNotificationRead) {
+        onNotificationRead()
+      }
+
+      navigate.push('/waitinglist')
+
+      await readNotification(notificationId)
+    }
+  }
+
+  const unreadCount = notifications.filter((n) => !n.isRead).length
+
+  return (
+    <div className='menu menu-sub menu-sub-dropdown notifications-menu' data-kt-menu='true'>
+      {/* REQUESTS SECTION */}
+      <div className='notifications-menu__section'>
+        <div className='notifications-menu__title'>REQUESTS</div>
+
+        <div className='notifications-menu__card'>
+          <div className='notifications-menu__badge'>
+            <div className='notifications-menu__badge-number'>{pendingRequests}</div>
+          </div>
+          <div className='notifications-menu__card-text'>Pending Experiences Requests</div>
         </div>
       </div>
 
-      <div className='tab-pane fade show active' id='kt_topbar_notifications_2' role='tabpanel'>
-        <div className='d-flex flex-column px-9'>
-          <div className='pt-10 pb-0'>
-            <h3 className='text-dark text-center fw-bolder'>Get Pro Access</h3>
-
-            <div className='text-center text-gray-600 fw-bold pt-1'>
-              Outlines keep you honest. They stoping you from amazing poorly about drive
-            </div>
-
-            <div className='text-center mt-5 mb-9'>
-              <a
-                href='#'
-                className='btn btn-sm btn-primary px-6'
-                data-bs-toggle='modal'
-                data-bs-target='#kt_modal_upgrade_plan'
+      {/* NOTIFICATIONS LIST */}
+      <div className='notifications-menu__section'>
+        <div className='notifications-menu__list'>
+          {notifications.length === 0 ? (
+            <div className='notifications-menu__empty'>There are no notifications</div>
+          ) : (
+            notifications.map((notification) => (
+              <div
+                key={notification.id}
+                className={`notifications-menu__item ${
+                  !notification.isRead ? 'notifications-menu__item--unread' : ''
+                }`}
+                onClick={() => handleMarkAsRead(notification.id)}
               >
-                Upgrade
-              </a>
-            </div>
-          </div>
-
-          <div className='text-center px-4'>
-            <img
-              className='mw-100 mh-200px'
-              alt='metronic'
-              src={toAbsoluteUrl('/media/illustrations/sketchy-1/1.png')}
-            />
-          </div>
+                <div className='notifications-menu__item-title'>{notification.verb}</div>
+                {notification.description && (
+                  <div className='notifications-menu__item-message'>{notification.description}</div>
+                )}
+                {notification.timestamp && (
+                  <div className='notifications-menu__item-time'>{notification.timestamp}</div>
+                )}
+              </div>
+            ))
+          )}
         </div>
       </div>
 
-      <div className='tab-pane fade' id='kt_topbar_notifications_3' role='tabpanel'>
-        <div className='scroll-y mh-325px my-5 px-8'>
-          {defaultLogs.map((log, index) => (
-            <div key={`log${index}`} className='d-flex flex-stack py-4'>
-              <div className='d-flex align-items-center me-2'>
-                <span className={clsx('w-70px badge', `badge-light-${log.state}`, 'me-4')}>
-                  {log.code}
-                </span>
-
-                <a href='#' className='text-gray-800 text-hover-primary fw-bold'>
-                  {log.message}
-                </a>
-
-                <span className='badge badge-light fs-8'>{log.time}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className='py-3 text-center border-top'>
-          <Link
-            to='/crafted/pages/profile'
-            className='btn btn-color-gray-600 btn-active-color-primary'
-          >
-            View All <KTSVG path='/media/icons/duotune/arrows/arr064.svg' className='svg-icon-5' />
-          </Link>
-        </div>
+      {/* VIEW ALL LINK */}
+      <div className='notifications-menu__view-all'>
+        <Link
+          to='/biography'
+          onClick={() => {
+            alert('comming soon')
+          }}
+        >
+          view all notifications
+        </Link>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 export {HeaderNotificationsMenu}

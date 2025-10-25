@@ -15,7 +15,7 @@ export function AuthPage() {
   const {pathname} = useLocation()
   const isRegistration = pathname.startsWith('/auth/registration')
   const [wizStep, setWizStep] = useState(1)
-  const [wizTotal, setWizTotal] = useState(3)
+  const [wizTotal, setWizTotal] = useState(4)
   const [headerTitle, setHeaderTitle] = useState(
     'There is currently a waiting list for Nobilis membership'
   )
@@ -36,20 +36,23 @@ export function AuthPage() {
       title: 'Select the category that best represents your accomplishments',
       sub: 'To be considered for membership, applicants must meet at least one of the following criteria. Each reflects a different form of exceptional achievement, leadership, or influence. Accomplishments may be current or past, provided past roles lasted at least 4 years.',
     },
+    4:{
+      title: 'Your Net Worth',
+      sub: 'To qualify as a “Wealth Owner,” you may be asked for proof (e.g., bank statement, CPA attestation, or family-office letter) if your net worth isn’t \npublicly verifiable.\nYour one-time initiation fee is calculated progressively based on your net worth.',
+    }
   }
 
   const insertBreakAfter = (text: string, after: string) =>
     text.includes(after) ? text.replace(after, `${after}\n`) : text
 
-  // regla de Figma para cada paso (puedes ajustar palabras de corte)
   const formatTitleForStep = (step: number, t: string) => {
-    if (step === 1) return insertBreakAfter(t, 'waiting list') // "waiting list\nfor Nobilis…"
-    if (step === 3) return insertBreakAfter(t, 'best ') // opcional: corta tras "best"
+    if (step === 1) return insertBreakAfter(t, 'waiting list') 
+    if (step === 3) return insertBreakAfter(t, 'best ') 
     return t
   }
 
   const formatSubTitleForStep = (step: number, t: string) => {
-    if (step === 3) return insertBreakAfter(t, 'exceptional ') // opcional: corta tras "best"
+    if (step === 3) return insertBreakAfter(t, 'exceptional ')
     return t
   }
   const {title, sub} = titles[wizStep] ?? titles[1]
@@ -65,7 +68,7 @@ export function AuthPage() {
     const handler = (e: Event) => {
       const ev = e as CustomEvent<{step: number; total: number}>
       const s = ev.detail?.step ?? 1
-      const t = ev.detail?.total ?? 3
+      const t = ev.detail?.total ?? 4
       setWizStep(s)
       setWizTotal(t)
       const map = titles[s] ?? titles[1]
@@ -121,7 +124,7 @@ export function AuthPage() {
                 <Route path='/auth/activate-account/:token/:user' component={CreatePassword} />
                 <Route path='/auth/forgot-password' component={ForgotPassword} />
                 <Route path='/reset-password/:user/:token' component={ResetPassword} />
-                <Route path='/message' component={MessageComponent} />
+                <Route path='/auth/message' component={MessageComponent} />
                 <Redirect from='/auth' exact={true} to='/auth/login' />
                 <Redirect to='/auth/login' />
               </Switch>

@@ -40,8 +40,7 @@ export function CreatePassword() {
 
       if (token) {
         await activateAccount(token, values.newPassword)
-          .then((data) => {
-            /* const {access} = data.data */
+          .then(() => {
             setPasswordUpdateData(values)
             setLoading(false)
 
@@ -52,8 +51,8 @@ export function CreatePassword() {
               ctaTo: '/auth/login',
               classNameBtn: 'nb-btn-outline',
               showBtn: true,
+              color: 'W'
             })
-            /* dispatch(auth.actions.login(access)) */
           })
           .catch(() => {
             setLoading(false)
@@ -63,21 +62,20 @@ export function CreatePassword() {
   })
 
   return (
-    <>
+    <>      
+      <div className='text-center mb-10'>
+        <h1 className='nb-heading-h2 nb-text-center mb-3'>{`Welcome to Nobilis, ${user}! Honored to have you among the world’s most accomplished`}</h1>
+        <div className='nb-body nb-center nb-muted'>To begin, please reset your password.</div>
+      </div>
       <form
         className='form w-100'
         noValidate
         id='kt_login_password_reset_form'
         onSubmit={formik.handleSubmit}
       >
-        <HeaderText
-          title={`Welcome to Nobilis, ${user}! Honored to have you among the world’s most accomplished`}
-          subtitle='To begin, please reset your password.'
-        />
-
         {/* begin::Form group */}
         <div className='fv-row mb-10'>
-          <label className='form-label nb-tag required'>New Password</label>
+          <label className='nb-tag'>New Password</label>
 
           <div className='nb-input-wrap'>
             <input
@@ -104,7 +102,7 @@ export function CreatePassword() {
           )}
         </div>
         <div className='fv-row mb-10'>
-          <label className='form-label nb-tag required'>Confirm Password</label>
+          <label className='nb-tag'>Confirm New Password</label>
           <div className='nb-input-wrap'>
             <input
               type={showPwd2 ? 'text' : 'password'}
@@ -161,7 +159,7 @@ export function CreatePassword() {
             type='submit'
             id='kt_password_reset_submit'
             className='btn nb-btn-outline w-100  nb-heading-md'
-            disabled={!accepted}
+            /* disabled={!accepted} */
           >
             {!loading && (
               <>

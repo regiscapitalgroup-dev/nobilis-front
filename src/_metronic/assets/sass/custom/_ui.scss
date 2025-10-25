@@ -90,8 +90,8 @@
   content:'';
   height: 2px;         /* grosor de las líneas */
   flex: 1 1 120px;     /* líneas cortas; crecen un poco si hay espacio */
-  max-width: 140px;
-  background: rgba(0,0,0,.12);  /* gris suave como el mock */
+  max-width: 100px;
+  background: #D7D7D7 ;  /* gris suave como el mock */
 }
 
 .nb-divider__icon{
@@ -201,10 +201,8 @@
    Nobilis – Question blocks (add-only)
    =========================== */
 
-/* Título de bloque (“WHAT DRAWS…”, “HOW ARE YOU…”) */
 .nbq-title {
-  /* no tocamos nb-tag; esto solo refuerza color y peso */
-  color: #000 !important;
+  color: #151515 !important;
   font-weight: 700 !important;
 }
 
@@ -271,7 +269,7 @@
 }
 
 /* Footer con flecha/“fleur” – líneas y color del ícono */
-.nb-divider__line { height: 2px; width: 160px; background: #e2e4ea; border-radius: 2px; }
+.nb-divider__line { height: 2px; width: 160px; background: #D7D7D7 ; border-radius: 2px; }
 .nb-fleur { width: 22px; height: 22px; fill: #460107; }
 
 

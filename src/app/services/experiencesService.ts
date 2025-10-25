@@ -16,6 +16,7 @@ export async function getExperiences(): Promise<ExperienceModel[]> {
         'Join us in Tuscany for an unforgettable wine and gastronomy retreat, connecting with other Nobilis members.',
       imageUrl: 'https://placehold.co/240x338',
       category: 'requests',
+      status: 'invite-only'
     },
     {
       id: 2,
@@ -30,6 +31,8 @@ export async function getExperiences(): Promise<ExperienceModel[]> {
         'An exclusive evening with international artists and collectors in London.',
       imageUrl: 'https://placehold.co/240x338',
       category: 'active',
+      status: 'invite-only'
+
     },
     {
       id: 3,
@@ -44,6 +47,7 @@ export async function getExperiences(): Promise<ExperienceModel[]> {
         'Gathering of philanthropists to discuss social impact initiatives across Latin America.',
       imageUrl: 'https://placehold.co/240x338',
       category: 'past',
+      status: 'paused'
     },
   ])
 }

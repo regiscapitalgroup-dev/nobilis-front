@@ -30,7 +30,6 @@ export function ResetPassword() {
 
   const [loading, setLoading] = useState(false)
   const [passwordUpdateData, setPasswordUpdateData] = useState<IUpdatePassword>(updatePassword)
-  const [errorAlert, setErrorAlert] = useState(false)
   const [showPwd, setShowPwd] = useState(false)
   const [showPwd2, setShowPwd2] = useState(false)
   const navigate = useHistory()
@@ -47,26 +46,19 @@ export function ResetPassword() {
 
       if (token) {
         await recoverAccount(token, values.newPassword, user)
-          .then((data) => {
-            const {access} = data
+          .then(() => {
             setPasswordUpdateData(values)
             setLoading(false)
-
-            /* dispatch(auth.actions.login(access)) */
-
             navigate.replace('/message', {
               title: 'Thank you. Your password has been reset',
               body: 'Continue to log is using your new password.',
               ctaText: 'LOGIN',
               ctaTo: '/auth/login',
+              color: 'B',
             })
-            /* setTimeout(() => {
-              history.push('/dashboard/new')
-            }, 1000) */
           })
           .catch(() => {
             setLoading(false)
-            setErrorAlert(true)
           })
       }
     },
@@ -74,6 +66,19 @@ export function ResetPassword() {
 
   return (
     <>
+      <button
+        onClick={() => {
+          navigate.replace('/message', {
+            title: 'Thank you.\nYour password has been reset',
+            body: 'Continue to log is using your new password.',
+            ctaText: 'LOGIN',
+            ctaTo: '/auth/login',
+            color: 'B',
+          })
+        }}
+      >
+        group
+      </button>
       <form
         className='form w-100'
         onSubmit={formik.handleSubmit}
@@ -83,7 +88,7 @@ export function ResetPassword() {
         {/* begin::Heading */}
         <div className='text-center mb-10'>
           <h1 className='nb-heading-h2 nb-text-center mb-3'>Reset your password</h1>
-          <div className='nb-body nb-center nb-muted'>Create your new password.</div>
+          <div className='nb-body nb-center'>Create your new password.</div>
         </div>
 
         {/* begin::Heading */}
@@ -96,7 +101,7 @@ export function ResetPassword() {
 
         {/* begin::Form group */}
         <div className='fv-row mb-10'>
-          <label className='form-label nb-tag required'>New Password</label>
+          <label className='nb-tag'>New Password</label>
 
           <div className='nb-input-wrap'>
             <input
@@ -131,7 +136,7 @@ export function ResetPassword() {
           <div className='d-flex justify-content-between mt-n5'>
             <div className='d-flex flex-stack mb-2'>
               {/* begin::Label */}
-              <label className='form-label nb-tag required'>Confirm Password</label>
+              <label className='nb-tag'>Confirm New Password</label>
               {/* end::Label */}
             </div>
           </div>

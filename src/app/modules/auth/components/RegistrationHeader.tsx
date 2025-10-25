@@ -4,13 +4,13 @@ import React from 'react'
 type Props = {
   step?: number
   total?: number
-  title?: string        // string para poder comparar por step
+  title?: string      
   subTitle?: string
 }
 
 const RegistrationHeader: React.FC<Props> = ({
   step = 1,
-  total = 3,
+  total = 4,
   title = 'There is currently a waiting list\nfor Nobilis membership',
   subTitle = 'To join the waiting list, please leave your details below:',
 }) => {

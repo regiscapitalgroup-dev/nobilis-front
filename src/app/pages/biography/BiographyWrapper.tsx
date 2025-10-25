@@ -12,7 +12,6 @@ const BiographyWrapper: FC = () => {
   const restoreRef = useRef(config)
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const isAdmin = user?.role === 'ADMIN'
-
   useEffect(() => {
     restoreRef.current = config
     const layoutConfig = getLayoutConfig('/biography', isAdmin)
