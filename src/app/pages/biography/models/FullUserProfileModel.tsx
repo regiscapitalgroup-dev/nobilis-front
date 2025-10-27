@@ -23,8 +23,15 @@ export interface FullUserProfileModel {
     lifePartnerName: string;
     lifePartnerLastname: string;
     postalAddress: string;
+    introduction: IntroductionDetail;
   }
   
+  
+  export interface IntroductionDetail {
+    id: number;
+    title: string;
+  }
+
   export interface SocialMediaProfile {
     id: number;
     platformName: string;

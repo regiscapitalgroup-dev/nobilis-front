@@ -42,7 +42,6 @@ const LandingValues = () => {
       </div>
       
       <div className="read-more-button">
-       {/*  <div className="button-text">Read more</div> */}
         <Link to='/values' className='button-text'>Read more</Link>
       </div>
     </div>

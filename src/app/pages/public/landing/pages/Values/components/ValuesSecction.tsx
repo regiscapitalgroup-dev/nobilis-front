@@ -4,7 +4,7 @@ import { KTSVG } from '../../../../../../../_metronic/helpers';
 const ValuesSecction = () => {
   return (
     <div className="values-section">
-      <div className="values-title">Values. What Really Matters</div>
+      <div className="values-title">What We Stand For</div>
       
       <div className="values-grid">
         <div className="value-card">
@@ -40,9 +40,9 @@ const ValuesSecction = () => {
         </div>
       </div>
       
-      <div className="read-more-button">
+     {/*  <div className="read-more-button">
         <div className="button-text">Read more</div>
-      </div>
+      </div> */}
     </div>
   );
 };

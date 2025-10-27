@@ -4,7 +4,7 @@ export const PartnersHero: FC = () => {
   return (
     <section className='partners-hero'>
       <img 
-        src='/media/part_head.png' 
+        src='/media/bg-par.png' 
         alt='Partners background' 
         className='partners-hero__background'
       />

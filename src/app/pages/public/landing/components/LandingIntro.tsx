@@ -1,6 +1,5 @@
 // LandingIntro.tsx
 import React, {FC} from 'react'
-import {KTSVG} from '../../../../../_metronic/helpers'
 
 export const LandingIntro: FC = () => {
   return (

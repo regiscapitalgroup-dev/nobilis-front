@@ -26,9 +26,16 @@ export function AsideMenuMain() {
             <span className='nb-menu-section-title'>MY ACCOUNT</span>
           </div>
           <div className='nb-menu-section-content'>
-            <AsideMenuItem
+          <AsideMenuItem
               to='/admin/overview/profile'
               title='MY PROFILE'
+              showIcon={true}
+              isSelected={false}
+              icon='/media/svg/nobilis/user_nb.svg'
+            />
+            <AsideMenuItem
+              to='/biography'
+              title='MY biography'
               showIcon={true}
               isSelected={false}
               icon='/media/svg/nobilis/user_nb.svg'

@@ -1,14 +1,16 @@
-// PartnersAccordion.tsx
 import React, {FC, useState} from 'react'
+import { KTSVG } from '../../../../../../../_metronic/helpers'
 
 interface AccordionItem {
   id: string
   title: string
   content: {
     subtitle?: string
+    introText?: string
     sections: Array<{
       title: string
       description: string
+      hasBullets?: boolean
     }>
     footer?: string
   }
@@ -30,63 +32,71 @@ export const PartnersAccordion: FC = () => {
             title: 'Unique Venues & Rare Access',
             description:
               'Properties, clubs, or sites that are difficult to reach or normally closed to the public—UNESCO heritage locations requiring permits, invitation-only golf or yacht clubs, private islands, or cultural and scientific institutions available for private after-hours visits as well as distinctive health retreats in extraordinary settings.',
+            hasBullets: false,
           },
           {
             title: 'Extraordinary Travel Experiences',
             description:
-              'Bespoke journeys to the worlds most remarkable destinations—iconic safaris, polar expeditions, swimming with whales, even space travel—creating unforgettable memories and lasting positive impressions.',
+              "Bespoke journeys to the world's most remarkable destinations—iconic safaris, polar expeditions, swimming with whales, even space travel—creating unforgettable memories and lasting positive impressions.",
+            hasBullets: false,
           },
           {
             title: 'Our Requirements',
             description:
               'Verified Excellence – A proven reputation in the luxury market, impeccable references, and the ability to meet the expectations of our ultra-high-net-worth clientele.\nAbsolute Discretion & Security – A commitment to rigorous privacy agreements and flawless guest confidentiality at every stage.',
+            hasBullets: true,
           },
         ],
         footer:
           'If your destination offers experiences few can access but everyone remembers, Nobilis invites you to apply as a trusted Travel Partner.',
       },
-      primaryImage: '/media/part_01.png',
-      secondaryImage: '/media/part_02.png',
+      primaryImage: '/media/ac_02.png',
+      secondaryImage: '/media/in-par-02.png',
     },
     {
       id: 'philanthropic',
       title: 'Philanthropic Organizations',
       content: {
         subtitle:
-          'We help charities raise funds for meaningful causes, ensuring lasting legacies and global impact.',
+          'We help charities raise funds for meaningful causes, creating lasting legacies and global impact.',
         sections: [
           {
-            title: 'What Partners Receive',
+            title: 'Requirements for Philanthropic Partners:',
             description:
-              'Presenting causes to a highly engaged, financially robust audience that values philanthropy and legacy giving.\nCollaboration on exclusive events (e.g., galas, auctions) designed to showcase your mission and attract high-value donors.',
-          },
-          {
-            title: 'Requirements',
-            description:
-              'Registered charity status, transparent financials, and verifiable outcomes.\nA clear mission statement that aligns with our Members values.\nCommitment to ethical fundraising and responsible use of funds.\nFor your safety, We do Love Eko.',
+              'The charity must be represented by its founder or official leader, who must be a current Nobilis Member.\nThe organization must have an impeccable reputation and agree to provide transparency on how funds collected through Nobilis events are spent.',
+            hasBullets: true,
           },
         ],
         footer:
-          'If you are working to make a real difference and would like to attract high-net-worth individuals, Nobilis invites you to join us as an Approved Philanthropic Partner.',
+          'Together, we create unique events that make a difference and leave a lasting mark on the world.',
       },
-      primaryImage: '/media/part_02.png',
-      secondaryImage: '/media/part_03.png',
+      primaryImage: '/media/ac_03.png',
+      secondaryImage: '/media/in-par-03.png',
     },
     {
       id: 'experts',
       title: 'Experts',
       content: {
-        subtitle: 'Verified experts guide Members through personal development.',
+        introText: "Nobilis offers 15 exclusive spots for external partners—renowned experts representing the most influential industries, including investments and finance, health and longevity, art and culture, advanced technology, sustainability, and other sectors essential to our Members' lives and legacies.",    
         sections: [
           {
-            title: 'Knowledge Sharing',
+            title: 'What Partners Receive',
             description:
-              'Deliver short, powerful insights to Members eager for transformative guidance across business, health, mindfulness, leadership, creativity, and more.',
+              'Direct access to present cutting-edge knowledge and market perspectives to Nobilis members.\nOpportunities to host discussions and be invited to Mastermind Circles.',
+            hasBullets: true,
+          },
+          {
+            title: 'Requirements',
+            description:
+              'Insight Leadership: Provide Nobilis with early, high-value market intelligence and lead discussions for Members on emerging trends before they reach the wider market.\nCredentials: Recognized leaders with a proven record of innovation, insight, and influence.\nReputation: Only top-tier professionals or firms with impeccable standing and verified references will be considered.\nPay annual fee to keep the spot.',
+            hasBullets: true,
           },
         ],
+        footer:
+          'Nobilis partners are selected by invitation and must meet the highest standards of expertise and credibility to ensure lasting value for our community.',
       },
-      primaryImage: '/media/part_03.png',
-      secondaryImage: '/media/part_01.png',
+      primaryImage: '/media/ac_04.png',
+      secondaryImage: '/media/in-par-01.png',
     },
   ]
 
@@ -110,7 +120,7 @@ export const PartnersAccordion: FC = () => {
               <button className='partners-accordion__header' onClick={() => handleToggle(item.id)}>
                 <h3 className='partners-accordion__title'>{item.title}</h3>
                 <div className='partners-accordion__icon'>
-                  <div className='partners-accordion__icon-line' />
+                <KTSVG path='/media/svg/nobilis/care-down.svg' className='svg-icon-2' />
                 </div>
               </button>
 
@@ -119,23 +129,32 @@ export const PartnersAccordion: FC = () => {
                   {item.content.subtitle && (
                     <h4 className='partners-accordion__subtitle'>{item.content.subtitle}</h4>
                   )}
+                  
+                  {item.content.introText && (
+                    <p className='partners-accordion__intro-text'>{item.content.introText}</p>
+                  )}
 
                   {item.content.sections.map((section, index) => (
                     <div key={index} className='partners-accordion__section'>
                       <h5 className='partners-accordion__section-title'>{section.title}</h5>
-                      <p className='partners-accordion__section-description'>
-                        {section.description}
-                      </p>
+                      {section.hasBullets ? (
+                        <ul className='partners-accordion__section-list'>
+                          {section.description.split('\n').map((line, i) => (
+                            <li key={i} className='partners-accordion__section-list-item'>
+                              {line}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className='partners-accordion__section-description'>
+                          {section.description}
+                        </p>
+                      )}
                     </div>
                   ))}
 
                   {item.content.footer && (
-                    <p className='partners-accordion__footer'>
-                      {item.content.footer.split('Nobilis invites you')[0]}
-                      <strong>
-                        Nobilis invites you{item.content.footer.split('Nobilis invites you')[1]}
-                      </strong>
-                    </p>
+                    <p className='partners-accordion__footer'>{item.content.footer}</p>
                   )}
                 </div>
               )}
@@ -143,7 +162,7 @@ export const PartnersAccordion: FC = () => {
           ))}
         </div>
 
-        {/* <div className='partners-accordion__images'>
+        <div className='partners-accordion__images'>
           <img
             key={`primary-${currentItem.id}`}
             src={currentItem.primaryImage}
@@ -153,10 +172,10 @@ export const PartnersAccordion: FC = () => {
           <img
             key={`secondary-${currentItem.id}`}
             src={currentItem.secondaryImage}
-            alt='Next preview'
+            alt='Preview'
             className='partners-accordion__image partners-accordion__image--secondary'
           />
-        </div> */}
+        </div>
       </div>
     </section>
   )

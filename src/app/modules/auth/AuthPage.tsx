@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react'
 import {Redirect, Route, Switch, useLocation} from 'react-router-dom'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
-
+import SVG from 'react-inlinesvg'
 import {RegitrationWizard} from './components/RegistrationWizard'
 import {Login} from './components/Login'
 import {CreatePassword} from './components/CreatePassword'
@@ -96,7 +96,7 @@ export function AuthPage() {
       >
         {/* Logo textual */}
         <div className='mb-5'>
-          <div className='nb-logo-text'>NOBILIS</div>
+        <SVG src='/media/svg/nobilis/logo-nb.svg' />
         </div>
 
         {isRegistration && (

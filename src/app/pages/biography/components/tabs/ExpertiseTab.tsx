@@ -33,13 +33,13 @@ const ExpertiseTab: FC = () => {
 
   const services = data?.expertise || []
 
-  if (!services.length) {
+  /* if (!services.length) {
     return (
       <div className='expertise-tab'>
         <div className='expertise-tab__empty'>No expertise information available.</div>
       </div>
     )
-  }
+  } */
 
   return (
     <div className='expertise-tab'>

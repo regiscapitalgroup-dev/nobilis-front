@@ -15,7 +15,7 @@ import { ContactForm } from './components/LandingContactForm'
 const LandingPage: FC = () => {
   return (
     <LandingWrapper>
-      <LandingHero imageUrl='/media/bg_section_01.png' />
+      <LandingHero imageUrl='/media/bg_lp_01.png' />
       <LandingIntro />
       <LandingMembers />
       <LandingValues />

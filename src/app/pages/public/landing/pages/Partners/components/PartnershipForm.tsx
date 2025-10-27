@@ -81,6 +81,7 @@ export const PartnershipForm: FC = () => {
               options={collection}
               placeholder='Select Partnership Type'
               name='partner_type_id'
+              
             />
             {/* {formik.touched.partnership_type && formik.errors.partnership_type && (
               <div className='landing-footer__error'>{formik.errors.partnership_type}</div>
@@ -96,12 +97,14 @@ export const PartnershipForm: FC = () => {
               value={formik.values.full_name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              required
             />
           </div>
 
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>E-mail</label>
             <input
+            required
               type='email'
               name='email'
               className='landing-footer__input'
@@ -114,6 +117,7 @@ export const PartnershipForm: FC = () => {
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>Company</label>
             <input
+            required
               type='text'
               name='company_name'
               className='landing-footer__input'
@@ -126,6 +130,7 @@ export const PartnershipForm: FC = () => {
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>Message</label>
             <textarea
+            required
               name='message'
               className='landing-footer__textarea landing-footer__textarea--tall'
               value={formik.values.message}

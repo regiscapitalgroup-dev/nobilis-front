@@ -42,10 +42,10 @@ export const ContactForm: FC = () => {
     <>
       <div className='landing-footer__contact-info'>
         <h2 className='landing-footer__title'>Contact us</h2>
-        <p className='landing-footer__description'>
-          You are invited to send any inquiries via this form or by email: contact
-          <span className='landing-footer__email-at'>@</span>
-          joinnobilis.com
+        <p className='landing-footer__description '>
+          You are invited to send any inquiries via this form or by email: 
+          <span className='landing-footer__email-at ms-2'>contact@joinnobilis.com</span>
+          
         </p>
       </div>
 
@@ -54,6 +54,7 @@ export const ContactForm: FC = () => {
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>Name, Surname</label>
             <input
+            required
               type='text'
               name='full_name'
               className='landing-footer__input'
@@ -68,6 +69,7 @@ export const ContactForm: FC = () => {
             <input
               type='email'
               name='email'
+              required
               className='landing-footer__input'
               value={formik.values.email}
               onChange={formik.handleChange}
@@ -79,6 +81,7 @@ export const ContactForm: FC = () => {
             <label className='landing-footer__label'>Message</label>
             <textarea
               name='message'
+              required
               className='landing-footer__textarea'
               value={formik.values.message}
               onChange={formik.handleChange}

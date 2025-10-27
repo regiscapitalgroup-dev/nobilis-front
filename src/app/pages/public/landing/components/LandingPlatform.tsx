@@ -3,8 +3,8 @@ import React, {FC, useState} from 'react'
 export const LandingPlatform: FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const images = [
-    'https://placehold.co/600x400/333/fff?text=Mockup+1',
-    'https://placehold.co/600x400/333/fff?text=Mockup+2',
+    '/media/laptop.png',
+    '/media/laptop-1.png',
   ]
 
   return (

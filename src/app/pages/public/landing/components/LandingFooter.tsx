@@ -1,16 +1,14 @@
-// LandingFooter.tsx
 import React, {FC, ReactNode} from 'react'
 import {toAbsoluteUrl} from '../../../../../_metronic/helpers'
 
 interface LandingFooterProps {
-  children?: ReactNode // El formulario se pasa como children
+  children?: ReactNode 
 }
 
 export const LandingFooter: FC<LandingFooterProps> = ({children}) => {
   return (
     <footer className='landing-footer'>
       <div className='landing-footer__content'>
-        {/* Sección del formulario - renderiza lo que se pase como children */}
         {children && (
           <div className='landing-footer__contact-section'>
             {children}
@@ -26,17 +24,17 @@ export const LandingFooter: FC<LandingFooterProps> = ({children}) => {
 
           <nav className='landing-footer__nav'>
             <div className='landing-footer__nav-links'>
-              <a href='#home' className='landing-footer__nav-link'>
+              <a href='/' className='landing-footer__nav-link'>
                 Home
               </a>
-              <a href='#our-story' className='landing-footer__nav-link'>
-                Our Story
+              <a href='/values' className='landing-footer__nav-link'>
+                Values
               </a>
-              <a href='#partner' className='landing-footer__nav-link'>
+              <a href='/partners' className='landing-footer__nav-link'>
                 Partner
               </a>
               <a href='#contact' className='landing-footer__nav-link'>
-                Contact
+                Contact us
               </a>
             </div>
           </nav>

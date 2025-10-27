@@ -2,6 +2,7 @@
 import React, {FC} from 'react'
 import {useHistory} from 'react-router-dom'
 import {KTSVG} from '../../../../../_metronic/helpers'
+import SVG from 'react-inlinesvg'
 
 interface LandingHeaderProps {
   onMenuClick?: () => void
@@ -51,7 +52,9 @@ export const LandingHeader: FC<LandingHeaderProps> = ({onMenuClick}) => {
         </button>
       </div>
 
-      <div className='landing-header__logo'>NOBILIS</div>
+      <div className='landing-header__logo'>
+        <SVG src='/media/svg/nobilis/nb_logo.svg' />
+      </div>
     </header>
   )
 }

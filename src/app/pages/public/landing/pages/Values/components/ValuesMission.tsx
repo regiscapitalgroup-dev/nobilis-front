@@ -1,9 +1,6 @@
 import React from 'react'
 
-
-
-export const ValuesMission: React.FC = ({
-}) => {
+export const ValuesMission: React.FC = () => {
   return (
     <div className="mission-section">
       <div className="mission-section__image-container">
@@ -11,7 +8,6 @@ export const ValuesMission: React.FC = ({
           className="mission-section__image" 
           src='/media/values_mission.png'
           alt='Mission of Nobilis'
-          
         />
       </div>
       

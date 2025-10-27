@@ -52,7 +52,6 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
     const youtubeId = getYouTubeId(video.videoLink)
 
     if (youtubeId) {
-      // Usa hqdefault que siempre existe
       return `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
     }
 

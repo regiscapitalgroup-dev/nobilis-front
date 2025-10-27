@@ -5,7 +5,7 @@ export const ValuesIntro: FC = () => {
     <section className='landing-intro'>
       <div className='landing-intro__content'>
         <div className='landing-intro__text-container'>
-          <p className='landing-intro__text'>
+          <p className='landing-intro__text' style={{whiteSpace:'pre-wrap'}}>
            { "Nobilis (Latin) – Noble. Showing fine personal qualities and high\n moral principles. Belonging to the aristocracy by rank, title, or birth."}
           </p>
         </div>
