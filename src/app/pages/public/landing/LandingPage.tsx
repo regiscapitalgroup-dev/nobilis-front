@@ -1,5 +1,5 @@
 // LandingPage.tsx
-import {FC} from 'react'
+import {FC, useRef} from 'react'
 import {LandingWrapper} from './LandingWrapper'
 import {LandingHero} from './components/LandingHero'
 import {LandingIntro} from './components/LandingIntro'
@@ -9,12 +9,14 @@ import {LandingCTA} from './components/LandingCTA'
 import {LandingPlatform} from './components/LandingPlatform'
 import LandingValues from './components/LandingValues'
 import {LandingMembers} from './components/Landingmembers'
-import { LandingFooter } from './components/LandingFooter'
-import { ContactForm } from './components/LandingContactForm'
+import {LandingFooter} from './components/LandingFooter'
+import {ContactForm} from './components/LandingContactForm'
 
 const LandingPage: FC = () => {
+  const contactRef = useRef<HTMLDivElement>(null)
+
   return (
-    <LandingWrapper>
+    <LandingWrapper contactRef={contactRef}>
       <LandingHero imageUrl='/media/bg_lp_01.png' />
       <LandingIntro />
       <LandingMembers />
@@ -23,9 +25,12 @@ const LandingPage: FC = () => {
       <LandingCTA />
       <LandingTestimonial />
       {/* <LandingPress /> */}
-      <LandingFooter>
-        <ContactForm/>
-      </LandingFooter>
+
+      <div id='contact' ref={contactRef}>
+        <LandingFooter>
+          <ContactForm />
+        </LandingFooter>
+      </div>
     </LandingWrapper>
   )
 }

@@ -21,7 +21,6 @@ export const ContactForm: FC = () => {
     },
     validationSchema: contactSchema,
     onSubmit: async (values, {setSubmitting, resetForm}) => {
-      console.log('Form submitted:', values)
       setLoading(true)
 
       try {

@@ -20,7 +20,6 @@ export const PartnershipForm: FC = () => {
   const selectRef = useRef<HTMLDivElement>(null)
   const {collection} = usePartenshipTypesField()
 
-  console.log(collection)
   const formik = useFormik({
     initialValues: {
       partner_type_id: '',
@@ -31,7 +30,6 @@ export const PartnershipForm: FC = () => {
     },
     validationSchema: partnershipSchema,
     onSubmit: async (values, {setSubmitting, resetForm}) => {
-      console.log('Partnership form submitted:', values)
       setLoading(true)
 
       try {

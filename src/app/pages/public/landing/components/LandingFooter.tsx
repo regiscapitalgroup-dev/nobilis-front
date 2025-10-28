@@ -2,18 +2,14 @@ import React, {FC, ReactNode} from 'react'
 import {toAbsoluteUrl} from '../../../../../_metronic/helpers'
 
 interface LandingFooterProps {
-  children?: ReactNode 
+  children?: ReactNode
 }
 
 export const LandingFooter: FC<LandingFooterProps> = ({children}) => {
   return (
     <footer className='landing-footer'>
       <div className='landing-footer__content'>
-        {children && (
-          <div className='landing-footer__contact-section'>
-            {children}
-          </div>
-        )}
+        {children && <div className='landing-footer__contact-section'>{children}</div>}
 
         <div className='landing-footer__bottom'>
           <img
@@ -31,7 +27,7 @@ export const LandingFooter: FC<LandingFooterProps> = ({children}) => {
                 Values
               </a>
               <a href='/partners' className='landing-footer__nav-link'>
-                Partner
+                Partners
               </a>
               <a href='#contact' className='landing-footer__nav-link'>
                 Contact us
