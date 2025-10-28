@@ -1,14 +1,20 @@
-import React, {FC} from 'react'
+import React, {FC, useState} from 'react'
 
 interface LandingHeroProps {
   imageUrl?: string
 }
 
 export const LandingHero: FC<LandingHeroProps> = ({imageUrl = 'https://placehold.co/1440x867'}) => {
+
+  const [imageLoaded, setImageLoaded] = useState(false)
+  
   return (
     <section className='landing-hero'>
       <div className='landing-hero__image-container'>
-        <img src={imageUrl} alt='Hero background' className='landing-hero__image' />
+      {!imageLoaded && <div className='landing-hero__placeholder' />}
+        <img src={imageUrl} alt='Hero background'  className={`landing-hero__image ${imageLoaded ? 'landing-hero__image--loaded' : ''}`}
+          onLoad={() => setImageLoaded(true)}
+          loading='eager'/>
         <div className='landing-hero__overlay'>
           <div className='landing-hero__content'>
             <h1 className='landing-hero__title'>You Are Here Because You've Been Invited</h1>

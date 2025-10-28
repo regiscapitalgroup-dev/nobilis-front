@@ -2,6 +2,7 @@
 import {FC, useState} from 'react'
 import {useLayout} from '../core'
 import {KTSVG} from '../../helpers'
+import {Link} from 'react-router-dom'
 
 interface FooterProps {
   theme?: 'dark' | 'light'
@@ -139,16 +140,16 @@ const Footer: FC<FooterProps> = ({theme = 'dark', animated = false}) => {
 
         {/* begin::Right Links */}
         <div className='customFooterRightSection'>
-          <a
-            href='/terms-conditions'
+          <Link
+            to='/terms-conditions'
             className='customFooterLink'
             aria-label='Read Terms and Conditions'
           >
             Terms and conditions
-          </a>
-          <a href='/privacy-policy' className='customFooterLink' aria-label='Read Privacy Policy'>
+          </Link>
+          <Link to='/privacy-policy' className='customFooterLink' aria-label='Read Privacy Policy'>
             Privacy Policy
-          </a>
+          </Link>
         </div>
         {/* end::Right Links */}
       </div>

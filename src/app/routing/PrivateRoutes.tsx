@@ -19,6 +19,8 @@ import {UserRole} from '../constants/roles'
 import {RootState} from '../../setup'
 import {SuggestExperienceWrapper} from '../pages/experiences/SuggestExperienceWrapper'
 import {WaitingListWrapper} from '../pages/waitingList/WaitingListWrapper'
+import {TermsPage} from '../pages/legal/TermsPage'
+import {PrivacyPage} from '../pages/legal/PrivacyPage'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
@@ -62,6 +64,8 @@ export function PrivateRoutes() {
         <Route path='/experiences/create' component={SuggestExperienceWrapper} />
         <Route path='/experiences' component={ExperiecesWrapper} />
         <Route path='/waitinglist' component={WaitingListWrapper} />
+        <Route path='/terms-conditions' component={TermsPage} />
+        <Route path='/privacy-policy' component={PrivacyPage} />
         <Redirect to='/error/404' />
       </Switch>
     </Suspense>

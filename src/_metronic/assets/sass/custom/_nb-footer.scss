@@ -58,10 +58,10 @@ $transition-duration: 0.3s;
     text-decoration: none;
   }
 
-  &:focus {
+ /*  &:focus {
     outline: 2px solid rgba(255, 255, 255, 0.5);
     outline-offset: 2px;
-  }
+  } */
 }
 
 @mixin social-icon-base {

@@ -67,6 +67,8 @@ const ROUTE_LAYOUT_MAP: Record<string, LayoutConfig> = {
   '/biography': LAYOUT_CONFIGS.HEADER_FOOTER,
   '/expert': LAYOUT_CONFIGS.HEADER_FOOTER_,
   '/dashboard': LAYOUT_CONFIGS.FULL_DASHBOARD,
+  '/terms-conditions': LAYOUT_CONFIGS.HEADER_FOOTER_,
+  '/privacy-policy': LAYOUT_CONFIGS.HEADER_FOOTER_,
 
 };
 
