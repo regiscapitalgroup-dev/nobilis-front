@@ -1,5 +1,4 @@
 import {Link, useLocation} from 'react-router-dom'
-import {KTSVG} from '../../../../../_metronic/helpers'
 
 type MessageState = {
   title?: string

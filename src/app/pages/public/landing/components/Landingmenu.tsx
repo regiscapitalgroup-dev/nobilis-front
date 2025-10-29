@@ -1,13 +1,14 @@
+import Item from 'antd/es/list/Item'
 import React, {FC, useState, useEffect, RefObject} from 'react'
 import {useHistory} from 'react-router-dom'
 
 interface LandingMenuProps {
   isOpen: boolean
   onClose: () => void
-  contactRef?: RefObject<HTMLDivElement>
+  footerRef?: RefObject<HTMLDivElement>
 }
 
-export const LandingMenu: FC<LandingMenuProps> = ({isOpen, onClose, contactRef}) => {
+export const LandingMenu: FC<LandingMenuProps> = ({isOpen, onClose, footerRef}) => {
   const navigate = useHistory()
   const [isClosing, setIsClosing] = useState(false)
   const [isVisible, setIsVisible] = useState(isOpen)
@@ -39,10 +40,10 @@ export const LandingMenu: FC<LandingMenuProps> = ({isOpen, onClose, contactRef})
     }, 300)
   }
 
-  const handleContact = () => {
+  const handleScroll = (id: string) => {
     onClose()
     setTimeout(() => {
-      contactRef?.current?.scrollIntoView({behavior: 'smooth'})
+      footerRef?.current?.scrollIntoView({behavior: 'smooth'})
     }, 300)
   }
 
@@ -74,7 +75,7 @@ export const LandingMenu: FC<LandingMenuProps> = ({isOpen, onClose, contactRef})
               className='landing-menu__item'
               onClick={() => {
                 if (item.id == 'contact') {
-                  handleContact()
+                  handleScroll(item.id)
                 } else {
                   handleMenuClick(item.path)
                 }

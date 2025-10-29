@@ -269,7 +269,7 @@
 }
 
 /* Footer con flecha/“fleur” – líneas y color del ícono */
-.nb-divider__line { height: 2px; width: 160px; background: #D7D7D7 ; border-radius: 2px; }
+.nb-divider__line { height: 1px; width: 160px; background: #D7D7D7 ; border-radius: 2px; }
 .nb-fleur { width: 22px; height: 22px; fill: #460107; }
 
 
@@ -278,7 +278,7 @@
 /* ====== STEP 3 — sólo dentro de nb-step3 ====== */
 .nb-step3 {
   /* asegura centrado del contenido sin afectar el form global */
-  .nbq-wrap { max-width: 640px; width: 100%; margin: 0 auto; }
+  .nbq-wrap {  width: 100%; margin: 0 auto; }
 
   /* pila título + descripción dentro de cada opción */
   .nbq-option__stack { display: flex; flex-direction: column; gap: .125rem; }

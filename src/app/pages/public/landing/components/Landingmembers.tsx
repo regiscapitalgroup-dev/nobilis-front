@@ -41,7 +41,7 @@ export const LandingMembers: FC = () => {
       subtitle: 'Trusted Knowledge, Direct Access',
       description: 'Members share professional expertise and market insights directly with peers — confidential, and often accessible only within Nobilis.',
       primaryImage: '/media/ac_04.png',
-      secondaryImage: '/media/members.png',
+      secondaryImage: '/media/in_01.png',
     },
   ]
 

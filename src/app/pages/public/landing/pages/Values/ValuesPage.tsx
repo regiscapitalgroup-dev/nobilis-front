@@ -9,16 +9,16 @@ import {ValuesMission} from './components/ValuesMission'
 import {ValuesVideo} from './components/ValuesVideo'
 
 const ValuesPage: FC = () => {
-  const contactRef = useRef<HTMLDivElement>(null)
+  const footerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <LandingWrapper contactRef={contactRef}>
+    <LandingWrapper footerRef={footerRef}>
       <ValuesHero />
       <ValuesIntro />
       <ValuesMission />
       <ValuesSecction />
       <ValuesVideo />
-      <div id='contact' ref={contactRef}>
+      <div id='contact' ref={footerRef}>
         <LandingFooter>
           <ContactForm />
         </LandingFooter>

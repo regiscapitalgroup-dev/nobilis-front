@@ -18,8 +18,6 @@ const Step3: FC<Step3Props> = ({goPrev, goNext, loading}) => {
         <div className='mb-0 fv-row'>
           <div className='nb3-hint'>Select all that apply</div>
 
-
-
           {/* === Opciones === */}
           <div className='nb-step3 nb3-scope'>
             {/* … */}

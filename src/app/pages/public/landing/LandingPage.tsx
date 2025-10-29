@@ -13,10 +13,10 @@ import {LandingFooter} from './components/LandingFooter'
 import {ContactForm} from './components/LandingContactForm'
 
 const LandingPage: FC = () => {
-  const contactRef = useRef<HTMLDivElement>(null)
+  const footerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <LandingWrapper contactRef={contactRef}>
+    <LandingWrapper footerRef={footerRef}>
       <LandingHero imageUrl='/media/bg_lp_01.png' />
       <LandingIntro />
       <LandingMembers />
@@ -26,7 +26,7 @@ const LandingPage: FC = () => {
       <LandingTestimonial />
       {/* <LandingPress /> */}
 
-      <div id='contact' ref={contactRef}>
+      <div id='contact' ref={footerRef}>
         <LandingFooter>
           <ContactForm />
         </LandingFooter>

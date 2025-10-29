@@ -4,6 +4,7 @@ import * as Yup from 'yup'
 import {CustomSelect} from './CustomSelect'
 import {partnerCreate} from '../../../../../../services/partnerShipService'
 import {usePartenshipTypesField} from '../../../../../../hooks/components/usePartnershipTypes'
+import {useAlert} from '../../../../../../hooks/utils/useAlert'
 
 const partnershipSchema = Yup.object().shape({
   partnership_type: Yup.string(),
@@ -19,6 +20,7 @@ export const PartnershipForm: FC = () => {
   const [isSelectOpen, setIsSelectOpen] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
   const {collection} = usePartenshipTypesField()
+  const {showError} = useAlert()
 
   const formik = useFormik({
     initialValues: {
@@ -38,8 +40,15 @@ export const PartnershipForm: FC = () => {
         resetForm()
         setSuccess(true)
         setTimeout(() => setSuccess(false), 5000)
-      } catch (error) {
+      } catch (error: any) {
         console.log(error)
+        const statusCode = error?.response?.status || 500
+        showError({
+          title: 'Unable to Submit Request',
+          message:
+            "We couldn't process your partnership request. Please try again or contact us directly.",
+          errorCode: `PARTNER_SUBMIT_${statusCode}`,
+        })
       } finally {
         setLoading(false)
       }
@@ -68,7 +77,26 @@ export const PartnershipForm: FC = () => {
         </p>
       </div>
 
-      <form className='landing-footer__form' onSubmit={formik.handleSubmit}>
+      <form
+        className='landing-footer__form'
+        onSubmit={formik.handleSubmit}
+        autoComplete='off'
+        noValidate
+      >
+        <div
+          style={{
+            position: 'absolute',
+            left: '-9999px',
+            top: 'auto',
+            width: '1px',
+            height: '1px',
+            overflow: 'hidden',
+          }}
+          aria-hidden='true'
+        >
+          <input type='text' name='fake-username' autoComplete='username' tabIndex={-1} />
+          <input type='password' name='fake-password' autoComplete='new-password' tabIndex={-1} />
+        </div>
         <div className='landing-footer__form-fields'>
           {/* Custom Select */}
           <div className='landing-footer__field'>
@@ -79,7 +107,6 @@ export const PartnershipForm: FC = () => {
               options={collection}
               placeholder='Select Partnership Type'
               name='partner_type_id'
-              
             />
             {/* {formik.touched.partnership_type && formik.errors.partnership_type && (
               <div className='landing-footer__error'>{formik.errors.partnership_type}</div>
@@ -96,45 +123,61 @@ export const PartnershipForm: FC = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               required
+              autoComplete='new-password'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
           </div>
 
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>E-mail</label>
             <input
-            required
+              required
               type='email'
               name='email'
               className='landing-footer__input'
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              autoComplete='new-password'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
           </div>
 
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>Company</label>
             <input
-            required
+              required
               type='text'
               name='company_name'
               className='landing-footer__input'
               value={formik.values.company_name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              autoComplete='new-password'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
           </div>
 
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>Message</label>
             <textarea
-            required
+              required
               name='message'
               className='landing-footer__textarea landing-footer__textarea--tall'
               value={formik.values.message}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               rows={6}
+              autoComplete='new-password'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
           </div>
         </div>

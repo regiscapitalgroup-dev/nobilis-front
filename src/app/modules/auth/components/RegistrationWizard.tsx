@@ -170,7 +170,12 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
         onSubmit={submitStep}
       >
         {() => (
-          <Form className='mx-auto mw-600px w-100 mt-5 pb-5' id='kt_create_account_form'>
+          <Form
+            className='mx-auto w-100 mt-5 pb-5'
+            id='kt_create_account_form'
+            autoComplete='off'
+            noValidate
+          >
             <FormObserver setFormValues={setCurrentFormValues} />
 
             <div className='current' data-kt-stepper-element='content'>
@@ -182,11 +187,19 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
             </div>
 
             <div data-kt-stepper-element='content'>
-              <Step3 goPrev={() => stepper.current?.goPrev()} goNext={nextOrSubmit}   loading={loading} />
+              <Step3
+                goPrev={() => stepper.current?.goPrev()}
+                goNext={nextOrSubmit}
+                loading={loading}
+              />
             </div>
 
             <div data-kt-stepper-element='content'>
-              <Step4 goPrev={() => stepper.current?.goPrev()} goNext={nextOrSubmit}   loading={loading} />
+              <Step4
+                goPrev={() => stepper.current?.goPrev()}
+                goNext={nextOrSubmit}
+                loading={loading}
+              />
             </div>
 
             {isSubmitButton && (

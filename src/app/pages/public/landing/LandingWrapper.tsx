@@ -4,10 +4,10 @@ import {LandingMenu} from './components/Landingmenu'
 
 interface LandingWrapperProps {
   children: React.ReactNode
-  contactRef?: RefObject<HTMLDivElement>
+  footerRef?: RefObject<HTMLDivElement>
 }
 
-const LandingWrapper: FC<LandingWrapperProps> = ({children, contactRef}) => {
+const LandingWrapper: FC<LandingWrapperProps> = ({children, footerRef}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
@@ -16,7 +16,7 @@ const LandingWrapper: FC<LandingWrapperProps> = ({children, contactRef}) => {
       <LandingMenu
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
-        contactRef={contactRef}
+        footerRef={footerRef}
       />
 
       <main className='landing-wrapper__content'>{children}</main>

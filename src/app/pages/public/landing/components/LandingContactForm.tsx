@@ -2,6 +2,7 @@ import React, {FC, useState} from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import {contactCreate} from '../../../../services/contactService'
+import {useAlert} from '../../../../hooks/utils/useAlert'
 
 const contactSchema = Yup.object().shape({
   full_name: Yup.string(),
@@ -12,6 +13,7 @@ const contactSchema = Yup.object().shape({
 export const ContactForm: FC = () => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const {showError} = useAlert()
 
   const formik = useFormik({
     initialValues: {
@@ -29,8 +31,16 @@ export const ContactForm: FC = () => {
         resetForm()
         setSuccess(true)
         setTimeout(() => setSuccess(false), 5000)
-      } catch (error) {
+      } catch (error: any) {
         console.log(error)
+
+        const statusCode = error?.response?.status || 500
+
+        showError({
+          title: 'Unable to Send Message',
+          message: "We couldn't send your message. Please try again or contact us directly.",
+          errorCode: `CONTACT_SUBMIT_${statusCode}`,
+        })
       } finally {
         setLoading(false)
       }
@@ -42,24 +52,48 @@ export const ContactForm: FC = () => {
       <div className='landing-footer__contact-info'>
         <h2 className='landing-footer__title'>Contact us</h2>
         <p className='landing-footer__description '>
-          You are invited to send any inquiries via this form or by email: 
+          You are invited to send any inquiries via this form or by email:
           <span className='landing-footer__email-at ms-2'>contact@joinnobilis.com</span>
-          
         </p>
       </div>
 
-      <form className='landing-footer__form' onSubmit={formik.handleSubmit}>
+      <form
+        className='landing-footer__form'
+        onSubmit={formik.handleSubmit}
+        autoComplete='off'
+        noValidate
+      >
+
+       {/*  trampa para que no te permita autocomplete */}
+        <div
+          style={{
+            position: 'absolute',
+            left: '-9999px',
+            top: 'auto',
+            width: '1px',
+            height: '1px',
+            overflow: 'hidden',
+          }}
+          aria-hidden='true'
+        >
+          <input type='text' name='fake-username' autoComplete='username' tabIndex={-1} />
+          <input type='password' name='fake-password' autoComplete='new-password' tabIndex={-1} />
+        </div>
         <div className='landing-footer__form-fields'>
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>Name, Surname</label>
             <input
-            required
+              required
               type='text'
               name='full_name'
               className='landing-footer__input'
               value={formik.values.full_name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              autoComplete='new-password'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
           </div>
 
@@ -73,6 +107,10 @@ export const ContactForm: FC = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              autoComplete='new-password'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
           </div>
 
@@ -85,6 +123,10 @@ export const ContactForm: FC = () => {
               value={formik.values.message}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              autoComplete='new-password'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
           </div>
         </div>
@@ -106,9 +148,7 @@ export const ContactForm: FC = () => {
                   />
                 </svg>
               </span>
-              <span className='landing-footer__alert-text'>
-                Your message successfully sent!
-              </span>
+              <span className='landing-footer__alert-text'>Your message successfully sent!</span>
             </div>
           )}
 

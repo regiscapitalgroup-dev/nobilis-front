@@ -4,11 +4,14 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import {existUserName} from '../../redux/AuthCRUD'
 import CityAutocompleteField from '../fields/CityAutocompleteField'
+import {useAlert} from '../../../../hooks/utils/useAlert'
 
 const Step1: FC<{goNext: () => void}> = ({goNext}) => {
   const formik = useFormikContext<any>()
   const [field, meta, helpers] = useField('phoneNumber')
   const [loading, setLoading] = useState<boolean>(false)
+  const {showError} = useAlert()
+
   const handlerSubmit = (event: any) => {
     formik.validateForm().then(async (errors) => {
       if (Object.keys(errors).length === 0) {
@@ -23,9 +26,13 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
           })
           .catch((error) => {
             setLoading(false)
-            const errorMessage = error.response?.data?.error || error.message || 'Unknown error'
-            console.log('error', errorMessage)
-            console.log('error.response?.data?.error', error.response?.data?.error)
+            const statusCode = error?.response?.status || 500
+
+            showError({
+              title: 'Unable to Continue',
+              message: "We couldn't verify your account. Please check your email and try again.",
+              errorCode: `AUTH_VERIFY_${statusCode}`,
+            })
           })
       }
     })
@@ -40,8 +47,11 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <Field
               type='text'
               autoComplete='off'
-              className='form-control form-control-lg form-control-underline input-text-style'
+              className='form-control-underline input-text-style'
               name='firstName'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block input-text-style fs-8'>
@@ -56,6 +66,9 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
               autoComplete='off'
               className={'form-control form-control-lg form-control-underline input-text-style'}
               name='lastName'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block input-text-style fs-8'>
@@ -92,6 +105,9 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
               autoComplete='off'
               className={'form-control form-control-lg form-control-underline input-text-style'}
               name='email'
+              autoCorrect='off'
+              autoCapitalize='off'
+              spellCheck='false'
             />
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block input-text-style fs-8'>

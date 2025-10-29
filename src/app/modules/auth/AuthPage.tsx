@@ -36,18 +36,18 @@ export function AuthPage() {
       title: 'Select the category that best represents your accomplishments',
       sub: 'To be considered for membership, applicants must meet at least one of the following criteria. Each reflects a different form of exceptional achievement, leadership, or influence. Accomplishments may be current or past, provided past roles lasted at least 4 years.',
     },
-    4:{
+    4: {
       title: 'Your Net Worth',
       sub: 'To qualify as a “Wealth Owner,” you may be asked for proof (e.g., bank statement, CPA attestation, or family-office letter) if your net worth isn’t \npublicly verifiable.\nYour one-time initiation fee is calculated progressively based on your net worth.',
-    }
+    },
   }
 
   const insertBreakAfter = (text: string, after: string) =>
     text.includes(after) ? text.replace(after, `${after}\n`) : text
 
   const formatTitleForStep = (step: number, t: string) => {
-    if (step === 1) return insertBreakAfter(t, 'waiting list') 
-    if (step === 3) return insertBreakAfter(t, 'best ') 
+    if (step === 1) return insertBreakAfter(t, 'waiting list')
+    if (step === 3) return insertBreakAfter(t, 'best ')
     return t
   }
 
@@ -78,6 +78,7 @@ export function AuthPage() {
     window.addEventListener('nb:stepper', handler as EventListener)
     return () => window.removeEventListener('nb:stepper', handler as EventListener)
   }, [])
+
   return (
     <div className='auth-shell d-flex flex-column flex-column-fluid'>
       <div aria-hidden='true' className='nb-hero'>
@@ -96,27 +97,40 @@ export function AuthPage() {
       >
         {/* Logo textual */}
         <div className='mb-5'>
-        <SVG src='/media/svg/nobilis/logo-nb.svg' />
+          <SVG src='/media/svg/nobilis/logo-nb.svg' />
         </div>
 
         {isRegistration && (
           <RegistrationHeader
             step={wizStep}
             total={wizTotal}
-            title={displayTitle} 
+            title={displayTitle}
             subTitle={displaySubtitle}
           />
         )}
 
         {/* Card con ancho responsivo*/}
         <div
-          className='mx-auto w-100'
+         /*  className='mx-auto w-100' */
           style={{
-            maxWidth: isRegistration ? '700px' : '640px',
+            maxWidth: isRegistration ? '846px' : '640px',
             width: '100%',
+            ...(isRegistration && wizStep === 1 &&  {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }),
           }}
         >
-          <div className='card card-flush nb-auth-card nb-auth-card--p60'>
+          <div className='card card-flush nb-auth-card nb-auth-card--p60' style={{
+            maxWidth: isRegistration ? '846px' : '640px',
+            width: '100%',
+            ...(isRegistration && {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }),
+          }}>
             <div className='nb-auth-stack'>
               <Switch>
                 <Route path='/auth/login' component={Login} />

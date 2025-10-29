@@ -1,34 +1,5 @@
-/* .custom-popup {
-    border-radius: 8px;
-    padding: 60px;
-    box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
-  }
-
-  .custom-button {
-    background-color: #151515;
-    color: white;
-    border: none;
-    padding: 12px 32px;
-    font-family: 'Satoshi', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .custom-button:hover {
-    background-color: #2a2a2a;
-  }
-
-  .swal2-icon.swal2-error {
-    border-color: #dc2626;
-    color: #dc2626;
-  }
- */
-
  .custom-popup {
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 60px 40px;
     box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
     max-width: 500px;
@@ -46,6 +17,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 10px;
+    text-transform: uppercase;
   }
 
   .custom-button:hover {
