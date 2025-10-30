@@ -243,7 +243,7 @@
     &--primary {
       width: 581.28px !important;
       height: 610.34px !important;
-
+      box-shadow: 0px 7.750405311584473px 17.438411712646484px rgba(0, 0, 0, 0.10);
       z-index: 2;
       transition: all 0.6s ease;
     }
@@ -254,7 +254,7 @@
       z-index: 1;
       transition: all 0.6s ease;
       box-shadow: none;
-      margin-left: 0;
+      margin: 0px 5px;
     }
   }
   

@@ -57,7 +57,7 @@ const WaitingListGrid: React.FC = () => {
   const handleDecline = async (reason: string, note: string) => {
     
     await rejectedRequest(user, {
-      rejection_reason: reason,
+      rejection_reason_id: reason,
       notes: note,
     })
     setShowDeclineModal(false)

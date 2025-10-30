@@ -17,7 +17,7 @@ const LandingPage: FC = () => {
 
   return (
     <LandingWrapper footerRef={footerRef}>
-      <LandingHero imageUrl='/media/bg_lp_01.png' />
+      <LandingHero imageUrl='/media/bg_nobilis_lp.png' />
       <LandingIntro />
       <LandingMembers />
       <LandingValues />

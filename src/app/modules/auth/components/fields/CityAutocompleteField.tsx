@@ -68,7 +68,7 @@ export default function CityAutocompleteField({
           }}
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 120)}
-          autoComplete='off'
+          autoComplete='new-email'  
         />
       </div>
 

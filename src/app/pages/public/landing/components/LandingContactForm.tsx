@@ -61,24 +61,8 @@ export const ContactForm: FC = () => {
         className='landing-footer__form'
         onSubmit={formik.handleSubmit}
         autoComplete='off'
-        noValidate
       >
-
-       {/*  trampa para que no te permita autocomplete */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '-9999px',
-            top: 'auto',
-            width: '1px',
-            height: '1px',
-            overflow: 'hidden',
-          }}
-          aria-hidden='true'
-        >
-          <input type='text' name='fake-username' autoComplete='username' tabIndex={-1} />
-          <input type='password' name='fake-password' autoComplete='new-password' tabIndex={-1} />
-        </div>
+        
         <div className='landing-footer__form-fields'>
           <div className='landing-footer__field'>
             <label className='landing-footer__label'>Name, Surname</label>
@@ -90,10 +74,8 @@ export const ContactForm: FC = () => {
               value={formik.values.full_name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              autoComplete='new-password'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='off'
+            
             />
           </div>
 
@@ -107,10 +89,7 @@ export const ContactForm: FC = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              autoComplete='new-password'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='off'
             />
           </div>
 
@@ -123,10 +102,7 @@ export const ContactForm: FC = () => {
               value={formik.values.message}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              autoComplete='new-password'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='off'
             />
           </div>
         </div>

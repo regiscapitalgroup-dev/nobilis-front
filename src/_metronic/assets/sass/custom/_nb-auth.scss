@@ -1750,3 +1750,182 @@ body[class*="header-fixed"] .auth-shell{ padding-top: 0 !important; }
 
   
 }
+
+/* ===== STEP 3 — Responsive ===== */
+
+.nb-step3 {
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    padding: 0 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 12px;
+  }
+}
+
+.nbq-wrap {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Hint "Select all that apply" */
+.nb3-hint {
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+}
+
+/* Opciones - Stack responsive */
+.nb3-scope .nbq-option {
+  @media (max-width: 768px) {
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+/* Checkbox responsive */
+.nb3-scope .nb3-check {
+  @media (max-width: 480px) {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.nb3-scope .nb3-check::after {
+  @media (max-width: 480px) {
+    width: 8px;
+    height: 5.5px;
+    left: 5px !important;
+    top: 3.5px !important;
+  }
+}
+
+.nb-step3 .nbq-check .form-check-input {
+  @media (max-width: 480px) {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+.nb-step3 .nbq-check .form-check-input:checked::after {
+  @media (max-width: 480px) {
+    width: 4px;
+    height: 8px;
+    border-width: 0 1.5px 1.5px 0;
+  }
+}
+
+/* Texto responsive */
+.nbq-option__title_v2 {
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
+}
+
+.nbq-option__desc {
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
+}
+
+/* Sección de proof */
+.nb-proof {
+  @media (max-width: 768px) {
+    margin-top: 20px !important;
+    margin-bottom: 40px !important;
+  }
+  
+  @media (max-width: 480px) {
+    margin-top: 16px !important;
+    margin-bottom: 32px !important;
+  }
+}
+
+.nb3-proof-text {
+  @media (max-width: 768px) {
+    font-size: 13px;
+    text-align: center;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
+}
+
+.nb3-proof-input {
+  @media (max-width: 768px) {
+    font-size: 15px;
+    padding: 10px 0;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+  
+  &::placeholder {
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 12px;
+    }
+  }
+}
+
+/* Nota + divisor */
+.nb-note-wrap {
+  @media (max-width: 768px) {
+    margin-bottom: 24px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 20px;
+  }
+}
+
+.nb-note-figma {
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 12px;
+    padding: 0 8px;
+  }
+}
+
+.nbx-lines {
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
+  
+  img {
+    @media (max-width: 480px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+

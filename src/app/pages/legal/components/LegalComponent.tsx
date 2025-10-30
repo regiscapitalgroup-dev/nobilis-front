@@ -1,16 +1,134 @@
 import React, {FC} from 'react'
+import {useLocation} from 'react-router-dom'
+
+interface Subsection {
+  subtitle?: string
+  paragraphs?: string[]
+  bullets?: string[]
+  additionalParagraphs?: string[]
+  additionalBullets?: string[]
+}
 
 interface Section {
   title: string
-  paragraphs: string[]
+  paragraphs?: string[]
+  bullets?: string[]
+  additionalParagraphs?: string[]
+  additionalBullets?: string[]
+  subsections?: Subsection[]
+  importantNotice?: string
 }
 
 interface LegalComponentProps {
   title: string
+  lastUpdated?: string
+  importantNotice?: string
   sections: Section[]
+  closingStatement?: string
 }
 
-export const LegalComponent: FC<LegalComponentProps> = ({title, sections}) => {
+export const LegalComponent: FC<LegalComponentProps> = ({
+  title,
+  lastUpdated,
+  importantNotice,
+  sections,
+  closingStatement,
+}) => {
+
+  const location = useLocation()
+  
+  const getClosingStatement = () => {
+    if (location.pathname.includes('/terms')) {
+      return 'By using the Nobilis Platform, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.'
+    }
+    if (location.pathname.includes('/privacy')) {
+      return 'BY USING THE PLATFORM, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTOOD THIS PRIVACY POLICY AND CONSENT TO THE COLLECTION, USE, AND DISCLOSURE OF YOUR INFORMATION AS DESCRIBED HEREIN.'
+    }
+    return null
+  }
+
+  const renderSubsection = (subsection: Subsection, sIndex: number) => (
+    <div key={`sub-${sIndex}`} className='legal-page__subsection'>
+      {subsection.subtitle && <p className='legal-page__paragraph'>{subsection.subtitle}</p>}
+
+      {subsection.paragraphs?.map((paragraph, spIndex) => (
+        <p key={`sp-${spIndex}`} className='legal-page__paragraph'>
+          {paragraph}
+        </p>
+      ))}
+
+      {subsection.bullets && (
+        <ul className='legal-page__list'>
+          {subsection.bullets.map((bullet, sbIndex) => (
+            <li key={`sb-${sbIndex}`} className='legal-page__list-item'>
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {subsection.additionalParagraphs?.map((paragraph, sapIndex) => (
+        <p key={`sap-${sapIndex}`} className='legal-page__paragraph'>
+          {paragraph}
+        </p>
+      ))}
+
+      {subsection.additionalBullets && (
+        <ul className='legal-page__list'>
+          {subsection.additionalBullets.map((bullet, sabIndex) => (
+            <li key={`sab-${sabIndex}`} className='legal-page__list-item'>
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+
+  const renderSection = (section: Section, index: number) => (
+    <div key={index} className='legal-page__section'>
+      <h2 className='legal-page__section-title'>{section.title}</h2>
+
+      {section.importantNotice && (
+        <p className='legal-page__paragraph'>{section.importantNotice}</p>
+      )}
+
+      {section.paragraphs?.map((paragraph, pIndex) => (
+        <p key={`p-${pIndex}`} className='legal-page__paragraph'>
+          {paragraph}
+        </p>
+      ))}
+
+      {section.bullets && (
+        <ul className='legal-page__list'>
+          {section.bullets.map((bullet, bIndex) => (
+            <li key={`b-${bIndex}`} className='legal-page__list-item'>
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {section.additionalParagraphs?.map((paragraph, apIndex) => (
+        <p key={`ap-${apIndex}`} className='legal-page__paragraph'>
+          {paragraph}
+        </p>
+      ))}
+
+      {section.additionalBullets && (
+        <ul className='legal-page__list'>
+          {section.additionalBullets.map((bullet, abIndex) => (
+            <li key={`ab-${abIndex}`} className='legal-page__list-item'>
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {section.subsections?.map((subsection, sIndex) => renderSubsection(subsection, sIndex))}
+    </div>
+  )
+
   return (
     <>
       <svg className='legal-page__watermark' viewBox='0 0 20 25' xmlns='http://www.w3.org/2000/svg'>
@@ -22,16 +140,21 @@ export const LegalComponent: FC<LegalComponentProps> = ({title, sections}) => {
           <div className='legal-page__content'>
             <h1 className='legal-page__title'>{title}</h1>
 
-            {sections.map((section, index) => (
-              <div key={index} className='legal-page__section'>
-                <h2 className='legal-page__section-title'>{section.title}</h2>
-                {section.paragraphs.map((paragraph, pIndex) => (
-                  <p key={pIndex} className='legal-page__paragraph'>
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            ))}
+            <div className='legal-page__paragraph'>Last Updated: October 15, 2025</div>
+            {importantNotice && (
+              <p className='legal-page__paragraph legal-page__paragraph--important'>
+                {importantNotice}
+              </p>
+            )}
+
+            {sections.map((section, index) => renderSection(section, index))}
+
+            <p
+              className='legal-page__paragraph legal-page__paragraph--closing'
+              style={{textTransform: 'uppercase', fontWeight: '600'}}
+            >
+              {getClosingStatement()}
+            </p>
           </div>
         </div>
       </section>

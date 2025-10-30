@@ -71,9 +71,8 @@ export const PartnershipForm: FC = () => {
       <div className='landing-footer__contact-info'>
         <h2 className='landing-footer__title'>Contact us for Partnership Enquires</h2>
         <p className='landing-footer__description'>
-          If you are interested in partnership with Nobilis, you can also email partners
-          <span className='landing-footer__email-at'>@</span>
-          joinnobilis.com
+          If you are interested in partnership with Nobilis, you can also email{" "}
+          <span className='landing-footer__email-at'>partners@joinnobilis.com</span>          
         </p>
       </div>
 
@@ -81,22 +80,7 @@ export const PartnershipForm: FC = () => {
         className='landing-footer__form'
         onSubmit={formik.handleSubmit}
         autoComplete='off'
-        noValidate
-      >
-        <div
-          style={{
-            position: 'absolute',
-            left: '-9999px',
-            top: 'auto',
-            width: '1px',
-            height: '1px',
-            overflow: 'hidden',
-          }}
-          aria-hidden='true'
-        >
-          <input type='text' name='fake-username' autoComplete='username' tabIndex={-1} />
-          <input type='password' name='fake-password' autoComplete='new-password' tabIndex={-1} />
-        </div>
+      >       
         <div className='landing-footer__form-fields'>
           {/* Custom Select */}
           <div className='landing-footer__field'>
@@ -123,10 +107,8 @@ export const PartnershipForm: FC = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               required
-              autoComplete='new-password'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='off'
+             
             />
           </div>
 
@@ -140,10 +122,7 @@ export const PartnershipForm: FC = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              autoComplete='new-password'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='off'
             />
           </div>
 
@@ -157,10 +136,7 @@ export const PartnershipForm: FC = () => {
               value={formik.values.company_name}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              autoComplete='new-password'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='off'
             />
           </div>
 
@@ -174,10 +150,7 @@ export const PartnershipForm: FC = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               rows={6}
-              autoComplete='new-password'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='off'
             />
           </div>
         </div>

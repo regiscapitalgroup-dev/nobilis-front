@@ -23,6 +23,11 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             setLoading(false)
 
             goNext()
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: 'smooth',
+            })
           })
           .catch((error) => {
             setLoading(false)
@@ -46,12 +51,9 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <label className='form-label nb-tag-no-required'>NAME</label>
             <Field
               type='text'
-              autoComplete='off'
               className='form-control-underline input-text-style'
               name='firstName'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='new-email'               
             />
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block input-text-style fs-8'>
@@ -63,12 +65,10 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <label className='form-label nb-tag-no-required'>SURNAME</label>
             <Field
               type='text'
-              autoComplete='off'
-              className={'form-control form-control-lg form-control-underline input-text-style'}
+              className={'form-control-underline input-text-style'}
               name='lastName'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='new-email'               
+
             />
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block input-text-style fs-8'>
@@ -101,13 +101,10 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             <label className='form-label nb-tag-no-required'>EMAIL</label>
 
             <Field
-              type='text'
-              autoComplete='off'
-              className={'form-control form-control-lg form-control-underline input-text-style'}
+              type='text'             
+              className={'form-control-underline input-text-style'}
               name='email'
-              autoCorrect='off'
-              autoCapitalize='off'
-              spellCheck='false'
+              autoComplete='new-email'               
             />
             <div className='fv-plugins-message-container'>
               <div className='fv-help-block input-text-style fs-8'>
@@ -129,7 +126,7 @@ const Step1: FC<{goNext: () => void}> = ({goNext}) => {
             />
           </div>
           <div className='col-xl-6'>
-            <label className='form-label nb-tag-no-required'>Country</label>
+            <label className='form-label nb-tag-no-required'>City</label>
             <CityAutocompleteField name='city' />
           </div>
         </div>

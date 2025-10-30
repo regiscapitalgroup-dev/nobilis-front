@@ -359,24 +359,20 @@
 }
 
 
-/* Sólo afecta al phone input cuando lo envuelves con containerClass="nb-phone" */
 .nb-phone {
   .flag-dropdown,
   .selected-flag,
-  .country-list { display: none !important; }  /* oculta bandera y lista */
+  .country-list { display: none !important; }  
 
-  /* El componente deja padding para la bandera; quítalo */
   .form-control { padding-left: 0 !important; }
   .form-control-underline { padding-left: 0 !important; }
 }
 
-/* La clase container se aplica en el mismo div .react-tel-input */
 .react-tel-input.nb-phone {
   .flag-dropdown,
   .selected-flag,
   .country-list { display: none !important; }
 
-  /* Quita el padding que deja la bandera */
   input.form-control,
   input.form-control-underline {
     padding-left: 0 !important;
@@ -393,5 +389,32 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 1;               /* por encima del fondo fijo */
+  z-index: 1;              
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #1a1a1a !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.nb-step1 input:-webkit-autofill,
+.nb-step2 input:-webkit-autofill,
+.nb-step3 input:-webkit-autofill,
+.nb-step4 input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input.form-control:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+  background-color: transparent !important;
 }

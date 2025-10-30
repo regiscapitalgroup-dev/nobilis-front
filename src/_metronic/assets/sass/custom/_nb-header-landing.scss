@@ -145,7 +145,8 @@
   // LandingHero.scss
   .landing-hero {
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    min-height: 867px; // Altura del diseño de Figma
     position: relative;
   
     &__image-container {
@@ -185,73 +186,64 @@
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.20);
-      overflow: hidden;
-      outline: 1px black solid;
-      outline-offset: -1px;
     }
   
     &__content {
-      width: 800px;
+      width: 100%;
       max-width: 800px;
-      left: 320px;
-      top: 379px;
       position: absolute;
+      left: 50%;
+      top: 379px;
+      transform: translateX(-50%);
+      display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
       gap: 24px;
-      display: inline-flex;
     }
   
     &__title {
-      align-self: stretch;
       text-align: center;
       color: white;
       font-size: 48px;
       font-family: 'Oswald', sans-serif;
       font-weight: 500;
-      line-height: 57.60px;
-      word-wrap: break-word;
+      line-height: 1.2;
       text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.30);
       margin: 0;
     }
   
     &__subtitle {
-      align-self: stretch;
       text-align: center;
       color: white;
       font-size: 20px;
       font-family: 'Satoshi', sans-serif;
       font-weight: 300;
-      line-height: 28px;
-      word-wrap: break-word;
+      line-height: 1.4;
       margin: 0;
     }
   
     &__scroll-icon {
       width: 48px;
       height: 48px;
-      left: 716px;
+      position: absolute;
+      left: 50%;
       top: 787px;
-      position: absolute;
-    }
-  
-    &__icon-bg {
-      width: 48px;
-      height: 48px;
-      left: 0;
-      top: 0;
-      position: absolute;
-    }
-  
-    &__arrow {
-      width: 30px;
-      height: 15px;
-      left: 9px;
-      top: 18px;
-      position: absolute;
-      outline: 3px #B4B4B4 solid;
-      outline-offset: -1.50px;
+      transform: translateX(-50%);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      /* animation: bounce 2s infinite; */
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
   
@@ -259,35 +251,114 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
   }
-  
-  @media (max-width: 992px) {
-    .landing-hero {
-      &__title {
-        font-size: 36px;
-      }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-5px);
     }
   }
   
-  @media (max-width: 768px) {
+  // Tablet landscape
+  @media (max-width: 1024px) {
     .landing-hero {
-      &__image-container {
-        height: 70vh;
+      &__content {
+        max-width: 700px;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0 20px;
       }
-  
+
       &__title {
-        font-size: 28px;
+        font-size: 42px;
       }
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .landing-hero {
-      &__title {
-        font-size: 24px;
+
+      &__subtitle {
+        font-size: 18px;
+      }
+
+      &__scroll-icon {
+        top: auto;
+        bottom: 80px;
       }
     }
   }
 
+  // Tablet portrait
+  @media (max-width: 768px) {
+    .landing-hero {
+      min-height: 500px;
+
+      &__content {
+        max-width: 90%;
+        gap: 20px;
+      }
+
+      &__title {
+        font-size: 36px;
+      }
+
+      &__subtitle {
+        font-size: 16px;
+      }
+
+      &__scroll-icon {
+        bottom: 60px;
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+
+  // Mobile
+  @media (max-width: 480px) {
+    .landing-hero {
+      min-height: 100vh;
+
+      &__overlay {
+        padding: 0 16px;
+      }
+
+      &__content {
+        gap: 16px;
+        padding: 0 16px;
+      }
+
+      &__title {
+        font-size: 28px;
+        line-height: 1.3;
+      }
+
+      &__subtitle {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      &__scroll-icon {
+        bottom: 40px;
+        width: 36px;
+        height: 36px;
+      }
+    }
+  }
+
+  // Very small mobile
+  @media (max-width: 360px) {
+    .landing-hero {
+      &__title {
+        font-size: 24px;
+      }
+
+      &__subtitle {
+        font-size: 13px;
+      }
+    }
+  }
 
 // LandingIntro.scss
 .landing-intro {
@@ -725,6 +796,8 @@
     background: #808080;
     transform: rotate(90deg);
   }
+
+  
 }
 
 // Responsive
@@ -2115,13 +2188,14 @@
       z-index: 1;
       transition: all 0.6s ease;
       box-shadow: none;
+      margin: 0px 5px;
     }
   
     &--primary {
       width: 581.28px;
       height: 610.34px;
       z-index: 2;
-     /*  box-shadow: 0px 7.750405311584473px 17.438411712646484px rgba(0, 0, 0, 0.10); */
+      box-shadow: 0px 7.750405311584473px 17.438411712646484px rgba(0, 0, 0, 0.10);
       transition: all 0.6s ease;
     }
   }
@@ -2406,7 +2480,7 @@
   background: #ffffff;
   border: 1px solid #E9E9E9;
   box-sizing: border-box;
-  height: 48px; // misma altura del botón
+  height: 48px; 
 }
 
 .landing-footer__alert-icon {
@@ -2444,3 +2518,15 @@
   }
 }
 
+.landing-footer__input:-webkit-autofill,
+.landing-footer__input:-webkit-autofill:hover,
+.landing-footer__input:-webkit-autofill:focus,
+.landing-footer__input:-webkit-autofill:active,
+.landing-footer__textarea:-webkit-autofill,
+.landing-footer__textarea:-webkit-autofill:hover,
+.landing-footer__textarea:-webkit-autofill:focus,
+.landing-footer__textarea:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.05) inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}

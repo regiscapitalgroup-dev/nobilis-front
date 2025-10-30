@@ -36,10 +36,26 @@
     margin: 0 0 30px 0;
   }
 
+  &__last-updated {
+    color: #393939;
+    font-size: 14px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 19.6px;
+    margin: 0px 0 20px 0;
+  }
+
   &__section {
     display: flex;
     flex-direction: column;
     gap: 15px;
+  }
+
+  &__subsection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-left: 0px;
   }
 
   &__section-title {
@@ -53,6 +69,15 @@
     margin: 0;
   }
 
+  &__subsection-title {
+    color: #393939;
+    font-size: 14px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 19.6px;
+    margin: 0;
+  }
+
   &__paragraph {
     color: #393939;
     font-size: 14px;
@@ -62,27 +87,53 @@
     margin: 0;
     word-wrap: break-word;
     text-align: justify;
+
+    &--important {
+      font-weight: 500;
+      background: #f5f5f5;
+      padding: 15px;
+      border-left: 3px solid #393939;
+    }
+
+    &--closing {
+      font-weight: 500;
+      margin-top: 20px;
+    }
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: 25px;
+    list-style-type: disc;
+  }
+
+  &__list-item {
+    color: #393939;
+    font-size: 14px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 19.6px;
+    margin: 5px 0;
+    word-wrap: break-word;
+    text-align: justify;
   }
 
   &__watermark {
     position: absolute;
-  right: 3px; 
-  top: 32px;
-  width: 250px; 
-  height: 317px;
-  opacity: 0.05;
-  z-index: 1;
-  pointer-events: none;
-    
+    right: 3px;
+    top: 32px;
+    width: 250px;
+    height: 317px;
+    opacity: 0.05;
+    z-index: 1;
+    pointer-events: none;
+
     path {
       fill: #262626;
     }
   }
-}
 
-/* body {
-  overflow-x: hidden; // Evita scroll horizontal en toda la página
-} */
+}
 
 @media (max-width: 1200px) {
   .legal-page {
@@ -135,12 +186,25 @@
       gap: 12px;
     }
 
+    &__subsection {
+      margin-left: 15px;
+    }
+
     &__section-title {
       font-size: 11px;
       line-height: 20px;
     }
 
     &__paragraph {
+      font-size: 13px;
+      line-height: 18px;
+    }
+
+    &__list {
+      padding-left: 20px;
+    }
+
+    &__list-item {
       font-size: 13px;
       line-height: 18px;
     }
@@ -152,6 +216,7 @@
       opacity: 0.03;
     }
   }
+
 }
 
 @media (max-width: 576px) {
@@ -171,10 +236,19 @@
       gap: 10px;
     }
 
+    &__subsection {
+      margin-left: 10px;
+    }
+
+    &__list {
+      padding-left: 18px;
+    }
+
     &__watermark {
       width: 120px;
       height: 126px;
       right: -40px;
     }
+    
   }
 }

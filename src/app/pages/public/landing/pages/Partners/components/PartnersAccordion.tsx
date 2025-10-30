@@ -50,7 +50,7 @@ export const PartnersAccordion: FC = () => {
         footer:
           'If your destination offers experiences few can access but everyone remembers, Nobilis invites you to apply as a trusted Travel Partner.',
       },
-      primaryImage: '/media/ac_02.png',
+      primaryImage: '/media/partner_01.png',
       secondaryImage: '/media/in-par-02.png',
     },
     {
@@ -70,7 +70,7 @@ export const PartnersAccordion: FC = () => {
         footer:
           'Together, we create unique events that make a difference and leave a lasting mark on the world.',
       },
-      primaryImage: '/media/ac_03.png',
+      primaryImage: '/media/partner_02.png',
       secondaryImage: '/media/in-par-03.png',
     },
     {
@@ -95,7 +95,7 @@ export const PartnersAccordion: FC = () => {
         footer:
           'Nobilis partners are selected by invitation and must meet the highest standards of expertise and credibility to ensure lasting value for our community.',
       },
-      primaryImage: '/media/ac_04.png',
+      primaryImage: '/media/partner_03.png',
       secondaryImage: '/media/in-par-01.png',
     },
   ]

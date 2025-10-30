@@ -1,5 +1,6 @@
 import React, {FC, ReactNode} from 'react'
 import {toAbsoluteUrl} from '../../../../../_metronic/helpers'
+import { Link } from 'react-router-dom'
 
 interface LandingFooterProps {
   children?: ReactNode
@@ -40,13 +41,13 @@ export const LandingFooter: FC<LandingFooterProps> = ({children}) => {
               © {new Date().getFullYear()} Nobilis. All rights reserved.
             </span>
             <span className='landing-footer__divider'></span>
-            <a href='#terms' className='landing-footer__legal-link'>
+            <Link to='/terms-conditions' className='landing-footer__legal-link'>
               Terms & Conditions
-            </a>
+            </Link>
             <span className='landing-footer__divider'></span>
-            <a href='#privacy' className='landing-footer__legal-link'>
+            <Link to='/privacy-policy' className='landing-footer__legal-link'>
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>

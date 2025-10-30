@@ -8,7 +8,7 @@ import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizard
 import {register} from '../redux/AuthCRUD'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {useHistory} from 'react-router-dom'
-import { Step4 } from './steps/Step4'
+import {Step4} from './steps/Step4'
 
 type WizardProps = {
   onStepChange?: (current: number, total: number) => void
@@ -40,6 +40,14 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
 
   const navigate = useHistory()
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    })
+  }
+
   const loadStepper = () => {
     stepper.current = StepperComponent.createInsance(stepperRef.current as HTMLDivElement)
     if (stepper.current) {
@@ -50,17 +58,17 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
 
   const prevStep = () => {
     if (!stepper.current) return
-    // <-- último paso correcto (sin -1)
     setSubmitButton(stepper.current.currentStepIndex === stepper.current.totatStepsNumber!)
     stepper.current.goPrev()
     setCurrentStep(stepper.current.currentStepIndex)
     setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex - 1])
     emitStep(stepper.current.currentStepIndex, stepper.current.totatStepsNumber ?? 3)
+
+    scrollToTop()
   }
 
   const submitStep = (values: ICreateAccount, actions: FormikValues) => {
     if (!stepper.current) return
-    // <-- último paso correcto (sin -1)
     setSubmitButton(stepper.current.currentStepIndex === stepper.current.totatStepsNumber!)
     setCurrentSchema(createAccountSchemas[stepper.current.currentStepIndex])
 
@@ -68,10 +76,12 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
       stepper.current.goNext()
       setCurrentStep(stepper.current.currentStepIndex)
       emitStep(stepper.current.currentStepIndex, stepper.current.totatStepsNumber ?? 3)
+      scrollToTop()
     } else {
       stepper.current.goto(1)
       actions.resetForm()
       emitStep(1, stepper.current.totatStepsNumber ?? 3)
+      scrollToTop()
     }
   }
 
@@ -141,6 +151,7 @@ const RegitrationWizard: FC<WizardProps> = ({onStepChange}) => {
     if (idx < tot) {
       stepper.current.goNext()
       setCurrentStep(stepper.current.currentStepIndex)
+      scrollToTop()
     } else {
       await doRegister()
     }

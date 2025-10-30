@@ -18,29 +18,29 @@ export const LandingMembers: FC = () => {
       description:
         "Legacy holders, UHNWIs, impact makers, governors, and C-suite executives — the world's most influential individuals and families, connected.",
 
-      primaryImage: '/media/members.png',
+      primaryImage: '/media/member_01.png',
       secondaryImage: '/media/in_02.png',
     },
     {
       title: 'Invitations',
       subtitle: 'Member-Led Experiences',
       description:
-        "Shared by members, for members. Travel, dine, and explore together — experiencing lifestyles, professions, passions, and purpose firsthand.",
-      primaryImage: '/media/ac_02.png',
+        "Shared by members, for members. Travel, dine, and explore\n together — experiencing lifestyles, professions, passions, and purpose firsthand.",
+      primaryImage: '/media/member_02.png',
       secondaryImage: '/media/in_03.png',
     },
     {
       title: 'Community',
       subtitle: 'Connect, Collaborate, Create',
       description: "From intimate Mastermind Circles to open discussions, members invite peers to collaborate on investments, health, art, relationships, and more — exchanging insights and creating impact.",
-      primaryImage: '/media/ac_03.png',
+      primaryImage: '/media/member_03.png',
       secondaryImage: '/media/in_04.png',
     },
     {
       title: 'Expertise',
       subtitle: 'Trusted Knowledge, Direct Access',
       description: 'Members share professional expertise and market insights directly with peers — confidential, and often accessible only within Nobilis.',
-      primaryImage: '/media/ac_04.png',
+      primaryImage: '/media/member_04.png',
       secondaryImage: '/media/in_01.png',
     },
   ]
