@@ -12,7 +12,7 @@ const loginSchema = Yup.object().shape({
   password: Yup.string().required('This field is required'),
 })
 
-const initialValues = {email: 'omar.espinoza@outlook.com', password: 'tomachangotubanana'}
+const initialValues = {email: '', password: ''}
 
 export function Login() {
   const [loading, setLoading] = useState(false)
