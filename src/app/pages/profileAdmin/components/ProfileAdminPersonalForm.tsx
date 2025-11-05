@@ -6,12 +6,15 @@ import CityAutocompleteField from '../../../modules/auth/components/fields/CityA
 import ClubesAutocompleteField from './fields/ClubesAutocompleteField'
 import {updateProfilePersonal} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
+import { useUserProfileContext } from '../../../context/UserProfileContext'
 
 const ProfileAdminPersonalForm: FC = () => {
   const [selectedHobbies, setSelectedHobbies] = useState<string[]>([])
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
+  const {refetch} = useUserProfileContext()
+
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -51,7 +54,7 @@ const ProfileAdminPersonalForm: FC = () => {
 
             await updateProfilePersonal(payload)
             setLoading(false)
-
+            await refetch ();
             navigate.push('/biography')
           } catch (error: any) {
             console.log(error)

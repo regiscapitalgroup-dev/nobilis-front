@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 
 interface Slide {
   title: string
@@ -44,6 +44,18 @@ export const LandingMembers: FC = () => {
       secondaryImage: '/media/in_01.png',
     },
   ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!isTransitioning) {
+        setIsTransitioning(true)
+        setCurrentIndex((prev) => (prev + 1) % slides.length)
+        setTimeout(() => setIsTransitioning(false), 600)
+      }
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [isTransitioning, slides.length])
 
   const handlePrev = () => {
     if (isTransitioning) return

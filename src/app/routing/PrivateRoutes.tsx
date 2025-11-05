@@ -21,6 +21,7 @@ import {SuggestExperienceWrapper} from '../pages/experiences/SuggestExperienceWr
 import {WaitingListWrapper} from '../pages/waitingList/WaitingListWrapper'
 import {TermsPage} from '../pages/legal/TermsPage'
 import {PrivacyPage} from '../pages/legal/PrivacyPage'
+import { UserProfileProvider } from '../context/UserProfileContext'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
@@ -47,6 +48,7 @@ export function PrivateRoutes() {
   }, [user, subscription, history])
 
   return (
+    <UserProfileProvider>
     <Suspense fallback={<FallbackView />}>
       <Switch>
         <Route path='/plans' component={DashboardWrapper} />
@@ -69,5 +71,6 @@ export function PrivateRoutes() {
         <Redirect to='/error/404' />
       </Switch>
     </Suspense>
+    </UserProfileProvider>
   )
 }

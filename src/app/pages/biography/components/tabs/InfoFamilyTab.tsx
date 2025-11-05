@@ -17,7 +17,7 @@ const InfoFamilyTab = () => {
       <div className="partner">
         <span className="field-label">Life Partner / Spouse</span>
         <span className="field-value">
-          {`${data?.lifePartnerName} ${data?.lifePartnerLastname}`|| 'Not specified'}
+          {`${data?.lifePartnerName ?? ""} ${data?.lifePartnerLastname ?? ""}`|| 'Not specified'}
         </span>
       </div>
 

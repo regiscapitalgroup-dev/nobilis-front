@@ -4,12 +4,15 @@ import {useState} from 'react'
 import {IndustriesAutocompleteField} from './fields/IndustriesAutocompleteField'
 import {updateProfileProfessional} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
+import { useUserProfileContext } from '../../../context/UserProfileContext'
 
 export default function ProfessionalOverviewForm() {
   const [loading, setLoading] = useState(false)
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([])
   const navigate = useHistory()
+  const {refetch} = useUserProfileContext()
+
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -79,6 +82,7 @@ export default function ProfessionalOverviewForm() {
 
           await updateProfileProfessional(payload)
           setLoading(false)
+          await refetch()
           navigate.push('/biography')
         } catch (error: any) {
           console.log(error)
@@ -327,28 +331,28 @@ export default function ProfessionalOverviewForm() {
 
             <button
               type='submit'
-              className='pf-btn pf-btn--save'
+              className='btn nb-btn-primary'
               disabled={loading}
               aria-busy={loading ? 'true' : 'false'}
               aria-live='polite'
             >
               {!loading ? (
-                <div className='pf-btn-inner'>
-                  <span>save changes</span>
+                <>
+                  <span className='nb-heading-md'>save changes</span>
                   <img
                     src='/media/svg/nobilis/vector1.svg'
                     alt=''
                     className='nb-btn-icon nb-btn-icon--white'
                   />
-                </div>
+                </>
               ) : (
-                <span className='indicator-progress'>
+                <span className='indicator-progress nb-heading-md'>
                   Please wait...
                   <span
                     className='spinner-border spinner-border-sm align-middle ms-2'
                     role='status'
                     aria-hidden='true'
-                  ></span>
+                  />
                 </span>
               )}
             </button>

@@ -30,9 +30,7 @@ const BiographyWrapper: FC = () => {
 
   return (
     <>
-      <UserProfileProvider>
-        <BiographyPage />
-      </UserProfileProvider>
+      <BiographyPage />
     </>
   )
 }

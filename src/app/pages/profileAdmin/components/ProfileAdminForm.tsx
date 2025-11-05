@@ -1,4 +1,4 @@
-import {Formik, Form, Field} from 'formik'
+import {Formik, Form, Field, ErrorMessage} from 'formik'
 import * as Yup from 'yup'
 import {LanguageAutocompleteField} from '../../profile/components/fields/LanguageAutocompleteField'
 import {useState} from 'react'
@@ -7,6 +7,7 @@ import {KTSVG, toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {updateProfile} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
 import {useAlert} from '../../../hooks/utils/useAlert'
+import { useUserProfileContext } from '../../../context/UserProfileContext'
 
 type SocialMediaItem = {
   id: string
@@ -25,6 +26,7 @@ const ProfileAdminForm: React.FC = () => {
   const MAX_LENGTH = 50
   const [countLength, setCountLength] = useState<number>(0)
   const {showError} = useAlert()
+  const {data , refetch} = useUserProfileContext()
 
   const handleSocialMediaSelect = (option: any) => {
     const newItem: SocialMediaItem = {
@@ -69,22 +71,21 @@ const ProfileAdminForm: React.FC = () => {
   const toggleCard = (id: string) => {
     setSelectedCards((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]))
   }
-
   return (
     <Formik
       initialValues={{
-        alias: '',
-        name: '',
-        surname: '',
-        headline: '',
+        alias: data?.aliasTitle ??  '',
+        name: data?.firstName ?? '',
+        surname: data?.surname ?? '',
+        headline:  data?.introductionHeadline ??  '',
         residence: '',
         guidingPrinciple: '',
         annualLimit: 'noLimit',
         quarterlyReports: 'yes',
       }}
       validationSchema={Yup.object({
-        name: Yup.string().required('Required'),
-        surname: Yup.string().required('Required'),
+        name: Yup.string().required('This field is required'),
+        surname: Yup.string().required('This field is required'),
       })}
       onSubmit={async (values) => {
         try {
@@ -101,6 +102,7 @@ const ProfileAdminForm: React.FC = () => {
             })),
           }
           await updateProfile(payload)
+          await refetch()
           navigate.push('/biography')
           setLoading(false)
         } catch (error: any) {
@@ -108,9 +110,9 @@ const ProfileAdminForm: React.FC = () => {
           const statusCode = error?.response?.status || 500
 
           showError({
-            title: 'Unable to updated profile',
-            message: "We couldn't sign you in. Please check your credentials and try again.",
-            errorCode: `AUTH_${statusCode}`,
+            title: 'Unable to update profile',
+            message: "We couldn't save your changes. Please review your information and try again.",
+            errorCode: `PROFILE_${statusCode}`,
           })
         }
       }}
@@ -137,11 +139,21 @@ const ProfileAdminForm: React.FC = () => {
             <div className='form-row'>
               <div className='form-field'>
                 <label className='field-label'>Name</label>
-                <Field name='name' className='input' />
+                <Field name='name' className='input  input-text-style'  />
+                <div className='fv-plugins-message-container'>
+                  <div className='fv-help-block input-text-style fs-8'>
+                    <ErrorMessage name='name' />
+                  </div>
+                </div>
               </div>
               <div className='form-field'>
                 <label className='field-label'>Surname</label>
                 <Field name='surname' className='input' />
+                <div className='fv-plugins-message-container'>
+                  <div className='fv-help-block input-text-style fs-8'>
+                    <ErrorMessage name='surname' />
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -149,8 +161,8 @@ const ProfileAdminForm: React.FC = () => {
               <label className='field-label'>Headline</label>
               <Field name='headline' className='input' />
               <div className='field-hint'>
-                List the most significant titles that define you (e.g., Entrepreneur, CEO, Author,
-                Philanthropist).
+                List the most significant titles that define you (e.g., Entrepreneur, CEO, Actor,
+                Author, Philanthropist, F1 Driver, Nobel Laureate, Mother of four). Be specific.
               </div>
             </div>
 
@@ -185,9 +197,7 @@ const ProfileAdminForm: React.FC = () => {
 
               {/* Botón para agregar */}
               <div className='social-media-add-btn' onClick={() => setModalOpen(true)}>
-                {socialMediaItems.length > 0
-                  ? '+ Add Another'
-                  : '+ Add Social Media & Online Presence'}
+                {socialMediaItems.length > 0 ? '+ Add Another' : '+ Add'}
               </div>
 
               <SocialMediaModal

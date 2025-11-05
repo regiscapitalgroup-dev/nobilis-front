@@ -1,12 +1,22 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 
 export const LandingPlatform: FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const images = [
     '/media/laptop-1.png',
-    '/media/laptop.png',
+    '/media/laptop_002.png',
   ]
 
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [images.length])
+
+  
   return (
     <section className='landing-platform'>
       <div className='landing-platform__watermark'>
@@ -45,6 +55,7 @@ export const LandingPlatform: FC = () => {
         <div className='landing-platform__mockup-section'>
           <div className='landing-platform__mockup-container'>
             <img 
+              key={currentIndex}
               src={images[currentIndex]} 
               alt='Nobilis Platform Mockup' 
               className='landing-platform__mockup-image' 

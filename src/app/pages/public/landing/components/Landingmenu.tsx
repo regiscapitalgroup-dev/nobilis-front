@@ -53,7 +53,7 @@ export const LandingMenu: FC<LandingMenuProps> = ({isOpen, onClose, footerRef}) 
     <div className={`landing-menu ${isClosing ? 'landing-menu--closing' : ''}`}>
       <div className='landing-menu__overlay' onClick={onClose} />
       <div className='landing-menu__content'>
-        <div className='landing-menu__header' onClick={onClose}>
+        <div className='landing-menu__header cursor-pointer' onClick={onClose}>
           <svg
             width='32'
             height='32'

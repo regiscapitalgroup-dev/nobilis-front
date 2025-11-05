@@ -9,11 +9,13 @@ import {hasPermission} from '../../utils/permissions'
 import {Permission} from '../../constants/roles'
 import {useHistory} from 'react-router-dom'
 import {updateProfileImg} from '../../services/profileService'
+import SVG from 'react-inlinesvg'
+import {showErrorAlert} from '../../helpers/alert'
 
 const socials = [
   {icon: '/media/svg/nobilis/instagram.svg'},
-  {icon: '/media/svg/nobilis/fb.svg'},
-  {icon: '/media/svg/nobilis/x.svg'},
+  {icon: '/media/svg/nobilis/fb_01.svg'},
+  {icon: '/media/svg/nobilis/x_01.svg'},
 ]
 
 const BiographyPage: FC = () => {
@@ -65,8 +67,16 @@ const BiographyPage: FC = () => {
 
     try {
       await updateProfileImg(file)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error to upload:', error)
+
+      const statusCode = error?.response?.status || 500
+
+      showErrorAlert({
+        title: 'Unable to update profile photo',
+        message: "We couldn't save your changes. Please review your information and try again.",
+        errorCode: `PROFILE_IMG${statusCode}`,
+      })
 
       setProfileImage(previousImage)
     } finally {
@@ -83,24 +93,6 @@ const BiographyPage: FC = () => {
 
   return (
     <>
-      {/* <div className='profile-completion-banner'>
-        <div className='profile-completion-banner__content'>
-          <div className='profile-completion-banner__text'>
-            <p className='profile-completion-banner__title'>
-              Complete your profile yourself or order professional service.
-            </p>
-            <p className='profile-completion-banner__subtitle'>
-              Earn 1000 Credits, learn <span className='underline'>Loyalty Program</span>
-            </p>
-          </div>
-        </div>
-
-        <button className='profile-completion-banner__btn'>
-          <span>GET PROFESSIONAL SERVICE</span>
-          <KTSVG path='/media/svg/nobilis/vector1.svg' />
-        </button>
-      </div> */}
-
       <div className='biography'>
         <div className='biography__watermark'>
           <img src={toAbsoluteUrl('/media/svg/nobilis/mark_bg.svg')} alt='watermark' />
@@ -139,7 +131,10 @@ const BiographyPage: FC = () => {
           <div className='biography__info'>
             <div className='biography__info-name'> {`Your Highness ${fullName}`}</div>
             <div className='biography__divider'></div>
-            <div className='biography__info-desc'>{data?.bioPresentation}</div>
+            <div className='biography__info-desc'>
+              <div className='biography__info-desc'>{data?.bioPresentation}</div>
+            </div>
+           
             <div className='biography__info-location'>
               <span>
                 <KTSVG path='/media/svg/nobilis/location_mark.svg' className='' />
@@ -165,42 +160,22 @@ const BiographyPage: FC = () => {
           <div className='biography__languages'>
             <div className='biography__languages-title'>My Introductions</div>
             <div className='biography__languages-list'>
-              {data?.introduction && <div className='lang'>{data?.introduction?.title}</div>}
+              {data?.introduction &&
+                data.introduction.map((item, index) => {
+                  return (
+                    <div key={index} className='lang'>
+                      {item}
+                    </div>
+                  )
+                })}
             </div>
           </div>
 
           {/* Actions */}
           <div className='biography__actions'>
-            {/*  <div className='biography__actions-buttons'>
-              {isMember ? (
-                <div className='btn-main btn-main--black'>
-                  Request Introduction
-                  <img
-                    src='/media/svg/nobilis/vector1.svg'
-                    alt=''
-                    className='nb-btn-icon nb-btn-icon--white'
-                  />
-                </div>
-              ) : null}
-
-              {isExpert ? (
-                <div className='btn-main btn-main--blue'>
-                  Book Expertise
-                  <img
-                    src='/media/svg/nobilis/vector1.svg'
-                    alt=''
-                    className='nb-btn-icon nb-btn-icon--white'
-                  />
-                </div>
-              ) : null}
-            </div> */}
             <div className='biography__actions-socials'>
               {socials.map((item, index) => (
-                <KTSVG
-                  key={index}
-                  path={toAbsoluteUrl(item.icon)}
-                  className='social-media-input-icon'
-                />
+                <SVG key={index} src={toAbsoluteUrl(item.icon)} />
               ))}
             </div>
           </div>
@@ -220,7 +195,10 @@ const BiographyPage: FC = () => {
 
           {canEditImage && (
             <>
-              <a className='biography__edit-btn' onClick={() => fileInputRef.current?.click()}>
+              <a
+                className='biography__edit-btn cursor-pointer'
+                onClick={() => fileInputRef.current?.click()}
+              >
                 <KTSVG path='/media/svg/nobilis/edit-img.svg' />
               </a>
             </>

@@ -1,17 +1,14 @@
-/* Estilos para el layout personalizado */
 
-/* Contenedor principal de la página */
 .page {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Container principal para aside y contenido */
 .main-container {
   display: flex;
   flex: 1;
-  min-height: 0; /* Permite que los flex children se contraigan */
+  min-height: 0; 
 }
 
 /* Container del aside */
@@ -71,19 +68,16 @@
   }
 }
 
-/* Ajustes específicos para metronic - más conservadores */
 .page .wrapper {
   margin-left: 0 !important;
 }
 
-/* Asegurar que el aside no tenga position fixed pero preserve otros estilos */
 .page .aside {
   position: relative !important;
 }
 
 
-/* CSS para corregir el header en el nuevo layout */
-/* Forzar que el header ocupe todo el ancho */
+
 .page #kt_header {
   width: 100% !important;
   position: relative !important;
@@ -94,7 +88,7 @@
   transform: none !important;
 }
 
-/* Asegurar que container-fluid realmente ocupe todo el ancho */
+
 .page #kt_header .container-fluid {
   max-width: none !important;
   width: 100% !important;

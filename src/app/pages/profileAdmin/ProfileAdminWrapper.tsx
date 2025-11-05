@@ -1,7 +1,6 @@
 import {FC, useEffect, useRef} from 'react'
 import {useLayout} from '../../../_metronic/layout/core'
 import {ProfileAdminPage} from './ProfileAdminPage'
-import {UserProfileProvider} from '../../context/UserProfileContext'
 
 const ProfileAdminWrapper: FC = () => {
   const {config, setLayout} = useLayout()
@@ -21,13 +20,7 @@ const ProfileAdminWrapper: FC = () => {
     return () => setLayout(restoreRef.current)
   }, [])
 
-  return (
-    <>
-      <UserProfileProvider>
-        <ProfileAdminPage />
-      </UserProfileProvider>
-    </>
-  )
+  return <ProfileAdminPage />
 }
 
 export {ProfileAdminWrapper}

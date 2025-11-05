@@ -23,7 +23,10 @@ export interface FullUserProfileModel {
     lifePartnerName: string;
     lifePartnerLastname: string;
     postalAddress: string;
-    introduction: IntroductionDetail;
+    introduction: [];
+    oftenIn:[],
+    firstName: string,
+    surname: string
   }
   
   

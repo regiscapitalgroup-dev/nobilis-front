@@ -7,15 +7,16 @@ interface UserProfileState {
   data?: FullUserProfileModel | null
   loading: boolean
   error?: Error | null
+  refetch: () => Promise<void>
 }
 
 const UserProfileContext = createContext<UserProfileState | undefined>(undefined)
 
 export const UserProfileProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
-  const {data, error, loading} = useUserProfile()
+  const {data, error, loading, refetch} = useUserProfile()
 
   return (
-    <UserProfileContext.Provider value={{data, loading, error}}>
+    <UserProfileContext.Provider value={{data, loading, error, refetch}}>
       {children}
     </UserProfileContext.Provider>
   )

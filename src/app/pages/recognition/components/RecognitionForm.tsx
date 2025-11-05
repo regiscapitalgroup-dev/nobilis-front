@@ -4,8 +4,10 @@ import * as Yup from 'yup'
 import {RecognitionModel} from '../models/RecognitionModel'
 import {updateUserRecognition} from '../../../services/recognitionService'
 import {useHistory} from 'react-router-dom'
+import {useUserProfileContext} from '../../../context/UserProfileContext'
 
 const RecognitionForm: FC = () => {
+  const {refetch} = useUserProfileContext()
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
 
@@ -31,8 +33,9 @@ const RecognitionForm: FC = () => {
   const handleSubmit = async (values: RecognitionModel) => {
     setLoading(true)
     await updateUserRecognition(values)
-      .then(() => {
+      .then(async () => {
         setLoading(false)
+        await refetch()
         navigate.push('/biography')
       })
       .catch((error) => {

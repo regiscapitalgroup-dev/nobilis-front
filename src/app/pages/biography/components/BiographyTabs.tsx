@@ -98,7 +98,7 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
                     recognition: '/recognition',
                     expertise: '/expertise',
                   }
-          
+
                   const route = routes[activeTab] || '/admin/overview/profile'
                   navigate.push(route)
                 }}
@@ -125,7 +125,7 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
             </div>
           )}
 
-          {/* {activeTab === 'bio' && (
+          {activeTab === 'bio' && (
             <div className='bio-gallery-section'>
               <div className='bio-tabs__gallery'>
                 {data?.videos &&
@@ -137,13 +137,12 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
                   ))}
               </div>
             </div>
-          )} */}
+          )}
           {activeTab === 'bio' && (
             <div className='bio-gallery-section'>
               <div className='bio-tabs__gallery'>
                 {data?.videos &&
                   data?.videos.map((video) => {
-                    // Extraer el ID del video
                     const videoId = video.videoLink.split('v=')[1]?.split('&')[0]
 
                     return (
@@ -160,10 +159,9 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
                             left: 0,
                             width: '100%',
                             height: '100%',
-                            pointerEvents: 'none', // Evita que se pueda interactuar
+                            pointerEvents: 'none',
                           }}
                         />
-                        {/* Div transparente para capturar el clic */}
                         <div
                           style={{
                             position: 'absolute',
@@ -175,7 +173,6 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
                             cursor: 'pointer',
                           }}
                           onClick={() => {
-                            // Aquí puedes abrir el modal o reproducir el video
                             window.open(video.videoLink, '_blank')
                           }}
                         />

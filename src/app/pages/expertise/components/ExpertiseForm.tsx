@@ -6,6 +6,7 @@ import {updateUserExpertise} from '../../../services/expertiseService'
 import {useHistory} from 'react-router-dom'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {useRateExpertiseField} from '../../../hooks/components/useRateExpertiseField'
+import { useUserProfileContext } from '../../../context/UserProfileContext'
 
 interface CustomSelectProps {
   value: string
@@ -62,6 +63,7 @@ const CustomSelect: FC<CustomSelectProps> = ({value, onChange, options}) => {
 const ExpertiseForm: FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
+  const {refetch} = useUserProfileContext()
 
   const {collection} = useRateExpertiseField()
   const rateOptions = collection.map((rate) => ({
@@ -111,6 +113,7 @@ const ExpertiseForm: FC = () => {
       setLoading(true)
       await updateUserExpertise(adaptedPayload)
       setLoading(false)
+      await refetch()
       navigate.push('/biography')
     } catch (error) {
       console.error('Error :', error)
