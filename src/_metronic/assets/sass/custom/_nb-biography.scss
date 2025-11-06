@@ -255,10 +255,9 @@
       height: auto;
     }
 
-    /* Background block gris - pegado al final del ancho */
     .bg-block {
       position: absolute;
-      right: 0; /* 🎯 AJUSTE: Pegado al borde derecho del contenedor right */
+      right: 0; 
       top: 0;
       width: 424px;
       height: 525px;
@@ -320,7 +319,7 @@
     /* Quote overlay */
     .quote {
       position: absolute;
-      bottom: 52px;
+      bottom: 0px;
       left: 0;
       width: 413px;
       padding: 30px;
@@ -356,53 +355,53 @@
       }
     }
 
-    /* Container del link de editar */
-    .biography__edit-container {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 413px;
-      display: flex;
-      justify-content: flex-end;
-      /* padding-right: 80px; */
-      z-index: 3;
+.biography__edit-container {
+  position: absolute;
+  bottom: -50px; // Lo bajo fuera del contenedor de la imagen
+  right: 80px; // Alineado a la derecha como en Figma
+  width: auto;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1;
 
-      @media (max-width: 1200px) {
-        width: 100%;
-        padding-right: 20px;
-        bottom: 10px;
-      }
-    }
+  @media (max-width: 1200px) {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    width: 100%;
+    padding-right: 20px;
+    margin-top: 10px;
+  }
+}
 
-    /* Link de editar */
-    .biography__edit-link {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      border: none;
-      background: transparent;
-      border-bottom: 1px solid #151515;
-      cursor: pointer;
+.biography__edit-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #151515;
+  cursor: pointer;
 
-      span {
-        color: #151515;
-        font-size: 12px;
-        font-family: 'Oswald', sans-serif;
-        font-weight: 500;
-        text-transform: uppercase;
-        line-height: 22.2px;
-      }
+  span {
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 22.2px;
+  }
 
-      svg {
-        width: 12px;
-        height: 3px;
-      }
+  svg {
+    width: 12px;
+    height: 3px;
+  }
 
-      &:hover {
-        opacity: 0.8;
-      }
-    }
+  &:hover {
+    opacity: 0.8;
+  }
+}
   }
 }
 
@@ -568,56 +567,56 @@
     }
   }
 
-  /* Galería de videos */
-  &__gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
+/* Galería de videos */
+&__gallery {
+  display: flex;
+  justify-content:space-between;
+  /* gap: 13.68px; */
+  /* margin-top: 20px; */
+}
 
-  &__video {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-    background: #000;
-    overflow: hidden;
-    cursor: pointer;
+&__video {
+  position: relative;
+  width: 282.54px;
+  height: 171.03px;
+  background: linear-gradient(0deg, rgba(20.84, 20.84, 20.84, 0.50) 0%, rgba(20.84, 20.84, 20.84, 0.50) 100%), #D7D7D7;
+  overflow: hidden;
+  cursor: pointer;
 
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  &__play {
+  iframe {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 55%;
-      transform: translate(-50%, -50%);
-      width: 0;
-      height: 0;
-      border-left: 15px solid #151515;
-      border-top: 10px solid transparent;
-      border-bottom: 10px solid transparent;
-    }
   }
+}
+
+&__play {
+  position: absolute;
+  left: 130.67px;
+  top: 73.89px;
+  width: 21.89px;
+  height: 21.89px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 7px;
+    top: 5px;
+    border-left: 8px solid #151515;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+}
+
 }
 
 /* Botón de editar con underline */
@@ -652,11 +651,6 @@
   }
 }
 
-/* Sección de galería */
-.bio-gallery-section {
-  width: 100%;
-  margin-top: 20px;
-}
 
 .biography__divider {
   width: 100%;
@@ -670,7 +664,7 @@
   display: flex;
   flex-direction: column;
   gap: 60px;
-  width: 850px;
+  /* width: 850px; */
   max-width: 100%;
 }
 
@@ -711,100 +705,6 @@
   }
 }
 
-.bio-tabs__gallery {
-  width: 1279px;
-  max-width: 1279px;
-  display: flex;
-  flex-wrap: wrap; 
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 20px;
-  
-  @media (max-width: 1300px) {
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-}
-
-.bio-tabs__video {
- /*  flex: 1; */
-  flex: 1 1 calc(33.333% - 20px);
-  height: 250px;
-  position: relative;
-  background: linear-gradient(0deg, rgba(20.84, 20.84, 20.84, 0.50) 0%, rgba(20.84, 20.84, 20.84, 0.50) 100%);
-  overflow: hidden;
-  cursor: pointer;
-  
-  @media (max-width: 1024px) {
-    flex: 1 1 calc(50% - 20px);  /* 2 columnas en tablet */
-    max-width: calc(50% - 20px);
-  }
-
-  @media (max-width: 768px) {
-    flex: 1 1 100%;             /* 1 columna en móvil */
-    max-width: 100%;
-  }
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(0deg, rgba(20.84, 20.84, 20.84, 0.50) 0%, rgba(20.84, 20.84, 20.84, 0.50) 100%);
-    z-index: 2;
-  }
-}
-
-.bio-tabs__play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 32px;
-  height: 32px;
-  z-index: 3;
-  cursor: pointer;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 9px;
-    width: 0;
-    height: 0;
-    border-left: 14px solid white;
-    border-top: 12px solid transparent;
-    border-bottom: 12px solid transparent;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 32px;
-    height: 32px;
-    border: 2px solid white;
-    border-radius: 50%;
-  }
-}
-
 /* PROFESSIONAL OVERVIEW TAB */
 .professional-overview-content {
   width: 100%;
@@ -820,6 +720,7 @@
 
 .professional-overview-column {
   flex: 1;
+  min-width: 0;
   padding: 40px;
   background: white;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.03);
@@ -833,7 +734,7 @@
 }
 
 .professional-overview-wrapper {
-  width: 600px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -893,6 +794,7 @@
   }
 
   &__content-education {
+    align-self: stretch;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -981,20 +883,18 @@
 }
 
 .lifestyle-column--left {
-  width: 630px;
+  flex: 1 1 0; // Cambié de width: 630px a flex
+  min-width: 0; // Agregué esto
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 20px;
-  
-  @media (max-width: 680px) {
-    width: 100%;
-  }
 }
 
 .lifestyle-column--right {
-  flex: 1;
+  flex: 1 1 0; // Agregué 1 0 para igualar
+  min-width: 0; // Agregué esto
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1003,7 +903,7 @@
 }
 
 .lifestyle-clubs-card {
-  width: 630px;
+  width: 100%; 
   padding: 40px;
   background: white;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.03);
@@ -1014,10 +914,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 30px;
-
-  @media (max-width: 680px) {
-    width: 100%;
-  }
 }
 
 .lifestyle-clubs-content {
@@ -1041,6 +937,7 @@
 }
 
 .lifestyle-clubs-list {
+  width: 100%; 
   display: flex;
   flex-direction: column;
   justify-content: center;

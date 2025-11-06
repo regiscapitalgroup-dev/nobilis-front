@@ -6,7 +6,8 @@ import CityAutocompleteField from '../../../modules/auth/components/fields/CityA
 import ClubesAutocompleteField from './fields/ClubesAutocompleteField'
 import {updateProfilePersonal} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
-import { useUserProfileContext } from '../../../context/UserProfileContext'
+import {useUserProfileContext} from '../../../context/UserProfileContext'
+import {useAlert} from '../../../hooks/utils/useAlert'
 
 const ProfileAdminPersonalForm: FC = () => {
   const [selectedHobbies, setSelectedHobbies] = useState<string[]>([])
@@ -14,7 +15,7 @@ const ProfileAdminPersonalForm: FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
   const {refetch} = useUserProfileContext()
-
+  const {showError} = useAlert()
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -53,11 +54,18 @@ const ProfileAdminPersonalForm: FC = () => {
             }
 
             await updateProfilePersonal(payload)
-            setLoading(false)
-            await refetch ();
+            await refetch()
             navigate.push('/biography')
           } catch (error: any) {
             console.log(error)
+
+            const statusCode = error?.response?.status || 500
+            showError({
+              title: 'Unable to update personal details',
+              message:
+                "We couldn't save your changes. Please review your information and try again.",
+              errorCode: `PERSONAL_DETAILS_${statusCode}`,
+            })
           } finally {
             setLoading(false)
           }
@@ -101,7 +109,9 @@ const ProfileAdminPersonalForm: FC = () => {
                     <CityAutocompleteField name='city' />
                   </div>
                 </div>
-                <div className='pf-personal__add'>+ Add more</div>
+                <div className='pf-personal__add' onClick={() => alert('coming soon')}>
+                  + Add more
+                </div>
               </div>
 
               {/* Personal Interests */}
@@ -141,21 +151,22 @@ const ProfileAdminPersonalForm: FC = () => {
 
               <button
                 type='submit'
-                className='pf-personal__btn pf-personal__btn--primary'
+                className='btn nb-btn-primary'
                 disabled={loading}
                 aria-busy={loading ? 'true' : 'false'}
+                aria-live='polite'
               >
                 {!loading ? (
-                  <div className='pf-btn-inner'>
-                    <span>save changes</span>
+                  <>
+                    <span className='nb-heading-md'>save changes</span>
                     <img
                       src='/media/svg/nobilis/vector1.svg'
                       alt=''
                       className='nb-btn-icon nb-btn-icon--white'
                     />
-                  </div>
+                  </>
                 ) : (
-                  <span className='indicator-progress'>
+                  <span className='indicator-progress nb-heading-md'>
                     Please wait...
                     <span
                       className='spinner-border spinner-border-sm align-middle ms-2'

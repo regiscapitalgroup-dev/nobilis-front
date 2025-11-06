@@ -124,20 +124,6 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
               <InfoFamilyTab />
             </div>
           )}
-
-          {activeTab === 'bio' && (
-            <div className='bio-gallery-section'>
-              <div className='bio-tabs__gallery'>
-                {data?.videos &&
-                  data?.videos.map((video) => (
-                    <div key={video.id} className='bio-tabs__video'>
-                      <div className='bio-tabs__play'></div>
-                      <img src={getVideoThumbnail(video.videoLink)} alt={video.title} />
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
           {activeTab === 'bio' && (
             <div className='bio-gallery-section'>
               <div className='bio-tabs__gallery'>
@@ -146,34 +132,57 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
                     const videoId = video.videoLink.split('v=')[1]?.split('&')[0]
 
                     return (
-                      <div key={video.id} className='bio-tabs__video'>
-                        <div className='bio-tabs__play'></div>
+                      <div
+                        key={video.id}
+                        className='bio-tabs__video'
+                        style={{position: 'relative'}}
+                      >
+                        {/* <div className=''>
+                          <div
+                            data-format='Stroke'
+                            data-weight='Regular'
+                            style={{width: '100%', height: '100%', position: 'relative'}}
+                          >
+                            <div
+                              style={{
+                                width: 21.89,
+                                height: 21.89,
+                                left: 0,
+                                top: 0,
+                                position: 'absolute',
+                              }}
+                            />
+                            <div
+                              style={{
+                                width: 13.68,
+                                height: 16.41,
+                                left: 6.16,
+                                top: 2.74,
+                                position: 'absolute',
+                                outline: '1.37px white solid',
+                                outlineOffset: '-0.68px',
+                              }}
+                            />
+                          </div>
+                        </div> */}
                         <iframe
                           src={`https://www.youtube.com/embed/${videoId}?controls=0&showinfo=0&modestbranding=1`}
                           frameBorder='0'
                           allow='accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                           allowFullScreen
-                          style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            height: '100%',
-                            pointerEvents: 'none',
-                          }}
                         />
                         <div
+                          onClick={() => {
+                            window.open(video.videoLink, '_blank')
+                          }}
                           style={{
                             position: 'absolute',
                             top: 0,
                             left: 0,
                             width: '100%',
                             height: '100%',
-                            zIndex: 3,
                             cursor: 'pointer',
-                          }}
-                          onClick={() => {
-                            window.open(video.videoLink, '_blank')
+                            zIndex: 1,
                           }}
                         />
                       </div>

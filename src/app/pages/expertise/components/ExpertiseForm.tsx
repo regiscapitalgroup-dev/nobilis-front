@@ -1,12 +1,13 @@
 import {FC, useState, useRef, useEffect} from 'react'
-import {Formik, Form, Field, FieldArray, FormikProps} from 'formik'
+import {Formik, Form, Field, FieldArray, FormikProps, ErrorMessage} from 'formik'
 import * as Yup from 'yup'
 import {ExpertiseModel} from '../models/ExpertiseModel'
 import {updateUserExpertise} from '../../../services/expertiseService'
 import {useHistory} from 'react-router-dom'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {useRateExpertiseField} from '../../../hooks/components/useRateExpertiseField'
-import { useUserProfileContext } from '../../../context/UserProfileContext'
+import {useUserProfileContext} from '../../../context/UserProfileContext'
+import {useAlert} from '../../../hooks/utils/useAlert'
 
 interface CustomSelectProps {
   value: string
@@ -34,7 +35,7 @@ const CustomSelect: FC<CustomSelectProps> = ({value, onChange, options}) => {
   return (
     <div className='custom-select' ref={dropdownRef}>
       <div className='custom-select__trigger' onClick={() => setIsOpen(!isOpen)}>
-        <span className='custom-select__value'>/ {selectedOption?.label || value}</span>
+        <span className='custom-select__value'>{selectedOption?.label || value}</span>
         <div className='custom-select__icon'>
           <KTSVG path='/media/svg/nobilis/arrow_up.svg' className='svg-icon-2' />
         </div>
@@ -60,10 +61,93 @@ const CustomSelect: FC<CustomSelectProps> = ({value, onChange, options}) => {
   )
 }
 
+interface CurrencyInputProps {
+  value: number
+  onChange: (value: number) => void
+  className?: string
+}
+
+const CurrencyInput: FC<CurrencyInputProps> = ({value, onChange, className}) => {
+  const [displayValue, setDisplayValue] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
+
+  useEffect(() => {
+    if (!isFocused) {
+      if (value && value > 0) {
+        setDisplayValue(formatCurrency(value))
+      } else {
+        setDisplayValue('')
+      }
+    }
+  }, [value, isFocused])
+
+  const formatCurrency = (num: number): string => {
+    return new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(num)
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value
+
+    const cleanValue = input.replace(/[^\d.,]/g, '')
+
+    const withoutCommas = cleanValue.replace(/,/g, '')
+
+    const parts = withoutCommas.split('.')
+    let sanitized = withoutCommas
+
+    if (parts.length > 2) {
+      sanitized = parts[0] + '.' + parts.slice(1).join('')
+    } else if (parts.length === 2 && parts[1].length > 2) {
+      sanitized = parts[0] + '.' + parts[1].substring(0, 2)
+    }
+
+    setDisplayValue(sanitized)
+
+    const numericValue = parseFloat(sanitized) || 0
+    onChange(numericValue)
+  }
+
+  const handleBlur = () => {
+    setIsFocused(false)
+    if (value && value > 0) {
+      setDisplayValue(formatCurrency(value))
+    } else {
+      setDisplayValue('')
+    }
+  }
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocused(true)
+    if (value && value > 0) {
+      setDisplayValue(value.toString())
+    } else {
+      setDisplayValue('')
+    }
+    e.target.select()
+  }
+
+  return (
+    <input
+      type='text'
+      value={displayValue}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      placeholder='0.00'
+      className={className}
+      inputMode='decimal'
+    />
+  )
+}
+
 const ExpertiseForm: FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
   const {refetch} = useUserProfileContext()
+  const {showError} = useAlert()
 
   const {collection} = useRateExpertiseField()
   const rateOptions = collection.map((rate) => ({
@@ -88,12 +172,12 @@ const ExpertiseForm: FC = () => {
   const validationSchema = Yup.object().shape({
     expertise: Yup.array().of(
       Yup.object().shape({
-        area: Yup.string().required('Required'),
-        description: Yup.string().required('Required'),
+        area: Yup.string().required('This field is required'),
+        description: Yup.string().required('This field is required'),
         pricing: Yup.object().shape({
-          currency: Yup.string().required('Required'),
-          amount: Yup.number().min(0, 'Must be positive').required('Required'),
-          unit: Yup.string().required('Required'),
+          currency: Yup.string().required('This field is required'),
+          amount: Yup.number().min(0, 'Must be positive').required('This field is required'),
+          unit: Yup.string().required('This field is required'),
         }),
       })
     ),
@@ -112,11 +196,18 @@ const ExpertiseForm: FC = () => {
     try {
       setLoading(true)
       await updateUserExpertise(adaptedPayload)
-      setLoading(false)
       await refetch()
       navigate.push('/biography')
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error :', error)
+
+      const statusCode = error?.response?.status || 500
+      showError({
+        title: 'Unable to update expertise',
+        message: "We couldn't save your changes. Please review your information and try again.",
+        errorCode: `EXPERTISE_${statusCode}`,
+      })
+    } finally {
       setLoading(false)
     }
   }
@@ -128,7 +219,7 @@ const ExpertiseForm: FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({values}: FormikProps<ExpertiseModel>) => (
+        {({values, setFieldValue}: FormikProps<ExpertiseModel>) => (
           <Form className='expertise-form__container'>
             <h2 className='expertise-form__title'>Edit Your Expertise</h2>
 
@@ -156,6 +247,11 @@ const ExpertiseForm: FC = () => {
                               className='expertise-form__input'
                             />
                           </div>
+                          <div className='fv-plugins-message-container'>
+                            <div className='fv-help-block input-text-style fs-8'>
+                              <ErrorMessage name={`expertise.${index}.area`} />
+                            </div>
+                          </div>
                         </div>
 
                         {/* Description */}
@@ -168,6 +264,11 @@ const ExpertiseForm: FC = () => {
                               className='expertise-form__input'
                             />
                           </div>
+                          <div className='fv-plugins-message-container'>
+                            <div className='fv-help-block input-text-style fs-8'>
+                              <ErrorMessage name={`expertise.${index}.description`} />
+                            </div>
+                          </div>
                         </div>
 
                         {/* Pricing */}
@@ -176,10 +277,11 @@ const ExpertiseForm: FC = () => {
                           <div className='expertise-form__pricing'>
                             <div className='expertise-form__pricing-left'>
                               <span className='expertise-form__currency'>USD $</span>
-                              <Field
-                                type='number'
-                                name={`expertise.${index}.pricing.amount`}
-                                placeholder='0'
+                              <CurrencyInput
+                                value={item.pricing.amount}
+                                onChange={(value) =>
+                                  setFieldValue(`expertise.${index}.pricing.amount`, value)
+                                }
                                 className='expertise-form__price-input'
                               />
                             </div>
@@ -224,7 +326,6 @@ const ExpertiseForm: FC = () => {
               </FieldArray>
             </div>
 
-            {/* Botones */}
             <div className='expertise-form__actions'>
               <button
                 type='button'
@@ -238,7 +339,8 @@ const ExpertiseForm: FC = () => {
                 type='submit'
                 className='btn nb-btn-primary'
                 disabled={loading}
-                aria-busy={loading}
+                aria-busy={loading ? 'true' : 'false'}
+                aria-live='polite'
               >
                 {!loading ? (
                   <>
@@ -252,7 +354,11 @@ const ExpertiseForm: FC = () => {
                 ) : (
                   <span className='indicator-progress nb-heading-md'>
                     Please wait...
-                    <span className='spinner-border spinner-border-sm align-middle ms-2' />
+                    <span
+                      className='spinner-border spinner-border-sm align-middle ms-2'
+                      role='status'
+                      aria-hidden='true'
+                    />
                   </span>
                 )}
               </button>

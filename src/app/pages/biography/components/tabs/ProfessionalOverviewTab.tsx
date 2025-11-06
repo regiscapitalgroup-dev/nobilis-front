@@ -11,7 +11,7 @@ const ProfessionalOverviewTab: FC = () => {
         <div className='professional-overview-section'>
           <div className='professional-overview-section__header'>
             <div className='professional-overview-section__title'>
-              <h3>Organizations I am involve in / Positions</h3>
+              <h3>Organizations & Roles</h3>
             </div>
           </div>
           <div className='professional-overview-section__content'>

@@ -116,18 +116,37 @@
       font-size: 12px;
       font-family: "Satoshi", sans-serif;
       font-weight: 300;
-      color: #151515;
+      color: #151515; // ✅ Cambié de #fff a #151515
 
       input[type="checkbox"] {
         appearance: none;
         width: 18px;
         height: 18px;
-        border: 2px solid #dfdfdf;
+        border: 2px solid #d7d7d7;
         border-radius: 2px;
         cursor: pointer;
+        position: relative;
+        flex-shrink: 0;
 
         &:checked {
-          background: #151515;
+          background: #460107;
+          border-color: #460107;
+
+          &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 8px;
+            height: 5px;
+            border-left: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: translate(-50%, -60%) rotate(-45deg);
+          }
+        }
+
+        &:focus {
+          outline: none;
         }
       }
     }
@@ -178,6 +197,7 @@
     }
   }
 }
+
 .field-label-part {
   font-size: 10px;
   text-transform: uppercase;
@@ -187,6 +207,7 @@
   font-family: "Satoshi", sans-serif;
   line-height: 18.5px;
 }
+
 .partner-desc {
   color: #808080;
   font-size: 10px;
@@ -194,11 +215,12 @@
   font-weight: 400;
   line-height: 14px;
 }
+
 .form-grid-2x2 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); // 2 columnas
-  grid-template-rows: auto auto;         // 2 filas
-  gap: 20px 30px;                        // espacio filas/columnas
+  grid-template-columns: repeat(2, 1fr); 
+  grid-template-rows: auto auto;         
+  gap: 20px 30px;                        
   width: 100%;
 
   .form-field {
@@ -212,7 +234,7 @@
   display: flex;
   flex-direction: column;
   gap: 60px;
-  max-width: 700px; // igual en ambos
+  max-width: 700px; 
   margin: 0 auto;
 
   .form-header {
@@ -221,7 +243,7 @@
     gap: 5px;
 
     &__title {
-      font-size: 40px; // 👈 mismo tamaño en ambos
+      font-size: 40px; 
       font-family: "Oswald", sans-serif;
       font-weight: 500;
       color: #151515;

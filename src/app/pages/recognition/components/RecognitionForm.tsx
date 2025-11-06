@@ -5,12 +5,13 @@ import {RecognitionModel} from '../models/RecognitionModel'
 import {updateUserRecognition} from '../../../services/recognitionService'
 import {useHistory} from 'react-router-dom'
 import {useUserProfileContext} from '../../../context/UserProfileContext'
+import { useAlert } from '../../../hooks/utils/useAlert'
 
 const RecognitionForm: FC = () => {
   const {refetch} = useUserProfileContext()
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
-
+  const {showError} = useAlert()
   const initialValues: RecognitionModel = {
     recognitions: [{description: '', link: ''}],
     links: [{url: ''}],
@@ -34,15 +35,19 @@ const RecognitionForm: FC = () => {
     setLoading(true)
     await updateUserRecognition(values)
       .then(async () => {
-        setLoading(false)
         await refetch()
         navigate.push('/biography')
       })
       .catch((error) => {
+        const statusCode = error?.response?.status || 500
+        showError({
+          title: 'Unable to update recognition',
+          message: "We couldn't save your changes. Please review your information and try again.",
+          errorCode: `RECOGNITION_${statusCode}`,
+        })
+      })
+      .finally(() => {
         setLoading(false)
-        const errorMessage = error.response?.data?.error || error.message || 'Unknown error'
-        console.log('error', error)
-        console.log('error.response?.data?.error', error.response?.data?.error)
       })
   }
 

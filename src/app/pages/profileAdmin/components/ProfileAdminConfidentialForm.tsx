@@ -9,12 +9,14 @@ import {MultipleCitiesAutocompleteField} from './fields/MultipleCitiesAutocomple
 import {useUserProfileContext} from '../../../context/UserProfileContext'
 import {updateProfileConfidential} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
+import {useAlert} from '../../../hooks/utils/useAlert'
 
 const ProfileConfidentialForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [selectedCities, setSelecteCities] = useState<string[]>([])
   const {data} = useUserProfileContext()
   const navigate = useHistory()
+  const {showError} = useAlert()
 
   return (
     <Formik
@@ -34,7 +36,7 @@ const ProfileConfidentialForm: React.FC = () => {
             name: '',
             surname: '',
             yearOfBirth: '',
-            relation: { id: 0, name: '' }, 
+            relation: {id: 0, name: ''},
           },
         ],
       }}
@@ -71,6 +73,12 @@ const ProfileConfidentialForm: React.FC = () => {
           navigate.push('/biography')
         } catch (error: any) {
           console.error(error)
+          const statusCode = error?.response?.status || 500
+          showError({
+            title: 'Unable to update confidential profile',
+            message: "We couldn't save your changes. Please review your information and try again.",
+            errorCode: `CONFIDENTIAL_${statusCode}`,
+          })
         } finally {
           setLoading(false)
         }
@@ -167,7 +175,9 @@ const ProfileConfidentialForm: React.FC = () => {
             </div>
 
             <MultipleCitiesAutocompleteField values={selectedCities} onChange={setSelecteCities} />
-            <div className='form-add'>+ Add more</div>
+            <div className='form-add' onClick={() => alert('coming soon')}>
+              + Add more
+            </div>
           </div>
 
           {/* Section: Family Relations */}
@@ -179,8 +189,8 @@ const ProfileConfidentialForm: React.FC = () => {
               <p className='partner-desc'>
                 If your partner meets Nobilis’ qualifications, they are eligible for a Life Partner
                 Discount on their own Nobilis account. If not, or not willing to create the account,
-                they can be linked to your profile and join you in Nobilis Experiences alongside your
-                closest relatives (parents, siblings) and children (up to 21 years old).
+                they can be linked to your profile and join you in Nobilis Experiences alongside
+                your closest relatives (parents, siblings) and children (up to 21 years old).
                 <br />
                 <br />
                 Relationships must have lasted at least one year to qualify.
@@ -235,13 +245,14 @@ const ProfileConfidentialForm: React.FC = () => {
 
                   <div
                     className='form-add'
-                    onClick={() =>
-                      push({
+                    onClick={
+                      () => alert('coming soon')
+                      /*  push({
                         name: '',
                         surname: '',
                         yearOfBirth: '',
                         relation: { id: 0, name: '' },
-                      })
+                      }) */
                     }
                   >
                     + Add more relatives
@@ -253,7 +264,11 @@ const ProfileConfidentialForm: React.FC = () => {
 
           {/* Actions */}
           <div className='form-actions'>
-            <button type='button' className='btn-secondary' onClick={() => navigate.push('/biography')}>
+            <button
+              type='button'
+              className='btn-secondary'
+              onClick={() => navigate.push('/biography')}
+            >
               Cancel
             </button>
             <button

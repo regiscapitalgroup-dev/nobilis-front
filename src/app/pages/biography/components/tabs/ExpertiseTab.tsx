@@ -6,9 +6,11 @@ interface ServiceCardProps {
   description: string
   rate: string
   rateType?: string
+  pricing: number
 }
 
-const ServiceCard: FC<ServiceCardProps> = ({ title, description, rate, rateType }) => {
+const ServiceCard: FC<ServiceCardProps> = ({ title, description, rate, rateType, pricing }) => {
+  
   return (
     <div className='service-card'>
       <div className='service-card__title'>{title}</div>
@@ -19,8 +21,9 @@ const ServiceCard: FC<ServiceCardProps> = ({ title, description, rate, rateType 
         <div className='service-card__rate'>
           <div className='service-card__rate-label'>Rate</div>
           <div className='service-card__rate-value'>
+          ${parseFloat(pricing.toString()).toFixed(2)}/
             {rate}
-            {rateType ? `/${rateType}` : ''}
+            {/* {rateType ? `/${rateType}` : ''} */}
           </div>
         </div>
       </div>
@@ -50,7 +53,8 @@ const ExpertiseTab: FC = () => {
             title={service.title}
             description={service.content}
             rate={service.rate}
-            rateType={service.rateType}
+            rateType={service?.rateType || ''}
+            pricing={service?.pricing || 0}
           />
         ))}
       </div>

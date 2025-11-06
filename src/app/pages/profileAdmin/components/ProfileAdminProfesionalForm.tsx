@@ -5,6 +5,7 @@ import {IndustriesAutocompleteField} from './fields/IndustriesAutocompleteField'
 import {updateProfileProfessional} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
 import { useUserProfileContext } from '../../../context/UserProfileContext'
+import { useAlert } from '../../../hooks/utils/useAlert'
 
 export default function ProfessionalOverviewForm() {
   const [loading, setLoading] = useState(false)
@@ -12,6 +13,7 @@ export default function ProfessionalOverviewForm() {
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([])
   const navigate = useHistory()
   const {refetch} = useUserProfileContext()
+  const {showError} = useAlert()
 
 
   const toggleInterest = (interest: string) => {
@@ -86,6 +88,12 @@ export default function ProfessionalOverviewForm() {
           navigate.push('/biography')
         } catch (error: any) {
           console.log(error)
+          const statusCode = error?.response?.status || 500
+          showError({
+            title: 'Unable to update professional overview',
+            message: "We couldn't save your changes. Please review your information and try again.",
+            errorCode: `PROFESSIONAL_OVERVIEW_${statusCode}`,
+          })
         } finally {
           setLoading(false)
         }
@@ -142,7 +150,7 @@ export default function ProfessionalOverviewForm() {
                 <Field name='website' className='pf-input' />
               </div>
             </div>
-            <div className='pf-add'>+ Add more</div>
+            <div className='pf-add' onClick={() => alert('coming soon')}>+ Add more</div>
           </div>
 
           {/* Board */}
@@ -188,7 +196,7 @@ export default function ProfessionalOverviewForm() {
                 <Field name='boardWebsite' className='pf-input' />
               </div>
             </div>
-            <div className='pf-add'>+ Add more</div>
+            <div className='pf-add' onClick={() => alert('coming soon')}>+ Add more</div>
           </div>
 
           {/* Nonprofit */}
@@ -235,7 +243,7 @@ export default function ProfessionalOverviewForm() {
                 <Field name='nonprofitWebsite' className='pf-input' />
               </div>
             </div>
-            <div className='pf-add'>+ Add more</div>
+            <div className='pf-add' onClick={() => alert('coming soon')}>+ Add another organization</div>
           </div>
 
           {/* Education */}
@@ -283,7 +291,7 @@ export default function ProfessionalOverviewForm() {
                 <Field name='eduWebsite' className='pf-input' />
               </div>
             </div>
-            <div className='pf-add'>+ Add more</div>
+            <div className='pf-add' onClick={() => alert('coming soon')}>+ Add more</div>
           </div>
 
           {/* Industries */}

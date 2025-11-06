@@ -55,10 +55,10 @@ export function Login() {
         noValidate
         id='kt_login_signin_form'
       >
-        {/* Header (gap 10 entre título y subtítulo) */}
+        {/* Header  */}
         <div className='nb-auth-header'>
           <h2 className='nb-heading-h2'>Welcome to Nobilis</h2>
-          <div className='nb-subtitle'>Enter your credential to login.</div>
+          <div className='nb-subtitle'>Enter your credentials to login.</div>
         </div>
 
         <div className='nb-fields-section'>
@@ -116,7 +116,7 @@ export function Login() {
             </div>
           </div>
 
-          {/* Forgot password (alineado a la izquierda) */}
+          {/* Forgot password*/}
           <div className='nb-auth-links'>
             <Link to='/auth/forgot-password' className='nb-link-underline'>
               FORGOT PASSWORD?
@@ -124,7 +124,7 @@ export function Login() {
           </div>
         </div>
 
-        {/* Sección de botones con gap 15px */}
+        {/* Sección de botones */}
         <div className='nb-auth-actions'>
           <button
             type='submit'

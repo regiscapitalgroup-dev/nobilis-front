@@ -18,6 +18,6 @@ export async function updateUserRecognition(
             : [],
     }
 
-    const { data } = await apiClient.put(`/profile/recognition/`, adaptedPayload);
+    const { data } = await apiClient.patch(`/profile/recognition/`, adaptedPayload);
     return data;
 }

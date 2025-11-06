@@ -4,6 +4,8 @@ import * as Yup from 'yup'
 import {BiographyModel} from '../models/BiographyModel'
 import {updateUserBiography} from '../../../services/biographyService'
 import {useHistory} from 'react-router-dom'
+import { useUserProfileContext } from '../../../context/UserProfileContext'
+import { useAlert } from '../../../hooks/utils/useAlert'
 
 const MAX_BIO_LENGTH = 1000
 const MAX_URLS = 3
@@ -18,7 +20,8 @@ const validationSchema = Yup.object({
 const BiographyForm: FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
-
+  const {refetch} = useUserProfileContext()
+  const {showError} = useAlert()
   const initialValues: BiographyModel = {
     biography: '',
     urls: [''],
@@ -34,10 +37,16 @@ const BiographyForm: FC = () => {
       }
 
       await updateUserBiography(payload)
-      setLoading(false)
+      await refetch()
       navigate.push('/biography')
     } catch (error: any) {
       console.log(error)
+      const statusCode = error?.response?.status || 500
+      showError({
+        title: 'Unable to update biography',
+        message: "We couldn't save your changes. Please review your information and try again.",
+        errorCode: `BIOGRAPHY_${statusCode}`,
+      })
     } finally {
       setLoading(false)
     }
@@ -113,7 +122,7 @@ const BiographyForm: FC = () => {
 
             {/* Actions */}
             <div className='form-actions'>
-              <button type='button' className='cancel-btn'>
+              <button type='button' className='cancel-btn' onClick={() => navigate.push('/biography')}>
                 Cancel
               </button>
               <button

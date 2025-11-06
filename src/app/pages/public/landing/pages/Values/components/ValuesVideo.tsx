@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 interface ValuesVideoProps {
   videoSrc?: string 
@@ -10,7 +10,47 @@ export const ValuesVideo: React.FC<ValuesVideoProps> = ({
   thumbnailSrc,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false)
+  const [hasAutoPlayed, setHasAutoPlayed] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5, // Se activa cuando el 50% del video es visible
+    }
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAutoPlayed && videoRef.current) {
+          // Intentar reproducir automáticamente
+          videoRef.current.play()
+            .then(() => {
+              setIsPlaying(true)
+              setHasAutoPlayed(true)
+            })
+            .catch((error) => {
+              // Si falla el autoplay (por políticas del navegador), solo marcamos como intentado
+              console.log('Autoplay prevented:', error)
+              setHasAutoPlayed(true)
+            })
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(handleIntersection, options)
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current)
+      }
+    }
+  }, [hasAutoPlayed])
 
   const handlePlay = () => {
     if (videoRef.current) {
@@ -24,8 +64,27 @@ export const ValuesVideo: React.FC<ValuesVideoProps> = ({
     }
   }
 
+  const handleVideoClick = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        handlePlay()
+      } else {
+        videoRef.current.pause()
+        setIsPlaying(false)
+      }
+    }
+  }
+
+  const handlePause = () => {
+    setIsPlaying(false)
+  }
+
+  const handlePlayEvent = () => {
+    setIsPlaying(true)
+  }
+
   return (
-    <div className="video-section">
+    <div className="video-section" ref={containerRef}>
       <div className="video-section__container">
         <video
           ref={videoRef}
@@ -34,7 +93,10 @@ export const ValuesVideo: React.FC<ValuesVideoProps> = ({
           preload="metadata"
           poster={thumbnailSrc}
           playsInline
-          onClick={handlePlay}
+          muted // Necesario para autoplay en la mayoría de navegadores
+          onClick={handleVideoClick}
+          onPause={handlePause}
+          onPlay={handlePlayEvent}
         >
           <source src={videoSrc} type="video/mp4" />
           Tu navegador no soporta el elemento de video.
@@ -44,7 +106,7 @@ export const ValuesVideo: React.FC<ValuesVideoProps> = ({
           <button
             className="video-section__play-button"
             onClick={handlePlay}
-            aria-label="Play video"
+            aria-label="Reproducir video"
           >
             <svg
               width="79"

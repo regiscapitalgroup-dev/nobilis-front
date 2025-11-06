@@ -5,6 +5,6 @@ export async function updateUserBiography(
     payload: BiographyModel
 ) {
 
-    const { data } = await apiClient.put(`admin-profile/biography/`, payload);
+    const { data } = await apiClient.patch(`admin-profile/biography/`, payload);
     return data;
 }

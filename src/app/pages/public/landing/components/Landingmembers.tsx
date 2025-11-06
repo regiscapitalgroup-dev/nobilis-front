@@ -11,6 +11,8 @@ interface Slide {
 export const LandingMembers: FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [direction, setDirection] = useState<'next' | 'prev'>('next')
+  
   const slides: Slide[] = [
     {
       title: 'Members',
@@ -48,9 +50,10 @@ export const LandingMembers: FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (!isTransitioning) {
+        setDirection('next')
         setIsTransitioning(true)
         setCurrentIndex((prev) => (prev + 1) % slides.length)
-        setTimeout(() => setIsTransitioning(false), 600)
+        setTimeout(() => setIsTransitioning(false), 1000)
       }
     }, 5000)
 
@@ -59,16 +62,18 @@ export const LandingMembers: FC = () => {
 
   const handlePrev = () => {
     if (isTransitioning) return
+    setDirection('prev')
     setIsTransitioning(true)
     setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
-    setTimeout(() => setIsTransitioning(false), 600)
+    setTimeout(() => setIsTransitioning(false), 1000)
   }
 
   const handleNext = () => {
     if (isTransitioning) return
+    setDirection('next')
     setIsTransitioning(true)
     setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
-    setTimeout(() => setIsTransitioning(false), 600)
+    setTimeout(() => setIsTransitioning(false), 1000)
   }
 
   const currentSlide = slides[currentIndex]
@@ -87,19 +92,31 @@ export const LandingMembers: FC = () => {
             key={`secondary-${currentIndex}`}
             src={currentSlide.secondaryImage}
             alt='Next slide preview'
-            className='landing-members__image landing-members__image--secondary'
+            className={`landing-members__image landing-members__image--secondary ${
+              isTransitioning ? `landing-members__image--transitioning-${direction}` : ''
+            }`}
           />
           <img
             key={`primary-${currentIndex}`}
             src={currentSlide.primaryImage}
             alt={currentSlide.subtitle}
-            className='landing-members__image landing-members__image--primary'
+            className={`landing-members__image landing-members__image--primary ${
+              isTransitioning ? `landing-members__image--transitioning-${direction}` : ''
+            }`}
           />
-          <h2 className='landing-members__title'>{currentSlide.title}</h2>
+          <h2 
+            className={`landing-members__title ${
+              isTransitioning ? 'landing-members__title--transitioning' : ''
+            }`}
+          >
+            {currentSlide.title}
+          </h2>
         </div>
 
         <div className='landing-members__content'>
-          <div className='landing-members__text'>
+          <div className={`landing-members__text ${
+            isTransitioning ? 'landing-members__text--transitioning' : ''
+          }`}>
             <p className='landing-members__subtitle'>{currentSlide.subtitle}</p>
             <p className='landing-members__description'>{currentSlide.description}</p>
           </div>

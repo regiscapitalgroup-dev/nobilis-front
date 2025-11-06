@@ -134,10 +134,10 @@ const BiographyPage: FC = () => {
             <div className='biography__info-desc'>
               <div className='biography__info-desc'>{data?.bioPresentation}</div>
             </div>
-           
+
             <div className='biography__info-location'>
               <span>
-                <KTSVG path='/media/svg/nobilis/location_mark.svg' className='' />
+                <KTSVG path='/media/svg/nobilis/location_mark.svg' />
                 {data?.city}
               </span>
             </div>

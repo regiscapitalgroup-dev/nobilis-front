@@ -55,7 +55,6 @@ export default function RelationAutocompleteField({
 
   const { collection, loading, error } = useRelationField()
   const items = useMemo<Item[]>(() => (Array.isArray(collection) ? collection : []), [collection])
-
   const visible = useMemo(() => {
     if (!enableSearch) return items.slice(0, 10)
     const q = debounced.toLowerCase()
