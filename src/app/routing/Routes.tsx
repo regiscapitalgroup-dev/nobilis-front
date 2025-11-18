@@ -26,7 +26,6 @@ const Routes: FC = () => {
         </Route>
       )}
 
-      <Route path='/payment' component={PaymentPage} />
       <Route path='/profile' component={ProfileForm} />
 
       <Route path='/error' component={ErrorsPage} />

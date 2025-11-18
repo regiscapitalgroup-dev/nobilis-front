@@ -18,7 +18,6 @@ export function HeaderWrapper() {
   const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const {subscribe, isConnected} = useWebSocketContext()
 
-  // 🔧 Obtenemos las notificaciones iniciales
   const {data: initialNotifications} = useUserNotifications()
 
   const [notificationCount, setNotificationCount] = useState(0)

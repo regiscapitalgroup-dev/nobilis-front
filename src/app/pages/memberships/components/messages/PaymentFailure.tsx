@@ -1,12 +1,9 @@
 import React from 'react'
-import {toAbsoluteUrl} from '../../../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
 
 const PaymentFailurePage: React.FC = () => {
   return (
     <div className='payment-content'>
-      {/* Logo */}
-
       {/* Card */}
       <div className='payment-card'>
         <h2 className='payment-card__title'>Payment unsuccessful</h2>
@@ -17,24 +14,23 @@ const PaymentFailurePage: React.FC = () => {
         </p>
 
         {/* Actions */}
-        {/* Actions */}
         <div className='payment-card__actions pf-actions'>
           <button type='button' className='pf-link-btn'>
             <span>CONTACT SUPPORT</span>
-            <img 
-            src='/media/svg/nobilis/vector1.svg' 
-            alt='' 
-            className='nb-btn-icon nb-btn-icon--black' 
-          />
+            <img
+              src='/media/svg/nobilis/vector1.svg'
+              alt=''
+              className='nb-btn-icon nb-btn-icon--black'
+            />
           </button>
 
-          <Link to='/profile' className='pf-outline-btn'>
+          <Link to='/membership/payment' className='pf-outline-btn'>
             <span>RETRY</span>
-            <img 
-            src='/media/svg/nobilis/vector1.svg' 
-            alt='' 
-            className='nb-btn-icon nb-btn-icon--black' 
-          />
+            <img
+              src='/media/svg/nobilis/vector1.svg'
+              alt=''
+              className='nb-btn-icon nb-btn-icon--black'
+            />
           </Link>
         </div>
       </div>

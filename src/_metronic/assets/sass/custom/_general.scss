@@ -1,14 +1,3 @@
-/* Shipping information / Payment Detail (igual al figma) */
-.payment-form-section .section-title{
-    font-family: 'Oswald', sans-serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 18px;
-    line-height: 1.2;       /* 120% */
-    letter-spacing: 0;
-    color: #151515;         /* en Figma aparece como “background”, es el color del texto */
-  }
-  
 
   .nb-logo-text {
     color: #151515;
@@ -32,17 +21,17 @@
 }
 
 .nb-zoom{
-  --nb-scale:1;
+  /* --nb-scale:1; */
   transform:scale(var(--nb-scale));
   transform-origin:center top;
+  max-width: var(--nb-shell-w);
   width:100%;
 }
 
-/* Contenedor de los planes – igual a Figma */
 .nb-ms-card{
-  width: 100%;
+  width: 1412px !important;
   background: #fff;
-  box-shadow: var(--nb-shadow);            /* 0 10px 45px rgba(0,0,0,.08) */
+  box-shadow: var(--nb-shadow);            
   padding: 60px;
   display: flex;
   flex-direction: column;
@@ -52,19 +41,129 @@
   box-sizing: border-box;
 }
 
-/* padding responsivo si quieres que no corte en móviles */
-@media (max-width: 640px){
-  .nb-ms-card{ padding: 24px; }
+
+
+
+/* ============================================
+   RESPONSIVE - SOLO AL FINAL
+   ============================================ */
+
+/* Pantallas GRANDES (>=1440px) - SIN scroll, centrado */
+@media (min-width: 1440px){
+  .nb-ms-shell{
+    max-width: 1440px;
+    margin: 0 auto;
+  }
 }
-/* Kicker "NOBILIS" del header (Figma) */
-.nb-ms-kicker{
-  width: 100%;
-  text-align:center;
-  color:#151515;
-  font-family:"Oswald", sans-serif;
-  font-weight:500;
-  font-size:19.71px;
-  line-height:23.66px;
-  letter-spacing:4.34px;
-  text-transform:uppercase;
+
+/* Pantallas MENORES a 1440px - CON scroll horizontal VISIBLE */
+@media (max-width: 1439px) and (min-width: 768px){
+  .nb-ms-card{
+    width: 100% !important;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+  
+  /* Scrollbar personalizado - MÁS VISIBLE */
+  .nb-ms-card::-webkit-scrollbar{
+    height: 12px;
+  }
+  
+  .nb-ms-card::-webkit-scrollbar-track{
+    background: #f1f1f1;
+    border-radius: 6px;
+  }
+  
+  .nb-ms-card::-webkit-scrollbar-thumb{
+    background: #888;
+    border-radius: 6px;
+  }
+  
+  .nb-ms-card::-webkit-scrollbar-thumb:hover{
+    background: #555;
+  }
+  
+  .nb-zoom{
+    width: 1226px;
+    min-width: 1226px;
+  }
+  
+  .nb-disclaimers{
+    width: 100%;
+    max-width: 1226px;
+  }
+}
+
+/* Mobile (<768px) - Ocultar labels, scroll en planes */
+@media (max-width: 767px){
+  .nb-ms-card{
+    width: 100% !important;
+    padding: 24px 16px;
+    overflow: visible;
+  }
+  
+  .nb-zoom{
+    width: 100%;
+    transform: none;
+    overflow-x: auto;
+  }
+  
+  .nb-board{
+    display: block;
+  }
+  
+  .nb-labels{
+    display: none;
+  }
+  
+  .nb-deck{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 16px;
+  }
+  
+  /* Scrollbar visible en mobile */
+  .nb-deck::-webkit-scrollbar{
+    height: 10px;
+  }
+  
+  .nb-deck::-webkit-scrollbar-track{
+    background: #f1f1f1;
+    border-radius: 5px;
+  }
+  
+  .nb-deck::-webkit-scrollbar-thumb{
+    background: #888;
+    border-radius: 5px;
+  }
+  
+  .nb-deck::-webkit-scrollbar-thumb:hover{
+    background: #555;
+  }
+  
+  .nb-plan{
+    min-width: 280px;
+    max-width: 280px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+  }
+  
+  .nb-plan--sm,
+  .nb-plan--lg{
+    width: 280px !important;
+    --current-width: 280px !important;
+  }
+  
+  .nb-plan:hover,
+  .nb-plan.is-hot{
+    transform: none !important;
+  }
+  
+  .nb-disclaimers{
+    width: 100%;
+  }
 }

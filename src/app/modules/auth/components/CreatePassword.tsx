@@ -5,7 +5,7 @@ import {useFormik} from 'formik'
 import {IUpdatePassword, updatePassword} from '../models/UserSettingsModel'
 import {activateAccount} from '../redux/AuthCRUD'
 import {TermsConditionsModal} from './_modals/TermsConditionsModal'
-import {HeaderText} from './helper/header-text'
+import {useAlert} from '../../../hooks/utils/useAlert'
 
 const passwordFormValidationSchema = Yup.object().shape({
   newPassword: Yup.string()
@@ -29,6 +29,7 @@ export function CreatePassword() {
   const [showPwd, setShowPwd] = useState(false)
   const [showPwd2, setShowPwd2] = useState(false)
   const navigate = useHistory()
+  const {showError} = useAlert()
 
   const formik = useFormik<IUpdatePassword>({
     initialValues: {
@@ -51,18 +52,25 @@ export function CreatePassword() {
               ctaTo: '/auth/login',
               classNameBtn: 'nb-btn-outline',
               showBtn: true,
-              color: 'W'
+              color: 'W',
             })
           })
-          .catch(() => {
+          .catch((error: any) => {
             setLoading(false)
+            const statusCode = error?.response?.status || 500
+            showError({
+              title: 'Password Setup Unavailable',
+              message:
+                'There was a problem creating your password. Please check your activation details or try again later.',
+              errorCode: `AUTH_CREATE_${statusCode}`,
+            })
           })
       }
     },
   })
 
   return (
-    <>      
+    <>
       <div className='text-center mb-10'>
         <h1 className='nb-heading-h2 nb-text-center mb-3'>{`Welcome to Nobilis, ${user}! Honored to have you among the world’s most accomplished`}</h1>
         <div className='nb-body nb-center nb-muted'>To begin, please reset your password.</div>

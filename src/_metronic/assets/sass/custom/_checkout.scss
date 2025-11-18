@@ -14,79 +14,115 @@ $color-white: #FFFFFF;
 $font-oswald: 'Oswald', sans-serif;
 $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-// Reset
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-// Layout general
-.payment-layout {
-  display: flex;
-  width: 100%;
-  min-height: 100vh;
-  background: $color-white;
+.payment-layout-header {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 10;
 
-  @media (max-width: 1024px) {
-    flex-direction: column;
-  }
-}
-
-// ================= LEFT SIDE =================
-.payment-summary-section {
-  width: 730px;
-  height: 906px;
-  padding: 10px 100px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  background: $color-white;
-
-  .summary-wrapper {
-    width: 442px;
-    height: 766px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  // LOGO
   .nobilis-logo {
-    width: 100%;
     font-family: $font-oswald;
-    font-size: 34.72px;
+    font-size: 19.71px;
     font-weight: 500;
     text-transform: uppercase;
     color: $color-primary;
-    line-height: 41.67px;
-    letter-spacing: 7.64px;
+    line-height: 23.66px;
+    letter-spacing: 4.34px;
+  }
+}
+
+
+.payment-layout {
+  display: flex;
+  width: 100%;
+  background: #FFFFFF;
+  padding-top: 100px;
+  /* overflow: hidden; */
+  background: $color-white;
+  position: relative;
+}
+
+.price-card-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.back-arrow {
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  margin-left: -20px;
+}
+.summary-header {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+// ================= LEFT SIDE =================
+.payment-summary-section {
+  width: 50%;
+  padding: 40px 100px;
+  display: flex;
+  flex-direction: column;
+  background: $color-white;
+  position: relative;
+  
+
+  .nobilis-logo {
+    font-family: $font-oswald;
+    font-size: 19.71px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: $color-primary;
+    line-height: 23.66px;
+    letter-spacing: 4.34px;
+    /* margin-bottom: 60px; */
   }
 
-  // Middle Section
+  .summary-wrapper {
+    max-width: 442px;
+  }
+
   .summary-middle {
     display: flex;
     flex-direction: column;
-    gap: 80px;
+    gap: 15px;
+    margin-top: 165px;
   }
 
-  // PAY NOBILIS card
   .price-card {
-    width: 100%;
-    padding: 20px;
-    background: $color-bg-light;
-    display: flex;
+    width: 100%;   
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 
     &__label {
       font-family: $font-satoshi;
-      font-size: 10px;
-      font-weight: 500;
+      font-size: 12px;
+      font-weight: 900;
       text-transform: uppercase;
-      color: $color-secondary;
-      letter-spacing: 1.5px;
-      line-height: 18.5px;
+      color: #B4B4B4;
+      letter-spacing: 1.8px;
+      line-height: 22.2px;
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     &__amount {
@@ -95,34 +131,24 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
       font-weight: 500;
       color: $color-primary;
       line-height: 38.4px;
-      text-align: left; // 🔥 ahora alineado a la izquierda
-    }
-
-    &__freq {
-      font-family: $font-satoshi;
-      font-size: 12px;
-      font-weight: 300;
-      color: $color-secondary;
-      line-height: 16.8px;
     }
   }
 
-  // Order details
   .order-details {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 15px;
 
     &__items {
       display: flex;
       flex-direction: column;
-      gap: 30px;
+      gap: 15px;
     }
 
     &__extra {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 15px;
     }
   }
 
@@ -132,18 +158,21 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     align-items: flex-start;
 
     &__info {
-      width: 162px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 0;
     }
 
     &__title {
       font-family: $font-satoshi;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 300;
       color: $color-primary;
       line-height: 19.6px;
+
+      &--single {
+        margin: 0;
+      }
     }
 
     &__qty {
@@ -152,37 +181,33 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
       align-items: center;
 
       span {
-        font-size: 12px;
+        font-size: 14px;
         font-family: $font-satoshi;
         font-weight: 300;
-        color: $color-secondary;
-        line-height: 16.8px;
-      }
-
-      strong {
-        font-size: 12px;
-        font-family: $font-satoshi;
-        font-weight: 700;
-        color: $color-secondary;
-        line-height: 16.8px;
+        color: #B4B4B4;
+        line-height: 19.6px;
       }
     }
 
     &__amount {
       font-family: $font-satoshi;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 300;
       color: $color-primary;
       line-height: 19.6px;
     }
 
     &--light {
-      .order-row__title,
-      .order-row__amount {
-        font-weight: 300;
-        color: $color-secondary;
+      .order-row__amount {  
+        color: #D7D7D7;
       }
     }
+  }
+
+  .order-divider {
+    width: 100%;
+    height: 0.8px;
+    background: $color-border;
   }
 
   .order-total {
@@ -190,113 +215,56 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     justify-content: space-between;
     font-family: $font-satoshi;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 300;
     color: $color-primary;
     line-height: 19.6px;
   }
-
-  .powered-by {
-    font-size: 11px;
-    font-family: $font-satoshi;
-    color: $color-secondary;
-    display: flex;
-    gap: 12px;
-    opacity: 0.6;
-
-    strong {
-      font-weight: 600;
-    }
-
-    .divider {
-      color: $color-border;
-    }
-
-    a {
-      text-decoration: none;
-      color: $color-secondary;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
 }
 
+
+
 // ================= RIGHT SIDE =================
-// ❌ No tocamos nada de aquí todavía
 .payment-form-section {
-  width: 710px;
-  height: 906px;
-  padding: 10px 100px;
+  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.08);
+  z-index: 5;
+  position: relative;
+  width: 50%;
+  padding: 40px 100px;
   background: $color-white;
-  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
 
-  .form-wrapper {
-    width: 420px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-}
-// ================= RIGHT SIDE =================
-.payment-form-section {
-  width: 710px;
-  height: 906px;
-  padding: 10px 100px;
-  background: $color-white;
-  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
-  display: flex;
-  align-items: center;
-
-  .form-wrapper {
-    width: 420px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  // -------- Or pay with card --------
-  .form-header {
-    display: flex;
-    align-items: center;
+  @media (max-width: 1024px) {
     width: 100%;
-    margin-bottom: 10px;
-
-    &::before,
-    &::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid $color-border;
-    }
-
-    .form-header__text {
-      font-size: 12px;
-      font-family: $font-satoshi;
-      font-weight: 300;
-      color: $color-primary;
-      margin: 0 12px;
-      white-space: nowrap;
-    }
+    padding: 40px 20px;
   }
 
-  // -------- Section titles --------
+  .form-wrapper {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
   .form-section {
     display: flex;
     flex-direction: column;
-    gap: 20px; // menos espacio entre título y campos
-
-    &__title {
-      font-size: 18px;
-      font-family: $font-oswald;
-      font-weight: 500;
-      color: $color-primary;
-      margin-bottom: 5px;
-    }
+    gap: 5px;
   }
 
-  // -------- Labels --------
+  .form-title-payment {
+
+    width: 100%;
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Satoshi';
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.8;
+    word-wrap: break-word;
+  }
+
   .form-label {
     font-size: 10px;
     font-family: $font-satoshi;
@@ -305,10 +273,9 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     letter-spacing: 1.5px;
     color: $color-secondary;
     line-height: 18.5px;
-    margin-bottom: 5px;
+    margin-bottom: 0;
   }
 
-  // -------- Inputs --------
   .form-input {
     width: 100%;
     height: 48px;
@@ -320,7 +287,7 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     color: $color-primary;
     background: transparent;
     outline: none;
-    padding: 0;
+    padding: 15px 0;
 
     &::placeholder {
       color: $color-secondary;
@@ -332,30 +299,15 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     }
   }
 
-  // -------- Select Country --------
   .select-wrapper {
-    width: 100%; // ahora al 100% del ancho
+    width: 100%;
     border-bottom: 1px solid $color-border;
     height: 48px;
     display: flex;
     align-items: center;
     padding: 0;
-    margin: 5px 0;
-
-    select {
-      width: 100%;
-      border: none;
-      background: transparent;
-      font-size: 12px;
-      font-family: $font-satoshi;
-      font-weight: 300;
-      color: $color-primary;
-      outline: none;
-      appearance: none;
-    }
   }
 
-  // -------- Manual address link --------
   .manual-entry-btn {
     font-size: 12px;
     font-family: $font-satoshi;
@@ -366,16 +318,15 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     border: none;
     padding: 0;
     cursor: pointer;
-    margin-top: 5px;
+    text-align: left;
   }
 
-  // -------- Card input --------
   .card-input-wrapper {
     height: 48px;
     border-bottom: 1px solid $color-border;
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    padding: 15px 0;
 
     .StripeElement {
       width: 100%;
@@ -384,29 +335,6 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     }
   }
 
-  // -------- Checkbox --------
-  .nbq-check {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
-
-    input[type='checkbox'] {
-      width: 18px;
-      height: 18px;
-      accent-color: $color-checkbox;
-    }
-
-    .nb-body {
-      font-size: 12px;
-      font-family: $font-satoshi;
-      font-weight: 300;
-      color: $color-primary;
-      cursor: pointer;
-    }
-  }
-
-  // -------- Submit button --------
   .submit-button {
     width: 100%;
     height: 48px;
@@ -418,75 +346,187 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     text-transform: uppercase;
     border: none;
     cursor: pointer;
-    margin-top: 20px;
-  }
-}
+    line-height: 22.2px;
+    text-align: center;
 
-.nb-country-autocomplete {
-  width: 100%;
-  position: relative;
-
-  .nb-country-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #d7d7d7;
-    height: 48px;
-    padding: 0 5px;
-  }
-
-  .nb-country-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 12px;
-    font-weight: 700;
-    color: #151515;
-
-    &::placeholder {
-      color: #808080;
-      font-weight: 300;
-    }
-  }
-
-  .nb-country-icon {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-
-    &.open {
-      transform: rotate(180deg);
-    }
-  }
-
-  .nb-country-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: white;
-    border: 1px solid #d7d7d7;
-    z-index: 10;
-    max-height: 200px;
-    overflow-y: auto;
-  }
-
-  .nb-country-item {
-    padding: 10px;
-    font-size: 12px;
-    cursor: pointer;
-
-    &:hover {
-      background: #f5f5f5;
+    &:disabled {
+      opacity: 0.6;
     }
   }
 }
 
-.nbq-check-payment {
-  position: relative;
-  margin-right: 12px;
-  flex-shrink: 0;
+.selected {
+  font-weight: 700 !important;
 }
 
+// ================= RESPONSIVE =================
+
+@media (max-width: 1200px) {
+  .payment-summary-section,
+  .payment-form-section {
+    padding: 40px 60px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .payment-layout {
+    flex-direction: column;
+    padding-top: 80px;
+  }
+
+  .payment-layout-header {
+    top: 30px;
+    left: 30px;
+  }
+
+  .payment-summary-section {
+    width: 100%;
+    padding: 30px 40px;
+    box-shadow: none;
+
+    .summary-middle {
+      margin-top: 80px;
+    }
+
+    .summary-wrapper {
+      max-width: 100%;
+    }
+  }
+
+  .payment-form-section {
+    width: 100%;
+    padding: 40px;
+    box-shadow: none;
+    border-top: 1px solid $color-border;
+
+    .form-wrapper {
+      max-width: 100%;
+    }
+  }
+
+  .back-arrow {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .payment-layout {
+    padding-top: 60px;
+  }
+
+  .payment-layout-header {
+    top: 20px;
+    left: 20px;
+
+    .nobilis-logo {
+      font-size: 16px;
+      letter-spacing: 3.5px;
+    }
+  }
+
+  .payment-summary-section {
+    padding: 20px 24px;
+
+    .summary-middle {
+      margin-top: 60px;
+      gap: 12px;
+    }
+
+    .price-card {
+      &__amount {
+        font-size: 28px;
+        line-height: 33.6px;
+      }
+    }
+
+    .order-row {
+      &__title,
+      &__amount,
+      &__qty span {
+        font-size: 13px;
+        line-height: 18.2px;
+      }
+    }
+
+    .order-total {
+      font-size: 13px;
+      line-height: 18.2px;
+    }
+  }
+
+  .payment-form-section {
+    padding: 30px 24px;
+
+    .form-wrapper {
+      gap: 25px;
+    }
+
+    .form-title-payment {
+      font-size: 11px;
+    }
+
+    .form-label {
+      font-size: 9px;
+      letter-spacing: 1.35px;
+    }
+
+    .form-input,
+    .card-input-wrapper {
+      height: 44px;
+    }
+
+    .submit-button {
+      height: 44px;
+      font-size: 11px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-layout-header {
+    top: 16px;
+    left: 16px;
+
+    .nobilis-logo {
+      font-size: 14px;
+      letter-spacing: 3px;
+    }
+  }
+
+  .payment-summary-section {
+    padding: 16px 20px;
+
+    .summary-middle {
+      margin-top: 50px;
+    }
+
+    .price-card {
+      &__label {
+        font-size: 11px;
+        letter-spacing: 1.65px;
+      }
+
+      &__amount {
+        font-size: 24px;
+        line-height: 28.8px;
+      }
+    }
+
+    .order-details {
+      gap: 12px;
+
+      &__items,
+      &__extra {
+        gap: 12px;
+      }
+    }
+  }
+
+  .payment-form-section {
+    padding: 24px 20px;
+
+    .form-wrapper {
+      gap: 20px;
+    }
+  }
+}

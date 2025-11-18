@@ -1,26 +1,25 @@
-import * as Yup from 'yup'
 
 export interface IMembershipPayment {
-  cardHoldName: string,  
-  invoice: boolean,
-  paymentMethodId: string,
+  payment_method_id: string,
   price_id: string,
+  card_no: string,
+  name_on_card: string,  
+  address: string
+  postal_code: string
   country: string
+  email: string
 }
 
-const cardNameHolderRegex = /^[A-Za-z\s]+$/;
-const membershipPaymentSchemas = [
-  Yup.object({
-    cardHoldName: Yup.string().required().matches(cardNameHolderRegex, 'The name must only contain letters').label('Card Hold Name'),
-  })
-]
 
 const inits: IMembershipPayment = {
-  cardHoldName: "",
-  invoice: false,
-  paymentMethodId: "" ,
+  payment_method_id: "",
   price_id: "",
-  country: ""
+  card_no: "",
+  name_on_card: "",  
+  address: "",
+  postal_code: "",
+  country: "",
+  email:""
 }
 
-export { membershipPaymentSchemas, inits }
+export {  inits }

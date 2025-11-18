@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import {requestPassword} from '../redux/AuthCRUD'
+import {useAlert} from '../../../hooks/utils/useAlert'
 
 const initialValues = {
   email: '',
@@ -19,8 +20,7 @@ const forgotPasswordSchema = Yup.object().shape({
 
 export function ForgotPassword() {
   const [loading, setLoading] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
-  const [errorAlert, setErrorAlert] = useState(false)
+  const {showError} = useAlert()
 
   const formik = useFormik({
     initialValues,
@@ -33,10 +33,15 @@ export function ForgotPassword() {
             setLoading(false)
             resetForm()
           })
-          .catch(() => {
+          .catch((error: any) => {
             setLoading(false)
-            setErrorAlert(true)
-            setTimeout(() => setErrorAlert(false), 5000)
+            const statusCode = error?.response?.status || 500
+            showError({
+              title: 'Password Reset Unavailable',
+              message:
+                "We couldn't send the password reset link at this time. Please ensure your email is correct or try again in a few minutes.",
+              errorCode: `AUTH_FORGOT_${statusCode}`,
+            })
           })
       }, 1000)
     },

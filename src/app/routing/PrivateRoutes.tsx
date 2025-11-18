@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect} from 'react'
+import React, {Suspense, useEffect, useRef} from 'react'
 import {Redirect, Route, Switch, useHistory} from 'react-router-dom'
 import {FallbackView} from '../../_metronic/partials'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
@@ -21,13 +21,14 @@ import {SuggestExperienceWrapper} from '../pages/experiences/SuggestExperienceWr
 import {WaitingListWrapper} from '../pages/waitingList/WaitingListWrapper'
 import {TermsPage} from '../pages/legal/TermsPage'
 import {PrivacyPage} from '../pages/legal/PrivacyPage'
-import { UserProfileProvider } from '../context/UserProfileContext'
+import {UserProfileProvider} from '../context/UserProfileContext'
+import MembershipPaymentWrapper from '../pages/memberships/MembershipPaymentWrapper'
+import PaymentPage from '../pages/memberships/PaymentPage'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
   const history = useHistory()
-  const {subscription} = useSelector((state: RootState) => state.auth, shallowEqual)
-
+  const subscription = useSelector((state: RootState) => state.auth?.subscription, shallowEqual)
   useEffect(() => {
     if (!user) return
 
@@ -49,28 +50,30 @@ export function PrivateRoutes() {
 
   return (
     <UserProfileProvider>
-    <Suspense fallback={<FallbackView />}>
-      <Switch>
-        <Route path='/plans' component={DashboardWrapper} />
-        <Route path='/dashboard' component={DashboardCoreWrapper} />
-        <Route path='/biography/overview' component={BiographyFormWrapper} />
-        <Route path='/biography' component={BiographyWrapper} />
-        <Route path='/calendar' component={CalendarWrapper} />
-        <Route path='/admin/overview/:section' component={ProfileAdminWrapper} />
-        <Route path='/expert/success' component={PaymentExpertMessageWrapper} />
-        <Route path='/expert' component={PaymentExpertWrapper} />
-        <Route path='/expertise' component={ExpertiseWrapper} />
-        <Route path='/recognition' component={RecognitionWrapper} />
-        <Route path='/team' component={TeamWrapper} />
-        <Route path='/references' component={ReferencesWrapper} />
-        <Route path='/experiences/create' component={SuggestExperienceWrapper} />
-        <Route path='/experiences' component={ExperiecesWrapper} />
-        <Route path='/waitinglist' component={WaitingListWrapper} />
-        <Route path='/terms-conditions' component={TermsPage} />
-        <Route path='/privacy-policy' component={PrivacyPage} />
-        <Redirect to='/error/404' />
-      </Switch>
-    </Suspense>
+      <Suspense fallback={<FallbackView />}>
+        <Switch>
+          <Route path='/plans' component={DashboardWrapper} />
+          <Route path='/membership/payment' component={MembershipPaymentWrapper} />
+          <Route path='/payment' component={PaymentPage} />
+          <Route path='/dashboard' component={DashboardCoreWrapper} />
+          <Route path='/biography/overview' component={BiographyFormWrapper} />
+          <Route path='/biography' component={BiographyWrapper} />
+          <Route path='/calendar' component={CalendarWrapper} />
+          <Route path='/admin/overview/:section' component={ProfileAdminWrapper} />
+          <Route path='/expert/success' component={PaymentExpertMessageWrapper} />
+          <Route path='/expert' component={PaymentExpertWrapper} />
+          <Route path='/expertise' component={ExpertiseWrapper} />
+          <Route path='/recognition' component={RecognitionWrapper} />
+          <Route path='/team' component={TeamWrapper} />
+          <Route path='/references' component={ReferencesWrapper} />
+          <Route path='/experiences/create' component={SuggestExperienceWrapper} />
+          <Route path='/experiences' component={ExperiecesWrapper} />
+          <Route path='/waitinglist' component={WaitingListWrapper} />
+          <Route path='/terms-conditions' component={TermsPage} />
+          <Route path='/privacy-policy' component={PrivacyPage} />
+          <Redirect to='/error/404' />
+        </Switch>
+      </Suspense>
     </UserProfileProvider>
   )
 }

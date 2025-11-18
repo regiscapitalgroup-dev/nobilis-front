@@ -8,7 +8,6 @@ export default function PaymentSuccessPage() {
 
   return (
     <div className='payment-content'>
-
       {/* Card */}
       <div className='payment-card'>
         <h2 className='payment-card__title'>
@@ -21,10 +20,12 @@ export default function PaymentSuccessPage() {
         </p>
 
         {/* Divider */}
-        <div className='payment-card__divider'>
-          <span className='payment-card__line' />
-          <img src='/media/svg/nobilis/mark.svg' alt='divider' className='payment-card__icon' />
-          <span className='payment-card__line' />
+        <div className='nbx-lines' aria-hidden='true'>
+          <span className='nbx-lines__line' />
+          <span>
+            <img src='/media/svg/nobilis/mark.svg' alt='divider' className='payment-card__icon' />
+          </span>
+          <span className='nbx-lines__line' />
         </div>
 
         {/* Botón */}

@@ -1,24 +1,22 @@
 import {FC, useRef, useState, useEffect} from 'react'
 import {MembershipWidget} from './components/MembershipWidget'
 import {MembershipCreditsWidget} from './components/MembershipCreditsWidget'
-import {MembershipPaymentWidget} from './components/MembershipPaymentWidget'
-import {loadStripe} from '@stripe/stripe-js'
-import {Elements} from '@stripe/react-stripe-js'
 import {MembershipDetailModel} from './models/MembershipModel'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {useMemberships} from '../../hooks/membership/useMemberships'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
+import {useHistory} from 'react-router-dom'
 
 const MembershipPage: FC = () => {
   const secondSecctionRef = useRef<HTMLDivElement>(null)
   const [isActiveRequest, setIsActiveRequest] = useState<boolean>(false)
   const [membership, setMembership] = useState<MembershipDetailModel | null>(null)
   const {memberships, loading} = useMemberships(isActiveRequest)
-  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || '', {locale: 'en'})
   const {subscription} = useSelector((state: RootState) => state.auth, shallowEqual)
   const FIXED_BREAKPOINT = 545
   const scrollYRef = useRef(0)
+  const navigate = useHistory()
 
   const handleSectionScroll = (e?: React.MouseEvent) => {
     if (e) e.preventDefault()
@@ -30,7 +28,6 @@ const MembershipPage: FC = () => {
   }
 
   const handleMembershipSelected = (data: MembershipDetailModel | null) => setMembership(data)
-  const handleCancelSelected = () => setMembership(null)
 
   useEffect(() => {
     let ticking = false
@@ -85,10 +82,20 @@ const MembershipPage: FC = () => {
     })
   }, [])
 
+  useEffect(() => {
+    if (membership) {
+      navigate.push({
+        pathname: '/membership/payment',
+        state: {
+          membership: membership,
+        },
+      })
+    }
+  }, [membership])
+
   return (
-    <div className='nb-app-container'>
+    <div className=''>
       <div className='membership-shell d-flex flex-column'>
-        {/* HERO SOLO SI NO ESTAMOS EN EL PAYMENT */}
         {membership == null && (
           <div aria-hidden='true' className='nb-membership-hero' style={getImageStyle()}>
             <img
@@ -97,8 +104,8 @@ const MembershipPage: FC = () => {
               alt=''
               loading='eager'
               style={{
-                width: '100%',
-                height: '100%',
+                /* width: '100%',
+                height: '100%', */
                 objectFit: 'cover',
                 display: 'block',
               }}
@@ -107,46 +114,28 @@ const MembershipPage: FC = () => {
         )}
 
         <div
-          className='d-flex flex-column'
+          /* className='d-flex flex-column' */
           style={{
             position: 'relative',
             zIndex: 1,
-            paddingBottom: '100px',
-            minHeight: '100vh',
+            /*  paddingBottom: '100px',
+            minHeight: '100vh', */
           }}
         >
-          <div className='container-fluid'>
-            <div className='row g-5 g-xl-8'>
-              {membership ? (
-                <div className='col-12'>
-                  <Elements stripe={stripePromise}>
-                    <MembershipPaymentWidget
-                      membership={membership}
-                      handleCancelSelected={handleCancelSelected} 
-                    />
-                  </Elements>
+          <div>
+            {Array.isArray(memberships) && memberships.length && (
+              <>
+                <MembershipWidget
+                  memberships={memberships}
+                  loading={loading}
+                  handleScroll={handleSectionScroll}
+                  handleMembershipSelected={handleMembershipSelected}
+                />
+                <div className='col-12 mt-10'>
+                  <MembershipCreditsWidget refToScroll={secondSecctionRef} />
                 </div>
-              ) : (
-                // Listado de planes
-                <>
-                  {Array.isArray(memberships) && memberships.length && (
-                    <>
-                      <div className='col-12'>
-                        <MembershipWidget
-                          memberships={memberships}
-                          loading={loading}
-                          handleScroll={handleSectionScroll}
-                          handleMembershipSelected={handleMembershipSelected} 
-                        />
-                      </div>
-                      <div className='col-12'>
-                        <MembershipCreditsWidget refToScroll={secondSecctionRef} />
-                      </div>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>

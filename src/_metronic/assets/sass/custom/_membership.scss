@@ -1,14 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap');
 @import url('https://fonts.cdnfonts.com/css/satoshi');
 
-/* ===== Tokens Figma ===== */
 :root{
   --nb-black:#151515; --nb-gray:#808080; --nb-border:#D7D7D7;
   --nb-shadow:0 10px 45px rgba(0,0,0,.08);
 
-  /* anchos exactos */
   --nb-shell-w:1226px;
-  --nb-feature-w:200px;
+  --nb-feature-w:330px;
   --nb-card-sm:285px;
   --nb-card-lg:345px;
 
@@ -16,13 +14,11 @@
   --nb-head-h:174px;
   --nb-btn-row-h:88px;
 
-  /* botón */
   --nb-btn-w:263px; --nb-btn-w-active:309px;
   --nb-btn-h:42px; --nb-btn-py:10px; --nb-btn-px:20px;
   --nb-btn-gap:4px; --nb-btn-gap-active:5px;
 }
 
-/* ===== Tipos EXACTOS (Figma) ===== */
 .nb-oswald-22{ font-family:"Oswald",sans-serif; font-weight:500; font-size:22px; line-height:26.4px; color:#151515; }
 .nb-oswald-18{ font-family:"Oswald",sans-serif; font-weight:500; font-size:18px; line-height:21.6px; color:#808080; }
 .nb-oswald-12{ font-family:"Oswald",sans-serif; font-weight:500; font-size:12px; line-height:22.2px; text-transform:uppercase; color:#151515; }
@@ -33,26 +29,69 @@
 
 .nb-inter-24-700{ font-family:"Inter",sans-serif; font-weight:700; font-size:24px; line-height:44.4px; color:#151515; }
 
-/* ===== Header (631px) ===== */
-.nb-ms-shell{ width:100%; }
-.nb-ms-header{ width:min(631px,100%); margin:0 auto 60px; display:flex; flex-direction:column; gap:10px; text-align:center; }
-.nb-ms-title{ font-family:"Oswald",sans-serif; font-weight:500; font-size:40px; line-height:48px; color:var(--nb-black); margin:0; }
-.nb-ms-sub{ font-family:"Satoshi",sans-serif; font-weight:300; font-size:14px; line-height:19.6px; color:#808080; margin:0; }
+.nb-ms-shell{ 
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-/* ===== Zoom wrapper: escala sin scroll ===== */
+.nb-ms-kicker{
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+  font-size: 19.71px;
+  line-height: 23.66px;
+  text-transform: uppercase;
+  letter-spacing: 4.34px;  
+  color: #151515;
+  margin: 0 0 60px 0;  
+}
+
+.nb-ms-header {
+  width: 100%; 
+  max-width: 631px;
+  margin: 0 0 60px 0;  
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+  text-align: center;
+  align-items: center;  
+}
+
+.nb-ms-title{ 
+  font-family:"Oswald",sans-serif; 
+  font-weight:500; 
+  font-size:40px; 
+  line-height:48px; 
+  color:var(--nb-black); 
+  margin:0;  
+  width: 100%;
+  letter-spacing: 0px;
+}
+
+.nb-ms-sub{ 
+  font-family:"Satoshi",sans-serif; 
+  font-weight:300; 
+  font-size:14px; 
+  line-height:19.6px; 
+  color:#808080; 
+  margin:0;  
+  width: 100%;  
+}
+
 .nb-zoom{
-  width:var(--nb-shell-w);
+  /* width:var(--nb-shell-w); */
+  width: 100%;
   margin:0 auto;
   transform-origin: top center;
 }
-@media (max-width: 1226px){ .nb-zoom{ transform: scale(calc(100vw / 1226)); } }
-/* fijar altura en móviles largos: opcional si usas contenedor con overflow hidden */
 
-/* ===== Board (labels + deck) ===== */
 .nb-board{
   display:grid;
   grid-template-columns: var(--nb-feature-w) 1fr;
-  column-gap:0;                 /* SIN espacio con la primera card */
+  column-gap:0;                 
   align-items:stretch;
   overflow:visible;
 }
@@ -63,32 +102,44 @@
 .nb-labels__head{
   height:var(--nb-head-h); padding:20px;
   display:flex; align-items:flex-end; border-bottom:1px solid var(--nb-border);
-  background:#fff;            /* siempre blanco */
+  background:#fff;            
 }
 .nbq-option__title{ font-family:"Satoshi",sans-serif; font-weight:900; font-size:12px; letter-spacing:1.8px;  color:#151515; }
 
-.nb-l-row{ height:44px; padding:12px 16px; display:flex; align-items:center; border-bottom:1px solid var(--nb-border); background:#fff; }
+.nb-l-row{ height:44px; padding:12px 16px; display:flex; align-items:center; border-bottom:1px solid var(--nb-border); background:#fff; white-space: nowrap; }
 .nb-l-row--section{ height:56px; padding:12px 16px; display:flex; align-items:center; background:#fff; border-top:1px solid var(--nb-border); border-bottom:1px solid var(--nb-border); }
 .nb-labels__btnrow{ height:var(--nb-btn-row-h); border-bottom:1px solid var(--nb-border); background:#fff; }
 
-/* ===== Deck ===== */
 .nb-deck{
-  display:flex; align-items:stretch; gap:16px;   /* separación entre cards */
-  padding-left:0;                                /* pegado a labels */
+  display:flex; 
+  align-items:stretch;
+  gap:10px;   
+  padding-left:0;                                
   overflow:visible;
+  isolation: isolate;
 }
 
-/* ===== Cards ===== */
 .nb-plan{
   position:relative; background:#fff; border:1px solid var(--nb-border);
-  /* display:grid; grid-auto-rows:minmax(var(--nb-row-min),auto); box-shadow:var(--nb-shadow); */
   transform-origin:center top; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   overflow:hidden;
 }
+.nb-deck > .nb-plan:first-child {
+  border-left: none;
+}
+
 .nb-plan > *{ position:relative; z-index:1; }
 
-.nb-plan--sm{ width:var(--nb-card-sm); }
-.nb-plan--lg{ width:var(--nb-card-lg); }
+.nb-plan--sm{ 
+  width: var(--nb-card-sm); 
+  --current-width: var(--nb-card-sm);  
+  flex-shrink: 0;  
+}
+.nb-plan--lg{ 
+  width: var(--nb-card-lg);
+  --current-width: var(--nb-card-lg);
+  flex-shrink: 0;  
+}
 
 .nb-plan__head{
   height:var(--nb-head-h); padding:20px;
@@ -107,12 +158,10 @@
 .nb-plan__row--section{ height:56px; border-top:1px solid var(--nb-border); border-bottom:1px solid var(--nb-border); background:#fff; }
 .nb-plan__btnrow{ height:var(--nb-btn-row-h); display:flex; align-items:center; justify-content:center; border-bottom:1px solid var(--nb-border); background:#fff; }
 
-/* chips / checks */
 .nb-check{ font-family:"Inter",sans-serif; font-weight:700; font-size:24px; line-height:44.4px; color:#151515; }
 .nb-chip{ display:inline-block; padding:6px 10px; border:1px solid var(--nb-border); border-radius:6px; font:600 12px/1 "Satoshi",sans-serif; background:#fff; color:#151515; }
 .nb-empty{ display:inline-block; width:1px; height:1px; }
 
-/* ===== Botón ===== */
 .nb-select-btn{
   width:var(--nb-btn-w); height:var(--nb-btn-h); padding:var(--nb-btn-py) var(--nb-btn-px);
   background:#D7D7D7; color:#808080; border:0; cursor:pointer;
@@ -123,7 +172,6 @@
 .nb-select-btn .txt-active{ display:none; }
 .nb-select-btn .txt-inactive{ display:inline; }
 
-/* ===== HOVER (solo alto, NO ancho) ===== */
 .nb-plan:hover::before,
 .nb-plan.is-hot::before{
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
@@ -131,12 +179,12 @@
 }
 .nb-plan:hover,
 .nb-plan.is-hot{
-  transform: translateY(-18px) scaleY(1.035);           /* crece a lo largo */
+  transform: translateY(-18px) scaleY(1.035);         
   box-shadow: 0 4px 12px rgba(0,0,0,.20);
   border-color: rgba(255,255,255,.12);
+  width: var(--current-width) !important;
 }
 
-/* Celdas transparentes y CENTRADAS en hover */
 .nb-plan:hover .nb-plan__head,
 .nb-plan:hover .nb-plan__row,
 .nb-plan:hover .nb-plan__btnrow,
@@ -148,7 +196,6 @@
   display:flex !important; align-items:center !important; justify-content:center !important; text-align:center !important;
 }
 
-/* textos blancos en hover */
 .nb-plan:hover .nb-oswald-22,
 .nb-plan:hover .nb-inter-24-700,
 .nb-plan:hover .nb-satoshi-14-300,
@@ -158,29 +205,23 @@
   color:#fff !important; -webkit-text-fill-color:#fff;
 }
 
-/* divider y tag como Figma en hover */
 .nb-plan:hover .nb-head__divider,
 .nb-plan.is-hot .nb-head__divider{ background:#494949; }
 .nb-plan:hover .nb-head__tag,
 .nb-plan.is-hot .nb-head__tag{ background:#FFFFFF0D; color:#FFFFFF80; }
 
-/* chip translúcida en hover */
 .nb-plan:hover .nb-chip,
 .nb-plan.is-hot .nb-chip{ background:rgba(255,255,255,.20); color:#fff; border-color:rgba(255,255,255,.30); }
 
-/* botón blanco en hover */
 .nb-plan:hover .nb-select-btn,
 .nb-plan.is-hot .nb-select-btn{
   background:#fff; color:#151515;
 }
-/* Botón SELECT PLAN con estética del login (outline negro) */
 .nb-select-btn.is-active{
   background:#fff !important;
   color:#151515 !important;
-  border:1px solid #151515 !important;  /* <-- borde como el login */
+  border:1px solid #151515 !important;  
 }
-
-/* Colocar texto+icono en línea y centrados cuando está activo */
 .nb-select-btn .txt-active{
   display:none;
   align-items:center;
@@ -190,19 +231,16 @@
 .nb-select-btn .txt-inactive{ display:inline-flex; }
 .nb-select-btn.is-active .txt-inactive{ display:none; }
 
-/* === FIX GAP COLUMNA LABELS vs CARD 1 === */
 .nb-board{
-  column-gap: 0 !important;          /* sin espacio entre columnas */
+  column-gap: 0 !important;         
 }
 
-/* el “haze” que se ve como hueco era la sombra de la columna de labels */
 .nb-labels{
-  box-shadow: none !important;        /* quita el degradado claro del borde derecho */
-  border-right: 1px solid var(--nb-border) !important;  /* pega visualmente con la card */
+  box-shadow: none !important;       
+  border-right: 1px solid var(--nb-border) !important;  
   margin-right: 0 !important;
 }
 
-/* la fila de REQUIREMENT debe ser blanca como el resto, sin separación extra */
 .nb-l-row--section{
   background: #fff !important;
   border-top: 1px solid var(--nb-border) !important;
@@ -210,28 +248,29 @@
   margin: 0 !important;
 }
 
-/* por si algún estilo dejó sangría en el deck */
 .nb-deck{
   margin-left: 0 !important;
 }
 .nb-disclaimers{
-  width:100%;
-  margin-top:12px;
+  width: 100%;
+  width: 100%; 
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.nb-disclaimer{
-  color:#151515;
-  font-family:"Satoshi", sans-serif;
-  font-weight:300;
-  font-size:14px;
-  line-height:19.6px;
-  word-wrap:break-word;
+.nb-disclaimer-text {
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi';
+  font-weight: 300;
+  line-height: 19.60px;
+  word-wrap: break-word;
+  text-align: left;
+  margin: 0;
+  width: 1292px;
 }
-
-
-
-
-
 
 
 
@@ -291,7 +330,6 @@
   color: white;
 }
 
-/* Clase para texto especial como "3 Complimentary" - estado normal */
 .nb-special-text {
   width: 100%;
   text-align: center;
@@ -306,12 +344,10 @@
   word-wrap: break-word;
 }
 
-/* Clase para texto especial cuando la card está en hover */
 .nb-plan.is-hot .nb-special-text {
   color: white;
 }
 
-/* Clase para texto de requirement como "Required**" - estado normal */
 .nb-requirement-text {
   text-align: center;
   justify-content: center;
@@ -325,7 +361,6 @@
   word-wrap: break-word;
 }
 
-/* Clase para texto de requirement cuando la card está en hover */
 .nb-plan.is-hot .nb-requirement-text {
   color: white;
 }
@@ -359,34 +394,25 @@
   line-height: 19.60px;
   word-wrap: break-word;
 }
-/* Kicker: NOBILIS (Figma: size 19.71, line-height 23.66, letterSpacing 4.34) */
 .nb-ms-kicker{
   font-family: "Oswald", sans-serif;
   font-weight: 500;
   font-size: 19.71px;
   line-height: 23.66px;
   text-transform: uppercase;
-  letter-spacing: 4.34px;   /* ← espaciado exacto de Figma */
+  letter-spacing: 4.34px;  
   color: #151515;
+  margin: 0 0 40px 0;
 }
 
-/* Título: Membership plans and benefits (si Figma marca tracking, colócalo aquí) */
 .nb-ms-title{
-  letter-spacing: 0px;      /* ← cambia este valor si tu Figma indica otro */
+  letter-spacing: 0px;      
 }
 
-/* global (afecta a todas las páginas) */
 #kt_content,
 .app-content,
 .content {
   padding-top: 0 !important;
 }
-
-/* si quieres solo en esta página:
-.nb-no-toolbar #kt_content,
-.nb-no-toolbar .app-content,
-.nb-no-toolbar .content { padding-top: 0 !important; }
-#kt_toolbar { display: none !important; }  // si hay toolbar visible
-*/
 
 

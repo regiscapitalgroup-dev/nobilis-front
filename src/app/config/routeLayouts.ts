@@ -69,6 +69,7 @@ const ROUTE_LAYOUT_MAP: Record<string, LayoutConfig> = {
   '/dashboard': LAYOUT_CONFIGS.FULL_DASHBOARD,
   '/terms-conditions': LAYOUT_CONFIGS.HEADER_FOOTER_,
   '/privacy-policy': LAYOUT_CONFIGS.HEADER_FOOTER_,
+  '/membership/payment': LAYOUT_CONFIGS.MINIMAL,
 
 };
 

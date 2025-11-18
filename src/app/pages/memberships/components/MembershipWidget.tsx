@@ -2,6 +2,7 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react'
 import {MembershipDetailModel} from '../models/MembershipModel'
 import {KTSVG} from '../../../../_metronic/helpers'
+import SVG from 'react-inlinesvg'
 
 type Props = {
   memberships: any[]
@@ -23,7 +24,6 @@ const MembershipWidget: React.FC<Props> = ({
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
-  // Lista de todos los campos booleanos disponibles
   const allBooleanFeatures = useMemo(
     () => [
       'platformAccess',
@@ -50,7 +50,6 @@ const MembershipWidget: React.FC<Props> = ({
   const zoomRef = useRef<HTMLDivElement | null>(null)
   const boardRef = useRef<HTMLDivElement | null>(null)
 
-  // Ahora solo tenemos: features + section header + UNA fila de requirement
   const labelRows = useMemo(
     () => [...allBooleanFeatures, SECTION_REQ, REQUIREMENT_ROW],
     [allBooleanFeatures]
@@ -136,10 +135,8 @@ const MembershipWidget: React.FC<Props> = ({
   }
 
   const getRequirementText = (m: any): string => {
-    // Extraemos el primer requirement del array
     if (m.requirements && m.requirements.length > 0) {
       const fullReq = m.requirements[0]
-      // Formato: "Active participation in Nobilis (25k Credits)|Required"
       const parts = fullReq.split('|')
       if (parts.length === 2) {
         const status = parts[1].trim()
@@ -164,14 +161,16 @@ const MembershipWidget: React.FC<Props> = ({
 
   return (
     <div className='nb-ms-shell'>
+      <div className='nb-ms-kicker mt-10'>
+        <SVG src='/media/svg/nobilis/logo-nb.svg' />
+      </div>
       <div className='nb-ms-header'>
-        <div className='nb-ms-header'>
-          <div className='nb-ms-kicker mt-10'>NOBILIS</div>
-        </div>
         <h2 className='nb-ms-title'>Membership plans and benefits</h2>
         <p className='nb-ms-sub'>
           Kindly choose your membership plan and complete the payment to secure your place in the
-          community. The initiation fee is a one-time contribution for lifetime access.
+          community.
+          <br />
+          The initiation fee is a one-time contribution for lifetime access.
         </p>
       </div>
 
@@ -196,7 +195,7 @@ const MembershipWidget: React.FC<Props> = ({
                     </div>
                   )
                 }
-                
+
                 if (label === REQUIREMENT_ROW) {
                   return (
                     <div
@@ -275,7 +274,6 @@ const MembershipWidget: React.FC<Props> = ({
                         )
                       }
 
-                      // Si es un campo booleano
                       const booleanValue = getBooleanFieldValue(m, label)
                       const specialText = getSpecialText(m, label)
 
@@ -310,8 +308,6 @@ const MembershipWidget: React.FC<Props> = ({
                       <button
                         type='button'
                         className={`nb-select-btn ${hot ? 'is-active' : ''}`}
-                        onMouseEnter={() => setHoverIdx(idx)}
-                        onMouseLeave={() => setHoverIdx(null)}
                         onClick={(e) => {
                           e.stopPropagation()
                           toggleSelect(idx, m)
@@ -338,17 +334,17 @@ const MembershipWidget: React.FC<Props> = ({
               })}
             </div>
           </div>
-          <div className='nb-disclaimers mt-8'>
-            <p className='nb-disclaimer-text'>
-              *The Founding Member plan will remain active for two years following the official
-              launch. After that, you will transition to either the Electi or Electi+ plan, while
-              retaining the lifelong benefits of being a Founding Member.
-            </p>
-            <p className='nb-disclaimer-text'>
-              ** Required within 30 days of paying the Initiation Fee; non-compliance will lead to
-              restricted profile functionality.
-            </p>
-          </div>
+        </div>
+        <div className='nb-disclaimers mt-8'>
+          <p className='nb-disclaimer-text'>
+            *The Founding Member plan will remain active for two years following the official
+            launch. After that, you will transition to either the Electi or Electi+ plan, while
+            retaining the lifelong benefits of being a Founding Member.
+          </p>
+          <p className='nb-disclaimer-text'>
+            ** Required within 30 days of paying the Initiation Fee; non-compliance will lead to
+            restricted profile functionality.
+          </p>
         </div>
       </div>
     </div>
