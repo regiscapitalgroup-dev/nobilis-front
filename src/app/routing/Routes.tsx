@@ -10,6 +10,7 @@ import ProfileForm from '../pages/profile/ProfilePage'
 import {PublicRoutes} from './PublicRoutes'
 import {WebSocketProvider} from '../context/WebSocketContext'
 import store from '../../setup/redux/Store'
+import { DrawerProvider } from '../context/UserWaitlistSelectedContext'
 
 const Routes: FC = () => {
   const isAuthorized = useSelector<RootState>(({auth}) => auth.user, shallowEqual)
@@ -33,9 +34,11 @@ const Routes: FC = () => {
         <Redirect to='/' />
       ) : (
         <WebSocketProvider wsBaseUrl={wsUrl} token={accessToken ?? ''}>
-          <MasterLayout>
-            <PrivateRoutes />
-          </MasterLayout>
+          <DrawerProvider>
+            <MasterLayout>
+              <PrivateRoutes />
+            </MasterLayout>
+          </DrawerProvider>
         </WebSocketProvider>
       )}
     </Switch>

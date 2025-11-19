@@ -2,7 +2,7 @@ import {FC} from 'react'
 
 export const ValuesHero: FC = () => {
   return (
-    <section className='partners-hero'>
+    <section className='partners-hero value-hero'>
       <img 
         src='/media/values.jpg' 
         alt='Partners background' 

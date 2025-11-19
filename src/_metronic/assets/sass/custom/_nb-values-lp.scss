@@ -61,8 +61,13 @@
   margin: 0;
 }
 
+.value-hero::before {
+  background: rgba(0, 0, 0, 0.18) !important;
+}
+
 .values-hero-background {
   padding-bottom: 42vh !important;
+  filter: grayscale(100%) brightness(1.03) contrast(0.92) !important;
 }
 
 // Responsive

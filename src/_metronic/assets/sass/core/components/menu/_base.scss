@@ -159,7 +159,14 @@
         &.menu.show,
         &.show[data-popper-placement] {
           display: flex;
-
+          background: #fff;
+          border: 1px aliceblue solid;
+          box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.08);
+          left: -33px !important;
+          top: -38px !important;
+          & > * {
+            background: #fff;
+          }
           // Animation
           @if (get($menu, dropdown, animation) == true) {
             // Move up

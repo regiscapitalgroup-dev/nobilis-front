@@ -20,3 +20,8 @@ export async function reasons() {
     const { data } = await apiClient.get(`/waitinglist/rejection-reasons/`,);
     return data?.results;
 }
+
+export async function membershipDetails(userId: number) {
+    const { data } = await apiClient.get(`/waitinglist/admin/${userId}/`);
+    return data;
+}

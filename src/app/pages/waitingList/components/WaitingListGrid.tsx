@@ -6,6 +6,7 @@ import {ApproveModal} from '../modals/ApproveModal'
 import {acceptRequest, rejectedRequest} from '../../../services/waitingListService'
 import {DeclineModal} from '../modals/DeclineModal'
 import { MenuComponent } from '../../../../_metronic/assets/ts/components'
+import { useDrawer } from '../../../context/UserWaitlistSelectedContext'
 
 export interface WaitlistUser {
   id: string
@@ -31,6 +32,7 @@ const WaitingListGrid: React.FC = () => {
   const safeData: WaitlistUser[] = Array.isArray(data) ? data : []
   const [showDeclineModal, setShowDeclineModal] = useState(false)
   const totalPages = 12
+  const { openDrawer } = useDrawer();
 
   const toggleDropdown = (userId: string, status: string) => {
     if (status.toLowerCase() === 'approved') {
@@ -99,6 +101,10 @@ const WaitingListGrid: React.FC = () => {
   const openModalDecline = (user: number) => {
     setUser(user)
     setShowDeclineModal(true)
+  }
+  const drawerOpen = (user: number) => {
+    setUser(user)
+    openDrawer(user);
   }
 
   return (
@@ -192,7 +198,8 @@ const WaitingListGrid: React.FC = () => {
                       </div>
                     ))
                   : safeData.map((user: WaitlistUser, index: number) => {
-                      const isApproved = user.status.toLowerCase() === 'approved'
+                      // const isApproved = user.status.toLowerCase() === 'approved'
+                      const isApproved = false
 
                       return (
                         <div key={`actions-${index}`} className='table__cell table__cell--actions'>
@@ -223,6 +230,7 @@ const WaitingListGrid: React.FC = () => {
                             <ActionsDropdown
                               onAccept={() => openModal(Number(user.id))}
                               onReject={() => openModalDecline(Number(user.id))}
+                              onDrawerOpen={() => drawerOpen(Number(user.id))}
                             />
                           )}
                         </div>

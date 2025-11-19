@@ -111,7 +111,8 @@
   align-items: flex-start;
   gap: 10px;
   display: flex;
-  max-height: 1180px;
+  max-height: fit-content;
+  height: fit-content;
 }
 
 .rm-style-15 {
@@ -500,7 +501,7 @@
   align-items: flex-start;
   gap: 30px;
   display: flex;
-  max-height: 405px;
+  max-height: auto;
 }
 
 .rm-style-56 {

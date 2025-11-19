@@ -16,6 +16,8 @@ import {RootState} from '../../setup'
 import {UserModel} from '../../app/modules/auth/models/UserModel'
 import {hasRole} from '../../app/utils/permissions'
 import {UserRole} from '../../app/constants/roles'
+import { RequestMembership } from '../partials/layout/request-membership/RequestMembershipDrawer'
+import { useDrawer } from '../../app/context/UserWaitlistSelectedContext'
 
 const MasterLayout: React.FC = ({children}) => {
   const location = useLocation()
@@ -30,6 +32,7 @@ const MasterLayout: React.FC = ({children}) => {
     showToolbar = false,
     showExpFooter,
   } = layoutConfig
+  const { isOpen, closeDrawer, payload } = useDrawer();
 
   return (
     <PageDataProvider>
@@ -69,6 +72,10 @@ const MasterLayout: React.FC = ({children}) => {
       {/* begin:: Drawers */}
       <ActivityDrawer />
       <DrawerMessenger />
+      <RequestMembership
+        isOpen={isOpen}
+        onClose={closeDrawer}
+        dataUser={payload} />
       {/* end:: Drawers */}
 
       {/* begin:: Modals */}

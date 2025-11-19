@@ -4,9 +4,10 @@ import { MenuComponent } from '../../../../_metronic/assets/ts/components';
 interface ActionsDropdownProps {
   onAccept: () => void;
   onReject: () => void;
+  onDrawerOpen: () => void;
 }
 
-const ActionsDropdown: FC<ActionsDropdownProps> = ({ onAccept, onReject }) => {
+const ActionsDropdown: FC<ActionsDropdownProps> = ({ onAccept, onReject, onDrawerOpen }) => {
   useEffect(() => {
     MenuComponent.reinitialization();
   }, []);
@@ -22,7 +23,7 @@ const ActionsDropdown: FC<ActionsDropdownProps> = ({ onAccept, onReject }) => {
           onClick={onAccept}
           className='menu-link px-3'
           style={{
-            background: 'transparent',
+            background: 'white',
             border: 'none',
             cursor: 'pointer',
             width: '100%',
@@ -42,7 +43,7 @@ const ActionsDropdown: FC<ActionsDropdownProps> = ({ onAccept, onReject }) => {
           onClick={onReject}
           className='menu-link px-3'
           style={{
-            background: 'transparent',
+            background: 'white',
             border: 'none',
             cursor: 'pointer',
             width: '100%',
@@ -50,6 +51,27 @@ const ActionsDropdown: FC<ActionsDropdownProps> = ({ onAccept, onReject }) => {
           }}
         >
           Reject
+        </button>
+      </div>
+
+      {/* Separator */}
+      <div className='separator my-2'></div>
+
+      {/* Request Membership */}
+      <div className='menu-item px-3'>
+        <button
+          id='kt_drawer_request_membership_btn'
+          className='menu-link px-3'
+          onClick={onDrawerOpen}
+          style={{
+            background: 'white',
+            border: 'none',
+            cursor: 'pointer',
+            width: '100%',
+            textAlign: 'left'
+          }}
+        >
+          Request Membership
         </button>
       </div>
     </div>
