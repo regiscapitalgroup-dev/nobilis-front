@@ -3,7 +3,7 @@ import {useFormik, FormikProvider} from 'formik'
 import {inits, IMembershipPayment} from './MembershipPaymentHelper'
 import {MembershipDetailModel} from '../models/MembershipModel'
 import {CardElement, useElements, useStripe} from '@stripe/react-stripe-js'
-import {useHistory} from 'react-router-dom'
+import {useHistory, useLocation} from 'react-router-dom'
 import {formatCurrencyUSD} from '../../../helpers/FormatCurrency'
 import {useSubscription} from '../../../hooks/subscription/useSubscription '
 import CountriesAutocompleteField from './fields/CountryAutocompleteField'
@@ -23,6 +23,8 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
 
   const scrollTopRef = useRef<HTMLDivElement>(null)
   const navigate = useHistory()
+  const location = useLocation<{membership: MembershipDetailModel; formData?: IMembershipPayment}>()
+  const savedFormData = location.state?.formData
 
   useEffect(() => {
     scrollTopRef.current?.scrollTo({behavior: 'smooth', top: 0})
@@ -52,7 +54,7 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
   )
 
   const formik = useFormik<IMembershipPayment>({
-    initialValues: {
+    initialValues: savedFormData || {
       ...inits,
       price_id: membership?.stripePlanId ?? '',
     },
@@ -79,7 +81,10 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
 
         if (error) {
           console.error(error)
-          navigate.push('/payment/error')
+          navigate.push({
+            pathname: '/payment/error',
+            state: {membership, formData: values},
+          })
           return
         }
 
@@ -88,7 +93,7 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
           price_id: membership?.stripePlanId ?? '',
           card_no: '',
           name_on_card: values.name_on_card,
-          address: values.address,
+          address: values.address ?? null,
           postal_code: values.postal_code,
           country: values.country,
           email: values.email,
@@ -99,12 +104,25 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
         navigate.push('/payment/success')
       } catch (err: any) {
         console.error(err)
-        navigate.push('/payment/error')
+        if (err) {
+          console.error(err)
+          navigate.push({
+            pathname: '/payment/error',
+            state: {membership, formData: values},
+          })
+          return
+        }
       } finally {
         setLoading(false)
       }
     },
   })
+
+  useEffect(() => {
+    if (savedFormData?.address) {
+      setShowManualAddress(true)
+    }
+  }, [savedFormData])
 
   const calculateTotal = (shipping: number = 0, priceMembership: number = 0): number => {
     const a = Number(shipping) || 0

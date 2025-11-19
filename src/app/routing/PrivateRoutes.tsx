@@ -1,4 +1,4 @@
-import React, {Suspense, useEffect, useRef} from 'react'
+import React, {Suspense, useEffect} from 'react'
 import {Redirect, Route, Switch, useHistory} from 'react-router-dom'
 import {FallbackView} from '../../_metronic/partials'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
@@ -24,28 +24,26 @@ import {PrivacyPage} from '../pages/legal/PrivacyPage'
 import {UserProfileProvider} from '../context/UserProfileContext'
 import MembershipPaymentWrapper from '../pages/memberships/MembershipPaymentWrapper'
 import PaymentPage from '../pages/memberships/PaymentPage'
+import ProfileForm from '../pages/profile/ProfilePage'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
   const history = useHistory()
   const subscription = useSelector((state: RootState) => state.auth?.subscription, shallowEqual)
+  
   useEffect(() => {
     if (!user) return
-
-    // Si es ADMIN → /biography
+  
+    if (user.role === UserRole.STAFF_USER) {
+      history.replace('/waitinglist')
+      return
+    }
+  
     if (user.role === UserRole.ADMIN) {
-      history.replace('/biography')
+      history.replace(subscription ? '/biography' : '/plans')
       return
     }
-
-    // Si NO es admin y TIENE suscripción → /biography
-    if (subscription) {
-      history.replace('/biography')
-      return
-    }
-
-    // Si NO tiene suscripción → /plans
-    history.replace('/plans')
+  
   }, [user, subscription, history])
 
   return (
@@ -71,6 +69,7 @@ export function PrivateRoutes() {
           <Route path='/waitinglist' component={WaitingListWrapper} />
           <Route path='/terms-conditions' component={TermsPage} />
           <Route path='/privacy-policy' component={PrivacyPage} />
+          <Route path='/profile' component={ProfileForm} />
           <Redirect to='/error/404' />
         </Switch>
       </Suspense>

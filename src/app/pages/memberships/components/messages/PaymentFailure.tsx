@@ -1,7 +1,13 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
+import {MembershipDetailModel} from '../../models/MembershipModel'
+import {IMembershipPayment} from '../MembershipPaymentHelper'
 
 const PaymentFailurePage: React.FC = () => {
+  const location = useLocation<{membership: MembershipDetailModel; formData?: IMembershipPayment}>()
+  const membership = location.state?.membership
+  const formData = location.state?.formData
+
   return (
     <div className='payment-content'>
       {/* Card */}
@@ -24,7 +30,13 @@ const PaymentFailurePage: React.FC = () => {
             />
           </button>
 
-          <Link to='/membership/payment' className='pf-outline-btn'>
+          <Link
+            to={{
+              pathname: '/membership/payment',
+              state: {membership, formData},
+            }}
+            className='pf-outline-btn'
+          >
             <span>RETRY</span>
             <img
               src='/media/svg/nobilis/vector1.svg'

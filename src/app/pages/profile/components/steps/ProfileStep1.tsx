@@ -110,7 +110,7 @@ const ProfileFormContent = ({
         </div>
         <div className='profile-form-group'>
           <label>Email</label>
-          <Field name='email' type='email' />
+          <Field name='email' type='email' readOnly/>
           <small>This information will not be displayed to public</small>
         </div>
       </div>
@@ -235,6 +235,7 @@ export default function ProfileStep1({initialData, onSubmit}: Props) {
         preferred_phone: initialData.preferred_phone,
         city: initialData.city || '',
       }}
+      enableReinitialize={true}
       validationSchema={Step1Schema}
       onSubmit={() => {}}
     >

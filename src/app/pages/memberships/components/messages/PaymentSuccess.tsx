@@ -16,7 +16,7 @@ export default function PaymentSuccessPage() {
 
         <p className='payment-card__desc'>
           To ensure your exclusive spot and full platform access after launch, please complete your
-          member profile and upload your experiences by June 30, 2025.
+          member profile and upload your experiences by December 31, 2025.
         </p>
 
         {/* Divider */}

@@ -1,61 +1,70 @@
-import React from 'react'
 import {AsideMenuItem} from './AsideMenuItem'
-import {AsideUserCard} from './AsideUserCard'
+import {UserModel} from '../../../../app/modules/auth/models/UserModel'
+import {RootState} from '../../../../setup/redux/RootReducer'
+import {shallowEqual, useSelector} from 'react-redux'
+import {hasPermission} from '../../../../app/utils/permissions'
+import {Permission} from '../../../../app/constants/roles'
 
 export function AsideMenuMain() {
+  const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const canWaitList = hasPermission(user, Permission.SEE_MENU_ITEM_WL)
   return (
     <div className='nb-aside-menu'>
       <div className='nb-aside-content'>
         {/* MY ACCOUNT Section */}
-        <div className='nb-menu-section'>
-          <div className='nb-menu-section-header'>
-            <span className='nb-menu-section-title'>Review</span>
+        {canWaitList && (
+          <div className='nb-menu-section'>
+            <div className='nb-menu-section-header'>
+              <span className='nb-menu-section-title'>Review</span>
+            </div>
+            <div className='nb-menu-section-content'>
+              <AsideMenuItem
+                to='/waitinglist'
+                title='users waitlist'
+                showIcon={true}
+                isSelected={false}
+                icon='/media/svg/nobilis/user_nb.svg'
+              />
+            </div>
           </div>
-          <div className='nb-menu-section-content'>
-            <AsideMenuItem
-              to='/waitinglist'
-              title='users waitlist'
-              showIcon={true}
-              isSelected={false}
-              icon='/media/svg/nobilis/user_nb.svg'
-            />
+        )}
+        {!canWaitList && (
+          <div className='nb-menu-section'>
+            <div className='nb-menu-section-header'>
+              <span className='nb-menu-section-title'>MY ACCOUNT</span>
+            </div>
+            <div className='nb-menu-section-content'>
+              <AsideMenuItem
+                to='/admin/overview/profile'
+                title='MY PROFILE'
+                showIcon={true}
+                isSelected={false}
+                icon='/media/svg/nobilis/user_nb.svg'
+              />
+              <AsideMenuItem
+                to='/biography'
+                title='MY biography'
+                showIcon={true}
+                isSelected={false}
+                icon='/media/svg/nobilis/user_nb.svg'
+              />
+              {/* <AsideMenuItem
+    to='/team'
+    title='MY TEAM'
+    showIcon={true}
+    isSelected={false}
+    icon='/media/svg/nobilis/team_nb.svg'
+  />
+  <AsideMenuItem
+    to='/references'
+    title='REFER A MEMBER'
+    showIcon={true}
+    isSelected={false}
+    icon='/media/svg/nobilis/ref_member_nb.svg'
+  /> */}
+            </div>
           </div>
-        </div>
-        <div className='nb-menu-section'>
-          <div className='nb-menu-section-header'>
-            <span className='nb-menu-section-title'>MY ACCOUNT</span>
-          </div>
-          <div className='nb-menu-section-content'>
-          <AsideMenuItem
-              to='/admin/overview/profile'
-              title='MY PROFILE'
-              showIcon={true}
-              isSelected={false}
-              icon='/media/svg/nobilis/user_nb.svg'
-            />
-            <AsideMenuItem
-              to='/biography'
-              title='MY biography'
-              showIcon={true}
-              isSelected={false}
-              icon='/media/svg/nobilis/user_nb.svg'
-            />
-            {/* <AsideMenuItem
-              to='/team'
-              title='MY TEAM'
-              showIcon={true}
-              isSelected={false}
-              icon='/media/svg/nobilis/team_nb.svg'
-            />
-            <AsideMenuItem
-              to='/references'
-              title='REFER A MEMBER'
-              showIcon={true}
-              isSelected={false}
-              icon='/media/svg/nobilis/ref_member_nb.svg'
-            /> */}
-          </div>
-        </div>
+        )}
 
         {/* Separator */}
         {/* <div className='nb-menu-separator'></div> */}
@@ -137,7 +146,7 @@ export function AsideMenuMain() {
 
         {/* Separator */}
         {/* <div className='nb-menu-separator'></div>
- */}
+         */}
         {/* MEMBERSHIP & FINANCE Section */}
         {/* <div className='nb-menu-section'>
           <div className='nb-menu-section-header'>

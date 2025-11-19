@@ -10,8 +10,10 @@ export const useSubscription = () => {
     try {
       const response = await subscribeToMembership(membershipPayment);
       setSubscriptionStatus(response.status);
+      setError(null)
     } catch (err) {
       setError(err as Error);
+      throw err;
     }
   };
 
