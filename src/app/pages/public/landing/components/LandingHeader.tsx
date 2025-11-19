@@ -18,6 +18,10 @@ export const LandingHeader: FC<LandingHeaderProps> = ({onMenuClick}) => {
   const handleRegister = () => {
     history.push('/auth/registration')
   }
+  
+  const handleHome = () => {
+    history.push('/')
+  }
 
   return (
     <header className='landing-header'>
@@ -52,7 +56,7 @@ export const LandingHeader: FC<LandingHeaderProps> = ({onMenuClick}) => {
         </button>
       </div>
 
-      <div className='landing-header__logo'>
+      <div className='landing-header__logo cursor-pointer' onClick={handleHome}>
         <SVG src='/media/svg/nobilis/nb_logo.svg' />
       </div>
     </header>

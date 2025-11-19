@@ -4,17 +4,16 @@ export const PartnersHero: FC = () => {
   return (
     <section className='partners-hero'>
       <img 
-        src='/media/bg-par.png' 
+        src='/media/partners.png' 
         alt='Partners background' 
         className='partners-hero__background'
       />
-      {/* <div className='partners-hero__overlay'>
+      <div className='partners-hero__overlay'>
         <h1 className='partners-hero__title'>Partners</h1>
         <p className='partners-hero__description'>
-          The top leading partners may be selected: Alone we will not be able to create the best
-          solutions for our members.
+          Where the world’s most trusted companies meet the world’s most accomplished minds
         </p>
-      </div> */}
+      </div>
     </section>
   )
 }

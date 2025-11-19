@@ -61,8 +61,22 @@
   margin: 0;
 }
 
+.values-hero-background {
+  padding-bottom: 42vh !important;
+}
+
 // Responsive
+@media (max-width: 1800px) {
+  .values-hero-background {
+    padding-bottom: 32vh !important;
+  }
+}
+
 @media (max-width: 1200px) {
+  .values-hero-background {
+    padding-bottom: 26vh !important;
+  }
+
   .mission-section-container {
     padding-left: 60px;
     padding-right: 60px;
@@ -90,7 +104,17 @@
   }
 }
 
+@media (max-width: 992px) {
+  .values-hero-background {
+    padding-bottom: 11vh !important;
+  }
+}
+
 @media (max-width: 768px) {
+  .values-hero-background {
+    padding-bottom: 12vh !important;
+  }
+  
   .mission-section-container {
     padding-left: 40px;
     padding-right: 40px;
@@ -122,7 +146,17 @@
   }
 }
 
+@media (max-width: 576px) {
+  .values-hero-background {
+    padding-bottom: 8vh !important;
+  }
+}
+
 @media (max-width: 480px) {
+  .values-hero-background {
+    padding-bottom: 4vh !important;
+  }
+
   .mission-section-container {
     padding-left: 20px;
     padding-right: 20px;

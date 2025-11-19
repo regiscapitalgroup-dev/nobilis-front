@@ -1,82 +1,120 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useCallback, useEffect, useRef, useState} from 'react'
 
 interface Slide {
   title: string
   subtitle: string
   description: string
   primaryImage: string
-  secondaryImage: string
 }
+
+const slides: Slide[] = [
+  {
+    title: 'Members',
+    subtitle: 'Diverse Leaders, United Vision',
+    description:
+      "Legacy holders, UHNWIs, impact makers, governors, and C-suite executives — the world's most influential individuals and families, connected.",
+    primaryImage: '/media/member_01.png',
+  },
+  {
+    title: 'Invitations',
+    subtitle: 'Member-Led Experiences',
+    description:
+      "Shared by members, for members. Travel, dine, and explore\n together — experiencing lifestyles, professions, passions, and purpose firsthand.",
+    primaryImage: '/media/member_02.png',
+  },
+  {
+    title: 'Community',
+    subtitle: 'Connect, Collaborate, Create',
+    description:
+      "From intimate Mastermind Circles to open discussions, members invite peers to collaborate on investments, health, art, relationships, and more — exchanging insights and creating impact.",
+    primaryImage: '/media/member_03.png',
+  },
+  {
+    title: 'Expertise',
+    subtitle: 'Trusted Knowledge, Direct Access',
+    description:
+      'Members share professional expertise and market insights directly with peers — confidential, and often accessible only within Nobilis.',
+    primaryImage: '/media/member_04.png',
+  },
+]
+
+const TRANSITION_DURATION = 1000
 
 export const LandingMembers: FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [direction, setDirection] = useState<'next' | 'prev'>('next')
-  
-  const slides: Slide[] = [
-    {
-      title: 'Members',
-      subtitle: 'Diverse Leaders, United Vision',
-      description:
-        "Legacy holders, UHNWIs, impact makers, governors, and C-suite executives — the world's most influential individuals and families, connected.",
+  const [previewIndex, setPreviewIndex] = useState(slides.length > 1 ? 1 : 0)
+  const transitionTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-      primaryImage: '/media/member_01.png',
-      secondaryImage: '/media/in_02.png',
+  const getTargetIndex = useCallback(
+    (baseIndex: number, travelDirection: 'next' | 'prev') => {
+      if (travelDirection === 'next') {
+        return (baseIndex + 1) % slides.length
+      }
+
+      return (baseIndex - 1 + slides.length) % slides.length
     },
-    {
-      title: 'Invitations',
-      subtitle: 'Member-Led Experiences',
-      description:
-        "Shared by members, for members. Travel, dine, and explore\n together — experiencing lifestyles, professions, passions, and purpose firsthand.",
-      primaryImage: '/media/member_02.png',
-      secondaryImage: '/media/in_03.png',
+    [slides.length]
+  )
+
+  const clearTransitionTimeout = useCallback(() => {
+    if (transitionTimeout.current) {
+      clearTimeout(transitionTimeout.current)
+      transitionTimeout.current = null
+    }
+  }, [])
+
+  const triggerTransition = useCallback(
+    (travelDirection: 'next' | 'prev') => {
+      if (isTransitioning || slides.length <= 1) return
+
+      const targetIndex = getTargetIndex(currentIndex, travelDirection)
+      setDirection(travelDirection)
+      setPreviewIndex(targetIndex)
+      setIsTransitioning(true)
+
+      clearTransitionTimeout()
+
+      transitionTimeout.current = setTimeout(() => {
+        setCurrentIndex(targetIndex)
+        setPreviewIndex(getTargetIndex(targetIndex, 'next'))
+        setIsTransitioning(false)
+      }, TRANSITION_DURATION)
     },
-    {
-      title: 'Community',
-      subtitle: 'Connect, Collaborate, Create',
-      description: "From intimate Mastermind Circles to open discussions, members invite peers to collaborate on investments, health, art, relationships, and more — exchanging insights and creating impact.",
-      primaryImage: '/media/member_03.png',
-      secondaryImage: '/media/in_04.png',
+    [clearTransitionTimeout, currentIndex, getTargetIndex, isTransitioning, slides.length]
+  )
+
+  useEffect(
+    () => () => {
+      clearTransitionTimeout()
     },
-    {
-      title: 'Expertise',
-      subtitle: 'Trusted Knowledge, Direct Access',
-      description: 'Members share professional expertise and market insights directly with peers — confidential, and often accessible only within Nobilis.',
-      primaryImage: '/media/member_04.png',
-      secondaryImage: '/media/in_01.png',
-    },
-  ]
+    [clearTransitionTimeout]
+  )
 
   useEffect(() => {
+    if (slides.length <= 1) return
+
     const interval = setInterval(() => {
-      if (!isTransitioning) {
-        setDirection('next')
-        setIsTransitioning(true)
-        setCurrentIndex((prev) => (prev + 1) % slides.length)
-        setTimeout(() => setIsTransitioning(false), 1000)
-      }
+      triggerTransition('next')
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [isTransitioning, slides.length])
+  }, [slides.length, triggerTransition])
 
   const handlePrev = () => {
-    if (isTransitioning) return
-    setDirection('prev')
-    setIsTransitioning(true)
-    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
-    setTimeout(() => setIsTransitioning(false), 1000)
+    triggerTransition('prev')
   }
 
   const handleNext = () => {
-    if (isTransitioning) return
-    setDirection('next')
-    setIsTransitioning(true)
-    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
-    setTimeout(() => setIsTransitioning(false), 1000)
+    triggerTransition('next')
   }
 
   const currentSlide = slides[currentIndex]
+  const secondarySlide = slides[previewIndex]
+
+  const secondaryPositionClass =
+    direction === 'prev' && isTransitioning ? 'landing-members__image--secondary-prev' : ''
 
   return (
     <section className='landing-members'>
@@ -86,13 +124,13 @@ export const LandingMembers: FC = () => {
         </svg>
       </div>
 
-      <div className='landing-members__container'>
-        <div className='landing-members__images'>
+        <div className='landing-members__container'>
+        <div className='landing-members__images landing-members__images_carrousel'>
           <img
-            key={`secondary-${currentIndex}`}
-            src={currentSlide.secondaryImage}
-            alt='Next slide preview'
-            className={`landing-members__image landing-members__image--secondary ${
+            key={`secondary-${previewIndex}`}
+            src={secondarySlide.primaryImage}
+            alt={secondarySlide.subtitle}
+            className={`landing-members__image landing-members__image--secondary ${secondaryPositionClass} ${
               isTransitioning ? `landing-members__image--transitioning-${direction}` : ''
             }`}
           />
@@ -104,6 +142,16 @@ export const LandingMembers: FC = () => {
               isTransitioning ? `landing-members__image--transitioning-${direction}` : ''
             }`}
           />
+          {/* <h2 
+            className={`landing-members__title ${
+              isTransitioning ? 'landing-members__title--transitioning' : ''
+            }`}
+          >
+            {currentSlide.title}
+          </h2> */}
+        </div>
+
+        <div className='landing-members__content'>
           <h2 
             className={`landing-members__title ${
               isTransitioning ? 'landing-members__title--transitioning' : ''
@@ -111,9 +159,6 @@ export const LandingMembers: FC = () => {
           >
             {currentSlide.title}
           </h2>
-        </div>
-
-        <div className='landing-members__content'>
           <div className={`landing-members__text ${
             isTransitioning ? 'landing-members__text--transitioning' : ''
           }`}>

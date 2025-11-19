@@ -7,6 +7,19 @@ interface LandingHeroProps {
 export const LandingHero: FC<LandingHeroProps> = ({imageUrl = 'https://placehold.co/1440x867'}) => {
 
   const [imageLoaded, setImageLoaded] = useState(false)
+
+  // Función para manejar el scroll hacia abajo
+  const handleScrollDown = () => {
+    let root = document.querySelector('.landing-wrapper__content'); // Firefox-safe
+    let img = document.querySelector('.landing-hero__image-container'); // Firefox-safe
+    if (!root) return;
+
+    root.scrollBy({
+      top: img?.clientHeight,   // una “pantalla” dentro del contenedor
+      left: 0,
+      behavior: 'smooth'
+    });
+  };
   
   return (
     <section className='landing-hero'>
@@ -22,7 +35,7 @@ export const LandingHero: FC<LandingHeroProps> = ({imageUrl = 'https://placehold
               The Private Network Connecting the World's Most Accomplished
             </p>
           </div>
-          <div className='landing-hero__scroll-icon'>
+          <div className='landing-hero__scroll-icon' onClick={handleScrollDown} role="button">
             <svg
               width='48'
               height='48'
