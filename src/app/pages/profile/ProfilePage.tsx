@@ -6,7 +6,6 @@ import {SocialProfile, UserProfile} from './models/ProfileModel'
 import {updateUserProfile} from '../../services/profileService'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
-import {useHistory} from 'react-router-dom'
 import {UserModel} from '../../modules/auth/models/UserModel'
 
 type ProfileData = {
@@ -26,7 +25,6 @@ type ProfileData = {
 export default function ProfileBasePage() {
   const [currentStep, setCurrentStep] = useState(1)
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
-  const navigate = useHistory()
   const fullName = `${user.firstName} ${user.lastName}`
   const [profileData, setProfileData] = useState<ProfileData>({
     introduction_headline: '',

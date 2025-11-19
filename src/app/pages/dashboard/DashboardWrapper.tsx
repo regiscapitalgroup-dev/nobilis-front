@@ -4,6 +4,10 @@ import {useIntl} from 'react-intl'
 import {useLayout} from '../../../_metronic/layout/core'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import MembershipPageWrapper from '../memberships/MembershipPageWrapper'
+import { shallowEqual, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { RootState } from '../../../setup'
+import { UserRole } from '../../constants/roles'
 
 const DashboardPage: FC = () => (
   <>
@@ -12,9 +16,27 @@ const DashboardPage: FC = () => (
 )
 
 const DashboardWrapper: FC = () => {
-  const intl = useIntl()
   const {config, setLayout} = useLayout()
   const restoreRef = useRef(config)
+
+  const user = useSelector((state: any) => state.auth?.user)
+  const history = useHistory()
+  const subscription = useSelector((state: RootState) => state.auth?.subscription, shallowEqual)
+
+  useEffect(() => {
+    if (!user) return
+  
+    if (user.role === UserRole.STAFF_USER) {
+      history.replace('/waitinglist')
+      return
+    }
+  
+    if (user.role === UserRole.ADMIN) {
+      history.replace(subscription ? '/biography' : '/plans')
+      return
+    }
+  
+  }, [user, subscription, history])
 
   useEffect(() => {
     restoreRef.current = config
