@@ -19,6 +19,7 @@ export const actionTypes = {
   SetUser: '[Set User] Action',
   SubscriptionLoaded: '[Load Subscription] Auth API',
   SetSubscription: '[Set Subscription] Action',
+  SubscriptionRequested: '[Request Subscription] Action',
 }
 
 const initialAuthState: IAuthState = {
@@ -103,6 +104,9 @@ export const actions = {
     type: actionTypes.SetSubscription, 
     payload: { subscription } 
   }),
+  requestSubscription: () => ({
+    type: actionTypes.SubscriptionRequested,
+  }),
 }
 
 export function* saga() {
@@ -117,6 +121,13 @@ export function* saga() {
   yield takeLatest(actionTypes.UserRequested, function* userRequested(): Generator<any, void, {user: UserModel, subscription?: SubscriptionModel}> {
     const {user, subscription} = yield getUserByToken()
     yield put(actions.fulfillUser(user))
+    if (subscription) {
+      yield put(actions.fulfillSubscription(subscription))
+    }
+  })
+
+  yield takeLatest(actionTypes.SubscriptionRequested, function* subscriptionRequested(): Generator<any, void, {user: UserModel, subscription?: SubscriptionModel}> {
+    const {subscription} = yield getUserByToken()
     if (subscription) {
       yield put(actions.fulfillSubscription(subscription))
     }

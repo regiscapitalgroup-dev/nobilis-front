@@ -83,7 +83,7 @@ export const useWebSocket = (options: UseWebSocketOptions) => {
         }
 
         return () => {
-            console.log('🧹 Limpiando WebSocket hook...');
+            console.log('Limpiando WebSocket hook...');
 
             subscriptionsRef.current.forEach(unsubscribe => unsubscribe());
             subscriptionsRef.current.clear();

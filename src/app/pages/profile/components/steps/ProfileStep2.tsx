@@ -4,6 +4,8 @@ import * as Yup from 'yup'
 import {KTSVG, toAbsoluteUrl} from '../../../../../_metronic/helpers'
 import EditPhotoModal from '../modals/EditPhotoModal'
 import {useHistory} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {actions} from '../../../../modules/auth/redux/AuthRedux'
 
 type Props = {
   initialData: any
@@ -21,6 +23,7 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
   const [showEditModal, setShowEditModal] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useHistory()
+  const dispatch = useDispatch()
   const [editValues, setEditValues] = useState({
     brightness: 100,
     contrast: 100,
@@ -33,6 +36,10 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
     try {
       setLoading(true)
       await onSubmit({photo: selectedPhoto})
+      dispatch(actions.requestSubscription())
+
+      await new Promise((resolve) => setTimeout(resolve, 800))
+
       navigate.push('/biography')
 
     } finally {

@@ -1,5 +1,5 @@
-import React, {Suspense, useEffect} from 'react'
-import {Redirect, Route, Switch, useHistory} from 'react-router-dom'
+import React, {Suspense, useEffect, useRef} from 'react'
+import {Redirect, Route, Switch, useHistory, useLocation} from 'react-router-dom'
 import {FallbackView} from '../../_metronic/partials'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {DashboardCoreWrapper} from '../pages/dashboardCore/DashboardCoreWrapper'
@@ -24,7 +24,7 @@ import {PrivacyPage} from '../pages/legal/PrivacyPage'
 import {UserProfileProvider} from '../context/UserProfileContext'
 import MembershipPaymentWrapper from '../pages/memberships/MembershipPaymentWrapper'
 import PaymentPage from '../pages/memberships/PaymentPage'
-import ProfileForm from '../pages/profile/ProfilePage'
+import ProfileBasePage from '../pages/profile/ProfilePage'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
@@ -44,6 +44,8 @@ export function PrivateRoutes() {
       return
     }
   }, [user, subscription, history])
+
+  
 
   return (
     <UserProfileProvider>
@@ -68,7 +70,7 @@ export function PrivateRoutes() {
           <Route path='/waitinglist' component={WaitingListWrapper} />
           <Route path='/terms-conditions' component={TermsPage} />
           <Route path='/privacy-policy' component={PrivacyPage} />
-          <Route path='/profile' component={ProfileForm} />
+          <Route path='/profile' component={ProfileBasePage} />
           <Redirect to='/error/404' />
         </Switch>
       </Suspense>

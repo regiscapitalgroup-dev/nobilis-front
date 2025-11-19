@@ -1,6 +1,5 @@
 import {FC, useEffect, useRef} from 'react'
 import {useLayout} from '../../../_metronic/layout/core'
-import {UserProfileProvider} from '../../context/UserProfileContext'
 import BiographyForm from './components/BiographyForm'
 
 const BiographyFormWrapper: FC = () => {

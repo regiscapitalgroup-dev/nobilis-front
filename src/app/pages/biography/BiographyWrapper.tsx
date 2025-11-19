@@ -1,7 +1,6 @@
 import {FC, useEffect, useRef} from 'react'
 import {useLayout} from '../../../_metronic/layout/core'
 import {BiographyPage} from './BiographyPage'
-import {UserProfileProvider} from '../../context/UserProfileContext'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {UserModel} from '../../modules/auth/models/UserModel'
