@@ -123,14 +123,14 @@ const HeaderNotificationsMenu: FC<HeaderNotificationsMenuProps> = ({onNotificati
 
       {/* VIEW ALL LINK */}
       <div className='notifications-menu__view-all'>
-        <Link
-          to='/biography'
+        <a
+          /*  to='/biography' */
           onClick={() => {
             alert('comming soon')
           }}
         >
           view all notifications
-        </Link>
+        </a>
       </div>
     </div>
   )
