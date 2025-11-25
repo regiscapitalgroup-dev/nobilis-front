@@ -45,10 +45,9 @@
 
 
 /* ============================================
-   RESPONSIVE - SOLO AL FINAL
+   RESPONSIVE 
    ============================================ */
 
-/* Pantallas GRANDES (>=1440px) - SIN scroll, centrado */
 @media (min-width: 1440px){
   .nb-ms-shell{
     max-width: 1440px;
@@ -56,7 +55,6 @@
   }
 }
 
-/* Pantallas MENORES a 1440px - CON scroll horizontal VISIBLE */
 @media (max-width: 1439px) and (min-width: 768px){
   .nb-ms-card{
     width: 100% !important;
@@ -64,7 +62,6 @@
     overflow-y: visible;
   }
   
-  /* Scrollbar personalizado - MÁS VISIBLE */
   .nb-ms-card::-webkit-scrollbar{
     height: 12px;
   }
@@ -94,7 +91,6 @@
   }
 }
 
-/* Mobile (<768px) - Ocultar labels, scroll en planes */
 @media (max-width: 767px){
   .nb-ms-card{
     width: 100% !important;
@@ -126,7 +122,6 @@
     padding-bottom: 16px;
   }
   
-  /* Scrollbar visible en mobile */
   .nb-deck::-webkit-scrollbar{
     height: 10px;
   }
@@ -163,7 +158,18 @@
     transform: none !important;
   }
   
-  .nb-disclaimers{
-    width: 100%;
+
+  .nb-disclaimers {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .nb-disclaimer-text {
+    width: 100% !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
   }
 }

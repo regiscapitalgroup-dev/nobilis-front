@@ -1,5 +1,5 @@
-import React, {Suspense, useEffect, useRef} from 'react'
-import {Redirect, Route, Switch, useHistory, useLocation} from 'react-router-dom'
+import React, {Suspense, useEffect} from 'react'
+import {Redirect, Route, Switch, useHistory} from 'react-router-dom'
 import {FallbackView} from '../../_metronic/partials'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {DashboardCoreWrapper} from '../pages/dashboardCore/DashboardCoreWrapper'
@@ -21,7 +21,6 @@ import {SuggestExperienceWrapper} from '../pages/experiences/SuggestExperienceWr
 import {WaitingListWrapper} from '../pages/waitingList/WaitingListWrapper'
 import {TermsPage} from '../pages/legal/TermsPage'
 import {PrivacyPage} from '../pages/legal/PrivacyPage'
-import {UserProfileProvider} from '../context/UserProfileContext'
 import MembershipPaymentWrapper from '../pages/memberships/MembershipPaymentWrapper'
 import PaymentPage from '../pages/memberships/PaymentPage'
 import ProfileBasePage from '../pages/profile/ProfilePage'
@@ -45,35 +44,31 @@ export function PrivateRoutes() {
     }
   }, [user, subscription, history])
 
-  
-
   return (
-    <UserProfileProvider>
-      <Suspense fallback={<FallbackView />}>
-        <Switch>
-          <Route path='/plans' component={DashboardWrapper} />
-          <Route path='/membership/payment' component={MembershipPaymentWrapper} />
-          <Route path='/payment' component={PaymentPage} />
-          <Route path='/dashboard' component={DashboardCoreWrapper} />
-          <Route path='/biography/overview' component={BiographyFormWrapper} />
-          <Route path='/biography' component={BiographyWrapper} />
-          <Route path='/calendar' component={CalendarWrapper} />
-          <Route path='/admin/overview/:section' component={ProfileAdminWrapper} />
-          <Route path='/expert/success' component={PaymentExpertMessageWrapper} />
-          <Route path='/expert' component={PaymentExpertWrapper} />
-          <Route path='/expertise' component={ExpertiseWrapper} />
-          <Route path='/recognition' component={RecognitionWrapper} />
-          <Route path='/team' component={TeamWrapper} />
-          <Route path='/references' component={ReferencesWrapper} />
-          <Route path='/experiences/create' component={SuggestExperienceWrapper} />
-          <Route path='/experiences' component={ExperiecesWrapper} />
-          <Route path='/waitinglist' component={WaitingListWrapper} />
-          <Route path='/terms-conditions' component={TermsPage} />
-          <Route path='/privacy-policy' component={PrivacyPage} />
-          <Route path='/profile' component={ProfileBasePage} />
-          <Redirect to='/error/404' />
-        </Switch>
-      </Suspense>
-    </UserProfileProvider>
+    <Suspense fallback={<FallbackView />}>
+      <Switch>
+        <Route path='/plans' component={DashboardWrapper} />
+        <Route path='/membership/payment' component={MembershipPaymentWrapper} />
+        <Route path='/payment' component={PaymentPage} />
+        <Route path='/dashboard' component={DashboardCoreWrapper} />
+        <Route path='/biography/overview' component={BiographyFormWrapper} />
+        <Route path='/biography' component={BiographyWrapper} />
+        <Route path='/calendar' component={CalendarWrapper} />
+        <Route path='/admin/overview/:section' component={ProfileAdminWrapper} />
+        <Route path='/expert/success' component={PaymentExpertMessageWrapper} />
+        <Route path='/expert' component={PaymentExpertWrapper} />
+        <Route path='/expertise' component={ExpertiseWrapper} />
+        <Route path='/recognition' component={RecognitionWrapper} />
+        <Route path='/team' component={TeamWrapper} />
+        <Route path='/references' component={ReferencesWrapper} />
+        <Route path='/experiences/create' component={SuggestExperienceWrapper} />
+        <Route path='/experiences' component={ExperiecesWrapper} />
+        <Route path='/waitinglist' component={WaitingListWrapper} />
+        <Route path='/terms-conditions' component={TermsPage} />
+        <Route path='/privacy-policy' component={PrivacyPage} />
+        <Route path='/profile' component={ProfileBasePage} />
+        <Redirect to='/error/404' />
+      </Switch>
+    </Suspense>
   )
 }

@@ -6,6 +6,8 @@ import PhoneInput from 'react-phone-input-2'
 import {LanguageAutocompleteField} from '../fields/LanguageAutocompleteField'
 import {KTSVG, toAbsoluteUrl} from '../../../../../_metronic/helpers'
 import CityAutocompleteField from '../../../../modules/auth/components/fields/CityAutocompleteField'
+import {getMaxBirthdayDate} from '../../../../utils/dateValidations'
+import { handleLettersOnly } from '../../../../utils/inputValidations'
 
 type SocialMediaItem = {
   id: string
@@ -106,11 +108,11 @@ const ProfileFormContent = ({
       <div className='profile-form-row'>
         <div className='profile-form-group'>
           <label>Name</label>
-          <Field name='name' />
+          <Field name='name'   onKeyPress={handleLettersOnly}/>
         </div>
         <div className='profile-form-group'>
           <label>Email</label>
-          <Field name='email' type='email' readOnly/>
+          <Field name='email' type='email' readOnly />
           <small>This information will not be displayed to public</small>
         </div>
       </div>
@@ -121,7 +123,12 @@ const ProfileFormContent = ({
         <div className='profile-form-group profile-form-date'>
           <label>Date of birth</label>
           <div className='profile-input-wrapper'>
-            <Field name='birthday' type='date' className='profile-input profile-input-date' />
+            <Field
+              name='birthday'
+              type='date'
+              className='profile-input profile-input-date'
+              max={getMaxBirthdayDate()}
+            />
           </div>
           <small>This information will not be displayed to public</small>
         </div>

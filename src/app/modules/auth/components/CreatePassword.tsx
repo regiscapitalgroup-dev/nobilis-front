@@ -98,6 +98,7 @@ export function CreatePassword() {
               className='nb-input-eye'
               aria-label={showPwd ? 'Hide password' : 'Show password'}
               onClick={() => setShowPwd((s) => !s)}
+              tabIndex={-1} 
             >
               <i className={`bi ${showPwd ? 'bi-eye-slash' : 'bi-eye'}`}></i>
             </button>
@@ -124,6 +125,7 @@ export function CreatePassword() {
               className='nb-input-eye'
               aria-label={showPwd2 ? 'Hide password' : 'Show password'}
               onClick={() => setShowPwd2((s) => !s)}
+              tabIndex={-1} 
             >
               <i className={`bi ${showPwd2 ? 'bi-eye-slash' : 'bi-eye'}`}></i>
             </button>
@@ -167,7 +169,7 @@ export function CreatePassword() {
             type='submit'
             id='kt_password_reset_submit'
             className='btn nb-btn-outline w-100  nb-heading-md'
-            /* disabled={!accepted} */
+            disabled={!accepted}
           >
             {!loading && (
               <>
@@ -197,6 +199,7 @@ export function CreatePassword() {
           setOpenModal(!openModal)
         }}
       ></TermsConditionsModal>
+
     </>
   )
 }

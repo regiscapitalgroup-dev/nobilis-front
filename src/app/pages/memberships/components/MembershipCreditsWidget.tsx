@@ -28,7 +28,7 @@ const MembershipCreditsWidget: React.FC<Props> = ({refToScroll}) => {
   }, []) */
 
   return (
-    <div className='lp-shell' ref={refToScroll}>
+    <div className='lp-shell mt-20' ref={refToScroll}>
       {/* Header Figma */}
       <div className='lp-hero'>
         <h2 className='lp-title'>Loyalty program</h2>

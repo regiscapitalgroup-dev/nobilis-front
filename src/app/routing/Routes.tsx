@@ -6,11 +6,11 @@ import {PrivateRoutes} from './PrivateRoutes'
 import {Logout} from '../modules/auth'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {RootState} from '../../setup'
-import ProfileForm from '../pages/profile/ProfilePage'
 import {PublicRoutes} from './PublicRoutes'
 import {WebSocketProvider} from '../context/WebSocketContext'
 import store from '../../setup/redux/Store'
-import { DrawerProvider } from '../context/UserWaitlistSelectedContext'
+import {DrawerProvider} from '../context/UserWaitlistSelectedContext'
+import {UserProfileProvider} from '../context/UserProfileContext'
 
 const Routes: FC = () => {
   const isAuthorized = useSelector<RootState>(({auth}) => auth.user, shallowEqual)
@@ -26,7 +26,6 @@ const Routes: FC = () => {
         </Route>
       )}
 
-
       <Route path='/error' component={ErrorsPage} />
       <Route path='/logout' component={Logout} />
 
@@ -35,9 +34,11 @@ const Routes: FC = () => {
       ) : (
         <WebSocketProvider wsBaseUrl={wsUrl} token={accessToken ?? ''}>
           <DrawerProvider>
-            <MasterLayout>
-              <PrivateRoutes />
-            </MasterLayout>
+            <UserProfileProvider>
+              <MasterLayout>
+                <PrivateRoutes />
+              </MasterLayout>
+            </UserProfileProvider>
           </DrawerProvider>
         </WebSocketProvider>
       )}

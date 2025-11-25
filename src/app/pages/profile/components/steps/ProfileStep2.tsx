@@ -6,6 +6,8 @@ import EditPhotoModal from '../modals/EditPhotoModal'
 import {useHistory} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {actions} from '../../../../modules/auth/redux/AuthRedux'
+import {useUserProfileContext} from '../../../../context/UserProfileContext'
+import {useAlert} from '../../../../hooks/utils/useAlert'
 
 type Props = {
   initialData: any
@@ -24,6 +26,9 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useHistory()
   const dispatch = useDispatch()
+  const {refetch} = useUserProfileContext()
+  const {showError} = useAlert()
+
   const [editValues, setEditValues] = useState({
     brightness: 100,
     contrast: 100,
@@ -37,11 +42,21 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
       setLoading(true)
       await onSubmit({photo: selectedPhoto})
       dispatch(actions.requestSubscription())
-
-      await new Promise((resolve) => setTimeout(resolve, 800))
+      await refetch()
 
       navigate.push('/biography')
+    } catch (err: any) {
+      console.error('Error:', err)
 
+      const statusCode = err?.response?.status || 500
+
+      showError({
+        title: 'Unable to Complete profile',
+        message: "We couldn't complete your profile. Please check your information and try again.",
+        errorCode: `COMPLETE_PROFILE_${statusCode}`,
+      })
+
+      return
     } finally {
       setLoading(false)
     }

@@ -19,7 +19,7 @@ const socials = [
 ]
 
 const BiographyPage: FC = () => {
-  const {data} = useUserProfileContext()
+  const {data, refetch} = useUserProfileContext()
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const canEditImage = hasPermission(user, Permission.EDIT_PROFILE_IMAGE)
   const fullName = `${user.firstName} ${user.lastName}`
@@ -29,11 +29,11 @@ const BiographyPage: FC = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false)
   const navigate = useHistory()
   const [module, setModule] = useState<string>('')
+  
 
   useEffect(() => {
     if (data?.subscription) setIsMember(true)
-
-    if (data?.expertise) setIsExpert(true)
+    if (data?.expertise && data.expertise.length > 0) setIsExpert(true)
   }, [data])
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const BiographyPage: FC = () => {
       typeof data.profilePicture === 'string' &&
       data.profilePicture.trim() !== ''
     ) {
-      setProfileImage(data.profilePicture)
+      setProfileImage(`${data.profilePicture}?t=${Date.now()}`)
     } else {
       setProfileImage(toAbsoluteUrl('/media/people3.png'))
     }
@@ -67,6 +67,7 @@ const BiographyPage: FC = () => {
 
     try {
       await updateProfileImg(file)
+      await refetch()
     } catch (error: any) {
       console.error('Error to upload:', error)
 

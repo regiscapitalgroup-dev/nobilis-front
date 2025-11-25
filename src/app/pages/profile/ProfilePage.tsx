@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react'
+import React, {useEffect, useLayoutEffect, useState} from 'react'
 import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import ProfileStep1 from './components/steps/ProfileStep1'
 import ProfileStep2 from './components/steps/ProfileStep2'
@@ -7,6 +7,7 @@ import {updateUserProfile} from '../../services/profileService'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {UserModel} from '../../modules/auth/models/UserModel'
+import {useUserProfileContext} from '../../context/UserProfileContext'
 
 type ProfileData = {
   introduction_headline: string
@@ -26,39 +27,60 @@ export default function ProfileBasePage() {
   const [currentStep, setCurrentStep] = useState(1)
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const fullName = `${user.firstName} ${user.lastName}`
+  const {data} = useUserProfileContext()
+  
   const [profileData, setProfileData] = useState<ProfileData>({
     introduction_headline: '',
     alias_title: '',
     name: fullName,
     email: user?.email,
-    birthday: '',
-    phone_number: '',
+    birthday: data?.birthday ?? '',
+    phone_number: data?.phoneNumber ?? '',
     preferred_phone: false,
     prefered_email: false,
     languageSpoken: [],
     social_media_profiles: [],
-    city: '',
+    city: data?.city ?? '',
   })
+
+  useEffect(() => {
+    if (data) {
+      setProfileData((prev) => ({
+        ...prev,
+        birthday: data.birthday ?? '',
+        phone_number: data.phoneNumber ?? '',
+        city: data.city ?? '',
+      }))
+    }
+  }, [data])
 
   const mapToApiPayload = (data: ProfileData, photoFile?: File | null): UserProfile => {
     const social_media_profiles: SocialProfile[] | undefined = (data.social_media_profiles || [])
       .filter((x: any) => x?.url)
-      .map((x: any) => ({
-        platform_name: String(x.name ?? '').trim(),
-        profile_url: String(x.url ?? '').trim(),
-      }))
+      .map((x: any) => {
+        let url = String(x.url ?? '').trim()
+
+        if (url && !url.startsWith('http://') && !url.startsWith('https://')) {
+          url = `https://${url}`
+        }
+
+        return {
+          platform_name: String(x.name ?? '').trim(),
+          profile_url: url,
+        }
+      })
 
     return {
       name: data.name ?? '',
       email: data.email ?? '',
       introduction_headline: data.introduction_headline ?? '',
       alias_title: data.alias_title ?? '',
-      profile_picture: photoFile ?? '',
+      profile_picture: photoFile ?? null,
       birthday: data.birthday ?? '',
       phone_number: data.phone_number ?? '',
       city: data.city ?? '',
       languages: (data.languageSpoken ?? []) as string[],
-      social_media_profiles,      
+      social_media_profiles,
       prefered_email: data.prefered_email ?? false,
       preferred_phone: data.preferred_phone ?? false,
     }
@@ -81,13 +103,9 @@ export default function ProfileBasePage() {
     const finalData = {...profileData, ...data}
     setProfileData(finalData)
 
-    try {
-      const payload = mapToApiPayload(finalData, data.photo ?? null)
-      await updateUserProfile(payload)
-    } catch (err) {
-      console.error('Error actualizando perfil:', err)
-    } finally {
-    }
+    const payload = mapToApiPayload(finalData, data.photo ?? null)
+    console.log('PAYLOAD', payload)
+    await updateUserProfile(payload)
   }
 
   const goBackToStep1 = () => {

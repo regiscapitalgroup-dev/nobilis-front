@@ -4,7 +4,6 @@ import React, {FC} from 'react'
 import {Link} from 'react-router-dom'
 import clsx from 'clsx'
 import {useLayout} from '../../core'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {AsideMenu} from './AsideMenu'
 
 const AsideDefault: FC = () => {
@@ -19,7 +18,8 @@ const AsideDefault: FC = () => {
       data-kt-drawer-name='aside'
       data-kt-drawer-activate='{default: true, lg: false}'
       data-kt-drawer-overlay='true'
-      data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+      data-kt-drawer-width="{default:'320px', '300px': '320px'}"
+     /*  data-kt-drawer-width="{default:'200px', '300px': '250px'}" */
       data-kt-drawer-direction='start'
       data-kt-drawer-toggle='#kt_aside_mobile_toggle'
       style={{
