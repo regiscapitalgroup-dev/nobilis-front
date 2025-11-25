@@ -21,11 +21,15 @@ const InfoAdminTab = () => {
           </div>
           <div className='field'>
             <span className='field-label'>E-mail</span>
-            <span className='field-value'>{data?.email}</span>
+            <span className='field-value email-value'>{data?.email}</span>
           </div>
           <div className='field'>
-            <span className='field-label'>Preferred Contact Method</span>
-            <span className='field-value'>Email, Phone</span>
+            <span className='field-label'> Preferred Contact Method</span>
+            <span className='field-value'>
+              {[data?.preferedEmail && 'Email', data?.preferedPhone && 'Phone']
+                .filter(Boolean)
+                .join(', ') || ''}
+            </span>
           </div>
         </div>
       </div>

@@ -19,7 +19,11 @@ function toUserProfileFormData(data: UserProfile): FormData {
 
     if (data.profile_picture instanceof File) {
         fd.append("profile_picture", data.profile_picture, data.profile_picture.name);
-    } else if (data.profile_picture) {
+    } else if (
+        data.profile_picture &&
+        typeof data.profile_picture === 'string' &&
+        data.profile_picture.trim() !== ''
+    ) {
         fd.append("profile_picture", data.profile_picture);
     }
 

@@ -1,4 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react'
+import * as Yup from 'yup'
 import {useFormik, FormikProvider} from 'formik'
 import {inits, IMembershipPayment} from './MembershipPaymentHelper'
 import {MembershipDetailModel} from '../models/MembershipModel'
@@ -9,8 +10,6 @@ import {useSubscription} from '../../../hooks/subscription/useSubscription '
 import CountriesAutocompleteField from './fields/CountryAutocompleteField'
 import SVG from 'react-inlinesvg'
 import {toAbsoluteUrl} from '../../../../_metronic/helpers'
-import { useDispatch } from 'react-redux'
-import { actions } from '../../../modules/auth/redux/AuthRedux'
 type Props = {
   membership?: MembershipDetailModel | null | undefined
   handleCancelSelected: () => void
@@ -55,11 +54,16 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
     []
   )
 
+  const validationSchema = Yup.object({
+    email: Yup.string().email('Wrong email format').required('This field is required'),
+  })
+
   const formik = useFormik<IMembershipPayment>({
     initialValues: savedFormData || {
       ...inits,
       price_id: membership?.stripePlanId ?? '',
     },
+    validationSchema,
     onSubmit: async (values) => {
       setLoading(true)
       try {
@@ -212,10 +216,18 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
                 <label className='form-label'>EMAIL</label>
                 <input
                   type='email'
-                  className='form-input'
+                  className={`form-input ${
+                    formik.touched.email && formik.errors.email ? 'form-input--error' : ''
+                  }`}
                   {...formik.getFieldProps('email')}
-                  required
                 />
+                {formik.touched.email && formik.errors.email && (
+                  <div className='fv-plugins-message-container'>
+                    <span role='alert' className='fv-help-block input-text-style fs-8'>
+                      {formik.errors.email}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className='form-section mb-10'>
@@ -235,7 +247,6 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
                   type='text'
                   className='form-input'
                   {...formik.getFieldProps('name_on_card')}
-                  required
                 />
               </div>
 
@@ -248,7 +259,6 @@ const MembershipPaymentWidget: React.FC<Props> = ({membership, handleCancelSelec
                   className='form-input'
                   placeholder='ZIP'
                   {...formik.getFieldProps('postal_code')}
-                  required
                 />
 
                 <button

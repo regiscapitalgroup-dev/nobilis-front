@@ -1,10 +1,10 @@
-// src/hooks/useMemberships.ts
 import { useState, useEffect } from 'react';
 import { getAllMemberships } from '../../services/membershipService';
+import { MembershipDetailModel } from '../../pages/memberships/models/MembershipModel';
 
 
-export const useMemberships = (isActive: boolean) => {
-  const [memberships, setMemberships] = useState<any[]>([]);
+export const useMemberships = () => {
+  const [memberships, setMemberships] = useState<MembershipDetailModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -12,7 +12,6 @@ export const useMemberships = (isActive: boolean) => {
     let isMounted = true;
     const fetchMemberships = async () => {
       try {
-        setLoading(true);
         const data = await getAllMemberships();
         if (isMounted) {
           setMemberships(data.data);
@@ -27,15 +26,11 @@ export const useMemberships = (isActive: boolean) => {
         }
       }
     };
-
-    /* if (isActive) {
-      fetchMemberships();
-    } */
-      fetchMemberships();
+    fetchMemberships();
     return () => {
       isMounted = false;
     };
-  }, [isActive]);
+  }, []);
 
   return { memberships, loading, error };
 };

@@ -86,6 +86,7 @@
   width: 100%;
   margin:0 auto;
   transform-origin: top center;
+  position: relative;
 }
 
 .nb-board{
@@ -252,7 +253,6 @@
   margin-left: 0 !important;
 }
 .nb-disclaimers{
-  width: 100%;
   width: 100%; 
   margin-top: 12px;
   display: flex;
@@ -281,12 +281,15 @@
 }
 
 .nb-membership-hero {
-  will-change: transform;
-  contain: paint;
-  position: relative;
-  overflow: hidden;
+  position: absolute;
+  top: 19%;
+  left: 50%;
+  transform: translate(-50%);
   height: 355px;
-  z-index: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  width: 100%;
 }
 
 .nb-membership-hero__img {
@@ -295,25 +298,34 @@
   object-fit: cover;
   display: block;
   filter: grayscale(100%);
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
 }
 
 /* Responsivo */
+@media (max-width: 1440px) {
+  .nb-membership-hero {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 1200px) {
   .nb-membership-hero {
-    height: 280px !important;
+    height: 280px;
+    top: 15%;
   }
 }
+
 @media (max-width: 768px) {
   .nb-membership-hero {
-    height: 220px !important;
+    height: 220px;
+    top: 10%;
   }
 }
+
 @media (max-width: 480px) {
   .nb-membership-hero {
-    height: 180px !important;
+    height: 180px;
+    top: 8%;
   }
 }
 

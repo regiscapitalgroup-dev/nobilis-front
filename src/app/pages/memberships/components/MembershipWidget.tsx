@@ -1,25 +1,18 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useMemo, useRef, useState} from 'react'
 import {MembershipDetailModel} from '../models/MembershipModel'
-import {KTSVG} from '../../../../_metronic/helpers'
+import {KTSVG, toAbsoluteUrl} from '../../../../_metronic/helpers'
 import SVG from 'react-inlinesvg'
 
 type Props = {
   memberships: any[]
   loading: boolean
-  handleScroll: (e?: React.MouseEvent) => void
   handleMembershipSelected: (data: MembershipDetailModel | null) => void
 }
 
 const SECTION_REQ = '__SECTION_REQUIREMENTS__'
 const REQUIREMENT_ROW = '__REQUIREMENT_ROW__'
 
-const MembershipWidget: React.FC<Props> = ({
-  memberships,
-  loading,
-  handleScroll,
-  handleMembershipSelected,
-}) => {
+const MembershipWidget: React.FC<Props> = ({memberships, loading, handleMembershipSelected}) => {
   const [hoverIdx, setHoverIdx] = useState<number | null>(null)
   const [selectedIdx, setSelectedIdx] = useState<number | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -78,23 +71,10 @@ const MembershipWidget: React.FC<Props> = ({
     if (!selectedId) handleMembershipSelected(null)
   }, [selectedId, handleMembershipSelected])
 
-  useEffect(() => {
-    const resize = () => {
-      if (!zoomRef.current || !boardRef.current) return
-      const available = zoomRef.current.clientWidth
-      const natural = boardRef.current.scrollWidth
-      const s = Math.min(1, available / (natural || 1))
-      zoomRef.current.style.setProperty('--nb-scale', String(s))
-    }
-    resize()
-    window.addEventListener('resize', resize)
-    return () => window.removeEventListener('resize', resize)
-  }, [memberships.length])
-
   if (loading) {
     return (
       <div className='d-flex justify-content-center align-items-center' style={{minHeight: 400}}>
-        <span className='spinner-border text-primary' role='status' />
+        <span className='spinner-border text-dark' role='status' />
       </div>
     )
   }
@@ -175,6 +155,18 @@ const MembershipWidget: React.FC<Props> = ({
       </div>
 
       <div className='nb-ms-card'>
+        <div aria-hidden='true' className='nb-membership-hero'>
+          <img
+            className='nb-membership-hero__img'
+            src={toAbsoluteUrl('/media/login-room.png')}
+            alt=''
+            loading='eager'
+            style={{
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </div>
         <div className='nb-zoom' ref={zoomRef}>
           <div className='nb-board' ref={boardRef}>
             {/* Columna de labels */}

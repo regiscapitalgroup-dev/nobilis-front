@@ -1,7 +1,5 @@
 .biography {
   width: 100%;
-  /* max-width: 1037px; */
- /*  max-width: calc(1037px + 30px); */
   position: relative;
   padding: 0;
   margin: 0 auto;  
@@ -22,8 +20,8 @@
   &__watermark {
     position: absolute;
     top: 50%;
-    left: 0; /* 🎯 Pegado al inicio del ancho */
-    transform: translateY(-50%); /* Solo centrado vertical */
+    left: 0; 
+    transform: translateY(-50%); 
     width: 600px;
     height: auto;
     opacity: 0.05;
@@ -1294,6 +1292,11 @@
         }
       }
     }
+  }
+
+  .email-value {
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 }
 

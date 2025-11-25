@@ -297,6 +297,14 @@ $font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI'
     &:focus {
       border-bottom-color: $color-primary;
     }
+
+    &--error {
+      border-bottom-color: #A50F0F !important;
+      
+      &:focus {
+        border-bottom-color: #A50F0F !important;
+      }
+    }
   }
 
   .select-wrapper {

@@ -22,13 +22,11 @@ const highlightMatch = (text: string, query: string) => {
 
 type Props = {
   name: string
-  placeholder?: string
   minChars?: number
 }
 
 export default function CityAutocompleteField({
   name,
-  placeholder = 'Type city…',
   minChars = 0,
 }: Props) {
   const [field, , helpers] = useField<string | undefined>(name)

@@ -26,7 +26,9 @@ export interface FullUserProfileModel {
     introduction: [];
     oftenIn:[],
     firstName: string,
-    surname: string
+    surname: string,
+    preferedPhone : boolean,
+    preferedEmail: boolean
   }
   
   

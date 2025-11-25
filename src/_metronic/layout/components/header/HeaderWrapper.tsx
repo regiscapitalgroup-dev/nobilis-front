@@ -10,6 +10,7 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../setup'
 import {useWebSocketContext} from '../../../../app/context/WebSocketContext'
 import {useUserNotifications} from '../../../../app/hooks/notifications/useNotifications'
+import { useUserProfileContext } from '../../../../app/context/UserProfileContext'
 
 export function HeaderWrapper() {
   const {pathname} = useLocation()
@@ -17,6 +18,8 @@ export function HeaderWrapper() {
   const {aside} = config
   const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const {subscribe, isConnected} = useWebSocketContext()
+  const {data} = useUserProfileContext()
+
 
   const {data: initialNotifications} = useUserNotifications()
 
@@ -74,6 +77,16 @@ export function HeaderWrapper() {
       }}
       {...attributes.headerMenu}
     >
+      {aside.display && (
+          <div className='d-flex align-items-center d-lg-none me-1' title='Show aside menu'>
+            <div
+              className='btn btn-icon btn-active-light w-30px h-30px w-md-40px h-md-40px'
+              id='kt_aside_mobile_toggle'
+            >
+              <KTSVG path='/media/icons/duotune/abstract/abs015.svg' className='svg-icon-2x mt-1' />
+            </div>
+          </div>
+        )}
       <div
         className='container-fluid d-flex align-items-center justify-content-between'
         style={{
@@ -186,7 +199,7 @@ export function HeaderWrapper() {
               data-kt-menu-flip='bottom'
             >
               <img
-                src={user.profilePicture ? user.profilePicture : 'https://placehold.co/32x32'}
+                src={data?.profilePicture  ? `${data.profilePicture}?t=${Date.now()}`  : 'https://placehold.co/32x32'}
                 alt='User'
               />
             </div>
