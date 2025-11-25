@@ -1,0 +1,31 @@
+export interface UserWaitlist {
+    id:number;
+    firstName:string;
+    lastName:string;
+    phoneNumber:string;
+    email:string;
+    occupation:string;
+    city:string;
+    referenced:string;
+    option0:boolean;
+    option1:boolean;
+    option2:boolean;
+    option3:boolean;
+    option4:boolean;
+    option5:boolean;
+    option6:boolean;
+    option7:boolean;
+    option8:boolean;
+    option9:boolean;
+    otherOption:string;
+    wealthOwner:boolean;
+    impactMaker:boolean;
+    executive:boolean;
+    governor:boolean;
+    linkVerify:string;
+    incomeRange:string;
+    createdAt:string;
+    status:string;
+    notes:string;
+    rejectionReason:string;
+}

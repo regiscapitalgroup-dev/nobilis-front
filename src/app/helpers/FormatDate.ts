@@ -26,3 +26,16 @@ export function daysSince(dateString: string): number {
   const diffMs = hoy.getTime() - fecha.getTime();
   return Math.floor(diffMs / (1000 * 60 * 60 * 24));
 }
+
+export function formatDateShortIntl2(dateString:string) {
+  const date = new Date(dateString);
+
+  const formatted = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+
+  // Cambia "08 Oct 2025" (ya está en formato correcto)
+  return formatted;
+}

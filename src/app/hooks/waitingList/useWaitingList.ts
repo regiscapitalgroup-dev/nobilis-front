@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { waitingListRequest } from '../../services/waitingListService';
 import { WaitlistUser } from '../../pages/waitingList/components/WaitingListGrid';
 
-export const useUseWaitinListRequest = (reload: number): {
+export const useUseWaitinListRequest = (reload: number,status:number): {
     data: any | null;
     loading: boolean;
     error: Error | null;
@@ -17,7 +17,7 @@ export const useUseWaitinListRequest = (reload: number): {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const data = await waitingListRequest();
+                const data = await waitingListRequest(status);
                 if (isMounted) setData(data);
             } catch (err) {
                 if (isMounted) setError(err as Error);

@@ -1,14 +1,21 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import { membershipDetails } from "../services/waitingListService";
 import { showErrorAlert } from "../helpers/alert";
 
-const DrawerContext = createContext(null);
+interface DrawerContextType {
+  isOpen: boolean;
+  openDrawer: (userId: number) => Promise<void>;
+  closeDrawer: () => void;
+  payload: any;
+}
 
-export const DrawerProvider = ({ children }) => {
+const DrawerContext = createContext<DrawerContextType | null>(null);
+
+export const DrawerProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [payload, setPayload] = useState(null); // datos enviados al drawer
 
-  const openDrawer = async (userId:number,callback:Function) => {
+  const openDrawer = async (userId:number) => {
     try {
       // aqui conectamos con el servicio que trae los datos
       let detailsMember = await membershipDetails(userId);
@@ -17,7 +24,7 @@ export const DrawerProvider = ({ children }) => {
       }
       setIsOpen(true);
     } catch (error:any) {
-      showErrorAlert({title: 'Error', text: error?.message ?? ''});
+      showErrorAlert({title: 'Error', message: error?.message ?? ''});
       setIsOpen(false);
     }
   };
@@ -34,4 +41,10 @@ export const DrawerProvider = ({ children }) => {
   );
 };
 
-export const useDrawer = () => useContext(DrawerContext);
+export const useDrawer = () => {
+  const context = useContext(DrawerContext);
+  if (!context) {
+    console.log('useDrawer must be used within a DrawerProvider');
+  }
+  return context;
+};

@@ -83,8 +83,14 @@ export function HeaderWrapper() {
           paddingRight: '24px',
         }}
       >
+        <button className="landing-header__hamburger d-inline-flex d-lg-none" aria-label="Toggle menu" id='kt_aside_mobile_toggle'>
+          <span className="svg-icon svg-icon-2x svg-icon-info">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="mh-50px"><line x1="7" y1="8.5" x2="25" y2="8.5" stroke="#151515"></line><line x1="7" y1="15.5" x2="25" y2="15.5" stroke="#151515"></line><line x1="7" y1="22.5" x2="25" y2="22.5" stroke="#151515"></line>
+            </svg>
+          </span>
+        </button>
         {/* LOGO */}
-        <div className='nb-header__logo'>
+        <div className='nb-header__logo d-none d-lg-inline-flex'>
           <svg
             width='78'
             height='15'
@@ -124,7 +130,7 @@ export function HeaderWrapper() {
         </div>
 
         {/* CENTRO */}
-        <div className='nb-header__center'>
+        <div className='nb-header__center d-none d-lg-inline-flex'>
           <div className='nb-header__tabs'>
             <span className='nb-header__tabs-item nb-header__tabs-item--active'>MEMBERS</span>
             <span className='nb-header__tabs-item nb-header__tabs-item--inactive'>INVITATIONS</span>

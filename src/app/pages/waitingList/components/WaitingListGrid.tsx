@@ -1,12 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import Pagination from '../../components/Pagination'
-import ActionsDropdown from './Actionsdropdown'
 import {useUseWaitinListRequest} from '../../../hooks/waitingList/useWaitingList'
-import {ApproveModal} from '../modals/ApproveModal'
-import {acceptRequest, rejectedRequest} from '../../../services/waitingListService'
-import {DeclineModal} from '../modals/DeclineModal'
 import { MenuComponent } from '../../../../_metronic/assets/ts/components'
 import { useDrawer } from '../../../context/UserWaitlistSelectedContext'
+import { formatDateShortIntl2 } from '../../../helpers/FormatDate'
 
 export interface WaitlistUser {
   id: string
@@ -22,17 +19,17 @@ export interface WaitlistUser {
 const PLACEHOLDER_ROWS = 8
 
 const WaitingListGrid: React.FC = () => {
+  const [activeTab, setActiveTab] = useState(1)
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null)
-  const [showModal, setShowModal] = useState(false)
   const [reload, setReload] = useState<number>(Math.random() * 10)
-  const {data, loading} = useUseWaitinListRequest(reload)
+  const {data, loading} = useUseWaitinListRequest(reload,activeTab)
   const [user, setUser] = useState<number>(0)
+  const [countNews, setCountNews] = useState<number>(0)
   const safeData: WaitlistUser[] = Array.isArray(data) ? data : []
-  const [showDeclineModal, setShowDeclineModal] = useState(false)
-  const totalPages = 12
-  const { openDrawer } = useDrawer();
+  const totalPages = 1
+  const { openDrawer, isOpen } = useDrawer();
 
   const toggleDropdown = (userId: string, status: string) => {
     if (status.toLowerCase() === 'approved') {
@@ -41,30 +38,24 @@ const WaitingListGrid: React.FC = () => {
     setOpenDropdownId((prev) => (prev === userId ? null : userId))
   }
 
+  // escuchamos cambios en el estado del drawer/panel
+  useEffect(() => {
+    // demos recargar el grid solo cuando se cierre el panel detalle de información
+    if(!isOpen){
+      setReload(Math.random() * 20)
+    }
+  }, [isOpen]);
+
   useEffect(() => {
     MenuComponent.reinitialization();
+    if(activeTab == 1){
+      setCountNews(data?.length ?? 0);
+    }
   }, [data]);
 
-  const closeDropdown = () => {
-    setOpenDropdownId(null)
-  }
-
-  const handleAccept = async () => {
-    await acceptRequest(user)
-    closeDropdown()
-    setShowModal(false)
+  const changeTab = (status: number) => {
+    setActiveTab(status);
     setReload(Math.random() * 20)
-  }
-
-  const handleDecline = async (reason: string, note: string) => {
-    
-    await rejectedRequest(user, {
-      rejection_reason_id: reason,
-      notes: note,
-    })
-    setShowDeclineModal(false)
-    setReload(Math.random() * 20)
-    closeDropdown()
   }
 
   const renderCells = (
@@ -72,7 +63,9 @@ const WaitingListGrid: React.FC = () => {
     isLoading: boolean,
     getValue: (u: WaitlistUser) => React.ReactNode,
     keyPrefix: string,
-    skeletonWidth: string = '70%'
+    skeletonWidth: string = '70%',
+    styleCell: 'table__cell--bold'|'' = 'table__cell--bold',
+    isDate:boolean = false,
   ) => {
     if (isLoading) {
       return Array.from({length: PLACEHOLDER_ROWS}).map((_, index) => (
@@ -85,23 +78,14 @@ const WaitingListGrid: React.FC = () => {
       ))
     }
     return items.map((u, index) => (
-      <div
+      <div onClick={drawerOpen.bind(null, parseInt(u.id))}
         key={`${keyPrefix}-${index}`}
-        className={`table__cell ${index === 0 ? 'table__cell--bold' : ''}`}
-      >
-        {getValue(u)}
+        className={`cursor-pointer table__cell ${styleCell}`}>
+        {isDate ? formatDateShortIntl2(getValue(u)) : getValue(u)}
       </div>
     ))
   }
 
-  const openModal = (user: number) => {
-    setUser(user)
-    setShowModal(true)
-  }
-  const openModalDecline = (user: number) => {
-    setUser(user)
-    setShowDeclineModal(true)
-  }
   const drawerOpen = (user: number) => {
     setUser(user)
     openDrawer(user);
@@ -112,6 +96,37 @@ const WaitingListGrid: React.FC = () => {
       <div className='users-waitlist-page'>
         <div className='users-waitlist-page__container'>
           <h1 className='users-waitlist__title'>Users Waitlist</h1>
+          <div className="card">
+            <ul className="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-bottom-0">
+              <li className="nav-item">
+                <a className={`nav-link ${activeTab === 1 ? "active" : ""}`}
+                  onClick={()=>changeTab(1)}>
+                  New
+                  <div data-property-1="regular" className='badge-wrapper'>
+                    <div className='badge-count'>{countNews}</div>
+                  </div>
+                </a>
+              </li>
+              <li className="separator-vertical">
+                <hr />
+              </li>
+              <li className="nav-item">
+                <a className={`nav-link ${activeTab === 2 ? "active" : ""}`}
+                  onClick={()=>{/* changeTab(2) */}}>
+                  Approved
+                </a>
+              </li>
+              <li className="separator-vertical">
+                <hr />
+              </li>
+              <li className="nav-item">
+                <a className={`nav-link ${activeTab === 3 ? "active" : ""}`}
+                  onClick={()=>{/* changeTab(3) */}}>
+                  Rejected
+                </a>
+              </li>
+            </ul>
+          </div>
 
           {/* Barra de carga superior */}
           {loading && <div className='page-loading-bar' />}
@@ -143,7 +158,7 @@ const WaitingListGrid: React.FC = () => {
               {/* Name Column */}
               <div className='table__column table__column--name'>
                 <div className='table__header'>NAME</div>
-                {renderCells(safeData, loading, (u) => u.fullName, 'name', '60%')}
+                {renderCells(safeData, loading, (u) => u.fullName, 'name', '60%', '')}
               </div>
 
               {/* Source Column */}
@@ -161,7 +176,7 @@ const WaitingListGrid: React.FC = () => {
               {/* Requested On Column */}
               <div className='table__column table__column--requested'>
                 <div className='table__header'>REQUESTED ON</div>
-                {renderCells(safeData, loading, (u) => u.requested, 'requested', '70%')}
+                {renderCells(safeData, loading, (u) => u.requested, 'requested', '70%', 'table__cell--bold', true)}
               </div>
 
               {/* Category Column */}
@@ -172,70 +187,8 @@ const WaitingListGrid: React.FC = () => {
 
               {/* Assigned Column */}
               <div className='table__column table__column--assigned'>
-                <div className='table__header'>ASSIGNED</div>
+                <div className='table__header'>ASSIGNED TO</div>
                 {renderCells(safeData, loading, (u) => u.assigned, 'assigned', '55%')}
-              </div>
-
-              {/* Status Column */}
-              <div className='table__column table__column--status'>
-                <div className='table__header'>STATUS</div>
-                {renderCells(safeData, loading, (u) => u.status, 'status', '45%')}
-              </div>
-
-              {/* Actions Column */}
-              <div className='table__column table__column--actions'>
-                <div className='table__header'>ACTIONS</div>
-                {loading
-                  ? Array.from({length: PLACEHOLDER_ROWS}).map((_, index) => (
-                      <div
-                        key={`actions-skel-${index}`}
-                        className='table__cell table__cell--actions'
-                      >
-                        <span
-                          className='skeleton'
-                          style={{width: 28, height: 28, borderRadius: 6}}
-                        />
-                      </div>
-                    ))
-                  : safeData.map((user: WaitlistUser, index: number) => {
-                      // const isApproved = user.status.toLowerCase() === 'approved'
-                      const isApproved = false
-
-                      return (
-                        <div key={`actions-${index}`} className='table__cell table__cell--actions'>
-                          <button
-                            className='btn btn-sm btn-icon btn-light btn-active-light-primary'
-                            data-kt-menu-trigger='click'
-                            data-kt-menu-placement='bottom-end'
-                            disabled={isApproved}
-                            style={{
-                              opacity: isApproved ? 0.4 : 1,
-                              cursor: isApproved ? 'not-allowed' : 'pointer',
-                            }}
-                          >
-                            <svg
-                              width='18'
-                              height='18'
-                              viewBox='0 0 18 18'
-                              fill='none'
-                              xmlns='http://www.w3.org/2000/svg'
-                            >
-                              <circle cx='9' cy='4' r='1.5' fill='#151515' />
-                              <circle cx='9' cy='9' r='1.5' fill='#151515' />
-                              <circle cx='9' cy='14' r='1.5' fill='#151515' />
-                            </svg>
-                          </button>
-
-                          {!isApproved && (
-                            <ActionsDropdown
-                              onAccept={() => openModal(Number(user.id))}
-                              onReject={() => openModalDecline(Number(user.id))}
-                              onDrawerOpen={() => drawerOpen(Number(user.id))}
-                            />
-                          )}
-                        </div>
-                      )
-                    })}
               </div>
             </div>
           </div>
@@ -248,12 +201,6 @@ const WaitingListGrid: React.FC = () => {
           />
         </div>
       </div>
-      <ApproveModal show={showModal} onHide={() => setShowModal(false)} onApprove={handleAccept} />
-      <DeclineModal
-        show={showDeclineModal}
-        onHide={() => setShowDeclineModal(false)}
-        onDecline={handleDecline}
-      />
     </>
   )
 }
