@@ -125,42 +125,44 @@ export const LandingMembers: FC = () => {
       </div>
 
         <div className='landing-members__container'>
-        <div className='landing-members__images landing-members__images_carrousel'>
-          <img
-            key={`secondary-${previewIndex}`}
-            src={secondarySlide.primaryImage}
-            alt={secondarySlide.subtitle}
-            className={`landing-members__image landing-members__image--secondary ${secondaryPositionClass} ${
-              isTransitioning ? `landing-members__image--transitioning-${direction}` : ''
-            }`}
-          />
-          <img
-            key={`primary-${currentIndex}`}
-            src={currentSlide.primaryImage}
-            alt={currentSlide.subtitle}
-            className={`landing-members__image landing-members__image--primary ${
-              isTransitioning ? `landing-members__image--transitioning-${direction}` : ''
-            }`}
-          />
-          {/* <h2 
-            className={`landing-members__title ${
-              isTransitioning ? 'landing-members__title--transitioning' : ''
-            }`}
-          >
-            {currentSlide.title}
-          </h2> */}
-        </div>
+          <div className='w-100 carrousel-responsive'>
+            <div className='landing-members__images landing-members__images_carrousel'>
+              <img
+                key={`secondary-${previewIndex}`}
+                src={secondarySlide.primaryImage}
+                alt={secondarySlide.subtitle}
+                className={`landing-members__image landing-members__image--secondary ${secondaryPositionClass} ${
+                  isTransitioning ? `landing-members__image--transitioning-${direction}` : ''
+                }`}
+              />
+              <img
+                key={`primary-${currentIndex}`}
+                src={currentSlide.primaryImage}
+                alt={currentSlide.subtitle}
+                className={`landing-members__image landing-members__image--primary ${
+                  isTransitioning ? `landing-members__image--transitioning-${direction}` : ''
+                }`}
+              />
+              {/* <h2 
+                className={`landing-members__title ${
+                  isTransitioning ? 'landing-members__title--transitioning' : ''
+                }`}
+              >
+                {currentSlide.title}
+              </h2> */}
+            </div>
+          </div>
 
         <div className='landing-members__content'>
           <h2 
-            className={`landing-members__title ${
-              isTransitioning ? 'landing-members__title--transitioning' : ''
+            className={`landing-members__title_floating ${
+              isTransitioning ? 'landing-members__title_floating--transitioning' : ''
             }`}
           >
             {currentSlide.title}
           </h2>
-          <div className={`landing-members__text ${
-            isTransitioning ? 'landing-members__text--transitioning' : ''
+          <div className={`landing-members__text_left ${
+            isTransitioning ? 'landing-members__text_left--transitioning' : ''
           }`}>
             <p className='landing-members__subtitle'>{currentSlide.subtitle}</p>
             <p className='landing-members__description'>{currentSlide.description}</p>

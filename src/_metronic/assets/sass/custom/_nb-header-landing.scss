@@ -1858,9 +1858,19 @@
 
 .landing-platform {
   width: 100%;
-  padding: 100px 0 100px 80px;
+  padding: 100px 80px 100px 80px;
   position: relative;
   background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-container {
+    max-width: 1440px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   &__watermark {
     width: 382px;
@@ -1902,6 +1912,15 @@
   &__title {
     color: #151515;
     font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 48px;
+    margin: 0;
+  }
+
+  &__title__nobilis {
+    color: #151515;
+    font-family: "Oswald", sans-serif;
     font-weight: 500;
     font-size: 40px;
     line-height: 48px;
@@ -2012,6 +2031,18 @@
   }
 }
 
+@media (max-width: 1100px) {
+  .landing-platform {
+    &__mockup-container {
+      width: 95%;
+    }
+
+    &-container {
+      width: 95%;
+    }
+  }
+}
+
 @media (max-width: 992px) {
   .landing-platform {
     padding: 60px 40px;
@@ -2020,6 +2051,7 @@
       display: flex;
       flex-direction: column;
       gap: 40px;
+      align-items: center;
     }
 
     &__text-section {
@@ -2045,8 +2077,9 @@
     }
 
     &__mockup-container {
-      aspect-ratio: 16 / 10;
+      /* aspect-ratio: 16 / 10; */
       height: auto;
+      width: 95%;
     }
 
     &__watermark {
@@ -2055,6 +2088,14 @@
       left: 50%;
       top: 100px;
       transform: translateX(-50%);
+    }
+
+    &-container {
+      width: 95%;
+    }
+
+    &__title__nobilis {
+      text-align: center;
     }
   }
 }

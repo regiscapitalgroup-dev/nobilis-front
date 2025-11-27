@@ -1,7 +1,11 @@
 import apiClient from "../helpers/apiClient";
 
-export async function waitingListRequest(status: number) {
-    const response = await apiClient.get(`/waitinglist/admin/`,{params: {status: status}});
+export interface ParamsWaitlist {
+    status: string,
+    search: string
+}
+export async function waitingListRequest(params:ParamsWaitlist) {
+    const response = await apiClient.get(`/waitinglist/admin/`,{params: params});
     return response.data;
 }
 

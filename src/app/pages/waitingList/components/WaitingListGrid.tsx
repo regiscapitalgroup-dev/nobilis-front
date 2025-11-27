@@ -4,6 +4,7 @@ import {useUseWaitinListRequest} from '../../../hooks/waitingList/useWaitingList
 import { MenuComponent } from '../../../../_metronic/assets/ts/components'
 import { useDrawer } from '../../../context/UserWaitlistSelectedContext'
 import { formatDateShortIntl2 } from '../../../helpers/FormatDate'
+import { usePagination } from '../../../hooks/utils/usePagination'
 
 export interface WaitlistUser {
   id: string
@@ -19,17 +20,25 @@ export interface WaitlistUser {
 const PLACEHOLDER_ROWS = 8
 
 const WaitingListGrid: React.FC = () => {
-  const [activeTab, setActiveTab] = useState(1)
+  const [timeoutWaitingList, setTimeoutWaitingList] = useState(10)
+  const [activeTab, setActiveTab] = useState('pending')
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null)
   const [reload, setReload] = useState<number>(Math.random() * 10)
-  const {data, loading} = useUseWaitinListRequest(reload,activeTab)
+  const {data, loading} = useUseWaitinListRequest(reload,activeTab,searchTerm,timeoutWaitingList)
   const [user, setUser] = useState<number>(0)
   const [countNews, setCountNews] = useState<number>(0)
   const safeData: WaitlistUser[] = Array.isArray(data) ? data : []
-  const totalPages = 1
   const { openDrawer, isOpen } = useDrawer();
+  const {
+    page,
+    totalPages,
+    currentData,
+    setPage,
+    nextPage,
+    prevPage
+  } = usePagination(data ?? [], 10);
 
   const toggleDropdown = (userId: string, status: string) => {
     if (status.toLowerCase() === 'approved') {
@@ -42,26 +51,46 @@ const WaitingListGrid: React.FC = () => {
   useEffect(() => {
     // demos recargar el grid solo cuando se cierre el panel detalle de información
     if(!isOpen){
+      setPage(1) // reset page
+      setTimeoutWaitingList(10) // ajustamos el timeout para que sea rápido
       setReload(Math.random() * 20)
     }
   }, [isOpen]);
+  
+  // escuchamos cambios en el input del buscador
+  useEffect(() => {
+    // demos recargar el grid cuando buscamos por texto
+    setPage(1) // reset page
+    setTimeoutWaitingList(2000) // ajustamos el timeout para que sea lento y de tiempo de escribir
+    setReload(Math.random() * 20)
+  }, [searchTerm]);
 
   useEffect(() => {
     MenuComponent.reinitialization();
-    if(activeTab == 1){
+    if(activeTab == 'pending'){
       setCountNews(data?.length ?? 0);
     }
   }, [data]);
 
-  const changeTab = (status: number) => {
+  const changeTab = (status: string) => {
     setActiveTab(status);
+    setPage(1) // reset page
+    setTimeoutWaitingList(10) // ajustamos el timeout para que sea rápido
     setReload(Math.random() * 20)
   }
 
+  const searchInList = (event:any) => {
+    if (event.key === 'Enter') {
+      setPage(1) // reset page
+      setTimeoutWaitingList(10) // ajustamos el timeout para que sea rápido
+      setReload(Math.random() * 20)
+    }
+  }
+
   const renderCells = (
-    items: WaitlistUser[],
+    items: any[],
     isLoading: boolean,
-    getValue: (u: WaitlistUser) => React.ReactNode,
+    getValue: (u: any) => React.ReactNode,
     keyPrefix: string,
     skeletonWidth: string = '70%',
     styleCell: 'table__cell--bold'|'' = 'table__cell--bold',
@@ -99,8 +128,8 @@ const WaitingListGrid: React.FC = () => {
           <div className="card">
             <ul className="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-bottom-0">
               <li className="nav-item">
-                <a className={`nav-link ${activeTab === 1 ? "active" : ""}`}
-                  onClick={()=>changeTab(1)}>
+                <a className={`nav-link ${activeTab === 'pending' ? "active" : ""}`}
+                  onClick={()=>changeTab('pending')}>
                   New
                   <div data-property-1="regular" className='badge-wrapper'>
                     <div className='badge-count'>{countNews}</div>
@@ -111,8 +140,8 @@ const WaitingListGrid: React.FC = () => {
                 <hr />
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${activeTab === 2 ? "active" : ""}`}
-                  onClick={()=>{/* changeTab(2) */}}>
+                <a className={`nav-link ${activeTab === 'approved' ? "active" : ""}`}
+                  onClick={()=>{changeTab('approved')}}>
                   Approved
                 </a>
               </li>
@@ -120,8 +149,8 @@ const WaitingListGrid: React.FC = () => {
                 <hr />
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${activeTab === 3 ? "active" : ""}`}
-                  onClick={()=>{/* changeTab(3) */}}>
+                <a className={`nav-link ${activeTab === 'rejected' ? "active" : ""}`}
+                  onClick={()=>{changeTab('rejected')}}>
                   Rejected
                 </a>
               </li>
@@ -144,6 +173,7 @@ const WaitingListGrid: React.FC = () => {
                 placeholder='Search Forum'
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => { searchInList(e) }}
               />
             </div>
 
@@ -152,52 +182,52 @@ const WaitingListGrid: React.FC = () => {
               {/* ID Column */}
               <div className='table__column table__column--id'>
                 <div className='table__header'>ID</div>
-                {renderCells(safeData, loading, (u) => u.id, 'id', '40%')}
+                {renderCells(currentData, loading, (u) => u.id, 'id', '40%')}
               </div>
 
               {/* Name Column */}
               <div className='table__column table__column--name'>
                 <div className='table__header'>NAME</div>
-                {renderCells(safeData, loading, (u) => u.fullName, 'name', '60%', '')}
+                {renderCells(currentData, loading, (u) => u.fullName, 'name', '60%')}
               </div>
 
               {/* Source Column */}
               <div className='table__column table__column--source'>
                 <div className='table__header'>SOURCE</div>
-                {renderCells(safeData, loading, (u) => u.source, 'source', '50%')}
+                {renderCells(currentData, loading, (u) => u.source, 'source', '50%')}
               </div>
 
               {/* Country Column */}
               <div className='table__column table__column--country'>
-                <div className='table__header'>COUNTRY</div>
-                {renderCells(safeData, loading, (u) => u.country, 'country', '50%')}
+                <div className='table__header'>CITY</div>
+                {renderCells(currentData, loading, (u) => u.country, 'country', '50%')}
               </div>
 
               {/* Requested On Column */}
               <div className='table__column table__column--requested'>
                 <div className='table__header'>REQUESTED ON</div>
-                {renderCells(safeData, loading, (u) => u.requested, 'requested', '70%', 'table__cell--bold', true)}
+                {renderCells(currentData, loading, (u) => u.requested, 'requested', '70%', 'table__cell--bold', true)}
               </div>
 
               {/* Category Column */}
               <div className='table__column table__column--category'>
                 <div className='table__header'>CATEGORY</div>
-                {renderCells(safeData, loading, (u) => u.category, 'category', '55%')}
+                {renderCells(currentData, loading, (u) => u.category, 'category', '55%')}
               </div>
 
               {/* Assigned Column */}
               <div className='table__column table__column--assigned'>
                 <div className='table__header'>ASSIGNED TO</div>
-                {renderCells(safeData, loading, (u) => u.assigned, 'assigned', '55%')}
+                {renderCells(currentData, loading, (u) => u.assigned, 'assigned', '55%')}
               </div>
             </div>
           </div>
 
           {/* Pagination */}
           <Pagination
-            currentPage={currentPage}
+            currentPage={page}
             totalPages={totalPages}
-            onPageChange={setCurrentPage}
+            onPageChange={setPage}
           />
         </div>
       </div>

@@ -67,8 +67,12 @@ const RequestMembership: FC<Props> = ({ isOpen, onClose, dataUser }) => {
         const instance = drawerInstanceRef.current;
         if (!instance) return;
 
-        if (isOpen) instance.show();
-        else instance.hide();
+        if (isOpen){
+            instance.show()
+            if(drawerRef.current) drawerRef.current.scrollTop = 0;
+        }else{
+            instance.hide()
+        }
 
     }, [isOpen]);
 
@@ -189,7 +193,7 @@ const RequestMembership: FC<Props> = ({ isOpen, onClose, dataUser }) => {
                                     <div className="rm-style-31">{dataUser?.occupation || 'No occupation provided.'}</div>
                                 </div>
                                 <div className="rm-style-32 col-12 col-md-6">
-                                    <div className="rm-style-33">Location</div>
+                                    <div className="rm-style-33">City</div>
                                     <div className="rm-style-34">{dataUser?.city || 'No location provided.'}</div>
                                 </div>
                             </div>
@@ -243,8 +247,8 @@ const RequestMembership: FC<Props> = ({ isOpen, onClose, dataUser }) => {
                             </div>
                             <div className="rm-style-67">
                                 <div className="rm-style-68">Initiation fee: </div>
-                                <div className="rm-style-69">{dataUser?.incomeRange || 
-                                    (questions?.[3]?.section04 ?? []).map((option, index) => {
+                                <div className="rm-style-69">
+                                    {(questions?.[2]?.section03 ?? []).map((option, index) => {
                                         return (dataUser?.[option.code] === true) ?
                                             (option?.description)
                                             : null
@@ -254,7 +258,7 @@ const RequestMembership: FC<Props> = ({ isOpen, onClose, dataUser }) => {
                         </div>
                         <div className="rm-style-70">
                             <div className="rm-style-71">Source</div>
-                            <div className="rm-style-72">{dataUser?.linkVerify || 'N/A'}</div>
+                            <div className="rm-style-72">{dataUser?.linkVerify ? (<a href={dataUser?.linkVerify} target="_blank">{dataUser?.linkVerify}</a>) : 'N/A'}</div>
                         </div>
                     </div>
                     <div className="rm-style-73">
@@ -291,10 +295,10 @@ const RequestMembership: FC<Props> = ({ isOpen, onClose, dataUser }) => {
                     </div>
                 </div>
                 <div className={`rm-style-88 d-flex flex-wrap flex-md-nowrap ${activeTab == 1 ? "d-flex" : "d-none"}`}>
-                    <div data-type="second" className="rm-style-89 col-12 col-md-4" onClick={openModalDecline} role="button">
+                    <div data-type="second" className={`rm-style-89 col-12 col-md-4 ${dataUser?.status == 'pending' ? "d-flex" : "d-none"}`} onClick={openModalDecline} role="button">
                         <div className="rm-style-90">Decline Request</div>
                     </div>
-                    <div data-icon="true" data-type="main" className="rm-style-91 col-12 col-md-5" onClick={openModal} role="button">
+                    <div data-icon="true" data-type="main" className={`rm-style-91 col-12 col-md-5 ${dataUser?.status == 'pending' ? "d-flex" : "d-none"}`} onClick={openModal} role="button">
                         <div className="rm-style-92">
                             Approve Request
                         </div>

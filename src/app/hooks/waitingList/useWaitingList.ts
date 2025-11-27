@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { waitingListRequest } from '../../services/waitingListService';
 import { WaitlistUser } from '../../pages/waitingList/components/WaitingListGrid';
 
-export const useUseWaitinListRequest = (reload: number,status:number): {
+export const useUseWaitinListRequest = (reload: number,status:string,search:string,timeout:number): {
     data: any | null;
     loading: boolean;
     error: Error | null;
@@ -13,11 +13,12 @@ export const useUseWaitinListRequest = (reload: number,status:number): {
 
     useEffect(() => {
         let isMounted = true;
+        let timeoutId: any;
 
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const data = await waitingListRequest(status);
+                const data = await waitingListRequest({status:status,search:search});
                 if (isMounted) setData(data);
             } catch (err) {
                 if (isMounted) setError(err as Error);
@@ -26,9 +27,12 @@ export const useUseWaitinListRequest = (reload: number,status:number): {
             }
         };
 
-        fetchData();
+        timeoutId = setTimeout(() => {
+            fetchData();
+        }, timeout);
         return () => {
             isMounted = false;
+            clearTimeout(timeoutId);
         };
     }, [reload]);
 
