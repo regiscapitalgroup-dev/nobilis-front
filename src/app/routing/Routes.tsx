@@ -11,6 +11,7 @@ import {WebSocketProvider} from '../context/WebSocketContext'
 import store from '../../setup/redux/Store'
 import {DrawerProvider} from '../context/UserWaitlistSelectedContext'
 import {UserProfileProvider} from '../context/UserProfileContext'
+import {SearchableMembersProvider} from '../context/SearchableMembersContext'
 
 const Routes: FC = () => {
   const isAuthorized = useSelector<RootState>(({auth}) => auth.user, shallowEqual)
@@ -35,9 +36,11 @@ const Routes: FC = () => {
         <WebSocketProvider wsBaseUrl={wsUrl} token={accessToken ?? ''}>
           <DrawerProvider>
             <UserProfileProvider>
-              <MasterLayout>
-                <PrivateRoutes />
-              </MasterLayout>
+              <SearchableMembersProvider>
+                <MasterLayout>
+                  <PrivateRoutes />
+                </MasterLayout>
+              </SearchableMembersProvider>
             </UserProfileProvider>
           </DrawerProvider>
         </WebSocketProvider>

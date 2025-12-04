@@ -1,30 +1,30 @@
 import React, {useEffect, useState} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useHistory, useLocation} from 'react-router-dom'
 import clsx from 'clsx'
 import {MenuComponent} from '../../../assets/ts/components'
 import {useLayout} from '../../core'
 import {KTSVG} from '../../../helpers'
 import {HeaderNotificationsMenu, HeaderUserMenu} from '../../../partials'
-import {UserModel} from '../../../../app/modules/auth/models/UserModel'
-import {shallowEqual, useSelector} from 'react-redux'
-import {RootState} from '../../../../setup'
 import {useWebSocketContext} from '../../../../app/context/WebSocketContext'
 import {useUserNotifications} from '../../../../app/hooks/notifications/useNotifications'
-import { useUserProfileContext } from '../../../../app/context/UserProfileContext'
+import {useUserProfileContext} from '../../../../app/context/UserProfileContext'
+import {useSearchableMembersContext} from '../../../../app/context/SearchableMembersContext'
 
 export function HeaderWrapper() {
   const {pathname} = useLocation()
   const {config, classes, attributes} = useLayout()
   const {aside} = config
-  const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const {subscribe, isConnected} = useWebSocketContext()
-  const {data} = useUserProfileContext()
-
-
+  const {data, refetch, setSearchParams: setParamasData} = useUserProfileContext()
+  const [random, setRandom] = useState(Math.random() * 30)
   const {data: initialNotifications} = useUserNotifications()
-
   const [notificationCount, setNotificationCount] = useState(0)
   const [hasNewNotification, setHasNewNotification] = useState(false)
+  const navigate = useHistory()
+  const location = useLocation()
+  const {setSearchParams} = useSearchableMembersContext()
+  const [where, setWhere] = useState('')
+  const [keywords, setKeywords] = useState('')
 
   useEffect(() => {
     MenuComponent.reinitialization()
@@ -61,9 +61,38 @@ export function HeaderWrapper() {
     }
   }, [subscribe, isConnected])
 
+  useEffect(() => {
+    setRandom(Math.random() * 10)
+  }, [data])
+
   const handleNotificationRead = () => {
     setNotificationCount((prev) => Math.max(0, prev - 1))
   }
+
+  const handleSearch = () => {
+    if (!where.trim() && !keywords.trim()) {
+      return
+    }
+
+    setSearchParams({where, keywords})
+    navigate.push('/searchable-members')
+  }
+
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+      if (!where.trim() && !keywords.trim()) {
+        setSearchParams({where: '', keywords: ''})
+
+        if (location.pathname == '/searchable-members'|| location.pathname == '/member/overview' ) {
+          navigate.goBack()
+        }
+        setParamasData({userSelected: ''})
+      }
+    }, 500)
+
+    return () => clearTimeout(timer)
+  }, [where, keywords, location.pathname, navigate, setSearchParams, setParamasData, refetch])
 
   return (
     <div
@@ -78,15 +107,15 @@ export function HeaderWrapper() {
       {...attributes.headerMenu}
     >
       {aside.display && (
-          <div className='d-flex align-items-center d-lg-none me-1' title='Show aside menu'>
-            <div
-              className='btn btn-icon btn-active-light w-30px h-30px w-md-40px h-md-40px'
-              id='kt_aside_mobile_toggle'
-            >
-              <KTSVG path='/media/icons/duotune/abstract/abs015.svg' className='svg-icon-2x mt-1' />
-            </div>
+        <div className='d-flex align-items-center d-lg-none me-1' title='Show aside menu'>
+          <div
+            className='btn btn-icon btn-active-light w-30px h-30px w-md-40px h-md-40px'
+            id='kt_aside_mobile_toggle'
+          >
+            <KTSVG path='/media/icons/duotune/abstract/abs015.svg' className='svg-icon-2x mt-1' />
           </div>
-        )}
+        </div>
+      )}
       <div
         className='container-fluid d-flex align-items-center justify-content-between'
         style={{
@@ -139,14 +168,27 @@ export function HeaderWrapper() {
         {/* CENTRO */}
         <div className='nb-header__center'>
           <div className='nb-header__tabs'>
-            <span className='nb-header_tabs-item nb-header_tabs-item--active'>MEMBERS</span>
-            <span className='nb-header_tabs-item nb-header_tabs-item--inactive'>INVITATIONS</span>
+            <span className='nb-header__tabs-item nb-header_tabs-item--active'>MEMBERS</span>
+            <span className='nb-header__tabs-item nb-header_tabs-item--inactive'>INVITATIONS</span>
           </div>
 
           <div className='nb-header__search'>
-            <input type='text' className='nb-header__search-field' placeholder='Where' />
-            <input type='text' className='nb-header__search-field' placeholder='Keywords' />
-            <div className='nb-header__search-icon'>
+            <input
+              type='text'
+              className='nb-header__search-field'
+              placeholder='Where'
+              value={where}
+              onChange={(e) => setWhere(e.target.value)}
+            />
+            <input
+              type='text'
+              className='nb-header__search-field'
+              placeholder='Keywords'
+              value={keywords}
+              onChange={(e) => setKeywords(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            />
+            <div className='nb-header__search-icon cursor-pointer' onClick={handleSearch}>
               <KTSVG path='/media/icons/duotune/general/gen021.svg' className='svg-icon-2' />
             </div>
           </div>
@@ -193,7 +235,11 @@ export function HeaderWrapper() {
               data-kt-menu-flip='bottom'
             >
               <img
-                src={data?.profilePicture  ? `${data.profilePicture}?t=${Date.now()}`  : 'https://placehold.co/32x32'}
+                src={
+                  data?.profilePicture
+                    ? `${data.profilePicture}?t=${random}`
+                    : 'https://placehold.co/32x32'
+                }
                 alt='User'
               />
             </div>

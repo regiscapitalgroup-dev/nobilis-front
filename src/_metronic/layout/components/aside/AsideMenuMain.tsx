@@ -55,6 +55,12 @@ export function AsideMenuMain() {
                   showIcon={true}
                   icon='/media/svg/nobilis/user_nb.svg'
                 />
+                {/* <AsideMenuItem
+                  to='/manage-members'
+                  title='MANAGE MEMBERS'
+                  showIcon={true}
+                  icon='/media/svg/nobilis/user_nb.svg'
+                /> */}
                 {/* Comentados según el código original */}
                 {/* <AsideMenuItem
                   to='/team'

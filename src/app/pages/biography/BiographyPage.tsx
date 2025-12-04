@@ -19,7 +19,7 @@ const socials = [
 ]
 
 const BiographyPage: FC = () => {
-  const {data, refetch} = useUserProfileContext()
+  const {data, refetch, searchParams, loading} = useUserProfileContext()
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const canEditImage = hasPermission(user, Permission.EDIT_PROFILE_IMAGE)
   const fullName = `${user.firstName} ${user.lastName}`
@@ -29,8 +29,8 @@ const BiographyPage: FC = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false)
   const navigate = useHistory()
   const [module, setModule] = useState<string>('')
-  
-
+  const [isImageLoading, setIsImageLoading] = useState<boolean>(true)
+  const searchableUser = !!searchParams.userSelected
   useEffect(() => {
     if (data?.subscription) setIsMember(true)
     if (data?.expertise && data.expertise.length > 0) setIsExpert(true)
@@ -42,13 +42,20 @@ const BiographyPage: FC = () => {
       typeof data.profilePicture === 'string' &&
       data.profilePicture.trim() !== ''
     ) {
+      setIsImageLoading(true)
       setProfileImage(`${data.profilePicture}?t=${Date.now()}`)
-    } else {
-      setProfileImage(toAbsoluteUrl('/media/people3.png'))
     }
   }, [data?.profilePicture])
 
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleImageLoad = () => {
+    setIsImageLoading(false)
+  }
+
+  const handleImageError = () => {
+    setIsImageLoading(false)
+  }
 
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -192,9 +199,16 @@ const BiographyPage: FC = () => {
             onChange={handleImageChange}
           />
 
-          <img src={profileImage} alt='profile' />
+          {isImageLoading && <div className='biography__image-skeleton' />}
+          <img
+            src={profileImage}
+            alt='profile'
+            className={isImageLoading ? 'biography__image--hidden' : ''}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+          />
 
-          {canEditImage && (
+          {canEditImage && !searchableUser && (
             <>
               <a
                 className='biography__edit-btn cursor-pointer'
@@ -208,7 +222,7 @@ const BiographyPage: FC = () => {
           <div className='quote'>
             <span>{data?.picFooter}</span>
           </div>
-          {canEditImage && (
+          {canEditImage && !searchableUser && (
             <div className='biography__edit-container'>
               <button
                 className='biography__edit-link'
@@ -223,7 +237,7 @@ const BiographyPage: FC = () => {
         </div>
       </div>
 
-      <BiographyTabs onTabChange={handleModule} />
+      <BiographyTabs onTabChange={handleModule} searchableUser={searchableUser} />
     </>
   )
 }

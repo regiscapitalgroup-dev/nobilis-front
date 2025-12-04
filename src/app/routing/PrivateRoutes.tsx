@@ -24,7 +24,6 @@ import {PrivacyPage} from '../pages/legal/PrivacyPage'
 import MembershipPaymentWrapper from '../pages/memberships/MembershipPaymentWrapper'
 import PaymentPage from '../pages/memberships/PaymentPage'
 import ProfileBasePage from '../pages/profile/ProfilePage'
-import { AddExperiencePage } from '../pages/teamAndPartners/AddExperiencePage'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
@@ -69,6 +68,9 @@ export function PrivateRoutes() {
         <Route path='/privacy-policy' component={PrivacyPage} />
         <Route path='/my-experience' component={AddExperiencePage} />
         <Route path='/profile' component={ProfileBasePage} />
+        <Route path='/searchable-members' component={MembersWrapper} />
+        <Route path='/member/overview' component={MemberDetailWrapper} />
+        <Route path='/manage-members' component={ManageMemberWrapper} />
         <Redirect to='/error/404' />
       </Switch>
     </Suspense>

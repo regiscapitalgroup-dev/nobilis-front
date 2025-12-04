@@ -1,5 +1,4 @@
-// ExperiencesSection.module.scss - ARCHIVO FINAL
-// Variables exactas del Figma
+// ExperiencesSection.module.scss - ACTUALIZADO
 $experiences-bg-color: #151515;
 $experiences-gradient: linear-gradient(180deg, rgba(164, 131, 96, 0) 0%, rgba(164, 131, 96, 0.11) 85%, rgba(164, 131, 96, 0) 100%);
 $experiences-text-color: white;
@@ -10,24 +9,20 @@ $card-height: 420px;
 $card-overlay-height: 210px;
 $avatar-size: 18px;
 
-// Typography exacta del Figma
 $title-font: 'Cormorant SC', serif;
 $subtitle-font: 'Satoshi', sans-serif;
 $content-font: 'Oswald', sans-serif;
 
-// Breakpoints
 $breakpoint-lg: 1200px;
 $breakpoint-md: 992px;
 $breakpoint-sm: 768px;
 
-// Main wrapper
 .experiencesWrapper {
   width: 100%;
   background: $experiences-bg-color;
   position: relative;
 }
 
-// Background decoration - imagen decorativa detrás del texto
 .backgroundDecoration {
   width: 188px;
   height: 197px;
@@ -35,7 +30,6 @@ $breakpoint-sm: 768px;
   top: 14px;
   position: absolute;
   opacity: 0.04;
- 
   background-size: contain;
   background-repeat: no-repeat;
   pointer-events: none;
@@ -63,7 +57,6 @@ $breakpoint-sm: 768px;
   }
 }
 
-// Header section
 .experiencesHeader {
   align-self: stretch;
   display: flex;
@@ -104,7 +97,13 @@ $breakpoint-sm: 768px;
   word-wrap: break-word;
 }
 
-// Cards grid (scroll horizontal)
+.experiencesSeparator {
+  width: 100%;
+  height: 0.5px;
+  background-color: #494949;
+  margin: 10px 0;
+}
+
 .experiencesGrid {
   align-self: stretch;
   display: flex;
@@ -115,18 +114,30 @@ $breakpoint-sm: 768px;
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  padding: 20px 0px 20px 0px;
 
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-// Experience card
 .experienceCard {
   width: $card-width;
   height: $card-height;
   position: relative;
   flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.35s ease;
+
+  &:hover {
+    width: 433px; 
+    height: 456px; 
+    margin-left: -16.5px; 
+    margin-right: -16.5px;
+    margin-top: -18px; 
+    z-index: 10;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+  }
 
   @media (max-width: $breakpoint-md) {
     width: 350px;
@@ -145,16 +156,24 @@ $breakpoint-sm: 768px;
   position: absolute;
   left: 0;
   top: 0;
+  overflow: hidden; 
 }
 
 .experienceImage {
-  width: $card-width;
-  height: $card-height;
+  // width: $card-width;
+  // height: $card-height;
+  width: 100%;
+  height: 100%;
   position: absolute;
   left: 0;
   top: 0;
   object-fit: cover;
   background: radial-gradient(ellipse 61.38% 61.38% at 50% 50%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.35) 100%);
+  transition: transform 0.5s ease;
+
+  .experienceCard:hover & {
+    transform: scale(1.05);
+  }
 
   @media (max-width: $breakpoint-md) {
     width: 350px;
@@ -168,7 +187,7 @@ $breakpoint-sm: 768px;
 }
 
 .experienceOverlay {
-  width: $card-width;
+  width: 100%;
   height: $card-overlay-height;
   padding: 20px;
   position: absolute;
@@ -179,7 +198,12 @@ $breakpoint-sm: 768px;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  gap: 5px;
+  gap: 15px;
+  transition: opacity 0.3s ease;
+
+  .experienceCard:hover & {
+    opacity: 0;
+  }
 
   @media (max-width: $breakpoint-md) {
     width: 350px;
@@ -196,7 +220,6 @@ $breakpoint-sm: 768px;
   }
 }
 
-// Badge "New"
 .experienceBadge {
   display: flex;
   justify-content: flex-start;
@@ -215,14 +238,34 @@ $breakpoint-sm: 768px;
   word-wrap: break-word;
 }
 
-// Authors section
+.experienceInvitedBy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: -10px;
+}
+
+.experienceInvitedByText {
+  color: $experiences-text-color;
+  font-size: 12px;
+  font-family: $subtitle-font;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 22.2px;
+  letter-spacing: 1.8px;
+  word-wrap: break-word;
+}
+
 .experienceAuthors {
   padding-top: 5px;
   padding-bottom: 5px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: -10px;
 }
 
 .experienceAuthor {
@@ -249,7 +292,6 @@ $breakpoint-sm: 768px;
   word-wrap: break-word;
 }
 
-// Experience title
 .experienceTitle {
   align-self: stretch;
   text-align: center;
@@ -271,164 +313,220 @@ $breakpoint-sm: 768px;
   }
 }
 
-// Agregar estos estilos al final de tu archivo ExperiencesSection.module.scss
-
-// Separador entre header y carrusel
-.experiencesSeparator {
+.experienceHoverOverlay {
+  // width: $card-width;
+  // height: $card-height;
   width: 100%;
-  height: 0.5px;
-  background-color: #494949;
-  margin: 10px 0;
-}
-
-// Wrapper del carrusel con controles
-.carouselWrapper {
-  position: relative;
-  width: 100%;
+  height: 100%; 
+  padding: 30px 20px; 
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.50);
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 20px;
-}
+  opacity: 0;
+  transition: opacity 0.3s ease;
 
-// Botones de navegación del carrusel
-.carouselButton {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10;
-  backdrop-filter: blur(10px);
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  &:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-
-  .svg-icon-2 {
-    color: white;
-    width: 20px;
-    height: 20px;
+  .experienceCard:hover & {
+    opacity: 1;
   }
 
   @media (max-width: $breakpoint-md) {
-    width: 40px;
-    height: 40px;
-    
-    .svg-icon-2 {
-      width: 16px;
-      height: 16px;
+    // width: 350px;
+    // height: 370px;
+    // padding: 15px;
+    // gap: 20px;
+    padding: 15px;
+    gap: 20px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 12px;
+    gap: 15px;
+    // width: 320px;
+    // height: 340px;
+    // padding: 12px;
+    // gap: 15px;
+  }
+}
+
+.experienceHoverInvitedBy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: -15px;
+}
+
+.experienceHoverInvitedByText {
+  color: $experiences-text-color;
+  font-size: 12px;
+  font-family: $subtitle-font;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 22.2px;
+  letter-spacing: 1.8px;
+  word-wrap: break-word;
+}
+
+.experienceHoverAuthors {
+  align-self: stretch;
+  padding-top: 0; 
+  padding-bottom: 0; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+  svg {
+    align-self: center;
+    flex-shrink: 0;
+  }
+}
+
+.experienceHoverAuthor {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.experienceHoverAuthorAvatar {
+  width: $avatar-size;
+  height: $avatar-size;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.experienceHoverAuthorName {
+  text-align: center;
+  color: $experiences-text-color;
+  font-size: 12px;
+  font-family: $title-font;
+  font-weight: 500;
+  line-height: 22.2px;
+  word-wrap: break-word;
+}
+
+.experienceHoverTitle {
+  align-self: stretch;
+  text-align: center;
+  color: $experiences-text-color;
+  font-size: 22px;
+  font-family: $content-font;
+  font-weight: 500;
+  line-height: 26.4px;
+  word-wrap: break-word;
+  margin-bottom: -20px;
+
+  @media (max-width: $breakpoint-md) {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+.experienceCategories {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.experienceCategoryTag {
+  opacity: 0.65;
+  color: $experiences-text-color;
+  font-size: 10px;
+  font-family: $subtitle-font;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 18.5px;
+  letter-spacing: 1.5px;
+  word-wrap: break-word;
+}
+
+.experienceDescription {
+  align-self: stretch;
+  // height: 67px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.80);
+  font-size: 12px;
+  font-family: $subtitle-font;
+  font-weight: 300;
+  line-height: 16.8px;
+  word-wrap: break-word;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  // display: -webkit-box;
+  // -webkit-line-clamp: 4;
+  // -webkit-box-orient: vertical;
+}
+
+.experienceInfoRow {
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.experienceInfoItem {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    path {
+      stroke: white;
     }
   }
 }
 
-.carouselButtonPrev {
-  left: -25px;
-  
-  @media (max-width: $breakpoint-lg) {
-    left: -20px;
-  }
-  
-  @media (max-width: $breakpoint-md) {
-    left: -20px;
-  }
+.experienceInfoText {
+  opacity: 0.65;
+  color: $experiences-text-color;
+  font-size: 10px;
+  font-family: $subtitle-font;
+  font-weight: 300;
+  line-height: 14px;
+  word-wrap: break-word;
 }
 
-.carouselButtonNext {
-  right: -25px;
-  
-  @media (max-width: $breakpoint-lg) {
-    right: -20px;
-  }
-  
-  @media (max-width: $breakpoint-md) {
-    right: -20px;
-  }
-}
-
-// Actualizar el grid para comportamiento de carrusel
-.experiencesGrid {
-  align-self: stretch;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: $experiences-gap;
-  overflow-x: hidden; // Cambiar de auto a hidden
-  overflow-y: hidden;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  transition: transform 0.3s ease;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-// Indicadores de dots
-.carouselDots {
+.experienceLearnMore {
+  padding-top: 10px;
+  padding-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  margin-top: 20px;
-  align-self: stretch;
-}
-
-.carouselDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.3);
+  gap: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.6);
-    transform: scale(1.2);
-  }
-
-  &.active {
-    background: white;
-    transform: scale(1.3);
+    opacity: 0.8;
   }
 }
 
-// Mejorar responsive para el carrusel
-@media (max-width: $breakpoint-lg) {
-  .carouselWrapper {
-    gap: 15px;
-  }
-  
-  .experiencesGrid {
-    gap: 15px;
-  }
-}
-
-@media (max-width: $breakpoint-md) {
-  .carouselWrapper {
-    gap: 10px;
-  }
-  
-  .experiencesGrid {
-    gap: 10px;
-  }
-  
-  .carouselDots {
-    margin-top: 15px;
-  }
+.experienceLearnMoreText {
+  text-align: center;
+  color: $experiences-text-color;
+  font-size: 12px;
+  font-family: $content-font;
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 22.2px;
+  word-wrap: break-word;
 }

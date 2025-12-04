@@ -71,15 +71,13 @@ const ROUTE_LAYOUT_MAP: Record<string, LayoutConfig> = {
   '/terms-conditions': LAYOUT_CONFIGS.HEADER_FOOTER_,
   '/privacy-policy': LAYOUT_CONFIGS.HEADER_FOOTER_,
   '/membership/payment': LAYOUT_CONFIGS.MINIMAL,
+  '/searchable-members': LAYOUT_CONFIGS.HEADER_ONLY,
+  '/member/overview': LAYOUT_CONFIGS.HEADER_FOOTER,
+  '/manage-members': LAYOUT_CONFIGS.PROFILE,
 
 };
 
 export const getLayoutConfig = (pathname: string, isAdmin: boolean): LayoutConfig => {
-
-  if (pathname === '/biography' && isAdmin) {
-
-    return isAdmin ? LAYOUT_CONFIGS.HEADER_FOOTER_ADMIN : LAYOUT_CONFIGS.HEADER_FOOTER;
-  }
 
   if (ROUTE_LAYOUT_MAP[pathname]) {
     return ROUTE_LAYOUT_MAP[pathname];

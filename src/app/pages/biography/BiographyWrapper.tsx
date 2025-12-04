@@ -5,12 +5,13 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {UserModel} from '../../modules/auth/models/UserModel'
 import {getLayoutConfig} from '../../config/routeLayouts'
+import {UserRole} from '../../constants/roles'
 
 const BiographyWrapper: FC = () => {
   const {config, setLayout} = useLayout()
   const restoreRef = useRef(config)
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
-  const isAdmin = user?.role === 'ADMIN'
+  const isAdmin = user?.role === UserRole.ADMIN
   useEffect(() => {
     restoreRef.current = config
     const layoutConfig = getLayoutConfig('/biography', isAdmin)

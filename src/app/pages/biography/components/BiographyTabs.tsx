@@ -7,7 +7,6 @@ import {ExpertiseTab} from './tabs/ExpertiseTab'
 import {useUserProfileContext} from '../../../context/UserProfileContext'
 import InfoAdminTab from './tabs/InfoAdminTab'
 import InfoFamilyTab from './tabs/InfoFamilyTab'
-import {useIntroduction} from '../../../hooks/introduction/useIntroduction'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../setup'
 import {UserModel} from '../../../modules/auth/models/UserModel'
@@ -18,6 +17,7 @@ import {useHistory} from 'react-router-dom'
 
 interface BiographyTabsProps {
   onTabChange?: (tabId: string) => void
+  searchableUser: boolean
 }
 
 const tabs = [
@@ -28,12 +28,11 @@ const tabs = [
   {id: 'expertise', label: 'Expertise'},
 ]
 
-const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
+const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange, searchableUser}) => {
   const {data} = useUserProfileContext()
-  /* const {collection} = useIntroduction() */
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const canEditBio = hasPermission(user, Permission.EDIT_BIOGRAPHY)
-  const [activeTab, setActiveTab] = useState(canEditBio ? 'ini' : 'bio')
+  const [activeTab, setActiveTab] = useState(canEditBio &&  !searchableUser ? 'ini' : 'bio')
   const navigate = useHistory()
 
   const getYouTubeId = (url: string) => {
@@ -80,7 +79,7 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
             </div>
           ))}
 
-          {canEditBio && (
+          {canEditBio && !searchableUser && (
             <div className='bio-tabs-actions-wrapper'>
               <button
                 className='bio-tabs__confidential-btn'
@@ -118,7 +117,7 @@ const BiographyTabs: React.FC<BiographyTabsProps> = ({onTabChange}) => {
           {activeTab === 'recognition' && <RecognitionTab />}
           {activeTab === 'expertise' && <ExpertiseTab />}
 
-          {activeTab === 'ini' && (
+          {activeTab === 'ini' &&  !searchableUser && (
             <div className='bio-tabs__panel--two-col'>
               <InfoAdminTab />
               <InfoFamilyTab />

@@ -1,14 +1,15 @@
-/* eslint-disable react/jsx-no-target-blank */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {FC} from 'react'
-import {Link} from 'react-router-dom'
 import clsx from 'clsx'
 import {useLayout} from '../../core'
 import {AsideMenu} from './AsideMenu'
 
 const AsideDefault: FC = () => {
   const {config, classes} = useLayout()
-  const {aside} = config
+  const {aside} = config;
+  
+  if (!aside.display) {
+    return null
+  }
 
   return (
     <div

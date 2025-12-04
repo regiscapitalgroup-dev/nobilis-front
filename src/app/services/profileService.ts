@@ -52,8 +52,8 @@ export async function updateUserProfile(
     return data;
 }
 
-export const getProfileByUser = async () => {
-    const response = await apiClient.get('/full-profile/');
+export const getProfileByUser = async (user?:string) => {
+    const response = await apiClient.get(`/full-profile/${user ? `${user}/` : ''}`);
     return response.data;
 };
 

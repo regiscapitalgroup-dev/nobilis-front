@@ -1,22 +1,32 @@
-// context/UserProfileContext.tsx
-import {createContext, useContext} from 'react'
+import {createContext, useContext, useState} from 'react'
 import {useUserProfile} from '../hooks/profile/useProfile'
 import {FullUserProfileModel} from '../pages/biography/models/FullUserProfileModel'
 
+interface Params {
+  userSelected?: string
+}
 interface UserProfileState {
   data?: FullUserProfileModel | null
   loading: boolean
   error?: Error | null
   refetch: () => Promise<void>
+  searchParams: Params
+  setSearchParams: React.Dispatch<React.SetStateAction<Params>>
 }
 
 const UserProfileContext = createContext<UserProfileState | undefined>(undefined)
 
 export const UserProfileProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
-  const {data, error, loading, refetch} = useUserProfile()
+  const [searchParams, setSearchParams] = useState<Params>({
+    userSelected: '',
+  })
+
+  const {data, error, loading, refetch} = useUserProfile(searchParams.userSelected)
 
   return (
-    <UserProfileContext.Provider value={{data, loading, error, refetch}}>
+    <UserProfileContext.Provider
+      value={{data, loading, error, refetch, searchParams, setSearchParams}}
+    >
       {children}
     </UserProfileContext.Provider>
   )
