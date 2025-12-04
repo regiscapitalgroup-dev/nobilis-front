@@ -38,7 +38,6 @@ export function CategoryAutocompleteField({
         const fetchData = async () => {
             const categories = await getCategories();
             setMockCategories(categories.results);
-            console.log(categories);
         }
         fetchData();
     },[])

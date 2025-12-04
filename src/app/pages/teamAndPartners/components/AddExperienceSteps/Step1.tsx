@@ -105,8 +105,8 @@ const Step1: FC<Props> = ({ onNextStep }) => {
                 </div>
 
                 <div className="tap-add-experience-footer">
-                    <div className="tap-add-experience-btn">
-                        <div role='button' onClick={async () => await onNextStep()} className="tap-add-experience-btn-text tap-flex-center">
+                    <div className="tap-add-experience-btn" role='button' onClick={async () => await onNextStep()}>
+                        <div className="tap-add-experience-btn-text tap-flex-center">
                             Create experience &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
                         </div>
                     </div>

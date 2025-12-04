@@ -7,6 +7,7 @@ import { useLayout } from "../../../_metronic/layout/core";
 import * as Yup from 'yup'
 import { rangeSchema } from "../../helpers/FormatInputs";
 import { showErrorAlert } from "../../helpers/alert";
+import { RequiredInfoModal } from "./components/RequiredInfoModal";
 
 export type Props = {
     step: number;
@@ -18,6 +19,8 @@ export type Props = {
 const AddExperiencePage: FC = () => {
     const [step, setStep] = useState(1);
     const formikRef = useRef();
+    const [showModal, setShowModal] = useState(false);
+    const [messageModal, setMessageModal] = useState("");
 
     const { config, setLayout } = useLayout()
     const restoreRef = useRef(config)
@@ -192,7 +195,7 @@ const AddExperiencePage: FC = () => {
         3: ["confidentialityType","policyCheck","policyCancelationCheck"],
     };
 
-    return (
+    return (<>
         <Formik innerRef={formikRef} initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
             {(formik) => {
 
@@ -225,7 +228,6 @@ const AddExperiencePage: FC = () => {
                 };
 
                 const nextStep = async () => {
-                    console.log('campos del formulario',formik.values);
                     formik.validateForm();
                     const fieldsToValidate = stepFields[step];
                     const errors = await formik.validateForm();
@@ -236,11 +238,8 @@ const AddExperiencePage: FC = () => {
                     if (stepErrors.length === 0) {
                         setStep(step + 1);
                     } else {
-                        showErrorAlert({
-                            title: 'Please fix the errors before proceeding',
-                            message: 'Some fields are invalid or incomplete.',
-                            confirmButtonText: 'OK',
-                        });
+                        setMessageModal(`Please enter '${String(stepErrors[0]).replaceAll('_',' ')}' to save your progress.`);
+                        setShowModal(true);
                         setTouchedForStep();
                     }
                 };
@@ -254,6 +253,12 @@ const AddExperiencePage: FC = () => {
                 </Form>);
             }}
         </Formik>
+        <RequiredInfoModal
+            open={showModal}
+            message={messageModal}
+            onClose={() => setShowModal(false)}
+            />
+        </>
     );
 }
 

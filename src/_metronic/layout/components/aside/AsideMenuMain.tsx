@@ -8,6 +8,7 @@ import {Permission} from '../../../../app/constants/roles'
 export function AsideMenuMain() {
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const canWaitList = hasPermission(user, Permission.SEE_MENU_ITEM_WL)
+  const canMenuMyHost = hasPermission(user, Permission.MY_HOSTING)
 
   return (
     <div className='nb-aside-menu'>
@@ -22,12 +23,6 @@ export function AsideMenuMain() {
               <AsideMenuItem
                 to='/waitinglist'
                 title='users waitlist'
-                showIcon={true}
-                icon='/media/svg/nobilis/user_nb.svg'
-              />
-              <AsideMenuItem
-                to='/my-experience'
-                title='My Experience'
                 showIcon={true}
                 icon='/media/svg/nobilis/user_nb.svg'
               />
@@ -177,6 +172,23 @@ export function AsideMenuMain() {
               </div>
             </div> */}
           </>
+        )}
+
+        {/* Profile partner y team */}
+        {canMenuMyHost && (
+          <div className='nb-menu-section'>
+            <div className='nb-menu-section-header'>
+              <span className='nb-menu-section-title'>MY HOSTINGS</span>
+            </div>
+            <div className='nb-menu-section-content'>
+              <AsideMenuItem
+                to='/my-experience'
+                title='My Experience'
+                showIcon={true}
+                icon='/media/svg/nobilis/user_nb.svg'
+              />
+            </div>
+          </div>
         )}
       </div>
 

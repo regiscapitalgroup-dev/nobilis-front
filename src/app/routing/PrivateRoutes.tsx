@@ -37,6 +37,11 @@ export function PrivateRoutes() {
   useEffect(() => {
     if (!user) return
 
+    if (user.role === UserRole.PROFILE_MANAGEMENT) {
+      history.replace('/my-experience')
+      return
+    }
+
     if (user.role === UserRole.STAFF_USER) {
       history.replace('/waitinglist')
       return
@@ -46,11 +51,13 @@ export function PrivateRoutes() {
       history.replace(subscription ? '/biography' : '/plans')
       return
     }
+
   }, [user, subscription, history])
 
   return (
     <Suspense fallback={<FallbackView />}>
       <Switch>
+        <Route path='/my-experience' component={AddExperiencePage} exact />
         <Route path='/plans' component={DashboardWrapper} />
         <Route path='/membership/payment' component={MembershipPaymentWrapper} />
         <Route path='/payment' component={PaymentPage} />
@@ -70,7 +77,6 @@ export function PrivateRoutes() {
         <Route path='/waitinglist' component={WaitingListWrapper} />
         <Route path='/terms-conditions' component={TermsPage} />
         <Route path='/privacy-policy' component={PrivacyPage} />
-        <Route path='/my-experience' component={AddExperiencePage} />
         <Route path='/profile' component={ProfileBasePage} />
         <Route path='/searchable-members' component={MembersWrapper} />
         <Route path='/member/overview' component={MemberDetailWrapper} />
