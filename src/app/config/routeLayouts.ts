@@ -65,7 +65,7 @@ const ROUTE_LAYOUT_MAP: Record<string, LayoutConfig> = {
   'payment/expert/success': LAYOUT_CONFIGS.HEADER_FOOTER_,
   '/waitinglist': LAYOUT_CONFIGS.PROFILE,
   '/my-experience': LAYOUT_CONFIGS.PROFILE,
-  '/biography': LAYOUT_CONFIGS.HEADER_FOOTER,
+  '/biography': LAYOUT_CONFIGS.PROFILE,
   '/expert': LAYOUT_CONFIGS.HEADER_FOOTER_,
   '/dashboard': LAYOUT_CONFIGS.FULL_DASHBOARD,
   '/terms-conditions': LAYOUT_CONFIGS.HEADER_FOOTER_,

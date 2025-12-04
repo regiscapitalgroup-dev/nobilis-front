@@ -104,7 +104,7 @@ export default function ProfileBasePage() {
     setProfileData(finalData)
 
     const payload = mapToApiPayload(finalData, data.photo ?? null)
-    console.log('PAYLOAD', payload)
+    
     await updateUserProfile(payload)
   }
 

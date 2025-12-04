@@ -4,8 +4,8 @@ import * as Yup from 'yup'
 import {BiographyModel} from '../models/BiographyModel'
 import {updateUserBiography} from '../../../services/biographyService'
 import {useHistory} from 'react-router-dom'
-import { useUserProfileContext } from '../../../context/UserProfileContext'
-import { useAlert } from '../../../hooks/utils/useAlert'
+import {useUserProfileContext} from '../../../context/UserProfileContext'
+import {useAlert} from '../../../hooks/utils/useAlert'
 
 const MAX_BIO_LENGTH = 1000
 const MAX_URLS = 3
@@ -13,7 +13,25 @@ const MAX_URLS = 3
 const validationSchema = Yup.object({
   biography: Yup.string().max(MAX_BIO_LENGTH, 'Maximum 1000 characters'),
   urls: Yup.array()
-    .of(Yup.string().url('Must be a valid URL'))
+    .of(
+      Yup.string()
+        .transform((value) => {
+          if (!value) return value
+
+          let normalizedUrl = String(value).trim()
+
+          if (
+            normalizedUrl &&
+            !normalizedUrl.startsWith('http://') &&
+            !normalizedUrl.startsWith('https://')
+          ) {
+            normalizedUrl = `https://${normalizedUrl}`
+          }
+
+          return normalizedUrl
+        })
+        .url('Must be a valid URL')
+    )
     .max(MAX_URLS, `You can only add up to ${MAX_URLS} URLs`),
 })
 
@@ -30,10 +48,25 @@ const BiographyForm: FC = () => {
   const handleSubmit = async (values: BiographyModel) => {
     try {
       setLoading(true)
+      const normalizedUrls = values.urls
+        .filter((url) => url.trim() !== '')
+        .map((url) => {
+          let normalizedUrl = String(url ?? '').trim()
+
+          if (
+            normalizedUrl &&
+            !normalizedUrl.startsWith('http://') &&
+            !normalizedUrl.startsWith('https://')
+          ) {
+            normalizedUrl = `https://${normalizedUrl}`
+          }
+
+          return normalizedUrl
+        })
 
       const payload = {
         biography: values.biography,
-        urls: values.urls.filter((url) => url.trim() !== ''),
+        urls: normalizedUrls,
       }
 
       await updateUserBiography(payload)
@@ -122,7 +155,11 @@ const BiographyForm: FC = () => {
 
             {/* Actions */}
             <div className='form-actions'>
-              <button type='button' className='cancel-btn' onClick={() => navigate.push('/biography')}>
+              <button
+                type='button'
+                className='cancel-btn'
+                onClick={() => navigate.push('/biography')}
+              >
                 Cancel
               </button>
               <button

@@ -5,7 +5,7 @@ import {RecognitionModel} from '../models/RecognitionModel'
 import {updateUserRecognition} from '../../../services/recognitionService'
 import {useHistory} from 'react-router-dom'
 import {useUserProfileContext} from '../../../context/UserProfileContext'
-import { useAlert } from '../../../hooks/utils/useAlert'
+import {useAlert} from '../../../hooks/utils/useAlert'
 
 const RecognitionForm: FC = () => {
   const {refetch} = useUserProfileContext()
@@ -21,19 +21,86 @@ const RecognitionForm: FC = () => {
     recognitions: Yup.array().of(
       Yup.object().shape({
         description: Yup.string().max(500, 'Max 500 characters'),
-        link: Yup.string().url('Invalid URL').nullable(),
+        link: Yup.string()
+          .transform((value) => {
+            if (!value) return value
+            let normalizedUrl = String(value).trim()
+            if (
+              normalizedUrl &&
+              !normalizedUrl.startsWith('http://') &&
+              !normalizedUrl.startsWith('https://')
+            ) {
+              normalizedUrl = `https://${normalizedUrl}`
+            }
+            return normalizedUrl
+          })
+          .url('Invalid URL')
+          .nullable(),
       })
     ),
     links: Yup.array().of(
       Yup.object().shape({
-        url: Yup.string().url('Invalid URL').nullable(),
+        url: Yup.string()
+          .transform((value) => {
+            if (!value) return value
+            let normalizedUrl = String(value).trim()
+            if (
+              normalizedUrl &&
+              !normalizedUrl.startsWith('http://') &&
+              !normalizedUrl.startsWith('https://')
+            ) {
+              normalizedUrl = `https://${normalizedUrl}`
+            }
+            return normalizedUrl
+          })
+          .url('Invalid URL')
+          .nullable(),
       })
     ),
   })
 
   const handleSubmit = async (values: RecognitionModel) => {
     setLoading(true)
-    await updateUserRecognition(values)
+
+    const normalizedRecognitions = values.recognitions.map((recognition) => ({
+      description: recognition.description || '',
+      link: recognition.link
+        ? (() => {
+            let normalizedUrl = String(recognition.link).trim()
+            if (
+              normalizedUrl &&
+              !normalizedUrl.startsWith('http://') &&
+              !normalizedUrl.startsWith('https://')
+            ) {
+              normalizedUrl = `https://${normalizedUrl}`
+            }
+            return normalizedUrl
+          })()
+        : '',
+    }))
+
+    const normalizedLinks = values.links.map((link) => ({
+      url: link.url
+        ? (() => {
+            let normalizedUrl = String(link.url).trim()
+            if (
+              normalizedUrl &&
+              !normalizedUrl.startsWith('http://') &&
+              !normalizedUrl.startsWith('https://')
+            ) {
+              normalizedUrl = `https://${normalizedUrl}`
+            }
+            return normalizedUrl
+          })()
+        : '',
+    }))
+
+    const payload = {
+      recognitions: normalizedRecognitions,
+      links: normalizedLinks,
+    }
+
+    await updateUserRecognition(payload)
       .then(async () => {
         await refetch()
         navigate.push('/biography')
