@@ -24,6 +24,10 @@ import {PrivacyPage} from '../pages/legal/PrivacyPage'
 import MembershipPaymentWrapper from '../pages/memberships/MembershipPaymentWrapper'
 import PaymentPage from '../pages/memberships/PaymentPage'
 import ProfileBasePage from '../pages/profile/ProfilePage'
+import { AddExperiencePage } from '../pages/teamAndPartners/AddExperiencePage'
+import { MembersWrapper } from '../pages/members/MembersWrapper'
+import { MemberDetailWrapper } from '../pages/members/MemberDetailWrapper'
+import { ManageMemberWrapper } from '../pages/manageMembers/ManageMemberWrapper'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
