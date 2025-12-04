@@ -1,0 +1,1436 @@
+.tap-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* estilos para add experience */
+.tap-add-experience-wrapper {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.tap-add-experience-container {
+  width: 630px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+.tap-add-experience-title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-add-experience-title {
+  width: 630px;
+  color: #151515;
+  font-size: 40px;
+  font-family: "Oswald";
+  font-weight: 500;
+  line-height: 48px;
+}
+
+.tap-add-experience-section {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.tap-add-experience-step {
+  color: #b4b4b4;
+  font-size: 12px;
+  font-family: "Satoshi";
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 22px;
+  letter-spacing: 1.8px;
+}
+
+.tap-add-experience-divider {
+  width: 100%;
+  height: 0;
+  outline: 1px #e9e9e9 solid;
+}
+
+.tap-add-experience-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: stretch;
+}
+
+.tap-add-experience-subblock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-add-experience-subtitle {
+  text-transform: uppercase;
+  color: #151515;
+  font-size: 12px;
+  font-family: "Satoshi";
+  font-weight: 900;
+  letter-spacing: 1.8px;
+}
+
+.tap-add-experience-text {
+  color: #808080;
+  font-size: 12px;
+  font-family: "Satoshi";
+  font-weight: 300;
+  line-height: 16.8px;
+}
+
+.tap-add-experience-image {
+  height: 354px;
+  width: 100%;
+}
+
+.tap-add-experience-guide-box {
+  background: white;
+  padding: 10px 20px;
+  outline: 1px #e9e9e9 solid;
+}
+
+.tap-add-experience-guide-text {
+  font-size: 12px;
+  font-family: "Satoshi";
+  font-weight: 300;
+  color: #151515;
+}
+
+.tap-add-experience-guide-link {
+  text-decoration: underline;
+}
+
+.tap-add-experience-radios {
+  display: inline-flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.tap-add-experience-radio-card {
+  flex: 1;
+  padding: 20px;
+  background: white;
+  outline: 1px #e9e9e9 solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tap-add-experience-radio-left,
+.tap-add-experience-radio-option {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.tap-add-experience-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px #dfdfdf solid;
+  position: relative;
+}
+
+.tap-add-experience-radio.selected {
+  border-color: #460107;
+
+  &::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: #460107;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+  }
+}
+
+.tap-add-experience-radio-label {
+  font-size: 12px;
+  font-family: "Satoshi";
+  font-weight: 300;
+  color: #151515;
+}
+
+.tap-add-experience-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tap-add-experience-btn {
+  background: #151515;
+  padding: 10px 20px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.tap-add-experience-btn-text {
+  color: white;
+  font-size: 12px;
+  font-family: "Oswald";
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* estilos para los radio buttons */
+/* Ocultamos el input real */
+.tap-host-radio-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Cuando está checked, activamos el “inner circle” */
+.tap-host-radio-input:checked + .tap-host-radio .tap-host-radio-inner {
+  opacity: 1;
+}
+
+/* Tu radio visual */
+.tap-host-radio {
+  width: 18px;
+  height: 18px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tap-host-radio-outer {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #dfdfdf;
+}
+
+.tap-host-radio-inner {
+  width: 10px;
+  height: 10px;
+  background: #460107;
+  border-radius: 50%;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* Para el radio seleccionado original */
+.tap-host-radio-input:checked + .tap-host-radio .tap-host-radio-outer {
+  border-color: #460107;
+}
+
+.tap-host-option {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.tap-host-option-label {
+  font-size: 12px;
+  color: #151515;
+  font-family: "Satoshi";
+}
+
+/* estilos para la seccion de experiences pasts */
+.tap-host-secction-experiences-past-wrapper {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-host-secction-experiences-past-title {
+  font-size: 12px;
+  color: #262626;
+  font-family: Satoshi;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  line-height: 22px;
+}
+
+.tap-host-secction-experiences-past-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-host-secction-experiences-past-card {
+  width: 738px;
+  display: flex;
+  background: white;
+  outline: 1px #e9e9e9 solid;
+  max-height: 254px;
+}
+
+/* ---------- LEFT IMAGE ---------- */
+.tap-host-secction-experiences-past-img-wrapper {
+  max-width: 240px;
+  height: auto;
+  position: relative;
+  width: 100%;
+  max-height: 254px;
+  overflow: hidden;
+}
+
+.tap-host-secction-experiences-past-img {
+  width: 240px;
+  height: 254px;
+}
+
+.tap-host-secction-experiences-past-img-overlay {
+  position: absolute;
+  width: 240px;
+  height: 210px;
+  left: 0;
+  top: 44px;
+  padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+  text-align: center;
+}
+
+.tap-host-secction-experiences-past-img-title {
+  font-size: 22px;
+  font-family: Oswald;
+  font-weight: 500;
+  color: white;
+  line-height: 26px;
+}
+
+/* ---------- DETAILS ---------- */
+.tap-host-secction-experiences-past-details {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  outline: 1px #e9e9e9 solid;
+  justify-content: space-between;
+}
+
+/* HOST LIST */
+.tap-host-secction-experiences-past-host-group {
+  display: flex;
+  gap: 30px;
+}
+
+.tap-host-secction-experiences-past-host {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tap-host-secction-experiences-past-host-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.tap-host-secction-experiences-past-host-name {
+  font-size: 12px;
+  color: #151515;
+  font-family: "Cormorant SC";
+  line-height: 22px;
+}
+
+/* ---------- INFO BOX ---------- */
+.tap-host-secction-experiences-past-info-box {
+  outline: 1px #e9e9e9 solid;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tap-host-secction-experiences-past-info-row {
+  display: flex;
+  gap: 20px;
+}
+
+.tap-host-secction-experiences-past-info-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tap-host-secction-experiences-past-info-text {
+  font-size: 12px;
+  color: #151515;
+  opacity: 0.65;
+  font-family: Satoshi;
+}
+
+/* ---------- BOTTOM ACTIONS ---------- */
+.tap-host-secction-experiences-past-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tap-host-secction-experiences-past-guests {
+  display: flex;
+  gap: 5px;
+  outline: 1px #e9e9e9 solid;
+  padding: 5px 10px;
+}
+
+.tap-host-secction-experiences-past-guests-text {
+  font-size: 10px;
+  opacity: 0.65;
+  @extend .tap-flex-center;
+}
+
+.tap-host-secction-experiences-past-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.tap-host-secction-experiences-past-btn-view {
+  font-family: Oswald;
+  font-size: 12px;
+  text-transform: uppercase;
+  @extend .tap-flex-center;
+  span {
+    border-bottom: 1px #151515 solid;
+  }
+}
+
+.tap-host-secction-experiences-past-btn-recreate {
+  padding: 10px 20px;
+  outline: 1px #151515 solid;
+  font-family: Oswald;
+  text-transform: uppercase;
+}
+
+.tap-host-secction-experiences-past-icon {
+  @extend .tap-flex-center;
+}
+
+/* experience step 2 */
+.tap-select-add-experience {
+  border: 0px;
+  height: auto;
+  padding: 5px 20px;
+  border-color: transparent;
+}
+
+.tap-add-experience-input-category {
+  height: 40px !important;
+}
+
+/* =============== BASE WRAPPER =============== */
+.tap-add-experience-2-wrapper-container {
+    width: 100%;
+    height: 100%;
+    // @extend .tap-flex-center;
+}
+
+.tap-add-experience-2-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  max-width: 700px;
+}
+
+/* =============== TITLES / HEADINGS =============== */
+
+.tap-add-experience-2-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-add-experience-2-title {
+  width: 630px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 40px;
+  font-weight: 500;
+  color: #151515;
+}
+
+.tap-add-experience-2-section-heading {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: #151515;
+  margin-bottom: 5px;
+}
+
+/* =============== STEP HEADER =============== */
+
+.tap-add-experience-2-step-header {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.tap-add-experience-2-step-count {
+  color: #B4B4B4;
+  font-size: 12px;
+  font-family: 'Satoshi';
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+}
+
+.tap-add-experience-2-divider {
+  width: 100%;
+  height: 0;
+  outline: 1px solid #E9E9E9;
+  outline-offset: -0.5px;
+}
+
+/* =============== GENERIC SECTION WRAPPER =============== */
+
+.tap-add-experience-2-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tap-add-experience-2-section-text {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: #151515;
+}
+
+/* =============== FORM LABELS =============== */
+
+.tap-add-experience-2-label {
+  color: #808080;
+  font-size: 10px;
+  font-family: 'Satoshi';
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* =============== INPUT LINES =============== */
+
+.tap-add-experience-2-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-add-experience-2-input-line {
+  height: 48px;
+  border-bottom: 1px solid #D7D7D7;
+  display: flex;
+  align-items: center;
+}
+
+.tap-add-experience-2-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Satoshi';
+  font-size: 14px;
+  color: #151515;
+}
+
+/* =============== INPUT FOOTER (hint + counter) =============== */
+
+.tap-add-experience-2-input-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tap-add-experience-2-input-hint,
+.tap-add-experience-2-input-counter {
+  font-family: 'Satoshi';
+  font-size: 10px;
+  font-style: italic;
+  font-weight: 400;
+  color: #B4B4B4;
+}
+
+/* =============== DESCRIPTIVE TEXTS =============== */
+
+.tap-add-experience-2-description {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  color: #808080;
+}
+
+.tap-add-experience-2-description-under {
+  font-family: 'Satoshi';
+  font-size: 10px;
+  color: #B4B4B4;
+  font-style: italic;
+}
+
+/* =============== RADIO BUTTONS (Availability, Audience, etc.) =============== */
+
+.tap-add-experience-2-radio-row {
+  display: flex;
+  gap: 10px;
+}
+
+.tap-add-experience-2-radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-add-experience-2-radio-card {
+//   padding: 20px;
+  outline: 1px solid #E9E9E9;
+  outline-offset: -1px;
+  background: white;
+  display: flex;
+  align-items: center;
+//   gap: 20px;
+  cursor: pointer;
+}
+
+.tap-add-experience-2-radio-card--selected {
+  outline: 1px solid #808080;
+  box-shadow: 0px 2px 2px rgba(0,0,0,0.1);
+}
+
+.tap-add-experience-2-radio-unselected {
+  border: 2px solid #DFDFDF;
+}
+
+.tap-add-experience-2-radio-label {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  font-weight: 300;
+  color: #151515;
+}
+
+.textarea-autosize {
+  resize: none;
+  overflow: hidden;
+}
+
+/* =============== AVAILABILITY EXTRA =============== */
+
+.tap-add-experience-2-add-text {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  font-weight: 300;
+  text-decoration: underline;
+  color: #151515;
+  cursor: pointer;
+  width: fit-content;
+}
+
+/* =============== DURATION BOX =============== */
+
+.tap-add-experience-2-duration-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-add-experience-2-duration-header {
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid #D7D7D7;
+  padding: 15px 0;
+  align-items: center;
+}
+
+.tap-add-experience-2-duration-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: 'Satoshi';
+  color: #151515;
+}
+
+.tap-add-experience-2-duration-right {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  border-left: 1px solid #E9E9E9;
+  padding-left: 10px;
+}
+
+.tap-add-experience-2-arrow {
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid #151515;
+  border-left: 2px solid #151515;
+  transform: rotate(225deg);
+}
+
+/* =============== PRICE PER GUEST =============== */
+
+.tap-add-experience-2-price-box {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #D7D7D7;
+  background: white;
+  padding: 15px 0;
+}
+
+.tap-add-experience-2-price-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: 'Satoshi';
+  font-size: 12px;
+  color: #151515;
+  span {
+    width: 40px;
+  }
+}
+
+.tap-add-experience-2-price-right {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  text-align: right;
+  color: #151515;
+}
+
+/* =============== OPTIONAL ENHANCEMENTS =============== */
+
+.tap-add-experience-2-enhancement-row {
+  display: flex;
+  gap: 20px;
+}
+
+.tap-add-experience-2-enhancement-input {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* =============== CATEGORIES =============== */
+
+.tap-add-experience-2-category-row {
+  display: flex;
+  gap: 20px;
+}
+
+.tap-add-experience-2-category-pill {
+  padding: 10px 15px;
+  background: white;
+  outline: 1px solid #460107;
+  outline-offset: -1px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.08);
+  gap: 10px;
+  span {
+    color: #151515;
+    font-size: 14px;
+    font-family: 'Satoshi';
+    font-weight: 700;
+    line-height: 19.60px;
+    word-wrap: break-word;
+  }
+}
+
+.tap-add-experience-2-category-icon {
+  width: 14px;
+  height: 14px;
+  background: #460107;
+}
+
+/* =========================================
+   11. LOCATION
+========================================= */
+
+.tap-add-experience-2-location-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================================
+   12. INVITE GUESTS
+========================================= */
+
+.tap-add-experience-2-radio-list span {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  font-weight: 300;
+  color: #151515;
+}
+
+.tap-add-experience-2-upgrade-container {
+  width: 100%;
+  height: 100%;
+  padding: 10px 20px;
+  background: linear-gradient(0deg, #151515 0%, #540008 100%);
+  outline: 1px var(--Color-2, #460107) solid;
+  outline-offset: -1px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.tap-add-experience-2-upgrade-text-group {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tap-add-experience-2-upgrade-title {
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-family: 'Oswald';
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 22.2px;
+  word-wrap: break-word;
+}
+
+.tap-add-experience-2-upgrade-subtitle {
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-family: 'Satoshi';
+  font-weight: 300;
+  line-height: 14px;
+  word-wrap: break-word;
+}
+
+/* =========================================
+   13. AUDIENCE
+========================================= */
+
+.tap-add-experience-2-radio-row span {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  font-weight: 300;
+  color: #151515;
+}
+
+/* =========================================
+   14. GUEST CAPACITY
+========================================= */
+
+.tap-add-experience-2-capacity-row {
+  display: flex;
+  gap: 20px;
+}
+
+.tap-add-experience-2-capacity-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 30%;
+}
+
+/* =========================================
+   15. IMPORTANT INFORMATION
+========================================= */
+
+.tap-add-experience-2-info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tap-add-experience-guest-option {
+  color: #B4B4B4;
+  font-size: 12px;
+  font-family: 'Satoshi';
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 22.20px;
+  letter-spacing: 1.80px;
+  word-wrap: break-word;
+}
+
+/* =========================================
+   16. IDEAL AUDIENCE
+========================================= */
+
+.tap-add-experience-2-ideal-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================================
+   17. HOST PRESENCE & TEAM MANAGEMENT
+========================================= */
+
+.tap-add-experience-2-host-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tap-add-experience-2-invitee-card {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+
+  &__avatar {
+    max-width: 20px;
+    max-height: 20px;
+    width: 20px;
+    height: auto;
+    border-radius: 50%;
+  }
+
+  &__name {
+    color: #262626;
+    font-size: 14px;
+    font-family: 'Satoshi';
+    font-weight: 300;
+    line-height: 19.6px;
+    word-wrap: break-word;
+  }
+
+  &__role-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  &__role {
+    color: #B4B4B4;
+    font-size: 12px;
+    font-family: 'Satoshi';
+    font-weight: 300;
+    line-height: 16.8px;
+    word-wrap: break-word;
+  }
+}
+
+
+/* =========================================
+   18. BENEFICIARY
+========================================= */
+
+.tap-add-experience-2-beneficiary-note {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.tap-add-experience-2-beneficiary-note a {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #151515;
+}
+
+.tap-add-experience-2-section-beneficiary-description {
+  width: 100%;
+  color: #808080;
+  font-size: 12px;
+  font-family: 'Satoshi';
+  font-weight: 300;
+  line-height: 16.80px;
+  word-wrap: break-word
+}
+
+.tap-add-experience-2-checkbox-row {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.tap-add-experience-2-checkbox {
+  width: 18px;
+  height: 18px;
+  position: relative;
+}
+
+.tap-add-experience-2-checkbox-box {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 2px;
+  border: 2px solid #d7d7d7;
+  &:checked {
+    background-color: black;
+  }
+}
+
+.tap-add-experience-2-image {
+  width: 100%;
+  max-width: 20px;
+  height: auto;
+  max-height: 20px;
+  border-radius: 50%;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.tap-add-experience-2-checkbox-text {
+  flex: 1 1 0;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi';
+  font-weight: 300;
+  line-height: 19.6px;
+  word-wrap: break-word;
+}
+
+
+/* =========================================
+   19. VISUALS (uploads)
+========================================= */
+
+.tap-add-experience-2-upload-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  label {
+    // Gallery Images
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Satoshi';
+    font-weight: 300;
+    line-height: 16.80px;
+    word-wrap: break-word;
+  }
+}
+
+.tap-add-experience-2-upload-area {
+  width: 100%;
+  height: 331px;
+  background: #F5F5F5;
+  border: 1px solid #D7D7D7;
+  position: relative;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  div {
+    gap: 10px;
+    .img-upload {
+      width: 54px !important;
+      height: 54px !important;
+      span {
+        svg {
+          width: 54px !important;
+          height: 54px !important;
+        }
+      }
+    }
+    .description {
+      // Drag your photo here or 
+      color: #B4B4B4;
+      font-size: 12px;
+      font-family: 'Satoshi';
+      font-weight: 300;
+      line-height: 16.80px;
+      word-wrap: break-word;
+    }
+    .btn_upload {
+      // upload image
+      color: #151515;
+      font-size: 12px;
+      font-family: 'Satoshi';
+      font-weight: 500;
+      text-decoration: underline;
+      text-transform: uppercase;
+      line-height: 16.80px;
+      word-wrap: break-word;
+    }
+  }
+}
+
+.tap-add-experience-2-gallery-upload-container {
+  width: 100%;
+  border: 1px dashed #dcdcdc;
+  padding: 15px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.tap-add-experience-2-gallery-upload-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.tap-add-experience-2-gallery-card {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: white;
+    color: black;
+    border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: #000;
+    }
+  }
+}
+
+.tap-add-experience-2-label-gallery-upload {
+  text-align: start;
+  color: #151515;
+  font-size: 12px;
+  font-family: 'Satoshi';
+  font-weight: 500;
+  text-decoration: underline;
+  text-transform: uppercase;
+  line-height: 16.80px;
+  word-wrap: break-word;
+}
+
+.tap-image-actions {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 27px;
+
+  &__item {
+    width: auto;
+    height: 17px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__label {
+    text-align: center;
+    color: #151515;
+    font-size: 12px;
+    font-family: "Satoshi";
+    font-weight: 500;
+    text-decoration: underline;
+    text-transform: uppercase;
+    line-height: 16.8px;
+    word-wrap: break-word;
+    cursor: pointer;
+  }
+}
+
+/* =========================================
+   20. VIDEO LINK
+========================================= */
+
+.tap-add-experience-2-video-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================================
+   21. FOOTER BUTTONS
+========================================= */
+
+.tap-add-experience-2-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 60px;
+}
+
+.tap-add-experience-2-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.tap-add-experience-2-btn-secondary {
+  padding: 10px 20px;
+  outline: 1px solid #151515;
+  outline-offset: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Oswald';
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tap-add-experience-2-btn-main {
+  padding: 10px 20px;
+  background: #151515;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.tap-add-experience-2-btn-main div {
+  font-family: 'Oswald';
+  font-size: 12px;
+  color: white;
+  text-transform: uppercase;
+}
+
+.tap-add-experience-2-btn-main-icon {
+  width: 12px;
+  height: 3px;
+  outline: 1px solid white;
+  outline-offset: -0.5px;
+}
+
+/* =========================================
+   SMALL RESPONSIVE TWEAKS (OPTIONAL)
+========================================= */
+
+/* =============== EXPERIENCIAS STEP 3 =============== */
+
+
+/* =============== funcion de responcividad =============== */
+/* ───────────────────────────────────────────────
+   VARIABLES
+────────────────────────────────────────────────── */
+$tap-add-experience-3-font-title: "Oswald";
+$tap-add-experience-3-font-body: "Satoshi";
+
+$tap-add-experience-3-color-text: #151515;
+$tap-add-experience-3-color-gray: #808080;
+$tap-add-experience-3-color-light-gray: #B4B4B4;
+$tap-add-experience-3-color-border: #D7D7D7;
+$tap-add-experience-3-color-primary: #460107;
+
+/* ───────────────────────────────────────────────
+   REUSABLE FLEX HELPERS
+────────────────────────────────────────────────── */
+%flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+%flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+%flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* ───────────────────────────────────────────────
+   MAIN CONTAINER
+────────────────────────────────────────────────── */
+.tap-add-experience-3-container {
+  @extend %flex-col;
+  width: 100%;
+  gap: 60px;
+  max-width: 700px;
+}
+
+/* HEADER */
+.tap-add-experience-3-header {
+  @extend %flex-col;
+  gap: 10px;
+}
+
+.tap-add-experience-3-title {
+  width: 630px;
+  font-family: $tap-add-experience-3-font-title;
+  font-size: 40px;
+  color: $tap-add-experience-3-color-text;
+  font-weight: 500;
+  line-height: 48px;
+}
+
+/* STEP BLOCK */
+.tap-add-experience-3-step-block {
+  @extend %flex-col;
+  align-self: stretch;
+  gap: 30px;
+}
+
+.tap-add-experience-3-step {
+  font-family: $tap-add-experience-3-font-body;
+  font-size: 12px;
+  font-weight: 900;
+  color: $tap-add-experience-3-color-light-gray;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+}
+
+.tap-add-experience-3-divider {
+  width: 100%;
+  height: 0;
+  outline: 1px #E9E9E9 solid;
+}
+
+/* CONTENT AREA */
+.tap-add-experience-3-section {
+  @extend %flex-col;
+  width: 630px;
+  gap: 40px;
+}
+
+.tap-add-experience-3-section-group {
+  @extend %flex-col;
+  gap: 10px;
+}
+
+.tap-add-experience-3-section-label {
+  font-family: $tap-add-experience-3-font-body;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: $tap-add-experience-3-color-text;
+}
+
+.tap-add-experience-3-section-description {
+  font-family: $tap-add-experience-3-font-body;
+  font-size: 14px;
+  color: $tap-add-experience-3-color-gray;
+  line-height: 19.6px;
+  font-weight: 300;
+  width: 100%;
+}
+
+.tap-add-experience-3-radio-content {
+  @extend %flex-col;
+  flex: 1;
+
+  .title {
+    font-family: $tap-add-experience-3-font-body;
+    font-size: 14px;
+    font-weight: 700;
+    color: $tap-add-experience-3-color-text;
+  }
+
+  .subtitle {
+    font-family: $tap-add-experience-3-font-body;
+    font-size: 12px;
+    font-weight: 300;
+    color: $tap-add-experience-3-color-text;
+  }
+}
+
+/* ───────────────────────────────────────────────
+   FOOTER BUTTONS
+────────────────────────────────────────────────── */
+.tap-add-experience-3-footer {
+  @extend %flex-row;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.tap-add-experience-3-footer-right {
+  @extend %flex-row;
+  gap: 15px;
+}
+
+.tap-add-experience-3-btn-secondary {
+  @extend %flex-center;
+  padding: 10px 20px;
+  outline: 1px $tap-add-experience-3-color-text solid;
+  outline-offset: -1px;
+  font-family: $tap-add-experience-3-font-title;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: $tap-add-experience-3-color-text;
+}
+
+.tap-add-experience-3-btn-main {
+  @extend %flex-center;
+  gap: 5px;
+  padding: 10px 20px;
+  background: $tap-add-experience-3-color-text;
+  color: white;
+  text-transform: uppercase;
+  font-family: $tap-add-experience-3-font-title;
+  font-size: 12px;
+
+  .tap-add-experience-3-btn-icon {
+    width: 12px;
+    height: 3px;
+    outline: 1px white solid;
+    outline-offset: -0.5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tap-add-experience-2-category-row,
+  .tap-add-experience-2-radio-row,
+  .tap-add-experience-2-enhancement-row,
+  .tap-add-experience-2-capacity-row {
+    flex-direction: column;
+  }
+
+  .tap-add-experience-2-title {
+    width: 100%;
+    font-size: 32px;
+  }
+
+  .tap-add-experience-2-wrapper {
+    gap: 40px;
+  }
+}

@@ -25,6 +25,12 @@ export function AsideMenuMain() {
                 showIcon={true}
                 icon='/media/svg/nobilis/user_nb.svg'
               />
+              <AsideMenuItem
+                to='/my-experience'
+                title='My Experience'
+                showIcon={true}
+                icon='/media/svg/nobilis/user_nb.svg'
+              />
             </div>
           </div>
         )}
