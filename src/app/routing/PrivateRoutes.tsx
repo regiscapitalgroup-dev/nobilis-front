@@ -71,13 +71,12 @@ export function PrivateRoutes() {
         <Route path='/host-experience' component={HostExperiencePage} />
         <Route path='/experience/detail/:id' component={ExperiencePreviewPage} />
         <Route path='/experience/edit/:id' component={EditExperiencePage} />
-        <Route path='/my-experience' component={AddExperiencePage} />
         <Route path='/my-experience/success' component={AddExperienceSuccessPage} />
-        <Route path='/my-experience/draft' component={AddExperienceDraftPage} />
-        <Route path='/my-experience/paused' component={AddExperiencePausedPage} />
-        <Route path='/experience/admin' component={ExperienceAdminPage} />
-        <Route path='/partner/my-experiences' component={HostPartnerExperiencePage} />
-        <Route path='/partner/my-experiences/draft' component={ExperiencesInProgressPage} />
+        <Route path='/my-experience/draft' component={AddExperienceDraftPage} exact/>
+        <Route path='/my-experience/paused' component={AddExperiencePausedPage} exact/>
+        <Route path='/experience/admin' component={ExperienceAdminPage} exact/>
+        <Route path='/partner/my-experiences' component={HostPartnerExperiencePage} exact />
+        <Route path='/partner/my-experiences/draft' component={ExperiencesInProgressPage} exact />
         <Route path='/team/admin' component={TeamAdminPage} />
         <Route path='/plans' component={DashboardWrapper} />
         <Route path='/membership/payment' component={MembershipPaymentWrapper} />
