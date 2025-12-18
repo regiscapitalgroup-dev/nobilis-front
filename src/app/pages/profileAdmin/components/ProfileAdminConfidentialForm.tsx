@@ -1,5 +1,5 @@
 import {Formik, Form, Field, FieldArray} from 'formik'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import * as Yup from 'yup'
 import CityAutocompleteField from '../../../modules/auth/components/fields/CityAutocompleteField'
 import PhoneInput from 'react-phone-input-2'
@@ -10,13 +10,21 @@ import {useUserProfileContext} from '../../../context/UserProfileContext'
 import {updateProfileConfidential} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
 import {useAlert} from '../../../hooks/utils/useAlert'
+import {getMaxBirthdayDate} from '../../../utils/dateValidations'
 
 const ProfileConfidentialForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
+
   const [selectedCities, setSelecteCities] = useState<string[]>([])
-  const {data} = useUserProfileContext()
+  const {data, searchParams} = useUserProfileContext()
   const navigate = useHistory()
   const {showError} = useAlert()
+
+ /*  useEffect(() => {
+    if (data?.oftenIn && data.oftenIn.length > 0) {
+      setSelecteCities(data.oftenIn)
+    }
+  }, [data]) */
 
   return (
     <Formik
@@ -25,9 +33,12 @@ const ProfileConfidentialForm: React.FC = () => {
         email: data?.email || '',
         dob: data?.birthday || '',
         phone: data?.phoneNumber || '',
-        contactMethods: [],
+        contactMethods: [
+          ...(data?.preferedEmail ? ['email'] : []),
+          ...(data?.preferedPhone ? ['phone'] : []),
+        ],
         address: '',
-        cityCountry: '',
+        cityCountry: data?.city,
         citiesOfInterest: [],
         partnerName: '',
         partnerSurname: '',
@@ -69,7 +80,10 @@ const ProfileConfidentialForm: React.FC = () => {
               })),
           }
 
-          await updateProfileConfidential(payload)
+          await updateProfileConfidential(
+            payload,
+            !!searchParams.userSelected ? searchParams.userSelected : ''
+          )
           navigate.push('/biography')
         } catch (error: any) {
           console.error(error)
@@ -107,7 +121,7 @@ const ProfileConfidentialForm: React.FC = () => {
             <div className='form-row'>
               <div className='form-field'>
                 <label className='field-label'>Date of Birth</label>
-                <Field type='date' name='dob' className='input' />
+                <Field type='date' name='dob' className='input' max={getMaxBirthdayDate()} />
               </div>
 
               <div className='form-field'>

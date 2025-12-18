@@ -24,10 +24,11 @@ import {PrivacyPage} from '../pages/legal/PrivacyPage'
 import MembershipPaymentWrapper from '../pages/memberships/MembershipPaymentWrapper'
 import PaymentPage from '../pages/memberships/PaymentPage'
 import ProfileBasePage from '../pages/profile/ProfilePage'
-import { AddExperiencePage } from '../pages/teamAndPartners/AddExperiencePage'
-import { MembersWrapper } from '../pages/members/MembersWrapper'
-import { MemberDetailWrapper } from '../pages/members/MemberDetailWrapper'
-import { ManageMemberWrapper } from '../pages/manageMembers/ManageMemberWrapper'
+import {AddExperiencePage} from '../pages/teamAndPartners/AddExperiencePage'
+import {MembersWrapper} from '../pages/members/MembersWrapper'
+import {MemberDetailWrapper} from '../pages/members/MemberDetailWrapper'
+import {ManageMemberWrapper} from '../pages/manageMembers/ManageMemberWrapper'
+import {ProfileMemberWrapper} from '../pages/profileMembers/ProfileMemberWrapper'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
@@ -51,7 +52,6 @@ export function PrivateRoutes() {
       history.replace(subscription ? '/biography' : '/plans')
       return
     }
-
   }, [user, subscription, history])
 
   return (
@@ -81,6 +81,7 @@ export function PrivateRoutes() {
         <Route path='/searchable-members' component={MembersWrapper} />
         <Route path='/member/overview' component={MemberDetailWrapper} />
         <Route path='/manage-members' component={ManageMemberWrapper} />
+        <Route path='/profile-member' component={ProfileMemberWrapper} />
         <Redirect to='/error/404' />
       </Switch>
     </Suspense>

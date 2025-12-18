@@ -4,17 +4,16 @@ import {useState} from 'react'
 import {IndustriesAutocompleteField} from './fields/IndustriesAutocompleteField'
 import {updateProfileProfessional} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
-import { useUserProfileContext } from '../../../context/UserProfileContext'
-import { useAlert } from '../../../hooks/utils/useAlert'
+import {useUserProfileContext} from '../../../context/UserProfileContext'
+import {useAlert} from '../../../hooks/utils/useAlert'
 
 export default function ProfessionalOverviewForm() {
   const [loading, setLoading] = useState(false)
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])
   const [selectedIndustries, setSelectedIndustries] = useState<string[]>([])
   const navigate = useHistory()
-  const {refetch} = useUserProfileContext()
+  const {refetch, searchParams} = useUserProfileContext()
   const {showError} = useAlert()
-
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -80,9 +79,11 @@ export default function ProfessionalOverviewForm() {
             industries: selectedIndustries,
           }
 
-          console.log('Payload listo para enviar:', payload)
 
-          await updateProfileProfessional(payload)
+          await updateProfileProfessional(
+            payload,
+            !!searchParams.userSelected ? searchParams.userSelected : ''
+          )
           setLoading(false)
           await refetch()
           navigate.push('/biography')
@@ -150,7 +151,9 @@ export default function ProfessionalOverviewForm() {
                 <Field name='website' className='pf-input' />
               </div>
             </div>
-            <div className='pf-add' onClick={() => alert('coming soon')}>+ Add more</div>
+            <div className='pf-add' onClick={() => alert('coming soon')}>
+              + Add more
+            </div>
           </div>
 
           {/* Board */}
@@ -196,7 +199,9 @@ export default function ProfessionalOverviewForm() {
                 <Field name='boardWebsite' className='pf-input' />
               </div>
             </div>
-            <div className='pf-add' onClick={() => alert('coming soon')}>+ Add more</div>
+            <div className='pf-add' onClick={() => alert('coming soon')}>
+              + Add more
+            </div>
           </div>
 
           {/* Nonprofit */}
@@ -243,7 +248,9 @@ export default function ProfessionalOverviewForm() {
                 <Field name='nonprofitWebsite' className='pf-input' />
               </div>
             </div>
-            <div className='pf-add' onClick={() => alert('coming soon')}>+ Add another organization</div>
+            <div className='pf-add' onClick={() => alert('coming soon')}>
+              + Add another organization
+            </div>
           </div>
 
           {/* Education */}
@@ -291,7 +298,9 @@ export default function ProfessionalOverviewForm() {
                 <Field name='eduWebsite' className='pf-input' />
               </div>
             </div>
-            <div className='pf-add' onClick={() => alert('coming soon')}>+ Add more</div>
+            <div className='pf-add' onClick={() => alert('coming soon')}>
+              + Add more
+            </div>
           </div>
 
           {/* Industries */}

@@ -74,6 +74,7 @@ const ROUTE_LAYOUT_MAP: Record<string, LayoutConfig> = {
   '/searchable-members': LAYOUT_CONFIGS.HEADER_ONLY,
   '/member/overview': LAYOUT_CONFIGS.HEADER_FOOTER,
   '/manage-members': LAYOUT_CONFIGS.PROFILE,
+  '/profile-member': LAYOUT_CONFIGS.PROFILE,
 
 };
 

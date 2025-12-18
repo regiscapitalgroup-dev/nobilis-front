@@ -8,13 +8,22 @@ import {useUserProfileContext} from '../../../context/UserProfileContext'
 import {useAlert} from '../../../hooks/utils/useAlert'
 
 const RecognitionForm: FC = () => {
-  const {refetch} = useUserProfileContext()
+  const {refetch, searchParams, data} = useUserProfileContext()
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
   const {showError} = useAlert()
   const initialValues: RecognitionModel = {
-    recognitions: [{description: '', link: ''}],
-    links: [{url: ''}],
+    recognitions:
+      data?.recognition?.topAccomplishments && data.recognition.topAccomplishments.length > 0
+        ? data.recognition.topAccomplishments.map((acc: any) => ({
+            description: acc.desc || '',
+            link: acc.url || '',
+          }))
+        : [{description: '', link: ''}],
+    links:
+      data?.recognition?.additionalLinks && data.recognition.additionalLinks.length > 0
+        ? data.recognition.additionalLinks.map((url) => ({url}))
+        : [{url: ''}],
   }
 
   const validationSchema = Yup.object().shape({
@@ -100,7 +109,10 @@ const RecognitionForm: FC = () => {
       links: normalizedLinks,
     }
 
-    await updateUserRecognition(payload)
+    await updateUserRecognition(
+      payload,
+      !!searchParams.userSelected ? searchParams.userSelected : ''
+    )
       .then(async () => {
         await refetch()
         navigate.push('/biography')

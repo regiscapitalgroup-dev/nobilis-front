@@ -1,11 +1,10 @@
 import {FC, useEffect, useRef} from 'react'
 import {useLayout} from '../../../_metronic/layout/core'
-import BiographyForm from './components/BiographyForm'
+import {ProfileMemberPage} from './ProfileMemberPage'
 
-const BiographyFormWrapper: FC = () => {
+const ProfileMemberWrapper: FC = () => {
   const {config, setLayout} = useLayout()
   const restoreRef = useRef(config)
-
   useEffect(() => {
     restoreRef.current = config
 
@@ -20,7 +19,11 @@ const BiographyFormWrapper: FC = () => {
     return () => setLayout(restoreRef.current)
   }, [])
 
-  return <BiographyForm />
+  return (
+    <>
+      <ProfileMemberPage />
+    </>
+  )
 }
 
-export {BiographyFormWrapper}
+export {ProfileMemberWrapper}

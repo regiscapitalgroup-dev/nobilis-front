@@ -1,11 +1,11 @@
 import apiClient from '../helpers/apiClient'
 
-export const updateProfile = async (data: any) => {
-    const response = await apiClient.put('admin-profile/basic/', data)
+export const updateProfile = async (data: any, memberId?: string) => {
+    const response = await apiClient.put(`admin-profile/basic/${memberId}`, data)
     return response.data
 }
 
-export const updateProfileProfessional = async (data: any) => {
+export const updateProfileProfessional = async (data: any, memberId?: string) => {
     try {
         const getYear = (value: string, isCurrent?: boolean): string => {
             if (isCurrent) return 'Present'
@@ -54,8 +54,8 @@ export const updateProfileProfessional = async (data: any) => {
                     },
                 ],
             },
-        }        
-        const response = await apiClient.patch('admin-profile/', payload)
+        }
+        const response = await apiClient.patch(`admin-profile/${memberId}/`, payload)
 
         return response.data
     } catch (error: any) {
@@ -63,26 +63,26 @@ export const updateProfileProfessional = async (data: any) => {
         throw error
     }
 }
-export const updateProfilePersonal = async (data: any) => {
+export const updateProfilePersonal = async (data: any, memberId?: string) => {
 
     const payload = {
         personal_detail: {
-          hobbies: data.hobbies || [],
-          interests: data.interests || [],
-          clubs: [
-            {
-              name: data.clubName,
-              city: data.city,
-            },
-          ],
+            hobbies: data.hobbies || [],
+            interests: data.interests || [],
+            clubs: [
+                {
+                    name: data.clubName,
+                    city: data.city,
+                },
+            ],
         },
-      }
+    }
 
-    const response =  await apiClient.patch('admin-profile/', payload)
+    const response = await apiClient.patch(`admin-profile/${memberId}/`, payload)
     return response.data
 }
 
-export const updateProfileConfidential = async (data: any) => {
-    const response = await apiClient.put('admin-profile/confidential/', data)
+export const updateProfileConfidential = async (data: any, memberId?: string) => {
+    const response = await apiClient.put(`admin-profile/confidential/${memberId}/`, data)
     return response.data
 }

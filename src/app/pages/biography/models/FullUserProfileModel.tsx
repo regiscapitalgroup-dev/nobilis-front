@@ -28,10 +28,20 @@ export interface FullUserProfileModel {
     firstName: string,
     surname: string,
     preferedPhone : boolean,
-    preferedEmail: boolean
+    preferedEmail: boolean,
+    assignedManager: AssignedManager | null;
+    guidingPrinciple: any
   }
   
   
+  export interface AssignedManager {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    profilePicture: string;
+  }
+
   export interface IntroductionDetail {
     id: number;
     title: string;

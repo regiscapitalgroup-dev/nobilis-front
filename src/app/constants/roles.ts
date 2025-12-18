@@ -10,6 +10,7 @@ export enum Permission {
     EDIT_BIOGRAPHY = 'EDIT_BIOGRAPHY',
     SEE_MENU_ITEM_WL = 'SEE_MENU_ITEM_WL',
     MY_HOSTING = 'MY_HOSTING',
+    MANAGE_MEMBER = 'MANAGE_MEMBER',
 }
 
 export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
@@ -22,6 +23,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
         Permission.SEE_MENU_ITEM_WL
     ],
     [UserRole.PROFILE_MANAGEMENT]: [
-        Permission.MY_HOSTING
+        Permission.MY_HOSTING,
+        Permission.MANAGE_MEMBER 
     ]
 }

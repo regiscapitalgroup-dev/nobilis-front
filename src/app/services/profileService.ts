@@ -3,9 +3,11 @@ import { UserProfile } from "../pages/profile/models/ProfileModel";
 import { ExperienceFooterModel } from "../../_metronic/layout/components/models/ExperienceModel";
 
 
-function toUserProfileFormData(data: UserProfile): FormData {
+function toUserProfileFormData(data: UserProfile, status?: string): FormData {
     const fd = new FormData();
-
+    if (status) {
+        fd.append("status", status);
+    }
 
     fd.append("introduction_headline", data.introduction_headline);
     fd.append("alias_title", data.alias_title);
@@ -52,7 +54,7 @@ export async function updateUserProfile(
     return data;
 }
 
-export const getProfileByUser = async (user?:string) => {
+export const getProfileByUser = async (user?: string) => {
     const response = await apiClient.get(`/full-profile/${user ? `${user}/` : ''}`);
     return response.data;
 };
@@ -76,4 +78,17 @@ export async function updateProfileImg(image: File) {
     })
 
     return data
+}
+
+
+export async function createUserProfile(
+    payload: UserProfile,
+    status?: string
+) {
+    const formData = toUserProfileFormData(payload, status);
+
+    const { data } = await apiClient.post(`/users/profile/`, formData, {
+        headers: { Accept: 'application/json' },
+    });
+    return data;
 }

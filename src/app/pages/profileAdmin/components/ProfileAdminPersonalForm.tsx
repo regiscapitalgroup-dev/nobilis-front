@@ -1,6 +1,5 @@
-import {FC, useState} from 'react'
-import {Formik, Form, Field} from 'formik'
-import {KTSVG} from '../../../../_metronic/helpers'
+import {FC, useEffect, useState} from 'react'
+import {Formik, Form} from 'formik'
 import {HobbiesAutocompleteField} from './fields/HobbiesAutocompleteField'
 import CityAutocompleteField from '../../../modules/auth/components/fields/CityAutocompleteField'
 import ClubesAutocompleteField from './fields/ClubesAutocompleteField'
@@ -14,8 +13,20 @@ const ProfileAdminPersonalForm: FC = () => {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
-  const {refetch} = useUserProfileContext()
+  const {refetch, searchParams, data} = useUserProfileContext()
   const {showError} = useAlert()
+
+  useEffect(() => {
+    if (data?.personalDetail?.hobbies && data.personalDetail.hobbies.length > 0) {
+      setSelectedHobbies(data.personalDetail.hobbies)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (data?.personalDetail?.interests && data.personalDetail.interests.length > 0) {
+      setSelectedInterests(data.personalDetail.interests)
+    }
+  }, [data])
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests((prev) =>
@@ -37,10 +48,11 @@ const ProfileAdminPersonalForm: FC = () => {
   return (
     <div className='pf-personal'>
       <Formik
+        enableReinitialize
         initialValues={{
           hobbies: '',
-          clubName: '',
-          city: '',
+          clubName: data?.personalDetail?.clubs?.[0]?.name || '',
+          city: data?.personalDetail?.clubs?.[0]?.city || '',
           interests: [],
         }}
         onSubmit={async (values, {resetForm}) => {
@@ -53,7 +65,10 @@ const ProfileAdminPersonalForm: FC = () => {
               interests: selectedInterests,
             }
 
-            await updateProfilePersonal(payload)
+            await updateProfilePersonal(
+              payload,
+              !!searchParams.userSelected ? searchParams.userSelected : ''
+            )
             await refetch()
             navigate.push('/biography')
           } catch (error: any) {

@@ -9,6 +9,7 @@ export function AsideMenuMain() {
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const canWaitList = hasPermission(user, Permission.SEE_MENU_ITEM_WL)
   const canMenuMyHost = hasPermission(user, Permission.MY_HOSTING)
+  const canManageMember = hasPermission(user, Permission.MANAGE_MEMBER)
 
   return (
     <div className='nb-aside-menu'>
@@ -50,13 +51,14 @@ export function AsideMenuMain() {
                   showIcon={true}
                   icon='/media/svg/nobilis/user_nb.svg'
                 />
-                {/* <AsideMenuItem
-                  to='/manage-members'
-                  title='MANAGE MEMBERS'
-                  showIcon={true}
-                  icon='/media/svg/nobilis/user_nb.svg'
-                /> */}
-                {/* Comentados según el código original */}
+                {canManageMember && (
+                  <AsideMenuItem
+                    to='/manage-members'
+                    title='MANAGE MEMBER'
+                    showIcon={true}
+                    icon='/media/svg/nobilis/user_nb.svg'
+                  />
+                )}
                 {/* <AsideMenuItem
                   to='/team'
                   title='MY TEAM'
@@ -72,7 +74,7 @@ export function AsideMenuMain() {
               </div>
             </div>
 
-           {/*  <div className='nb-menu-separator'></div>
+            {/*  <div className='nb-menu-separator'></div>
 
             <div className='nb-menu-section'>
               <div className='nb-menu-section-header'>

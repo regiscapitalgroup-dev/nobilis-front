@@ -1,13 +1,13 @@
 import {Formik, Form, Field, ErrorMessage} from 'formik'
 import * as Yup from 'yup'
 import {LanguageAutocompleteField} from '../../profile/components/fields/LanguageAutocompleteField'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import SocialMediaModal from '../../profile/components/SocialMediaModal'
 import {KTSVG, toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {updateProfile} from '../../../services/profileAdminService'
 import {useHistory} from 'react-router-dom'
 import {useAlert} from '../../../hooks/utils/useAlert'
-import { useUserProfileContext } from '../../../context/UserProfileContext'
+import {useUserProfileContext} from '../../../context/UserProfileContext'
 
 type SocialMediaItem = {
   id: string
@@ -26,7 +26,46 @@ const ProfileAdminForm: React.FC = () => {
   const MAX_LENGTH = 50
   const [countLength, setCountLength] = useState<number>(0)
   const {showError} = useAlert()
-  const {data , refetch} = useUserProfileContext()
+  const {data, refetch, searchParams} = useUserProfileContext()
+
+  useEffect(() => {
+    if (data?.languages && data.languages.length > 0) {
+      setSelectedLanguages(data.languages)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (data?.socialMediaProfiles && data.socialMediaProfiles.length > 0) {
+      const iconMap: Record<string, string> = {
+        Website: '/media/svg/nobilis/web.svg',
+        Linkedin: '/media/svg/nobilis/lk.svg',
+        Instagram: '/media/svg/nobilis/instagram.svg',
+        Facebook: '/media/svg/nobilis/fb-black.svg',
+        'X Profile': '/media/svg/nobilis/x.svg',
+        Twitter: '/media/svg/nobilis/x.svg',
+      }
+
+      const idMap: Record<string, string> = {
+        Website: 'website',
+        Linkedin: 'linkedin',
+        Instagram: 'instagram',
+        Facebook: 'facebook',
+        'X Profile': 'twitter',
+        Twitter: 'twitter',
+      }
+
+      const mappedSocialMedia: SocialMediaItem[] = data.socialMediaProfiles.map(
+        (profile, index) => ({
+          id: idMap[profile.platformName] || `social-${index}`,
+          name: profile.platformName,
+          icon: iconMap[profile.platformName] || '/media/svg/nobilis/web.svg',
+          url: profile.profileUrl,
+        })
+      )
+
+      setSocialMediaItems(mappedSocialMedia)
+    }
+  }, [data])
 
   const handleSocialMediaSelect = (option: any) => {
     const newItem: SocialMediaItem = {
@@ -73,13 +112,14 @@ const ProfileAdminForm: React.FC = () => {
   }
   return (
     <Formik
+      enableReinitialize
       initialValues={{
-        alias: data?.aliasTitle ??  '',
+        alias: data?.aliasTitle ?? '',
         name: data?.firstName ?? '',
         surname: data?.surname ?? '',
-        headline:  data?.introductionHeadline ??  '',
-        residence: '',
-        guidingPrinciple: '',
+        headline: data?.introductionHeadline ?? '',
+        residence: data?.city,
+        guidingPrinciple: data?.guidingPrinciple ?? '',
         annualLimit: 'noLimit',
         quarterlyReports: 'yes',
       }}
@@ -101,7 +141,7 @@ const ProfileAdminForm: React.FC = () => {
               profile_url: item.url,
             })),
           }
-          await updateProfile(payload)
+          await updateProfile(payload, !!searchParams.userSelected ? searchParams.userSelected : '')
           await refetch()
           navigate.push('/biography')
           setLoading(false)
@@ -139,7 +179,7 @@ const ProfileAdminForm: React.FC = () => {
             <div className='form-row'>
               <div className='form-field'>
                 <label className='field-label'>Name</label>
-                <Field name='name' className='input  input-text-style'  />
+                <Field name='name' className='input  input-text-style' />
                 <div className='fv-plugins-message-container'>
                   <div className='fv-help-block input-text-style fs-8'>
                     <ErrorMessage name='name' />

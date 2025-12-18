@@ -25,7 +25,7 @@ export const ManageMemberGrid: React.FC<MembersTableProps> = ({members, onRowCli
   const handleClickCell = (memberId: string) => {
     setSearchParams({userSelected: memberId})
 
-    navigate.push('/member/overview')
+    navigate.push('/profile-member')
   }
 
   return (

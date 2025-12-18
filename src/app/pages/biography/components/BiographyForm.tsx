@@ -38,11 +38,13 @@ const validationSchema = Yup.object({
 const BiographyForm: FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
-  const {refetch} = useUserProfileContext()
+  const {refetch, searchParams, data} = useUserProfileContext()
   const {showError} = useAlert()
   const initialValues: BiographyModel = {
-    biography: '',
-    urls: [''],
+    biography: data?.biography ?? '',
+    urls: data?.videos && data.videos.length > 0 
+      ? data.videos.map(video => video.videoLink)
+      : [''],
   }
 
   const handleSubmit = async (values: BiographyModel) => {
@@ -69,7 +71,10 @@ const BiographyForm: FC = () => {
         urls: normalizedUrls,
       }
 
-      await updateUserBiography(payload)
+      await updateUserBiography(
+        payload,
+        !!searchParams.userSelected ? searchParams.userSelected : ''
+      )
       await refetch()
       navigate.push('/biography')
     } catch (error: any) {

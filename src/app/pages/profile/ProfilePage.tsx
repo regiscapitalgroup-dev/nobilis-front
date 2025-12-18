@@ -3,11 +3,12 @@ import {toAbsoluteUrl} from '../../../_metronic/helpers'
 import ProfileStep1 from './components/steps/ProfileStep1'
 import ProfileStep2 from './components/steps/ProfileStep2'
 import {SocialProfile, UserProfile} from './models/ProfileModel'
-import {updateUserProfile} from '../../services/profileService'
+import {createUserProfile, updateUserProfile} from '../../services/profileService'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {UserModel} from '../../modules/auth/models/UserModel'
 import {useUserProfileContext} from '../../context/UserProfileContext'
+import { useLocation } from 'react-router-dom'
 
 type ProfileData = {
   introduction_headline: string
@@ -28,8 +29,26 @@ export default function ProfileBasePage() {
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const fullName = `${user.firstName} ${user.lastName}`
   const {data} = useUserProfileContext()
-  
-  const [profileData, setProfileData] = useState<ProfileData>({
+
+  const location = useLocation<{isNewRecord?: boolean}>()
+  const isNewRecord = location.state?.isNewRecord
+
+
+  const emptyData: ProfileData = {
+    introduction_headline: '',
+    alias_title: '',
+    name: '',
+    email: '',
+    birthday: '',
+    phone_number: '',
+    preferred_phone: false,
+    prefered_email: false,
+    languageSpoken: [],
+    social_media_profiles: [],
+    city: '',
+  }
+
+  const editData: ProfileData = {
     introduction_headline: '',
     alias_title: '',
     name: fullName,
@@ -41,10 +60,15 @@ export default function ProfileBasePage() {
     languageSpoken: [],
     social_media_profiles: [],
     city: data?.city ?? '',
-  })
+  }
+
+  
+  const [profileData, setProfileData] = useState<ProfileData>(
+    isNewRecord ? emptyData : editData
+  )
 
   useEffect(() => {
-    if (data) {
+    if (data  && !isNewRecord) {
       setProfileData((prev) => ({
         ...prev,
         birthday: data.birthday ?? '',
@@ -52,7 +76,7 @@ export default function ProfileBasePage() {
         city: data.city ?? '',
       }))
     }
-  }, [data])
+  }, [data, isNewRecord])
 
   const mapToApiPayload = (data: ProfileData, photoFile?: File | null): UserProfile => {
     const social_media_profiles: SocialProfile[] | undefined = (data.social_media_profiles || [])
@@ -99,13 +123,17 @@ export default function ProfileBasePage() {
     setCurrentStep(2)
   }
 
-  const handleStep2Submit = async (data: {photo?: File | null}) => {
+  const handleStep2Submit = async (data: {photo?: File | null; status?: string}) => {
     const finalData = {...profileData, ...data}
     setProfileData(finalData)
 
     const payload = mapToApiPayload(finalData, data.photo ?? null)
-    
-    await updateUserProfile(payload)
+  
+    if (isNewRecord) {
+      await createUserProfile(payload,  data.status) 
+    } else {
+      await updateUserProfile(payload) 
+    }
   }
 
   const goBackToStep1 = () => {
@@ -142,7 +170,7 @@ export default function ProfileBasePage() {
 
         {/* Steps dinámicos */}
         {currentStep === 1 && (
-          <ProfileStep1 initialData={profileData} onSubmit={handleStep1Submit} />
+          <ProfileStep1 initialData={profileData} onSubmit={handleStep1Submit} isNewRecord={isNewRecord ?? false}/>
         )}
 
         {currentStep === 2 && (
@@ -150,6 +178,7 @@ export default function ProfileBasePage() {
             initialData={profileData}
             onSubmit={handleStep2Submit}
             onBack={goBackToStep1}
+            isNewRecord={isNewRecord}
           />
         )}
       </div>

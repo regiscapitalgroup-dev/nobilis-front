@@ -2,8 +2,9 @@ import apiClient from "../helpers/apiClient";
 
 
 export async function updateUserExpertise(
-    payload: any
+    payload: any,
+    memberId?: string
 ) {
-    const { data } = await apiClient.put(`profile/expertise/`, payload);
+    const { data } = await apiClient.put(`profile/expertise/${memberId}/`, payload);
     return data;
 }

@@ -7,7 +7,7 @@ import {LanguageAutocompleteField} from '../fields/LanguageAutocompleteField'
 import {KTSVG, toAbsoluteUrl} from '../../../../../_metronic/helpers'
 import CityAutocompleteField from '../../../../modules/auth/components/fields/CityAutocompleteField'
 import {getMaxBirthdayDate} from '../../../../utils/dateValidations'
-import { handleLettersOnly } from '../../../../utils/inputValidations'
+import {handleLettersOnly} from '../../../../utils/inputValidations'
 
 type SocialMediaItem = {
   id: string
@@ -19,6 +19,7 @@ type SocialMediaItem = {
 type Props = {
   initialData: any
   onSubmit: (data: any) => void
+  isNewRecord: boolean
 }
 
 const Step1Schema = Yup.object().shape({
@@ -35,9 +36,11 @@ const Step1Schema = Yup.object().shape({
 const ProfileFormContent = ({
   initialData,
   onSubmit,
+  isNewRecord,
 }: {
   initialData: any
   onSubmit: (data: any) => void
+  isNewRecord: boolean
 }) => {
   const [isModalOpen, setModalOpen] = useState(false)
   const [countLength, setCountLength] = useState<number>(
@@ -108,11 +111,11 @@ const ProfileFormContent = ({
       <div className='profile-form-row'>
         <div className='profile-form-group'>
           <label>Name</label>
-          <Field name='name'   onKeyPress={handleLettersOnly}/>
+          <Field name='name' onKeyPress={handleLettersOnly} />
         </div>
         <div className='profile-form-group'>
           <label>Email</label>
-          <Field name='email' type='email' readOnly />
+          <Field name='email' type='email' readOnly={isNewRecord ? false : true} />
           <small>This information will not be displayed to public</small>
         </div>
       </div>
@@ -228,7 +231,7 @@ const ProfileFormContent = ({
   )
 }
 
-export default function ProfileStep1({initialData, onSubmit}: Props) {
+export default function ProfileStep1({initialData, onSubmit, isNewRecord}: Props) {
   return (
     <Formik
       initialValues={{
@@ -246,7 +249,13 @@ export default function ProfileStep1({initialData, onSubmit}: Props) {
       validationSchema={Step1Schema}
       onSubmit={() => {}}
     >
-      {() => <ProfileFormContent initialData={initialData} onSubmit={onSubmit} />}
+      {() => (
+        <ProfileFormContent
+          initialData={initialData}
+          onSubmit={onSubmit}
+          isNewRecord={isNewRecord}
+        />
+      )}
     </Formik>
   )
 }

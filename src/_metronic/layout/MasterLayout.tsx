@@ -16,16 +16,18 @@ import {RootState} from '../../setup'
 import {UserModel} from '../../app/modules/auth/models/UserModel'
 import {hasRole} from '../../app/utils/permissions'
 import {UserRole} from '../../app/constants/roles'
-import { RequestMembership } from '../partials/layout/request-membership/RequestMembershipDrawer'
-import { useDrawer } from '../../app/context/UserWaitlistSelectedContext'
-import { MembersHeader } from '../../app/pages/members/components/MembersHeader'
-import { useUserProfileContext } from '../../app/context/UserProfileContext'
+import {RequestMembership} from '../partials/layout/request-membership/RequestMembershipDrawer'
+import {useDrawer} from '../../app/context/UserWaitlistSelectedContext'
+import {MembersHeader} from '../../app/pages/members/components/MembersHeader'
+import {useUserProfileContext} from '../../app/context/UserProfileContext'
+import {AdminHeaderWrapper} from './components/header/admin/AdminHeaderWrapper'
 
 const MasterLayout: React.FC = ({children}) => {
   const location = useLocation()
-  
+
   const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const isAdmin = hasRole(user, UserRole.ADMIN)
+  const isManage = hasRole(user, UserRole.PROFILE_MANAGEMENT)
   const layoutConfig = getLayoutConfig(location.pathname, isAdmin)
   const {
     showHeader,
@@ -34,13 +36,13 @@ const MasterLayout: React.FC = ({children}) => {
     showToolbar = false,
     showExpFooter,
   } = layoutConfig
-  const { isOpen, closeDrawer, payload } = useDrawer();
+  const {isOpen, closeDrawer, payload} = useDrawer()
   return (
     <PageDataProvider>
       <div className='page d-flex flex-column min-vh-100' style={{position: 'relative'}}>
         {/* Header - mantiene estilos originales pero ocupa todo el ancho */}
-        {showHeader && <HeaderWrapper />}
-       {location.pathname == '/searchable-members' && <MembersHeader /> }
+        {showHeader && <>{isManage ? <AdminHeaderWrapper /> : <HeaderWrapper />}</>}
+        {location.pathname == '/searchable-members' && <MembersHeader />}
         {/* Container principal */}
         <div className='d-flex flex-row flex-fill' style={{position: 'relative'}}>
           {/* Aside */}
@@ -73,10 +75,7 @@ const MasterLayout: React.FC = ({children}) => {
       {/* begin:: Drawers */}
       <ActivityDrawer />
       <DrawerMessenger />
-      <RequestMembership
-        isOpen={isOpen}
-        onClose={closeDrawer}
-        dataUser={payload} />
+      <RequestMembership isOpen={isOpen} onClose={closeDrawer} dataUser={payload} />
       {/* end:: Drawers */}
 
       {/* begin:: Modals */}

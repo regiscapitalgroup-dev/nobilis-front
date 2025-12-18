@@ -1,92 +1,44 @@
 import React, {useState} from 'react'
-import {ManageMemberGrid} from './components/ManageMemberGrid'
+import {ManageMemberGrid, Member} from './components/ManageMemberGrid'
 import Pagination from '../components/Pagination'
 import {ManageMemberStats} from './components/ManageMemberStats'
 import {ManageMemberSearch} from './components/ManageMemberSearch'
 import {ManageMemberTabNavigation} from './components/ManageMemberTabNavigation'
-import {useSearchableMembersContext} from '../../context/SearchableMembersContext'
+import {useSearchableManageMembers} from '../../hooks/manageMembers/useSearchableManageMembers'
+import {ApiMember} from './models/ManageMemberModel'
 
 export const ManageMemberPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('members')
-  const {data: members, loading: membersLoading} = useSearchableMembersContext()
-
-  console.log('MEMBERS', members)
-
   const [searchQuery, setSearchQuery] = useState('')
   const [page, setPage] = useState(1)
+
+  const {data} = useSearchableManageMembers(searchQuery, activeTab)
+
   const tabs: any[] = [
     {id: 'members', label: 'Members'},
     {id: 'new-members', label: 'New Members'},
     {id: 'create-profile', label: 'Create Profile', badge: 2},
   ]
 
-  const mockMembers: any[] = [
-    {
-      id: '#1234',
-      name: 'Kristina Adam',
-      avatar: 'https://placehold.co/28x28',
-      email: 'john@email.com',
-      memberSince: '12 July 2025',
-      plan: 'Electi',
-      assignedTo: 'Admin Name',
-    },
-    {
-      id: '#1234',
-      name: 'Kristina Adam',
-      avatar: 'https://placehold.co/28x28',
-      email: 'john@email.com',
-      memberSince: '12 July 2025',
-      plan: 'Electi ∞',
-      assignedTo: 'Admin Name',
-    },
-    {
-      id: '#1234',
-      name: 'Kristina Adam',
-      avatar: 'https://placehold.co/28x28',
-      email: 'john@email.com',
-      memberSince: '12 July 2025',
-      plan: 'Inactive',
-      assignedTo: 'Admin Name',
-    },
-    {
-      id: '#1234',
-      name: 'Kristina Adam',
-      avatar: 'https://placehold.co/28x28',
-      email: 'john@email.com',
-      memberSince: '12 July 2025',
-      plan: 'Inactive',
-      assignedTo: 'Admin Name',
-    },
-    {
-      id: '#1234',
-      name: 'Kristina Adam',
-      avatar: 'https://placehold.co/28x28',
-      email: 'john@email.com',
-      memberSince: '12 July 2025',
-      plan: 'Electi',
-      assignedTo: 'Admin Name',
-    },
-    {
-      id: '#1234',
-      name: 'Kristina Adam',
-      avatar: 'https://placehold.co/28x28',
-      email: 'john@email.com',
-      memberSince: '12 July 2025',
-      plan: 'Electi ∞',
-      assignedTo: 'Admin Name',
-    },
-    {
-      id: '#1234',
-      name: 'Kristina Adam',
-      avatar: 'https://placehold.co/28x28',
-      email: 'john@email.com',
-      memberSince: '12 July 2025',
-      plan: 'Electi ∞',
-      assignedTo: 'Admin Name',
-    },
-  ]
+  const transformMember = (apiMember: ApiMember): Member => ({
+    id: String(apiMember.id),
+    name: `${apiMember.firstName} ${apiMember.lastName}`.trim(),
+    avatar: apiMember.profilePicture,
+    email: apiMember.email,
+    memberSince: apiMember.memberSince,
+    plan: apiMember.planName,
+    assignedTo: apiMember.assignedTo?.name || 'Unassigned',
+    assignedToAvatar: apiMember.assignedTo?.profilePicture,
+  })
 
-  const totalPages = 12
+  const members = data?.results?.map(transformMember) || []
+
+  const electiCount =
+    data?.stats.plansBreakdown.find((p) =>
+      p.profile_CurrentSubscription_Plan_Title?.toLowerCase().includes('electi')
+    )?.count || 0
+
+  const totalPages = data?.count ? Math.ceil(data.count / 15) : 1
 
   return (
     <div className='manage-member-page'>
@@ -101,21 +53,24 @@ export const ManageMemberPage: React.FC = () => {
             onCreateRecord={() => console.log('clicked')}
           />
         </div>
+
         <div className='manage-member-page__search'>
           <ManageMemberSearch value={searchQuery} onChange={setSearchQuery} />
         </div>
 
-        <div className='manage-member-page__stats'>
-          <ManageMemberStats
-            totalMembers={200000}
-            activeMembers={180000}
-            electiMembers={120000}
-            newMembers={300}
-          />
-        </div>
+        {data?.stats && (
+          <div className='manage-member-page__stats'>
+            <ManageMemberStats
+              totalMembers={data.stats.totalMembers}
+              activeMembers={data.stats.activeMembers}
+              electiMembers={electiCount}
+              newMembers={data.stats.newMembers}
+            />
+          </div>
+        )}
 
         <div className='manage-member-page__table'>
-          <ManageMemberGrid members={mockMembers} />
+          <ManageMemberGrid members={members} />
         </div>
 
         <div className='manage-member-page__pagination'>

@@ -146,7 +146,7 @@ const CurrencyInput: FC<CurrencyInputProps> = ({value, onChange, className}) => 
 const ExpertiseForm: FC = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useHistory()
-  const {refetch} = useUserProfileContext()
+  const {refetch, searchParams, data} = useUserProfileContext()
   const {showError} = useAlert()
 
   const {collection} = useRateExpertiseField()
@@ -155,18 +155,36 @@ const ExpertiseForm: FC = () => {
     label: rate,
   }))
 
+  const formatTitle = (title: string): string => {
+    return title
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+  }
+
   const initialValues: ExpertiseModel = {
-    expertise: [
-      {
-        area: '',
-        description: '',
-        pricing: {
-          currency: 'USD',
-          amount: 0,
-          unit: rateOptions[0]?.value,
-        },
-      },
-    ],
+    expertise:
+      data?.expertise && data.expertise.length > 0
+        ? data.expertise.map((exp: any) => ({
+            area: formatTitle(exp.title) || '',
+            description: exp.content || '',
+            pricing: {
+              currency: 'USD',
+              amount: parseFloat(exp.pricing) || 0,
+              unit: exp.rate?.toLowerCase() || rateOptions[0]?.value,
+            },
+          }))
+        : [
+            {
+              area: '',
+              description: '',
+              pricing: {
+                currency: 'USD',
+                amount: 0,
+                unit: rateOptions[0]?.value,
+              },
+            },
+          ],
   }
 
   const validationSchema = Yup.object().shape({
@@ -195,7 +213,10 @@ const ExpertiseForm: FC = () => {
 
     try {
       setLoading(true)
-      await updateUserExpertise(adaptedPayload)
+      await updateUserExpertise(
+        adaptedPayload,
+        !!searchParams.userSelected ? searchParams.userSelected : ''
+      )
       await refetch()
       navigate.push('/biography')
     } catch (error: any) {
@@ -215,6 +236,7 @@ const ExpertiseForm: FC = () => {
   return (
     <div className='expertise-form'>
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}

@@ -13,13 +13,14 @@ type Props = {
   initialData: any
   onSubmit: (data: any) => void
   onBack: () => void
+  isNewRecord?: boolean
 }
 
 const Step2Schema = Yup.object().shape({
   photo: Yup.mixed().required('Photo is required'),
 })
 
-export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
+export default function ProfileStep2({initialData, onSubmit, onBack, isNewRecord = false}: Props) {
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null)
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -36,15 +37,18 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
     straighten: 0,
   })
   const [loading, setLoading] = useState(false)
+  const [loadingDraft, setLoadingDraft] = useState(false)
 
   const handleFinishClick = async () => {
     try {
       setLoading(true)
       await onSubmit({photo: selectedPhoto})
-      dispatch(actions.requestSubscription())
-      await refetch()
+      if (!isNewRecord) {
+        dispatch(actions.requestSubscription())
+        await refetch()
+      }
 
-      navigate.push('/biography')
+      navigate.push(isNewRecord ? '/manage-members' : '/biography')
     } catch (err: any) {
       console.error('Error:', err)
 
@@ -62,6 +66,26 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
     }
   }
 
+
+  const handleSaveDraft = async () => {
+    try {
+      setLoadingDraft(true)
+      await onSubmit({photo: selectedPhoto, status: 'draft'})
+      navigate.push('/manage-members')
+    } catch (err: any) {
+      console.error('Error:', err)
+  
+      const statusCode = err?.response?.status || 500
+  
+      showError({
+        title: 'Unable to Save Draft',
+        message: "We couldn't save your draft. Please try again.",
+        errorCode: `SAVE_DRAFT_${statusCode}`,
+      })
+    } finally {
+      setLoadingDraft(false)
+    }
+  }
   const handleFileSelect = (file: File) => {
     if (file && file.type.startsWith('image/')) {
       setSelectedPhoto(file)
@@ -101,6 +125,7 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
   }
 
   const exampleImages = ['/media/people3.png', '/media/people2.png', '/media/people1.png']
+
 
   return (
     <>
@@ -241,19 +266,32 @@ export default function ProfileStep2({initialData, onSubmit, onBack}: Props) {
                 <span>back</span>
               </button>
 
-              {/* <button type='submit' onClick={() => handleSubmit({})} className='finish-button'>
-                <span>finish</span>
-                <img
-                  src='/media/svg/nobilis/vector1.svg'
-                  alt=''
-                  className='nb-btn-icon nb-btn-icon--black'
-                />
-              </button> */}
+              {isNewRecord && (
+                <button
+                  type='button'
+                  onClick={handleSaveDraft}
+                  className='finish-button'
+                  disabled={loadingDraft || loading}
+                >
+                  {!loadingDraft  ? (
+                    <span>Save as Draft</span>
+                  ) : (
+                    <span className='indicator-progress nb-heading-md'>
+                      Saving...
+                      <span
+                        className='spinner-border spinner-border-sm align-middle ms-2'
+                        role='status'
+                        aria-hidden='true'
+                      />
+                    </span>
+                  )}
+                </button>
+              )}
               <button
                 type='button'
                 onClick={handleFinishClick}
                 className='finish-button'
-                disabled={loading}
+                disabled={loadingDraft || loading}
               >
                 {!loading ? (
                   <>
