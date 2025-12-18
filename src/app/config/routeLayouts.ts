@@ -48,6 +48,13 @@ export const LAYOUT_CONFIGS = {
     showToolbar: false,
     showExpFooter: false,
   },
+  FOOTER: {
+    showHeader: false,
+    showAside: false,
+    showFooter: true,
+    showToolbar: false,
+    showExpFooter: false,
+  },
 } as const;
 
 const ROUTE_LAYOUT_MAP: Record<string, LayoutConfig> = {
@@ -65,6 +72,15 @@ const ROUTE_LAYOUT_MAP: Record<string, LayoutConfig> = {
   'payment/expert/success': LAYOUT_CONFIGS.HEADER_FOOTER_,
   '/waitinglist': LAYOUT_CONFIGS.PROFILE,
   '/my-experience': LAYOUT_CONFIGS.PROFILE,
+  '/host-experience': LAYOUT_CONFIGS.PROFILE,
+  '/my-experience/success': LAYOUT_CONFIGS.PROFILE,
+  '/my-experience/draft': LAYOUT_CONFIGS.PROFILE,
+  '/my-experience/paused': LAYOUT_CONFIGS.PROFILE,
+  '/experience/admin': LAYOUT_CONFIGS.PROFILE,
+  '/experience/edit/': LAYOUT_CONFIGS.PROFILE,
+  '/experience/detail/': LAYOUT_CONFIGS.FOOTER,
+  '/partner/my-experiences': LAYOUT_CONFIGS.PROFILE,
+  '/partner/my-experiences/draft': LAYOUT_CONFIGS.PROFILE,
   '/biography': LAYOUT_CONFIGS.PROFILE,
   '/expert': LAYOUT_CONFIGS.HEADER_FOOTER_,
   '/dashboard': LAYOUT_CONFIGS.FULL_DASHBOARD,

@@ -1,0 +1,123 @@
+.admin-team-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-admin-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 60px;
+}
+
+.team-admin-section-title {
+  font-family: 'Satoshi';
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: #151515;
+}
+
+.team-admin-row {
+  display: inline-flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.team-admin-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-bottom: 1px #808080 solid;
+  min-height: 40px;
+
+  label {
+    font-family: 'Satoshi';
+    font-size: 10px;
+    font-weight: 500;
+    color: #808080;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+}
+
+/* modal */
+.team-admin-add-member-modal {
+  .modal-content {
+    border-radius: 0;
+    border: none;
+    width: 867px;
+  }
+}
+
+.team-admin-add-member {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  &__title {
+    font-family: 'Oswald';
+    font-size: 32px;
+    font-weight: 500;
+    color: #262626;
+  }
+
+  &__card {
+    padding: 20px;
+    border: 1px solid #e9e9e9;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__section-title {
+    font-family: 'Satoshi';
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #151515;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    label {
+      font-family: 'Satoshi';
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #808080;
+    }
+  }
+
+  &__input {
+    height: 48px;
+    border-bottom: 1px solid #d7d7d7;
+
+    &--select {
+      background: #fff;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

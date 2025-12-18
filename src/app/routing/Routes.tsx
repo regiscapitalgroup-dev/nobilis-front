@@ -12,6 +12,7 @@ import store from '../../setup/redux/Store'
 import {DrawerProvider} from '../context/UserWaitlistSelectedContext'
 import {UserProfileProvider} from '../context/UserProfileContext'
 import {SearchableMembersProvider} from '../context/SearchableMembersContext'
+import { ConfirmProvider } from '../helpers/alertConfirm'
 
 const Routes: FC = () => {
   const isAuthorized = useSelector<RootState>(({auth}) => auth.user, shallowEqual)
@@ -37,9 +38,11 @@ const Routes: FC = () => {
           <DrawerProvider>
             <UserProfileProvider>
               <SearchableMembersProvider>
-                <MasterLayout>
-                  <PrivateRoutes />
-                </MasterLayout>
+                <ConfirmProvider>
+                  <MasterLayout>
+                    <PrivateRoutes />
+                  </MasterLayout>
+                </ConfirmProvider>
               </SearchableMembersProvider>
             </UserProfileProvider>
           </DrawerProvider>

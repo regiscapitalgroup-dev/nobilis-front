@@ -183,12 +183,16 @@ export function AsideMenuMain() {
               <span className='nb-menu-section-title'>MY HOSTINGS</span>
             </div>
             <div className='nb-menu-section-content'>
-              <AsideMenuItem
-                to='/my-experience'
-                title='My Experience'
-                showIcon={true}
-                icon='/media/svg/nobilis/user_nb.svg'
-              />
+              <AsideMenuItem to='/my-experience' title='My Experience' showIcon={true} icon='/media/svg/nobilis/menu_my_experiences.svg'/>
+              <AsideMenuItem to='/host-experience' title='Host Experience' showIcon={true} icon='/media/svg/nobilis/menu_my_experiences.svg'/>
+              <AsideMenuItem to='/experience/admin' title='Experiences' showIcon={true} icon='/media/svg/nobilis/user_nb.svg'/>
+            </div>
+            <div className='nb-menu-section-header'>
+              <span className='nb-menu-section-title'>Members Account</span>
+            </div>
+            <div className='nb-menu-section-content'>
+              <AsideMenuItem to='/partner/my-experiences' title='My Experiences' showIcon={true} icon='/media/svg/nobilis/exp_nb.svg'/>
+              {/* <AsideMenuItem to='/team/admin' title='Team' showIcon={true} icon='/media/svg/nobilis/user_nb.svg'/> */}
             </div>
           </div>
         )}

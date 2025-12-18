@@ -1,0 +1,600 @@
+.loader-search-bar {
+  width: 20px;
+  padding: 5px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #25b09b;
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {to{transform: rotate(1turn)}}
+
+// Page container (igual que team-page)
+.admin-experience-page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: white;
+
+  &__container {
+    width: 100%;
+    max-width: 980px;
+    padding: 0 40px 80px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    &__title {
+        color: #151515;
+        font-size: 32px;
+        font-family: 'Oswald', sans-serif;
+        font-weight: 500;
+        line-height: 38.4px;
+        word-wrap: break-word;
+        margin: 0;
+    }
+
+    &__content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 15px;
+    }
+  }
+}
+
+// Table
+.admin-experience-page-table {
+  align-self: stretch;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: auto;
+
+  &__column {
+    flex: 1;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    &--80 {
+      max-width: 80px;
+      width: 80px;
+    }
+    &--100 {
+      max-width: 100px;
+      width: 100px;
+    }
+    &--150 {
+      max-width: 150px;
+      width: 150px;
+    }
+    &--200 {
+      max-width: 200px;
+      width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &--300 {
+      max-width: 300px;
+      width: 300px;
+    }
+  }
+
+  &__header {
+    align-self: stretch;
+    min-height: 32px;
+    padding: 12px 8px;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    color: #b4b4b4;
+    font-size: 10px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 18.5px;
+    letter-spacing: 1.5px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__filter {
+    align-self: stretch;
+    min-height: 32px;
+    padding: 0 8px;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__cell {
+    align-self: stretch;
+    max-height: 64px;
+    min-height: 64px;
+    padding: 12px 8px;
+    border-bottom: 1px solid #e9e9e9;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 300;
+    line-height: 16.8px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &--bold {
+      font-weight: 700;
+    }
+
+    &--actions {
+      justify-content: center;
+      overflow: visible;
+      position: relative;
+      z-index: 1;
+    }
+  }
+}
+
+.admin-experience-detail-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* ===============================
+   VARIABLES
+================================ */
+$color-dark: #151515;
+$color-muted: #808080;
+$color-border: #e9e9e9;
+$color-primary: #460107;
+$color-white: #ffffff;
+
+$font-oswald: 'Oswald';
+$font-satoshi: 'Satoshi';
+$font-cormorant: 'Cormorant SC';
+
+$shadow-soft: 0 0 10px rgba(0, 0, 0, 0.08);
+
+@mixin flex($justify: flex-start, $align: center, $gap: 0) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin text(
+  $size,
+  $weight: 300,
+  $color: $color-dark,
+  $family: $font-satoshi,
+  $transform: none
+) {
+  font-family: $family;
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+  text-transform: $transform;
+}
+
+@mixin outlined-box($padding) {
+  padding: $padding;
+  background: $color-white;
+  border: 1px solid $color-border;
+}
+
+/* Backdrop */
+.experience-detail-backdrop {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Posicionamiento del modal */
+.experience-detail-modal {
+  margin: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  max-width: 630px;
+  width: 630px;
+
+  /* animación inicial */
+  transform: translateX(100%) !important;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* cuando el modal está visible */
+.modal.show .experience-detail-modal {
+  transform: translateX(0) !important;
+}
+
+/* contenido */
+.experience-detail-modal-content {
+  height: 100vh;
+  border-radius: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.admin-experience-details-container {
+  width: 100%;
+  max-width: 630px !important;
+  height: 100%;
+  padding: 40px;
+  background: $color-white;
+  border-left: 1px solid $color-border;
+  box-shadow: $shadow-soft;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100vh;
+  overflow: scroll;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.admin-experience-details-header {
+  @include flex(space-between, center);
+}
+
+.admin-experience-details-title {
+  @include text(32px, 500, $color-dark, $font-oswald);
+  line-height: 38px;
+}
+
+/* ===============================
+   ACTION
+================================ */
+.admin-experience-details-action {
+  @include flex(flex-end);
+}
+
+/* ===============================
+   CARD
+================================ */
+.admin-experience-details-card {
+  @include outlined-box(30px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-experience-details-user {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.admin-experience-details-id {
+  @include text(10px, 400, $color-muted);
+  font-style: italic;
+}
+
+.admin-experience-details-user-info {
+  @include flex(flex-start, center, 5px);
+}
+
+.admin-experience-details-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.admin-experience-details-name {
+  @include text(12px, 500, $color-dark, $font-cormorant);
+}
+
+.admin-experience-details-contact {
+  @include flex(flex-start, flex-start, 20px);
+}
+
+.admin-experience-details-field {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.admin-experience-details-label {
+  @include text(10px, 300, $color-muted);
+}
+
+.admin-experience-details-value {
+  @include text(12px);
+}
+
+/* ===============================
+   FOOTER
+================================ */
+.admin-experience-details-footer {
+  @include flex(space-between);
+}
+
+.admin-experience-details-summary {
+  @include outlined-box(30px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+.admin-experience-details-summary-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-experience-details-summary-tags {
+  @include flex(flex-start, center, 15px);
+
+  span {
+    @include text(10px, 500, #b4b4b4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+}
+
+.admin-experience-details-summary-title {
+  @include text(12px, 700);
+  line-height: 16.8px;
+}
+
+/* Description */
+.admin-experience-details-summary-description {
+  @include text(12px, 300);
+  line-height: 16.8px;
+}
+
+/* Audience */
+.admin-experience-details-summary-audience {
+  @include flex(flex-start, center, 5px);
+
+  span {
+    @include text(12px, 300);
+  }
+}
+
+/* Submitted */
+.admin-experience-details-summary-submitted {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.admin-experience-details-summary-label {
+  @include text(12px, 300, #b4b4b4);
+}
+
+.admin-experience-details-summary-user {
+  @include flex(flex-start, center, 10px);
+
+  img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  strong {
+    @include text(12px, 700);
+  }
+}
+
+.admin-experience-details-summary-badge {
+  padding: 0 4px;
+  background: #f5f5f5;
+  border: 1px solid $color-dark;
+  @include text(10px, 500, #262626);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  line-height: 18.50px;
+  word-wrap: break-word;
+}
+
+/* Meta */
+.admin-experience-details-summary-meta {
+  @include flex(flex-start, center, 10px);
+
+  span {
+    @include text(12px, 300, #b4b4b4);
+  }
+}
+
+/* Footer */
+.admin-experience-details-summary-footer {
+  @include flex(space-between, center);
+}
+
+.admin-experience-details-summary-actions {
+  @include flex(flex-start, center, 10px);
+  opacity: 0;
+}
+
+/* Decline Modal */
+.decline-experience-modal.modal {
+  .modal-dialog {
+    .modal-content {
+      width: 533px;
+    }
+  }
+}
+
+.decline-experience {
+  max-width: 533px;
+  width: 100%;
+  padding: 40px;
+  background: #fff;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+
+  &__title {
+    font-family: 'Oswald';
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 38.4px;
+    color: #262626;
+    text-align: center;
+  }
+
+  &__description {
+    font-family: 'Satoshi';
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 19.6px;
+    color: #151515;
+    text-align: center;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__label {
+    font-family: 'Satoshi';
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #808080;
+  }
+
+  &__select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 0;
+    border-bottom: 1px solid #d7d7d7;
+  }
+
+  &__note-footer {
+    display: flex;
+    justify-content: space-between;
+
+    font-family: 'Satoshi';
+    font-size: 10px;
+    font-style: italic;
+    color: #b4b4b4;
+  }
+
+  &__actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__btn {
+    padding: 10px 20px;
+    font-family: 'Oswald';
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 22.2px;
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    &--secondary {
+      background: transparent;
+      border: 1px solid #151515;
+      color: #151515;
+    }
+
+    &--primary {
+      background: #151515;
+      border: none;
+      color: #fff;
+    }
+  }
+
+  &__btn-icon {
+    width: 12px;
+    height: 3px;
+    border: 1px solid #fff;
+  }
+}
+
+/* section info history */
+.info-history {
+  width: 100%;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+  }
+
+  &__label {
+    font-family: 'Satoshi';
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    line-height: 18.5px;
+    color: #262626;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__item-title {
+    font-family: 'Satoshi';
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16.8px;
+    color: #151515;
+  }
+
+  &__item-description {
+    font-family: 'Satoshi';
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 16.8px;
+    color: #151515;
+  }
+}

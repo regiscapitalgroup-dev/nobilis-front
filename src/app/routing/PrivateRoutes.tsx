@@ -24,11 +24,21 @@ import {PrivacyPage} from '../pages/legal/PrivacyPage'
 import MembershipPaymentWrapper from '../pages/memberships/MembershipPaymentWrapper'
 import PaymentPage from '../pages/memberships/PaymentPage'
 import ProfileBasePage from '../pages/profile/ProfilePage'
-import {AddExperiencePage} from '../pages/teamAndPartners/AddExperiencePage'
 import {MembersWrapper} from '../pages/members/MembersWrapper'
 import {MemberDetailWrapper} from '../pages/members/MemberDetailWrapper'
 import {ManageMemberWrapper} from '../pages/manageMembers/ManageMemberWrapper'
 import {ProfileMemberWrapper} from '../pages/profileMembers/ProfileMemberWrapper'
+import { AddExperiencePage } from '../pages/teamExperiences/AddExperiencePage'
+import { AddExperienceSuccessPage } from '../pages/teamExperiences/SuccessAddExperiencePage'
+import { HostExperiencePage } from '../pages/teamExperiences/HostExperiencePage'
+import { AddExperienceDraftPage } from '../pages/teamExperiences/AddExperienceDraftPage'
+import { AddExperiencePausedPage } from '../pages/teamExperiences/AddExperiencePausedPage'
+import { EditExperiencePage } from '../pages/teamExperiences/EditExperiencePage'
+import { ExperiencePreviewPage } from '../pages/experienceHostPreview/ExperiencePreviewPage'
+import ExperienceAdminPage from '../pages/experiencesAdmin/ExperienceAdminPage'
+import { HostPartnerExperiencePage } from '../pages/partnerExperiences/HostPartnerExperiencePage'
+import { ExperiencesInProgressPage } from '../pages/partnerExperiences/ExperiencesInProgressPage'
+import { TeamAdminPage } from '../pages/teamAdmin/TeamAdminPage'
 
 export function PrivateRoutes() {
   const user = useSelector((state: any) => state.auth?.user)
@@ -58,6 +68,17 @@ export function PrivateRoutes() {
     <Suspense fallback={<FallbackView />}>
       <Switch>
         <Route path='/my-experience' component={AddExperiencePage} exact />
+        <Route path='/host-experience' component={HostExperiencePage} />
+        <Route path='/experience/detail/:id' component={ExperiencePreviewPage} />
+        <Route path='/experience/edit/:id' component={EditExperiencePage} />
+        <Route path='/my-experience' component={AddExperiencePage} />
+        <Route path='/my-experience/success' component={AddExperienceSuccessPage} />
+        <Route path='/my-experience/draft' component={AddExperienceDraftPage} />
+        <Route path='/my-experience/paused' component={AddExperiencePausedPage} />
+        <Route path='/experience/admin' component={ExperienceAdminPage} />
+        <Route path='/partner/my-experiences' component={HostPartnerExperiencePage} />
+        <Route path='/partner/my-experiences/draft' component={ExperiencesInProgressPage} />
+        <Route path='/team/admin' component={TeamAdminPage} />
         <Route path='/plans' component={DashboardWrapper} />
         <Route path='/membership/payment' component={MembershipPaymentWrapper} />
         <Route path='/payment' component={PaymentPage} />

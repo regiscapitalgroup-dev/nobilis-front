@@ -5,4 +5,5 @@ export interface UserModel {
   pic: string,
   role: string
   profilePicture: string;
+  id:number;
 }

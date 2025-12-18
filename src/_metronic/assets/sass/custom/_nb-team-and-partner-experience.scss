@@ -28,7 +28,7 @@
 }
 
 .tap-add-experience-title {
-  width: 630px;
+  // width: 630px;
   color: #151515;
   font-size: 40px;
   font-family: "Oswald";
@@ -251,6 +251,7 @@
   display: inline-flex;
   flex-direction: column;
   gap: 10px;
+  min-width: 738px;
 }
 
 .tap-host-secction-experiences-past-title {
@@ -270,11 +271,12 @@
 }
 
 .tap-host-secction-experiences-past-card {
-  width: 738px;
+  width: 100%;
   display: flex;
   background: white;
   outline: 1px #e9e9e9 solid;
   max-height: 254px;
+  min-height: 254px;
 }
 
 /* ---------- LEFT IMAGE ---------- */
@@ -288,30 +290,33 @@
 }
 
 .tap-host-secction-experiences-past-img {
-  width: 240px;
-  height: 254px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .tap-host-secction-experiences-past-img-overlay {
   position: absolute;
-  width: 240px;
-  height: 210px;
-  left: 0;
-  top: 44px;
+  width: 100%;
+  height: 100%;
   padding: 20px;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
-  text-align: center;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  flex-direction: column;
 }
 
 .tap-host-secction-experiences-past-img-title {
+  height: 100%;
   font-size: 22px;
   font-family: Oswald;
   font-weight: 500;
   color: white;
   line-height: 26px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
 }
 
 /* ---------- DETAILS ---------- */
@@ -995,6 +1000,7 @@
   height: auto;
   max-height: 20px;
   border-radius: 50%;
+  overflow: hidden;
   img {
     width: 100%;
     height: auto;
@@ -1200,8 +1206,6 @@
 
 .tap-add-experience-2-btn-secondary {
   padding: 10px 20px;
-  outline: 1px solid #151515;
-  outline-offset: -1px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1209,7 +1213,13 @@
   font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
-  cursor: pointer;
+  border: 1px solid #151515;
+  background: white;
+  color: black;
+  &:hover {
+    background: black;
+    color: white;
+  }
 }
 
 .tap-add-experience-2-btn-main {
@@ -1219,21 +1229,16 @@
   align-items: center;
   justify-content: center;
   gap: 5px;
-  cursor: pointer;
-}
-
-.tap-add-experience-2-btn-main div {
   font-family: 'Oswald';
   font-size: 12px;
   color: white;
   text-transform: uppercase;
-}
-
-.tap-add-experience-2-btn-main-icon {
-  width: 12px;
-  height: 3px;
-  outline: 1px solid white;
-  outline-offset: -0.5px;
+  cursor: pointer;
+  &:hover {
+    background: white;
+    color: black;
+    border-color: black;
+  }
 }
 
 /* =========================================
@@ -1375,47 +1380,6 @@ $tap-add-experience-3-color-primary: #460107;
 /* ───────────────────────────────────────────────
    FOOTER BUTTONS
 ────────────────────────────────────────────────── */
-.tap-add-experience-3-footer {
-  @extend %flex-row;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-}
-
-.tap-add-experience-3-footer-right {
-  @extend %flex-row;
-  gap: 15px;
-}
-
-.tap-add-experience-3-btn-secondary {
-  @extend %flex-center;
-  padding: 10px 20px;
-  outline: 1px $tap-add-experience-3-color-text solid;
-  outline-offset: -1px;
-  font-family: $tap-add-experience-3-font-title;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: $tap-add-experience-3-color-text;
-}
-
-.tap-add-experience-3-btn-main {
-  @extend %flex-center;
-  gap: 5px;
-  padding: 10px 20px;
-  background: $tap-add-experience-3-color-text;
-  color: white;
-  text-transform: uppercase;
-  font-family: $tap-add-experience-3-font-title;
-  font-size: 12px;
-
-  .tap-add-experience-3-btn-icon {
-    width: 12px;
-    height: 3px;
-    outline: 1px white solid;
-    outline-offset: -0.5px;
-  }
-}
 
 @media (max-width: 768px) {
   .tap-add-experience-2-category-row,
@@ -1474,34 +1438,164 @@ $tap-add-experience-3-color-primary: #460107;
   word-wrap: break-word;
 }
 
-.tap-experience-nb-modal-button {
-  width: fit-content;
+.tap-experience-nb-modal-button:hover {
+  background: #151515;
+  color: white;
+}
+
+/* estilos para la pagina de success en add experience */
+.tap-add-experience-success-container {
+  width: 100%;
   height: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  outline: 1px #151515 solid;
-  outline-offset: -1px;
+  padding: 40px;
+  background: white;
+  box-shadow: 0px 10px 45px rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5;
+  gap: 40px;
+  max-width: 630px;
+}
+
+.tap-add-experience-success-title {
+  width: 100%;
+  text-align: center;
+  color: #151515;
+  font-size: 40px;
+  font-family: 'Oswald';
+  font-weight: 500;
+  line-height: 48px;
+  word-wrap: break-word;
+}
+
+.tap-add-experience-success-subtitle {
+  width: 100%;
+  text-align: center;
+  color: #151515;
+  font-size: 14px;
+  font-family: 'Satoshi';
+  font-weight: 300;
+  line-height: 19.6px;
+  word-wrap: break-word;
+}
+
+.tap-add-experience-success-icon-wrapper {
+  width: 206px;
   display: inline-flex;
-  span {
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  .line-svg {
+    span {
+      svg {
+        width: 71px;
+        height: 2px;
+      }
+    }
+  }
+  .icon-svg {
+    span {
+      svg {
+        height: 20px !important;
+        width: 20px !important;
+      }
+    }
+  }
+}
+
+/* Buttons container */
+.tap-add-experience-success-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Secondary button (outlined) */
+.tap-add-experience-success-btn-secondary {
+  padding: 10px 20px;
+  outline: 1px #151515 solid;
+  outline-offset: -1px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  div {
+    text-align: center;
     color: #151515;
     font-size: 12px;
     font-family: 'Oswald';
     font-weight: 500;
-    text-transform: 'uppercase';
-    line-height: 22.20px;
-    word-wrap: break-word;
-  }
-  span:hover {
-    color: white;
+    text-transform: uppercase;
+    line-height: 22.2px;
   }
 }
 
-.tap-experience-nb-modal-button:hover {
-  background: #151515;
-  color: white;
+/* Underline button */
+.tap-add-experience-success-btn-underline {
+  border-bottom: 1px #151515 solid;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
+  div {
+    text-align: center;
+    color: #151515;
+    font-size: 12px;
+    font-family: 'Oswald';
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 22.2px;
+  }
+}
+
+
+.tap-host-secction-experiences-lead {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  &__title {
+    color: #1E1E1E;
+    font-size: 14px;
+    font-family: 'Oswald';
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 16.8px;
+    letter-spacing: 3.08px;
+    word-wrap: break-word;
+  }
+  &__subtitle {
+    text-align: center;
+    color: #808080;
+    font-size: 10px;
+    font-family: 'Satoshi';
+    font-style: italic;
+    font-weight: 400;
+    line-height: 14px;
+    word-wrap: break-word;
+  }
+}
+
+/* autocomplete icon */
+.tap-add-experience-2-city-autocomplete-icon {
+  height: 24px;
+  width: 24px;
+  span {
+    svg {
+      height: 20px;
+      width: 20px;
+    }
+  }
+}
+
+.btn-decline-reasons {
+  color: #A50F0F !important;
+  span {
+    border-bottom: 1px #A50F0F solid !important;
+  }
 }
