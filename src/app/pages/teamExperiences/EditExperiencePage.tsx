@@ -198,7 +198,14 @@ const EditExperiencePage: FC = () => {
                         return new Date(value) > new Date(start);
                     }),
             })
-        ).min(1, "Add at least one date").required('dates required'),
+        ).when("availability_type", {
+            is: "by_date",
+            then: (schema) =>
+            schema
+                .min(1, "Add at least one date")
+                .required("Dates are required"),
+            otherwise: (schema) => schema.notRequired(),
+        }),
         duration_type: Yup.number().required("Selected an duration"),
         duration: Yup.number().required("Enter a number").max(31, "Max 31"),
         price_per_guest_text: Yup.string().required("Enter a number").max(13, "Max $1,000,000,000.00"),
