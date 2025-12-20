@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { DetailExperienceDrawer } from './components/DetailExperienceDrawer'
 import { EXPERIENCE_STATUS, EXPERIENCE_STATUS_LIST } from '../teamExperiences/models/ExperienceStatus';
 import { getExperiencesByStatus } from '../../services/adminExperiencesService';
+import { KTSVG } from '../../../_metronic/helpers';
 
 interface SearchProps {
     limit:number;
@@ -147,7 +148,13 @@ const ExperienceAdminPage: React.FC = () => {
 
     return (<div className='admin-experience-page'>
         <div className='admin-experience-page__container'>
-            <h1 className='admin-experience-page__title'>Experiences</h1>
+            <div className='w-100 d-flex flex-row justify-content-between align-items-center'>
+                <h1 className='admin-experience-page__title'>Experiences</h1>
+                <button className="tap-add-experience-2-btn-secondary" onClick={()=>history.push(`/my-experience`)}>
+                    <KTSVG path='/media/svg/nobilis/calendar-edit.svg' />
+                    <span>&nbsp;&nbsp;Create Experience</span>
+                </button>
+            </div>
             <div className="card">
                 <ul className="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-bottom-0">
                     {experienceStatusList.map((item:any,index:number)=>(<div className='d-flex flex-row' key={`tabs-experiences-${index}`}>

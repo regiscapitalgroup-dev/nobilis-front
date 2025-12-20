@@ -54,7 +54,7 @@ export const ManageMemberTabNavigation: React.FC<TabNavigationProps> = ({
       </div>
 
       <ManageMemberButton
-        label='Create Record'
+        label='Create Member'
         icon='calendar-edit'
         variant='outline'
         state={{isNewRecord: true}}
