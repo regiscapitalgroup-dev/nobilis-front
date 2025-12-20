@@ -101,7 +101,7 @@ export const MemberModal: FC<Props> = ({ show, onClose, onLoad, onSubmit, userSe
         relation: Yup.string()/* .required("Relation is required") */,
         experience_ids: Yup.array().of(
                 Yup.number(),
-            ).min(1, "At least one experience is required"),
+            ),
     });
 
     const handleSubmit = async (values) => {

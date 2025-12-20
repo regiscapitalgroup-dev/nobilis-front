@@ -49,7 +49,7 @@ export const ExperiencePreviewInviteCarousel: React.FC<Props> = ({ items, events
   };
 
   return (
-    <div className="experience-preview-invite-carousel">
+    <div className={`experience-preview-invite-carousel ${items?.length > 0 ? '' : 'd-none'}`}>
       {/* FLECHAS */}
       <button className="carousel-btn left" onClick={scrollPrev}>‹</button>
       <button className="carousel-btn right" onClick={scrollNext}>›</button>

@@ -341,7 +341,7 @@ const ExperiencePreviewPage: FC = () => {
                     </div>)}
                 </div>
 
-                <div className="experience-preview-invite-by">
+                <div className={`experience-preview-invite-by ${experiences?.length > 0 ? '' : 'd-none'}`}>
                     <div className="experience-preview-name">
                         <KTSVG path='/media/svg/nobilis/mark-292928.svg' />
                         {experience?.host?.firstName ?? ''} {experience?.host?.lastName ?? ''}
