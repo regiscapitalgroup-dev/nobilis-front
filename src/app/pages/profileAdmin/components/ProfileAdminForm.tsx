@@ -143,7 +143,7 @@ const ProfileAdminForm: React.FC = () => {
           }
           await updateProfile(payload, !!searchParams.userSelected ? searchParams.userSelected : '')
           await refetch()
-          navigate.push('/biography')
+          /* navigate.push('/biography') */
           setLoading(false)
         } catch (error: any) {
           setLoading(false)
@@ -352,7 +352,11 @@ const ProfileAdminForm: React.FC = () => {
               type='button'
               className='btn-secondary'
               onClick={() => {
-                navigate.push('/biography')
+                if (searchParams.userSelected) {
+                  navigate.push(`/profile-member`)
+                } else {
+                  navigate.push('/biography')
+                }
               }}
             >
               Cancel

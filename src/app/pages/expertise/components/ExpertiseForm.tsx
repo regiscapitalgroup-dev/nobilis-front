@@ -218,7 +218,7 @@ const ExpertiseForm: FC = () => {
         !!searchParams.userSelected ? searchParams.userSelected : ''
       )
       await refetch()
-      navigate.push('/biography')
+      // navigate.push('/biography')
     } catch (error: any) {
       console.error('Error :', error)
 
@@ -352,7 +352,13 @@ const ExpertiseForm: FC = () => {
               <button
                 type='button'
                 className='expertise-form__btn expertise-form__btn--secondary'
-                onClick={() => navigate.push('/biography')}
+                onClick={() => {
+                  if (searchParams.userSelected) {
+                    navigate.push(`/profile-member`)
+                  } else {
+                    navigate.push('/biography')
+                  }
+                }}
               >
                 Cancel
               </button>

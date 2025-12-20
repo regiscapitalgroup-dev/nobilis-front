@@ -86,7 +86,7 @@ export default function ProfessionalOverviewForm() {
           )
           setLoading(false)
           await refetch()
-          navigate.push('/biography')
+          // navigate.push('/biography')
         } catch (error: any) {
           console.log(error)
           const statusCode = error?.response?.status || 500

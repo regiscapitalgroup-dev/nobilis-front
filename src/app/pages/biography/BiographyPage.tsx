@@ -137,7 +137,7 @@ const BiographyPage: FC = () => {
 
           {/* Info */}
           <div className='biography__info'>
-            <div className='biography__info-name'> {`Your Highness ${fullName}`}</div>
+            <div className='biography__info-name'> {`Your ${data?.aliasTitle ?? ''} ${fullName}`}</div>
             <div className='biography__divider'></div>
             <div className='biography__info-desc'>
               <div className='biography__info-desc'>{data?.bioPresentation}</div>
