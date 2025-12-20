@@ -8,25 +8,25 @@ export default function ImageField() {
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!values.photo) {
+    if (!values.profile_picture) {
       setPreview(null);
       return;
     }
 
     // Si ya es una URL (editar)
-    if (typeof values.photo === 'string') {
-      setPreview(values.photo);
+    if (typeof values.profile_picture === 'string') {
+      setPreview(values.profile_picture);
       return;
     }
 
     // Si es File (create o change)
-    const objectUrl = URL.createObjectURL(values.photo);
+    const objectUrl = URL.createObjectURL(values.profile_picture);
     setPreview(objectUrl);
 
     return () => {
       URL.revokeObjectURL(objectUrl);
     };
-  }, [values.photo]);
+  }, [values.profile_picture]);
 
   // Cuando el usuario hace click
   const handleClick = () => {
@@ -39,12 +39,12 @@ export default function ImageField() {
 
     if (!file.type.startsWith("image/")) return;
 
-    setFieldValue("photo", file);
+    setFieldValue("profile_picture", file);
   };
 
   const removeImage = () => {
     setPreview(null);
-    setFieldValue("photo", null);
+    setFieldValue("profile_picture", null);
   };
 
   // Drag & drop

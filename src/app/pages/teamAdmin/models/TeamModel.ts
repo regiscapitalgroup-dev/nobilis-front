@@ -1,8 +1,9 @@
 export interface TeamModel {
   id: number
-  user: TeamUser
+  userData: TeamUser
   role: TeamRole
   joinedAt: string
+  phoneNumber: string
 }
 
 export interface TeamUser {
@@ -10,7 +11,6 @@ export interface TeamUser {
   email: string
   firstName: string
   lastName: string
-  phone: string
 }
 
 export interface TeamRole {

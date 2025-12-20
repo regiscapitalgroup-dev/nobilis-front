@@ -10,6 +10,7 @@ export function AsideMenuMain() {
   const canWaitList = hasPermission(user, Permission.SEE_MENU_ITEM_WL)
   const canMenuMyHost = hasPermission(user, Permission.MY_HOSTING)
   const canManageMember = hasPermission(user, Permission.MANAGE_MEMBER)
+  const canAdminTeam = hasPermission(user, Permission.TEAM)
 
   return (
     <div className='nb-aside-menu'>
@@ -174,6 +175,17 @@ export function AsideMenuMain() {
               </div>
             </div> */}
           </>
+        )}
+
+        {canAdminTeam && (
+          <div className='nb-menu-section'>
+            <div className='nb-menu-section-header'>
+              <span className='nb-menu-section-title'>Members Account</span>
+            </div>
+            <div className='nb-menu-section-content'>
+              <AsideMenuItem to='/team/admin' title='Team' showIcon={true} icon='/media/svg/nobilis/user_nb.svg'/>
+            </div>
+          </div>
         )}
 
         {/* Profile partner y team */}

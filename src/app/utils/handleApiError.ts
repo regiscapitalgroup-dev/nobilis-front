@@ -12,6 +12,7 @@ type HandleApiErrorOptions = {
   onForbidden?: () => void;
   onNotFound?: () => void;
   onServerError?: () => void;
+  onBadRequest?: (data:any) => void;
 };
 
 export function handleApiError(
@@ -31,6 +32,7 @@ export function handleApiError(
 
   switch (status) {
     case 400:
+      options?.onBadRequest?.(data);
       throw {
         status,
         message: data?.message || data?.detail || 'Bad request',
@@ -73,4 +75,18 @@ export function handleApiError(
         data,
       };
   }
+}
+
+type ErrorObject = Record<string, string[]>;
+
+export function parseApiErrors(errors: ErrorObject): string {
+  if (!errors || typeof errors !== 'object') return '';
+
+  return Object.entries(errors)
+    .map(([field, messages]) => {
+      if (!Array.isArray(messages)) return '';
+      return `${field}: ${messages.join(', ')}`;
+    })
+    .filter(Boolean)
+    .join(' | ');
 }

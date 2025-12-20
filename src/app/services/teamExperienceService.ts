@@ -83,6 +83,17 @@ export async function getUsersSubscribed(search: string) {
     }
 }
 
+export async function getHost(params: any={}) {
+    try {
+        const response = await apiClient.get(`/hosts/`, { params: params });
+        return response.data;
+    } catch (error) {
+        handleApiError(error, {
+            onUnauthorized: Logout,
+        });
+    }
+}
+
 /* experiencias */
 
 export async function createExperience(data: any) {

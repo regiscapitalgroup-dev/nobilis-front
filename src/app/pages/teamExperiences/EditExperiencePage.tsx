@@ -82,6 +82,8 @@ const EditExperiencePage: FC = () => {
             id: data.id ?? 0,
             experienceType: 'edit',
             /* step2 */
+            host_type: data.hostType ?? 'partner',
+            host_id: data.host?.id ?? 0,
             title: data.title ?? '',
             itinerary: data.itinerary ?? '',
             what_is_included: data.whatIsIncluded ?? '',
@@ -140,6 +142,8 @@ const EditExperiencePage: FC = () => {
         id: 0,
         experienceType: "new",
         /* step2  */
+        host_type: "partner",
+        host_id: 0,
         title: "",
         itinerary: "",
         what_is_included: "",
@@ -182,6 +186,8 @@ const EditExperiencePage: FC = () => {
         id: Yup.number(),
         experienceType: Yup.string().required("Please select an option"),
         /* step2  */
+        host_type: Yup.string().required("Please select an option"),
+        host_id: Yup.number().required("Select the host of the experience"),
         title: Yup.string().required("Experience name is required").max(100, "Max 100 characters"),
         itinerary: Yup.string().required("Itinerary is required").max(500, "Max 500 characters"),
         what_is_included: Yup.string().required("Includes field is required").max(500, "Max 500 characters"),
@@ -214,7 +220,7 @@ const EditExperiencePage: FC = () => {
                 name: Yup.string().required("Service name is required").max(100, "Max 100 characters"),
                 price: Yup.number().required("Service price is required").min(0, 'Min value is 0').max(1000000000, "Max values $1,000,000,000.00")
             })
-        ).min(1, "At least one enhancement is required"),
+        ),
         category_ids: Yup.array().of(
             Yup.string().required("Category is required").max(100, "Max 100 characters"),
         ).min(1, "At least one category is required"),
@@ -343,6 +349,7 @@ const EditExperiencePage: FC = () => {
             cloneObj.galleryImages = [];
             cloneObj.audience_type = Number(cloneObj.audience_type);
             cloneObj.duration_type = Number(cloneObj.duration_type);
+            cloneObj.host_id = Number(cloneObj.host_id);
             let response = await updateExperience(values.id, cloneObj);
             // guardamos solo el cover
             let responseImgs = 0;
@@ -392,7 +399,7 @@ const EditExperiencePage: FC = () => {
     }
 
     const stepFields = {
-        1: ["title", "itinerary", "what_is_included", "availability_type", "dates_data", "duration_type", "duration", "price_per_guest_text", "enhancements_data", "category_ids", "location_address",
+        1: ["host_id","host_type","title", "itinerary", "what_is_included", "availability_type", "dates_data", "duration_type", "duration", "price_per_guest_text", "enhancements_data", "category_ids", "location_address",
             "arrival_notes", "public", "allowed_guest_ids", "audience_type", "guest_capacity_adults", "guest_capacity_children", "guest_capacity_infants",
             "important_information_guest", "ideal_audience", "host_presence", "additional_team_member_ids", "beneficiary_for_profit", "beneficiary_check", "beneficiaries", "imageCover", "galleryImages", "optional_video_link"],
         2: ["confidentiality_type", "confidentiality_check", "policy_cancelation_check"],

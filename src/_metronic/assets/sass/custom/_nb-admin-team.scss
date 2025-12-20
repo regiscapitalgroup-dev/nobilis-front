@@ -51,7 +51,7 @@
   .modal-content {
     border-radius: 0;
     border: none;
-    width: 867px;
+    width: 670px;
   }
 }
 
@@ -119,5 +119,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+}
+
+.nb-admin-team-item-select {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.08);
+  display: flex;
+  gap: 10px;
+  background: #F5F5F5;
+  padding: 5px 10px;
+  span {
+    color: #151515;
+    font-size: 14px;
+    font-family: 'Satoshi';
+    line-height: 19.60px;
+    word-wrap: break-word;
   }
 }

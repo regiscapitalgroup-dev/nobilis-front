@@ -16,12 +16,30 @@ import GalleryUploadField from '../fields/GalleryUploadField'
 import CityAutocompleteField from '../fields/CityAutocompleteField'
 import { GenericModel } from '../../../models/GenericModel'
 import { EXPERIENCE_STATUS } from '../../../models/ExperienceStatus'
+import { getHost } from '../../../../../services/teamExperienceService'
 
 const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMessage, onPause, catalogs }) => {
     const formik = useFormikContext();
     const [isEditing, setIsEditing] = useState(false);
     const userData = useSelector<RootState>(({ auth }) => auth, shallowEqual) as IAuthState
     const history = useHistory()
+    const [listHost, setListHost] = useState<any[]>([]);
+
+    const getUserListHosts = async () => {
+        if(formik.values.host_type === "member"){
+            let hosts = await getHost({ });
+            console.log('member',hosts);
+            setListHost(hosts?.results)
+        }else{
+            let hosts = await getHost({ type: 'partner' });
+            console.log('member',hosts);
+            setListHost(hosts?.results)
+        }
+    }
+
+    useEffect(() => {
+        getUserListHosts();
+    }, [formik.values.host_type]);
 
     const handleExperienceChange = (e: any) => {
         const value = e.target.value.slice(0, 100); // límite
@@ -133,6 +151,61 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
                         <label className="tap-add-experience-2-label">You can only edit certain info only when editing an active experience</label>
                         <div className="tap-add-experience-2-input-line">
                         </div>
+                    </div>
+                </section>
+                {/* <!-- 5. Host Type --> */}
+                <section className="tap-add-experience-2-section">
+                    <label className="tap-add-experience-2-section-heading">Type Host</label>
+                    <div className="tap-add-experience-2-radio-row">
+                        <div className={`tap-add-experience-2-radio-card w-50 ${formik.values.host_type === "partner" ? 'tap-add-experience-2-radio-card--selected' : ''}`}>
+                            <label className="tap-host-option p-6 w-100">
+                                <input type="radio" className="tap-host-radio-input"
+                                    name="host_type"
+                                    value="partner"
+                                    checked={formik.values.host_type === "partner"}
+                                    onChange={formik.handleChange}
+                                />
+                                <div className="tap-host-radio">
+                                    <div className="tap-host-radio-outer"></div>
+                                    <div className="tap-host-radio-inner"></div>
+                                </div>
+                                <div className="tap-host-option-label">Partner</div>
+                            </label>
+                        </div>
+                        <div className={`tap-add-experience-2-radio-card w-50 ${formik.values.host_type === "member" ? 'tap-add-experience-2-radio-card--selected' : ''}`}>
+                            <label className="tap-host-option p-6 w-100">
+                                <input type="radio" className="tap-host-radio-input"
+                                    name="host_type"
+                                    value="member"
+                                    checked={formik.values.host_type === "member"}
+                                    onChange={formik.handleChange}
+                                />
+                                <div className="tap-host-radio">
+                                    <div className="tap-host-radio-outer"></div>
+                                    <div className="tap-host-radio-inner"></div>
+                                </div>
+                                <div className="tap-host-option-label">Member</div>
+                            </label>
+                        </div>
+                    </div>
+                    <ErrorMessage name="host_type" component="div" className="tap-add-experience-text text-danger" />
+                </section>
+                {/* <!-- 5. Host --> */}
+                <section className="tap-add-experience-2-section">
+                    <label className="tap-add-experience-2-label">Host</label>
+                    <div>
+                        <div className="tap-add-experience-2-input-line">
+                            <select name="host_id" value={formik.values.host_id} onChange={formik.handleChange} className='tap-select-add-experience w-100' placeholder='Select an option'>
+                                <option value={0} defaultChecked>Select a host</option>
+                                {(listHost ?? []).map((r:any,index:number)=>
+                                    (<option key={`duration-${index}`} value={Number(r.id)}>{r.fullName} {r.email}</option>)
+                                )}
+                            </select>
+                        </div>
+                        <div className="tap-add-experience-2-input-hint mt-3">
+                            Select the host of the experience
+                        </div>
+                        <ErrorMessage name="host_id" component="div" className="tap-add-experience-text text-danger" />
                     </div>
                 </section>
                 {/* <!-- 3. NAME THE EXPERIENCE --> */}

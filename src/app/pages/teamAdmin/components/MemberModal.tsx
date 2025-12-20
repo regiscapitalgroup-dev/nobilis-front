@@ -1,57 +1,74 @@
-import { FC, useEffect, useState } from 'react'
-import { Modal, Dropdown } from 'react-bootstrap-v5'
+import { FC, useEffect, useRef } from 'react'
+import { Modal } from 'react-bootstrap-v5'
 import { ErrorMessage, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { useHistory } from 'react-router-dom'
 import { showErrorAlert } from '../../../helpers/alert'
-import { handleApiError } from '../../../utils/handleApiError'
+import { handleApiError, parseApiErrors } from '../../../utils/handleApiError'
 import ImageField from './fields/ImageField'
 import { KTSVG } from '../../../../_metronic/helpers'
-import { getExperiences } from '../../../services/teamExperienceService'
-import { EXPERIENCE_STATUS } from '../../teamExperiences/models/ExperienceStatus'
-import { ExperienceSummary } from '../../teamExperiences/models/ExperienceSummaryModel'
+import { SelectExperienceField } from './fields/SelectExperienceField'
+import { createTeam, getDetailTeam, updateTeam } from '../../../services/teamAdminService'
+import { UserModel } from '../../../modules/auth/models/UserModel'
+import { shallowEqual, useSelector } from 'react-redux'
+import { RootState } from '../../../../setup'
 
 type Props = {
     show: boolean;
     onClose: () => void;
+    onSubmit?: () => void;
     onLoad?: (isloaded:boolean) => void;
+    userSelectedId: number;
 }
 
-export const MemberModal: FC<Props> = ({ show, onClose }) => {
-    const [experiences, setExperiences] = useState<ExperienceSummary[]>([])
-    const [reasons, setReasons] = useState<any[]>([])
-    const history = useHistory()
+export const MemberModal: FC<Props> = ({ show, onClose, onLoad, onSubmit, userSelectedId }) => {
+    const user = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+    const formikRef = useRef();
 
-    const fetchData = async () => {
-        const experiences = await getExperiences({ limit: 50, offset: 0, status: EXPERIENCE_STATUS.PUBLISHED });
-        console.log(experiences.results);
-        setExperiences(experiences.results);
+    const getTeam = async () => {
+        const team_ = await getDetailTeam(user.id,userSelectedId);
+        if(team_?.id == 0) return;
+        setFormikValues(team_);
     }
 
+    const setFormikValues = async (team: any) => {
+        await formikRef.current.setValues({
+            user_id: team?.id,
+            email: team?.email ?? "",
+            first_name: team?.firstName ?? "",
+            last_name: team?.lastName ?? "",
+            phone_number: team?.phoneNumber ?? "",
+            profile_picture: team?.profilePicture ?? null,
+            role_id: team?.roleId ?? 7,
+            experience_ids: team?.experiencesIds?.length ? team.experiencesIds : []
+        });
+    };
+
     useEffect(()=>{
-        fetchData();
-    },[])
+        if(userSelectedId > 0){
+            getTeam();
+        }
+    },[userSelectedId])
 
     const initialValues = {
-        id: 0,
+        user_id: 0,
         email: "",
         first_name: "",
         last_name: "",
-        phone: "",
-        photo: null,
-        role_code: "PROFILE_MANAGEMENT",
+        phone_number: "",
+        profile_picture: null,
+        role_id: 7,
         organization: "",
         relation: "",
         experience_ids: [] as number[],
     };
 
     const validationSchema = Yup.object({
-        rejection_reason_id: Yup.number().required("Selected an option").min(1,'Selected an option'),
+        user_id: Yup.number(),
         email: Yup.string().email('Wrong email format').min(3, 'Minimum 3 symbols').max(50, 'Maximum 50 symbols').required('Email is required'),
         first_name: Yup.string().required("Name is required").max(100, "Max 100 characters"),
         last_name: Yup.string().required("Last name is required").max(100, "Max 100 characters"),
-        phone: Yup.string().matches(/^[0-9()+\-\s]{7,15}$/,'Invalid phone number').required('Phone is required'),
-        photo: Yup.mixed()
+        phone_number: Yup.string().matches(/^[0-9()+\-\s]{7,15}$/,'Invalid phone number').required('Phone is required'),
+        profile_picture: Yup.mixed()
             .required("Cover image is required")
             .test("fileOrUrl", "Only images or valid URLs allowed", (value) => {
                 if (!value) return false;
@@ -79,9 +96,9 @@ export const MemberModal: FC<Props> = ({ show, onClose }) => {
                 }
                 return true; // si es URL, no aplica límite de tamaño
             }),
-        role_code: Yup.string().required("Role is required"),
-        organization: Yup.string().required("Organization is required"),
-        relation: Yup.string().required("Relation is required"),
+        role_id: Yup.number()/* .required("Role is required") */,
+        organization: Yup.string()/* .required("Organization is required") */,
+        relation: Yup.string()/* .required("Relation is required") */,
         experience_ids: Yup.array().of(
                 Yup.number(),
             ).min(1, "At least one experience is required"),
@@ -89,46 +106,86 @@ export const MemberModal: FC<Props> = ({ show, onClose }) => {
 
     const handleSubmit = async (values) => {
         try {
-            console.log(values);
             onLoad(true);
-            // let isDecline = await declineExperience(experienceId,values);
-            let isDecline = {};
+            let msg = '';
+            let cloneObj = JSON.parse(JSON.stringify({...values}));
+            const formData = new FormData();
+            formData.append('user_id', values.user_id);
+            formData.append('email', values.email);
+            formData.append('first_name', values.first_name);
+            formData.append('last_name', values.last_name);
+            formData.append('phone_number', values.phone_number);
+            if(values.profile_picture instanceof File){
+                formData.append('profile_picture', values.profile_picture);
+            }
+            formData.append('organization', values.organization ?? '');
+            formData.append('relation', values.relation ?? '');
+            if(values.experience_ids.length > 1){
+                let ids = (values.experience_ids ?? []).map((item)=>{
+                    formData.append('experience_ids', item);
+                });
+            }else{
+                let ids = (values.experience_ids ?? []).map((item)=>{
+                    formData.append('experience_ids[]', item);
+                });
+            }
+            if(values?.user_id == 0){
+                delete cloneObj.profile_picture; // photo se maneja aparte en create
+                let isCreated = await createTeam(formData);
+                msg = isCreated.ok || isCreated.email ? 'The team member has been created successfully.' : 'Unable to create team member.';
+            }else{
+                // actualizamos info
+                formData.append('role_id', 7);
+                let isUpdate = await updateTeam(user.id,values.user_id,formData);
+                msg = isUpdate.id ? 'The team member has been updated successfully.' : 'Unable to update team member.';
+            }
             onLoad(false);
-            // history.goBack();
-            showErrorAlert({ title: '', message: isDecline.detail ?? 'The experience has been declined successfully.' });
+            onSubmit();
+            showErrorAlert({ title: '', message: msg ?? 'The experience has been declined successfully.' });
         } catch (error) {
+            onLoad(false);
             handleApiError(error, {
                 onServerError: ()=>showErrorAlert({ title: 'Error', message: 'Error declining the experience. Please try again later.' }),
+                onBadRequest: (data)=>{
+                    let msg = parseApiErrors(data);
+                    showErrorAlert({ title: 'Error', message: msg })
+                }
             });
         }
     }
 
     return (
         <Modal show={show} onHide={onClose} centered size="lg" backdrop="static" dialogClassName="team-admin-add-member-modal">
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+            <Formik innerRef={formikRef} initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
                 {(formik) => {
                     const onCancelHandle = () => {
                         formik.resetForm({
                             values: {
-                                id: 0,
+                                user_id: 0,
                                 email: "",
                                 first_name: "",
                                 last_name: "",
-                                phone: "",
-                                photo: null,
-                                role_code: "PROFILE_MANAGEMENT",
+                                phone_number: "",
+                                profile_picture: null,
+                                role_id: 5,
                                 organization: "",
                                 relation: "",
+                                experience_ids: [],
                             }
                         });
                         onClose();
                     }
 
+                    const handleExperienciesChange = (value:string) => {
+                        formik.setFieldValue("experience_ids", value);
+                        formik.validateForm();
+                    };
+
                     return (<Form>
                         <div className="team-admin-add-member">
                             {/* HEADER */}
                             <div className="team-admin-add-member__title">
-                                Add New Member
+                                {formik.values.user_id == 0 ? 'Add New' : 'Edit'} Member
                             </div>
                             {/* CONTENT */}
                             <div className="team-admin-add-member__card">
@@ -160,50 +217,21 @@ export const MemberModal: FC<Props> = ({ show, onClose }) => {
                                     <div className="team-admin-add-member__field">
                                         <label>Phone number</label>
                                         <div className="team-admin-add-member__input">
-                                            <input name="phone" value={formik.values.phone} onChange={formik.handleChange} className="tap-add-experience-2-input" maxLength={100} />
+                                            <input name="phone_number" value={formik.values.phone_number} onChange={formik.handleChange} className="tap-add-experience-2-input" maxLength={100} />
                                         </div>
-                                        <ErrorMessage name="phone" component="div" className="tap-add-experience-text text-danger" />
+                                        <ErrorMessage name="phone_number" component="div" className="tap-add-experience-text text-danger" />
                                     </div>
                                     <div className="team-admin-add-member__field">
                                         <label>Photo</label>
                                         <ImageField />
-                                        <ErrorMessage name="photo" component="div" className="tap-add-experience-text text-danger" />
+                                        <ErrorMessage name="profile_picture" component="div" className="tap-add-experience-text text-danger" />
                                     </div>
                                 </div>
 
                                 {/* ASSIGN EXPERIENCE */}
                                 <div className="team-admin-add-member__field">
                                     <label>Assign experience</label>
-                                    <div className="team-admin-add-member__input team-admin-add-member__input--select">
-                                        <Dropdown className="w-100">
-                                            <Dropdown.Toggle className="btn btn-light w-100 d-flex justify-content-between">
-                                                {formik.values.experience_ids.length > 0
-                                                ? `${formik.values.experience_ids.length} selected`
-                                                : 'Select experiences'}
-                                                <i className="bi bi-chevron-down" />
-                                            </Dropdown.Toggle>
-                                            <Dropdown.Menu className="w-100 p-3">
-                                                {(experiences ?? []).map((exp) => {
-                                                    const checked = formik.values.experience_ids.includes(exp.id)
-                                                    return (<Dropdown.Item as="div" key={exp.id} className="px-0">
-                                                        <label className="form-check mb-2 w-100">
-                                                            <input type="checkbox" className="form-check-input" checked={checked} 
-                                                            onChange={(e) => {
-                                                                const next = e.target.checked 
-                                                                    ? [...formik.values.experience_ids, exp.id]
-                                                                    : formik.values.experience_ids.filter((id) => id !== exp.id);
-                                                                console.log('experience_ids',next);
-                                                                formik.setFieldValue('experience_ids', next)
-                                                            }}/>
-                                                            <span className="form-check-label ms-2">
-                                                                {exp.title}
-                                                            </span>
-                                                        </label>
-                                                    </Dropdown.Item>)
-                                                })}
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-                                    </div>
+                                    <SelectExperienceField values={formik.values.experience_ids} onChange={handleExperienciesChange}/>
                                     <ErrorMessage name="experience_ids" component="div" className="tap-add-experience-text text-danger" />
                                 </div>
                             </div>
@@ -215,7 +243,7 @@ export const MemberModal: FC<Props> = ({ show, onClose }) => {
                                 </button>
 
                                 <button type='submit' className="decline-experience__btn decline-experience__btn--primary">
-                                    Add Member
+                                    {formik.values.user_id == 0 ? 'Add' : 'Edit'} Member
                                     &nbsp;<KTSVG path='/media/svg/nobilis/vector02.svg' />
                                 </button>
                             </div>

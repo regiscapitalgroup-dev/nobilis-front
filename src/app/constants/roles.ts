@@ -11,12 +11,14 @@ export enum Permission {
     SEE_MENU_ITEM_WL = 'SEE_MENU_ITEM_WL',
     MY_HOSTING = 'MY_HOSTING',
     MANAGE_MEMBER = 'MANAGE_MEMBER',
+    TEAM = 'TEAM',
 }
 
 export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
     [UserRole.ADMIN]: [
         Permission.EDIT_PROFILE_IMAGE,
         Permission.EDIT_BIOGRAPHY,
+        Permission.TEAM,
     ],
     [UserRole.FINAL_USER]: [],
     [UserRole.STAFF_USER]: [

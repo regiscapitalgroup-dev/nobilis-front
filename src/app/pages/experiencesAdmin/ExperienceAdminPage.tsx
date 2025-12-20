@@ -13,6 +13,7 @@ interface SearchProps {
     offset:number;
     status:string;
     search?:string;
+    type?:string;
 }
 
 const ExperienceAdminPage: React.FC = () => {
@@ -23,7 +24,7 @@ const ExperienceAdminPage: React.FC = () => {
     const [messageLoader, setMessageLoader] = useState("Loading...")
 
     const [tabs, setTabs] = useState<any>()
-    const [activeTab, setActiveTab] = useState('1')
+    const [activeTab, setActiveTab] = useState()
     const [searchTerm, setSearchTerm] = useState('')
     const [experiences, setExperiences] = useState<ExperienceShort[]>([]);
     const [openDetail, setOpenDetail] = useState(false)
@@ -47,13 +48,13 @@ const ExperienceAdminPage: React.FC = () => {
     const fetchData = async (params:SearchProps,showLoader:boolean=false) => {
         try {
             setIsLoader(true);
+            if(params.status === `${EXPERIENCE_STATUS.PENDING},${EXPERIENCE_STATUS.DRAFT}`){
+                params.type = 'member';
+            }else if(params.status === `${EXPERIENCE_STATUS.DRAFT},${EXPERIENCE_STATUS.PENDING}`){
+                params.type = 'partner';
+            }
             const experiences_ = await getExperiencesByStatus(params)
             setExperiences(experiences_.results);
-            // convertimos los stats a array
-            /* const stats_ = Object.entries(experiences_.stats).map(([key, value]) => ({
-                status: (key == 'preLaunch' ? 'pre_launch' : key),
-                count: value,
-            })); */
             setTabs(experiences_.stats);
             setIsLoader(false);
             setTotalRows(Number(experiences_?.count));
@@ -82,9 +83,11 @@ const ExperienceAdminPage: React.FC = () => {
     }, [])
 
     useEffect(() => {
+        console.log('useEffect',activeTab);
         setCurrentPage(1);
         const handler = setTimeout(() => {
-            fetchData({ limit, offset: 0, status: activeTab, search: searchTerm });
+            fetchData({ limit, offset: 0, status: (activeTab ?? 1), search: searchTerm });
+            if(!activeTab) setActiveTab(1);
         }, 2000);
         return () => clearTimeout(handler);
     }, [searchTerm]);
@@ -183,7 +186,7 @@ const ExperienceAdminPage: React.FC = () => {
                 </div>
 
                 {/* Table */}
-                <div className='admin-experience-page-table'>
+                <div className={`admin-experience-page-table ${experiences.length > 0 ? 'd-flex' : 'd-none'}`}>
                     {/* ID Column */}
                     <div className='admin-experience-page-table__column admin-experience-page-table__column--80'>
                         <div className='admin-experience-page-table__header'>ID</div>
@@ -240,7 +243,7 @@ const ExperienceAdminPage: React.FC = () => {
             </div>
 
             {/* Pagination */}
-            {totalRows && (<div className='tap-flex-center mt-5'>
+            {totalRows > 0 && (<div className='tap-flex-center mt-5'>
                 <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
             </div>)}
             {/* <LoaderOverlay visible={isLoader} message={messageLoader} /> */}
