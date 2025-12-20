@@ -19,6 +19,10 @@ export async function updateUserRecognition(
             : [],
     }
 
-    const { data } = await apiClient.patch(`/profile/recognition/${memberId}/`, adaptedPayload);
+
+    const url = memberId
+        ? `/profile/recognition/${memberId}/`
+        : `/profile/recognition/`;
+    const { data } = await apiClient.patch(url, adaptedPayload);
     return data;
 }

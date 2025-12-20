@@ -1,7 +1,11 @@
 import apiClient from '../helpers/apiClient'
 
 export const updateProfile = async (data: any, memberId?: string) => {
-    const response = await apiClient.put(`admin-profile/basic/${memberId}`, data)
+
+    const url = memberId
+        ? `/admin-profile/basic/${memberId}/`
+        : `/admin-profile/basic/`;
+    const response = await apiClient.put(url, data)
     return response.data
 }
 
@@ -55,7 +59,11 @@ export const updateProfileProfessional = async (data: any, memberId?: string) =>
                 ],
             },
         }
-        const response = await apiClient.patch(`admin-profile/${memberId}/`, payload)
+
+        const url = memberId
+            ? `/admin-profile/${memberId}/`
+            : `/admin-profile/`;
+        const response = await apiClient.patch(url, payload)
 
         return response.data
     } catch (error: any) {
@@ -78,11 +86,17 @@ export const updateProfilePersonal = async (data: any, memberId?: string) => {
         },
     }
 
-    const response = await apiClient.patch(`admin-profile/${memberId}/`, payload)
+    const url = memberId
+        ? `/admin-profile/${memberId}/`
+        : `/admin-profile/`;
+    const response = await apiClient.patch(url, payload)
     return response.data
 }
 
 export const updateProfileConfidential = async (data: any, memberId?: string) => {
-    const response = await apiClient.put(`admin-profile/confidential/${memberId}/`, data)
+    const url = memberId
+        ? `/admin-profile/confidential/${memberId}/`
+        : `/admin-profile/confidential/`;
+    const response = await apiClient.put(url, data)
     return response.data
 }

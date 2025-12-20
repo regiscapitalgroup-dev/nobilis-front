@@ -6,6 +6,9 @@ export async function updateUserBiography(
     memberId?: string
 ) {
 
-    const { data } = await apiClient.patch(`admin-profile/biography/${memberId}/`, payload);
+    const url = memberId
+        ? `/admin-profile/biography/${memberId}/`
+        : `/admin-profile/biography/`;
+    const { data } = await apiClient.patch(url, payload);
     return data;
 }

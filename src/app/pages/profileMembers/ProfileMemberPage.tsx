@@ -33,10 +33,12 @@ export function ProfileMemberPage() {
     return () => {
       const nextPath = history.location.pathname
       const keepUserRoutes = [
+        '/biography/overview',
         '/profile-member',
         '/admin/overview/professional',
         '/admin/overview/personal',
         '/admin/overview/confidential',
+        '/admin/overview/profile',
         '/recognition',
         '/expertise',
       ]

@@ -9,13 +9,17 @@ import {useWebSocketContext} from '../../../../app/context/WebSocketContext'
 import {useUserNotifications} from '../../../../app/hooks/notifications/useNotifications'
 import {useUserProfileContext} from '../../../../app/context/UserProfileContext'
 import {useSearchableMembersContext} from '../../../../app/context/SearchableMembersContext'
+import {UserModel} from '../../../../app/modules/auth/models/UserModel'
+import {shallowEqual, useSelector} from 'react-redux'
+import {RootState} from '../../../../setup'
 
 export function HeaderWrapper() {
   const {pathname} = useLocation()
   const {config, classes, attributes} = useLayout()
   const {aside} = config
   const {subscribe, isConnected} = useWebSocketContext()
-  const {data, refetch, setSearchParams: setParamasData} = useUserProfileContext()
+  const {data, refetch, setSearchParams: setParamasData, searchParams} = useUserProfileContext()
+  const loggedUser = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
   const [random, setRandom] = useState(Math.random() * 30)
   const {data: initialNotifications} = useUserNotifications()
   const [notificationCount, setNotificationCount] = useState(0)
@@ -79,12 +83,11 @@ export function HeaderWrapper() {
   }
 
   useEffect(() => {
-
     const timer = setTimeout(() => {
       if (!where.trim() && !keywords.trim()) {
         setSearchParams({where: '', keywords: ''})
 
-        if (location.pathname == '/searchable-members'|| location.pathname == '/member/overview' ) {
+        if (location.pathname == '/searchable-members' || location.pathname == '/member/overview') {
           navigate.goBack()
         }
         setParamasData({userSelected: ''})
@@ -93,6 +96,10 @@ export function HeaderWrapper() {
 
     return () => clearTimeout(timer)
   }, [where, keywords, location.pathname, navigate, setSearchParams, setParamasData, refetch])
+
+  const profilePicture = searchParams.userSelected
+    ? loggedUser.profilePicture
+    : data?.profilePicture
 
   return (
     <div
@@ -236,9 +243,7 @@ export function HeaderWrapper() {
             >
               <img
                 src={
-                  data?.profilePicture
-                    ? `${data.profilePicture}?t=${random}`
-                    : 'https://placehold.co/32x32'
+                  profilePicture ? `${profilePicture}?t=${random}` : 'https://placehold.co/32x32'
                 }
                 alt='User'
               />
