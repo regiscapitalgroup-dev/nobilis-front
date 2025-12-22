@@ -87,7 +87,7 @@ export const DeclineExperienceModal: React.FC<Props> = ({ onCancel, onLoad, open
                             Clarify the reason for the Member to be fixed.
                         </p>
 
-                        <div className="decline-experience__form">
+                        <div className="decline-experience__form w-100">
                             {/* Select reason */}
                             <div className="decline-experience__field">
                                 <label className="decline-experience__label">

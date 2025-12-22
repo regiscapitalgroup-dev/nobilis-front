@@ -17,6 +17,7 @@ import CityAutocompleteField from '../fields/CityAutocompleteField'
 import { GenericModel } from '../../../models/GenericModel'
 import { EXPERIENCE_STATUS } from '../../../models/ExperienceStatus'
 import { getHost } from '../../../../../services/teamExperienceService'
+import { validateShowButtonActions } from '../utils'
 
 const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMessage, onPause, catalogs }) => {
     const formik = useFormikContext();
@@ -28,11 +29,9 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
     const getUserListHosts = async () => {
         if(formik.values.host_type === "member"){
             let hosts = await getHost({ });
-            console.log('member',hosts);
             setListHost(hosts?.results)
         }else{
             let hosts = await getHost({ type: 'partner' });
-            console.log('member',hosts);
             setListHost(hosts?.results)
         }
     }
@@ -80,7 +79,7 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
         const raw = formik.values.price_per_guest_text;
         if (!raw) return;
 
-        const numberValue = Number(raw);
+        const numberValue = isNaN(Number(raw)) ? 0 : Number(raw);
         const formatted = formatter.format(numberValue);
 
         formik.setFieldValue("price_per_guest_text", formatted);
@@ -735,10 +734,10 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
                         back
                     </div>
                     <div className="tap-add-experience-2-footer-right">
-                        <button type="button" className={`tap-add-experience-2-btn-secondary ${formik.values?.id > 0 ? '' : 'd-none'}`} onClick={()=>onPause(true)}>
+                        <button type="button" className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('paused',formik)}`} onClick={()=>onPause(true)}>
                             <div>Pause Experience</div>
                         </button>
-                        <button className="tap-add-experience-2-btn-secondary" onClick={handleSaveForLater}>
+                        <button className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('draft',formik)}`} onClick={handleSaveForLater}>
                             <div>save for later</div>
                         </button>
                         <button type='button' onClick={onNextStep} className="tap-add-experience-2-btn-main tap-flex-center">

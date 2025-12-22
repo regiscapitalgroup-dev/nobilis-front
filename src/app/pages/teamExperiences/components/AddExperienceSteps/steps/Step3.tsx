@@ -3,6 +3,7 @@ import { Props } from '../../../AddExperiencePage'
 import { KTSVG } from '../../../../../../_metronic/helpers'
 import { ErrorMessage, useFormikContext } from 'formik'
 import { EXPERIENCE_STATUS } from '../../../models/ExperienceStatus'
+import { validateShowButtonActions } from '../utils'
 
 const Step3:FC<Props> = ({ onBackStep, haveErrors, onLoad, onLoadMessage, onPause, catalogs }) => {
     const formik = useFormikContext();
@@ -120,10 +121,12 @@ const Step3:FC<Props> = ({ onBackStep, haveErrors, onLoad, onLoadMessage, onPaus
                     back
                 </div>
                 <div className="tap-add-experience-2-footer-right">
-                    <button type="button" className={`tap-add-experience-2-btn-secondary ${formik.values?.id > 0 ? '' : 'd-none'}`} onClick={()=>onPause(true)}>
+                    <button type="button" className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('paused',formik)}`} onClick={()=>onPause(true)}>
                         <div>Pause Experience</div>
                     </button>
-                    <button type='button' className="tap-add-experience-2-btn-secondary" onClick={handleSaveForLater}>save for later</button>
+                    <button className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('draft',formik)}`} onClick={handleSaveForLater}>
+                        save for later
+                    </button>
 
                     <button type='button' className="tap-add-experience-2-btn-main tap-flex-center" onClick={handleSaveDefinitive} disabled={formik.isSubmitting || !formik.isValid}>
                         <span>submit</span>

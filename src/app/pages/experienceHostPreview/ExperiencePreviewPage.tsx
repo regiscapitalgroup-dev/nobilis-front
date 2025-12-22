@@ -189,21 +189,18 @@ const ExperiencePreviewPage: FC = () => {
                             <div>go back</div>
                         </div>
                     </div>
-
                     <div className="experience-preview-leadbar-textblock">
                         <div className="experience-preview-leadbar-subtitle">
                         Experience By {experience?.host?.firstName} {experience?.host?.lastName}
                         </div>
                     </div>
-                    
-                    <div className={`experience-preview-leadbar-btn-secondary ${experience.status == EXPERIENCE_STATUS.PENDING || experience.status == EXPERIENCE_STATUS.PRE_LAUNCH ? 'd-flex' : 'd-none'}`} onClick={()=>setOpenDeclineModal(true)}>
+                    <div className={`experience-preview-leadbar-btn-secondary ${experience.status == EXPERIENCE_STATUS.PENDING ? 'd-flex' : 'd-none'}`} onClick={()=>setOpenDeclineModal(true)}>
                         <div className="experience-preview-leadbar-btn-text tap-flex-center w-100">
                             <div>Decline</div>
                             &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
                         </div>
                     </div>
-
-                    <div className={`experience-preview-leadbar-btn-primary ${experience.status == EXPERIENCE_STATUS.PENDING || experience.status == EXPERIENCE_STATUS.PRE_LAUNCH ? 'd-flex' : 'd-none'}`} onClick={onApprovedHandle}>
+                    <div className={`experience-preview-leadbar-btn-primary ${experience.status == EXPERIENCE_STATUS.PENDING ? 'd-flex' : 'd-none'}`} onClick={onApprovedHandle}>
                         <div className="experience-preview-leadbar-btn-text-primary tap-flex-center w-100">
                             <div>Approve</div>
                             &nbsp;<KTSVG path='/media/svg/nobilis/vector02.svg' />

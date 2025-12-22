@@ -148,7 +148,7 @@ const AddExperiencePage: FC = () => {
             otherwise: (schema) => schema.notRequired(),
         }),
         duration_type: Yup.number().required("Selected an duration"),
-        duration: Yup.number().required("Enter a number").max(31,"Max 31"),
+        duration: Yup.number().integer('Must be an integer').required("Enter a number").max(31,"Max 31"),
         price_per_guest_text: Yup.string().required("Enter a number").max(13,"Max $1,000,000,000.00"),
         enhancements_data: Yup.array().of(
             Yup.object().shape({
