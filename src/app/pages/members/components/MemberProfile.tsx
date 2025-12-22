@@ -6,6 +6,7 @@ interface MemberProfileProps {
   surname?: string
   bioPresentation?: string
   city?: string
+  aliasTitle?: string
 }
 
 export const MemberProfile: FC<MemberProfileProps> = ({
@@ -13,11 +14,12 @@ export const MemberProfile: FC<MemberProfileProps> = ({
   surname,
   bioPresentation,
   city,
+  aliasTitle,
 }) => {
   return (
     <div className='member-detail__profile'>
       <div className='member-detail__name-wrapper'>
-        <div className='member-detail__name'>{`Your Highness ${firstName} ${surname}`}</div>
+        <div className='member-detail__name'>{`Your ${aliasTitle} ${firstName} ${surname}`}</div>
       </div>
       <svg
         width='413'

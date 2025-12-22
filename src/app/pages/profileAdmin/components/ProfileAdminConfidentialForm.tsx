@@ -16,7 +16,7 @@ const ProfileConfidentialForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
 
   const [selectedCities, setSelecteCities] = useState<string[]>([])
-  const {data, searchParams} = useUserProfileContext()
+  const {data, searchParams, refetch} = useUserProfileContext()
   const navigate = useHistory()
   const {showError} = useAlert()
 
@@ -84,7 +84,9 @@ const ProfileConfidentialForm: React.FC = () => {
             payload,
             !!searchParams.userSelected ? searchParams.userSelected : ''
           )
-          navigate.push('/biography')
+          await refetch()
+
+          // navigate.push('/biography')
         } catch (error: any) {
           console.error(error)
           const statusCode = error?.response?.status || 500

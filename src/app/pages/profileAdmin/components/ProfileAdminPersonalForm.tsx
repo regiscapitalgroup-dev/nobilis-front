@@ -70,7 +70,7 @@ const ProfileAdminPersonalForm: FC = () => {
               !!searchParams.userSelected ? searchParams.userSelected : ''
             )
             await refetch()
-            navigate.push('/biography')
+            // navigate.push('/biography')
           } catch (error: any) {
             console.log(error)
 
@@ -158,7 +158,11 @@ const ProfileAdminPersonalForm: FC = () => {
                 type='button'
                 className='pf-personal__btn pf-personal__btn--secondary'
                 onClick={() => {
-                  navigate.push('/biography')
+                  if (searchParams.userSelected) {
+                    navigate.push(`/profile-member`)
+                  } else {
+                    navigate.push('/biography')
+                  }
                 }}
               >
                 Cancel

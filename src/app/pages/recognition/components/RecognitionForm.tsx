@@ -115,7 +115,7 @@ const RecognitionForm: FC = () => {
     )
       .then(async () => {
         await refetch()
-        navigate.push('/biography')
+        // navigate.push('/biography')
       })
       .catch((error) => {
         const statusCode = error?.response?.status || 500
@@ -133,6 +133,7 @@ const RecognitionForm: FC = () => {
   return (
     <div className='recognition-form'>
       <Formik
+        enableReinitialize
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -255,7 +256,11 @@ const RecognitionForm: FC = () => {
                 type='button'
                 className='recognition-form__btn recognition-form__btn--secondary'
                 onClick={() => {
-                  navigate.push('/biography')
+                  if (searchParams.userSelected) {
+                    navigate.push(`/profile-member`)
+                  } else {
+                    navigate.push('/biography')
+                  }
                 }}
               >
                 Cancel

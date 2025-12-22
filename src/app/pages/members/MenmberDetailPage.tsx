@@ -20,7 +20,8 @@ const MemberDetailPage: FC = () => {
     languages = [],
     profilePicture,
     picFooter,
-    subscription
+    subscription,
+    aliasTitle,
   } = data ?? {}
 
   return (
@@ -30,6 +31,7 @@ const MemberDetailPage: FC = () => {
           <div className='member-detail__info-section'>
             <MemberBadges hasExpertise={expertise.length > 0} subscription={subscription} />
             <MemberProfile
+              aliasTitle={aliasTitle ?? ''}
               firstName={firstName}
               surname={surname}
               bioPresentation={bioPresentation}

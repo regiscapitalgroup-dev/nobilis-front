@@ -1,4 +1,3 @@
-// app/pages/profileMembers/components/ProfileMemberInfo.tsx
 import {FC} from 'react'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {ProfileMemberBadges} from './ProfileMemberBadges'
@@ -44,7 +43,7 @@ export const ProfileMemberInfo: FC<ProfileMemberInfoProps> = ({
 
         <div className='nb-pm-profile'>
           <div className='nb-pm-name-wrapper'>
-            <div className='nb-pm-name'>{ `Your Highness ${firstName} ${surname}`}</div>
+            <div className='nb-pm-name'>{ `Your ${aliasTitle} ${firstName} ${surname}`}</div>
           </div>
           <div className='nb-pm-description'>{bioPresentation}</div>
 
