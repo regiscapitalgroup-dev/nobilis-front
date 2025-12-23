@@ -94,7 +94,7 @@ const EditExperiencePage: FC = () => {
                 end: dayjs(d.end),
             })),
             duration_type: data.durationType ?? '2',
-            duration: data.duration ?? '',
+            duration: Number(data.duration) ?? '',
             price_per_guest: Number(data.pricePerGuest ?? 0),
             price_per_guest_text: data.pricePerGuest ?? '',
             enhancements_data: (data.enhancements ?? []).map((e: any) => ({
@@ -187,7 +187,7 @@ const EditExperiencePage: FC = () => {
         experienceType: Yup.string().required("Please select an option"),
         /* step2  */
         host_type: Yup.string().required("Please select an option"),
-        host_id: Yup.number().required("Select the host of the experience"),
+        host_id: Yup.number().required("Select the host of the experience").min(1,"Select the host of the experience"),
         title: Yup.string().required("Experience name is required").max(100, "Max 100 characters"),
         itinerary: Yup.string().required("Itinerary is required").max(500, "Max 500 characters"),
         what_is_included: Yup.string().required("Includes field is required").max(500, "Max 500 characters"),
@@ -213,7 +213,7 @@ const EditExperiencePage: FC = () => {
             otherwise: (schema) => schema.notRequired(),
         }),
         duration_type: Yup.number().required("Selected an duration"),
-        duration: Yup.number().integer('Must be an integer').required("Enter a number").max(31,"Max 31"),
+        duration: Yup.number().required("Enter a number").max(31,"Max 31"),
         price_per_guest_text: Yup.string().required("Enter a number").max(13, "Max $1,000,000,000.00"),
         enhancements_data: Yup.array().of(
             Yup.object().shape({

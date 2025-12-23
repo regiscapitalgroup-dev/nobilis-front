@@ -170,22 +170,6 @@
   justify-content: space-between;
 }
 
-.tap-add-experience-btn {
-  background: #151515;
-  padding: 10px 20px;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-
-.tap-add-experience-btn-text {
-  color: white;
-  font-size: 12px;
-  font-family: "Oswald";
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
 /* estilos para los radio buttons */
 /* Ocultamos el input real */
 .tap-host-radio-input {
@@ -1216,6 +1200,7 @@
   border: 1px solid #151515;
   background: white;
   color: black;
+  height: 46px;
   &:hover {
     background: rgba(70, 1, 7, 0.05);
   }
@@ -1233,11 +1218,16 @@
   color: white;
   text-transform: uppercase;
   cursor: pointer;
-  &:hover {
-    background: white;
+  height: 46px;
+}
+
+.tap-add-experience-2-btn-main:hover {
+  .tap-host-button-text{
     color: black;
-    border-color: black;
   }
+  outline: black 1px solid;
+  outline-offset: -1px;
+  background: white;
 }
 
 /* =========================================

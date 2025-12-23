@@ -129,8 +129,10 @@ const Step3:FC<Props> = ({ onBackStep, haveErrors, onLoad, onLoadMessage, onPaus
                     </button>
 
                     <button type='button' className="tap-add-experience-2-btn-main tap-flex-center" onClick={handleSaveDefinitive} disabled={formik.isSubmitting || !formik.isValid}>
-                        <span>submit</span>
-                        &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
+                        <div className='tap-host-button-text tap-flex-center'>
+                            submit
+                            &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
+                        </div>
                     </button>
                 </div>
             </div>

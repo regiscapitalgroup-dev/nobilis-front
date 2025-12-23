@@ -85,8 +85,6 @@ const SectionPast: FC<PropsSectionPast> = ({ }) => {
             </div>
             <div className={`tap-host-secction-experiences-past-list`}>
                 {(listExperiences ?? []).map((exp:ExperienceSummary, index:number) =>
-                    exp?.dates == 0 ? 
-                    null :
                     (<div key={exp.id ?? index} className="tap-host-secction-experiences-past-card">
 
                         {/* LEFT IMAGE */}

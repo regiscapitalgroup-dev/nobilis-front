@@ -338,6 +338,7 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
                             </>)}
                         </FieldArray>
                     </div>
+                    <ErrorMessage name={`dates_data`} component="div" className="tap-add-experience-text text-danger w-50" />
                     <div className={`w-100 flex-column ${formik.values.availability_type === "by_request" ? 'd-flex' : 'd-none'}`}>
                         <div style={{ width: '100%', color: '#808080', fontSize: 12, fontFamily: 'Satoshi', fontWeight: '300', lineHeight: '16.80px', wordWrap: 'break-word' }}>Explanation of the Upon request feature</div>
                     </div>
@@ -741,8 +742,10 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
                             <div>save for later</div>
                         </button>
                         <button type='button' onClick={onNextStep} className="tap-add-experience-2-btn-main tap-flex-center">
-                            <div>next</div>
-                            &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
+                            <div className='tap-host-button-text tap-flex-center'>
+                                next
+                                &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
+                            </div>
                         </button>
                     </div>
                 </div>
