@@ -183,6 +183,7 @@ export function AsideMenuMain() {
               <span className='nb-menu-section-title'>Members Account</span>
             </div>
             <div className='nb-menu-section-content'>
+              <AsideMenuItem to='/host-experience' title='Host Experience' showIcon={true} icon='/media/svg/nobilis/menu_my_experiences.svg'/>
               <AsideMenuItem to='/team/admin' title='Team' showIcon={true} icon='/media/svg/nobilis/user_nb.svg'/>
             </div>
           </div>

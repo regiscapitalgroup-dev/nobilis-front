@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 import apiClient from "../helpers/apiClient";
-import { handleApiError } from "../utils/handleApiError";
+import { handleApiError, parseApiErrors } from "../utils/handleApiError";
+import { showErrorAlert } from "../helpers/alert";
 
 const Logout = () => {
     window.location.href = '/';
@@ -108,6 +109,10 @@ export async function createExperience(data: any) {
     } catch (error) {
         handleApiError(error, {
             onUnauthorized: Logout,
+            onBadRequest: (data)=>{
+                let msg = parseApiErrors(data);
+                showErrorAlert({ title: 'Error', message: msg })
+            }
         });
     }
 }
@@ -140,6 +145,10 @@ export async function updateExperience(id:number,data: any) {
     } catch (error) {
         handleApiError(error, {
             onUnauthorized: Logout,
+            onBadRequest: (data)=>{
+                let msg = parseApiErrors(data);
+                showErrorAlert({ title: 'Error', message: msg })
+            }
         });
     }
 }

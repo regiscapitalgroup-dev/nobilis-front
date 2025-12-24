@@ -62,6 +62,11 @@ export function PrivateRoutes() {
       history.replace(subscription ? '/biography' : '/plans')
       return
     }
+    
+    if (user.role === UserRole.PARTNER) {
+      history.replace('/my-experience')
+      return
+    }
   }, [user, subscription, history])
 
   return (

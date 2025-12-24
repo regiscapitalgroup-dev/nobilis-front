@@ -19,7 +19,7 @@ import { EXPERIENCE_STATUS } from '../../../models/ExperienceStatus'
 import { getHost } from '../../../../../services/teamExperienceService'
 import { validateShowButtonActions } from '../utils'
 
-const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMessage, onPause, catalogs }) => {
+const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMessage, onPause, catalogs, onSaveDraft }) => {
     const formik = useFormikContext();
     const [isEditing, setIsEditing] = useState(false);
     const userData = useSelector<RootState>(({ auth }) => auth, shallowEqual) as IAuthState
@@ -119,14 +119,6 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
         formik.setFieldValue("beneficiaries", value);
         formik.validateForm();
     };
-
-    const handleSaveForLater = async () => {
-        await formik.setFieldValue("status",EXPERIENCE_STATUS.DRAFT);
-        let haveErrs:boolean = await haveErrors();
-        if(!haveErrs){
-            await formik.submitForm();
-        }
-    }
 
     return (
         <div className="tap-add-experience-2-wrapper-container">
@@ -738,7 +730,7 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
                         <button type="button" className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('paused',formik)}`} onClick={()=>onPause(true)}>
                             <div>Pause Experience</div>
                         </button>
-                        <button className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('draft',formik)}`} onClick={handleSaveForLater}>
+                        <button type="button" className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('draft',formik)}`} onClick={onSaveDraft}>
                             <div>save for later</div>
                         </button>
                         <button type='button' onClick={onNextStep} className="tap-add-experience-2-btn-main tap-flex-center">

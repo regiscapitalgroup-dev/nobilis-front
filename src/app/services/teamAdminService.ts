@@ -1,5 +1,6 @@
+import { showErrorAlert } from "../helpers/alert";
 import apiClient from "../helpers/apiClient";
-import { handleApiError } from "../utils/handleApiError";
+import { handleApiError, parseApiErrors } from "../utils/handleApiError";
 
 const Logout = () => {
     window.location.href = '/';
@@ -16,13 +17,27 @@ export const getDetailTeam = async (teamId:number,membershipId:number) => {
 };
 
 export async function createTeam(data: any) {
-    const response = await apiClient.post(`/my-team-invite/`, data,{ 
-        headers: { 
-            Accept: 'application/json',
-            "Content-Type": "application/json",
-        } 
-    });
-    return response.data;
+    try {
+        const response = await apiClient.post(`/my-team-invite/`, data,{ 
+            headers: { 
+                Accept: 'application/json',
+                "Content-Type": "application/json",
+            } 
+        });
+        return response.data;
+    } catch (error) {
+        handleApiError(error, {
+            onUnauthorized: Logout,
+            onBadRequest: (data)=>{
+                let msg = parseApiErrors(data);
+                showErrorAlert({ title: 'Error', message: msg })
+            },
+            onForbidden: (data)=>{
+                showErrorAlert({ title: 'Error', message: data?.error })
+            }
+        });
+    }
+    
 }
 
 export async function updateTeam(teamId:number,membershipId:number,data: any,formData: boolean=false) {

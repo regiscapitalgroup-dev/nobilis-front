@@ -236,7 +236,7 @@ const ExperiencePreviewPage: FC = () => {
 
                     <div className="experience-preview-description-block">
                         <p className="experience-preview-description">
-                            {experience?.idealAudience}
+                            {experience?.idealAudience || 'Pending information'}
                         </p>
 
                         <div className="experience-preview-family">
@@ -264,7 +264,7 @@ const ExperiencePreviewPage: FC = () => {
                                 <span className="experience-preview-icon-18">
                                     <KTSVG path='/media/svg/nobilis/location-white.svg' />
                                 </span>
-                                <span className='labels'>{experience?.locationAddress}</span>
+                                <span className='labels'>{experience?.locationAddress || 'Pending information'}</span>
                             </div>
 
                             <div className="experience-preview-detail">
@@ -281,6 +281,9 @@ const ExperiencePreviewPage: FC = () => {
                                         </span>
                                     ))}
                                 </div>
+                                <div className={`labels ${experience.dates?.length > 0 ? 'd-none' : ''}`}>
+                                    { 'Pending information' }
+                                </div>
                             </div>
 
                             <div className="experience-preview-detail">
@@ -294,14 +297,14 @@ const ExperiencePreviewPage: FC = () => {
                                 <span className="experience-preview-icon-18">
                                     <KTSVG path='/media/svg/nobilis/clock-white.svg' />
                                 </span>
-                                <span className='labels'>{experience?.duration} {(durations ?? []).map((i)=>(i.id == experience.durationType) ? i.name : '')}</span>
+                                <span className='labels'>{experience.duration || 'Pending information'} {(durations ?? []).map((i)=>(i.id == experience.durationType) ? i.name : '')}</span>
                             </div>
 
                             <div className="experience-preview-detail">
                                 <span className="experience-preview-icon-18">
                                     <KTSVG path='/media/svg/nobilis/currency-white.svg' />
                                 </span>
-                                <span className='labels'>$&nbsp;{experience.pricePerGuest}&nbsp;/&nbsp;Guest</span>
+                                <span className='labels'>$&nbsp;{experience.pricePerGuest || 'Pending information'}&nbsp;/&nbsp;Guest</span>
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,8 @@ export enum UserRole {
     ADMIN = 'ADMIN',
     FINAL_USER = 'FINAL_USER',
     STAFF_USER = 'STAFF',
-    PROFILE_MANAGEMENT = 'PROFILE_MANAGEMENT', // perfil team y partners
+    PROFILE_MANAGEMENT = 'PROFILE_MANAGEMENT',
+    PARTNER = 'PARTNER',
 }
 
 export enum Permission {
@@ -15,10 +16,12 @@ export enum Permission {
 }
 
 export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
+    [UserRole.PARTNER]: [
+        Permission.TEAM,
+    ],
     [UserRole.ADMIN]: [
         Permission.EDIT_PROFILE_IMAGE,
         Permission.EDIT_BIOGRAPHY,
-        Permission.TEAM,
     ],
     [UserRole.FINAL_USER]: [],
     [UserRole.STAFF_USER]: [

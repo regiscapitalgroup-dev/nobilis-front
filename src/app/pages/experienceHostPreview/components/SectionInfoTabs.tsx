@@ -41,7 +41,7 @@ export function SectionInfoTabs({ experience }: Props) {
         return (<div className="w-100 d-flex flex-md-row flex-column gap-100">
             <div className={`experience-preview-tab-content w-75`}>
                 <p className="experience-preview-description-text">
-                    {getDisplayedText(text)}
+                    {getDisplayedText(text || 'Pending information')}
                 </p>
                 {showButton && (
                     <button className="experience-preview-readmore" onClick={() => setMore(!more)}>
@@ -56,7 +56,7 @@ export function SectionInfoTabs({ experience }: Props) {
             <div className={`experience-preview-tab-content w-50`}>
                 <div className="experience-preview-included-title">Whats Included</div>
                 <p className="experience-preview-description-text">
-                    {getDisplayedText(text)}
+                    {getDisplayedText(text || 'Pending information')}
                 </p>
                 {showButton && (
                     <button className="experience-preview-readmore" onClick={() => setMore(!more)}>
@@ -82,7 +82,7 @@ export function SectionInfoTabs({ experience }: Props) {
             <div className={`experience-preview-tab-content w-50`}>
                 <div className="experience-preview-included-title">Guest Preparation & Additional Notes</div>
                 <p className="experience-preview-description-text">
-                    {getDisplayedText(text)}
+                    {getDisplayedText(text || 'Pending information')}
                 </p>
                 {showButton && (
                     <button className="experience-preview-readmore" onClick={() => setMore(!more)}>

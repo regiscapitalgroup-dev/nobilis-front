@@ -130,7 +130,7 @@ const TeamAdminPage: FC = () => {
                     <DropdownOption item={item} onEdit={handleOnEdit} onDelete={handleDelete} />
                 </div>))}
                 {teamList.length == 0 ? 'No results' : ''}
-                {paginationCount && (<div className='tap-flex-center mt-5'>
+                {paginationCount > 0 && (<div className='tap-flex-center mt-5'>
                     <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
                 </div>)}
             </div>

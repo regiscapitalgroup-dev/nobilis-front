@@ -129,7 +129,7 @@ const SectionOnReview: FC<PropsSectionOnReview> = ({ }) => {
                                             <KTSVG path='/media/svg/nobilis/teams_and_partner/team_and_partner_experiences_past_location.svg' />&nbsp;
                                         </div>
                                         <div className="tap-host-secction-experiences-past-info-text">
-                                            {exp.locationAddress}
+                                            {exp.locationAddress !== '' ? exp.locationAddress : 'N/A'}
                                         </div>
                                     </div>
                                     <div className="tap-host-secction-experiences-past-info-item">
@@ -137,7 +137,7 @@ const SectionOnReview: FC<PropsSectionOnReview> = ({ }) => {
                                             <KTSVG path='/media/svg/nobilis/teams_and_partner/team_and_partner_experiences_past_date.svg' />&nbsp;
                                         </div>
                                         <div className="tap-host-secction-experiences-past-info-text">
-                                            {exp?.dates?.length>0 ? formatDateShortIntl2(exp?.dates[0]?.start) : null}
+                                            {exp?.dates?.length>0 ? formatDateShortIntl2(exp?.dates[0]?.start) : 'N/A'}
                                         </div>
                                     </div>
                                     <div className="tap-host-secction-experiences-past-info-item">
@@ -145,7 +145,7 @@ const SectionOnReview: FC<PropsSectionOnReview> = ({ }) => {
                                             <KTSVG path='/media/svg/nobilis/teams_and_partner/team_and_partner_experiences_past_person.svg' />&nbsp;
                                         </div>
                                         <div className="tap-host-secction-experiences-past-info-text">
-                                            Max {getMaxPeople(exp)} Guests
+                                            Max {getMaxPeople(exp) ?? 'N/A'} Guests
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@ const SectionOnReview: FC<PropsSectionOnReview> = ({ }) => {
                                             <KTSVG path='/media/svg/nobilis/teams_and_partner/team_and_partner_experiences_past_usd.svg' />&nbsp;
                                         </div>
                                         <div className="tap-host-secction-experiences-past-info-text">
-                                            $ {exp.pricePerGuest}&nbsp;/&nbsp;Guest
+                                            $ {exp.pricePerGuest ?? 'N/A'}&nbsp;/&nbsp;Guest
                                         </div>
                                     </div>
                                     <div className="tap-host-secction-experiences-past-info-item">
@@ -164,7 +164,7 @@ const SectionOnReview: FC<PropsSectionOnReview> = ({ }) => {
                                             <KTSVG path='/media/svg/nobilis/teams_and_partner/team_and_partner_experiences_past_hour.svg' />&nbsp;
                                         </div>
                                         <div className="tap-host-secction-experiences-past-info-text">
-                                            {exp.duration} {(durations ?? []).map((i)=>(i.id == exp.durationType) ? i.name : '')}
+                                            {exp.duration ?? 'N/A'} {(durations ?? []).map((i)=>(i.id == exp.durationType) ? i.name : '')}
                                         </div>
                                     </div>
                                     <div className="tap-host-secction-experiences-past-info-item"></div>

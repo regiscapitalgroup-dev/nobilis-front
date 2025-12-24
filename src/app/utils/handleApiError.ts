@@ -9,7 +9,7 @@ type ApiErrorPayload = {
 
 type HandleApiErrorOptions = {
   onUnauthorized?: () => void;
-  onForbidden?: () => void;
+  onForbidden?: (data:any) => void;
   onNotFound?: () => void;
   onServerError?: () => void;
   onBadRequest?: (data:any) => void;
@@ -18,7 +18,7 @@ type HandleApiErrorOptions = {
 export function handleApiError(
   error: unknown,
   options?: HandleApiErrorOptions
-): never {
+): any {
   const err = error as AxiosError<ApiErrorPayload>;
 
   if (!err.response) {
@@ -33,47 +33,47 @@ export function handleApiError(
   switch (status) {
     case 400:
       options?.onBadRequest?.(data);
-      throw {
+      /* throw {
         status,
         message: data?.message || data?.detail || 'Bad request',
         data,
-      };
-
+      }; */
+      break;
     case 401:
       if (data?.code === 'token_not_valid') {
         options?.onUnauthorized?.();
       }
-
-      throw {
+      /* throw {
         status,
         message: 'Session expired. Please log in again.',
         data,
-      };
-
+      }; */
+      break;
     case 403:
-      options?.onForbidden?.();
-      throw {
+      options?.onForbidden?.(data);
+      /* throw {
         status,
         message: 'You do not have permission to perform this action.',
         data,
-      };
-
+      }; */
+      break;
     case 404:
       options?.onNotFound?.();
-      throw {
+      /* throw {
         status,
         message: 'Resource not found.',
         data,
-      };
-
+      }; */
+      break;
     case 500:
     default:
       options?.onServerError?.();
-      throw {
+      /* throw {
         status,
         message: 'Unexpected server error.',
         data,
-      };
+      }; */
+      break;
   }
 }
 
