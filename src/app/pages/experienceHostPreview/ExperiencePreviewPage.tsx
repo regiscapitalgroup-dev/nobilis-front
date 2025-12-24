@@ -61,7 +61,7 @@ const ExperiencePreviewPage: FC = () => {
             setDuration(duration.results)
             const experience_ = await getDetailExperience(id);
             setExperience(experience_);
-            const experiences_ = await getExperiencesByStatus({status: 1})
+            const experiences_ = await getExperiencesByStatus({status: `${EXPERIENCE_STATUS.PENDING},${EXPERIENCE_STATUS.PRE_LAUNCH}`})
             let filter = (experiences_.results ?? []).filter((item)=>item.id != id);
             setExperiences(filter);
             setIsLoader(false);
