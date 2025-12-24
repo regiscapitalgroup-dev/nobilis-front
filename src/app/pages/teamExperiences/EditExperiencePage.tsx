@@ -14,6 +14,7 @@ import { ExperienceDetail } from "./models/ExperienceSummaryModel";
 import dayjs from 'dayjs'
 import { PauseExperienceModal } from "./components/PauseExperienceModal";
 import { validationSchemaForDraftEdit, validationSchemaPendingEdit } from "./components/AddExperienceSteps/utils";
+import { useConfirmAction } from "../../hooks/utils/useConfirmAction";
 
 const EditExperiencePage: FC = () => {
     const [step, setStep] = useState(1);
@@ -25,6 +26,7 @@ const EditExperiencePage: FC = () => {
     const [messageModal, setMessageModal] = useState("");
     const [statusDraft, setStatusDraft] = useState(false);
     const history = useHistory()
+    const confirm = useConfirmAction();
     // modo edicion
     const { id } = useParams();
     const [experience, setExperience] = useState<ExperienceDetail>({});
@@ -244,13 +246,16 @@ const EditExperiencePage: FC = () => {
     }
 
     const handleOnDraft = async () => {
-        await setStatusDraft(true);
-        let error = await haveErrors();
-        if (!error) {
-            await formikRef.current.setFieldValue("status",EXPERIENCE_STATUS.DRAFT);
-            formikRef.current.submitForm();
-        }else{
-            await setStatusDraft(false);
+        let continue_ = await confirm({ title: 'Save as Draft', message: 'Are you sure you want to save your progress as a draft?' });
+        if(continue_){
+            await setStatusDraft(true);
+            let error = await haveErrors();
+            if (!error) {
+                await formikRef.current.setFieldValue("status",EXPERIENCE_STATUS.DRAFT);
+                formikRef.current.submitForm();
+            }else{
+                await setStatusDraft(false);
+            }
         }
     }
 

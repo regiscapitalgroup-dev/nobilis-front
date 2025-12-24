@@ -150,10 +150,12 @@ const DetailExperienceDrawer:React.FC<Props> = ({ open, onClose, experience }) =
             {/* Footer */}
             <div className="admin-experience-details-footer">
                 <div>&nbsp;</div>
-                <button className="tap-add-experience-2-btn-main" onClick={()=>history.push(`/experience/detail/${experience.id}`)}>
-                    <div>review the experience</div>
-                    &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
-                </button>
+                <div className="tap-add-experience-2-btn-main" role="button" onClick={()=>history.push(`/experience/detail/${experience.id}`)}>
+                    <div className="tap-host-button-text tap-flex-center">
+                        review the experience
+                        &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
+                    </div>
+                </div>
             </div>
         </div>
 

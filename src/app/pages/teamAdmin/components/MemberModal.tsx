@@ -25,9 +25,11 @@ export const MemberModal: FC<Props> = ({ show, onClose, onLoad, onSubmit, userSe
     const formikRef = useRef();
 
     const getTeam = async () => {
+        onLoad(true);
         const team_ = await getDetailTeam(user.id,userSelectedId);
         if(team_?.id == 0) return;
-        setFormikValues(team_);
+        await setFormikValues(team_);
+        onLoad(false);
     }
 
     const setFormikValues = async (team: any) => {

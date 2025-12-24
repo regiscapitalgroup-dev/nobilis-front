@@ -12,6 +12,8 @@ import { LoaderOverlay } from "../../hooks/loader/LoaderOverlay";
 import { ICatalogs } from "./models/GenericModel";
 import { EXPERIENCE_STATUS } from "./models/ExperienceStatus";
 import { validationSchemaForDraft, validationSchemaForPending } from "./components/AddExperienceSteps/utils";
+import { useConfirmAction } from "../../hooks/utils/useConfirmAction";
+import { title } from "process";
 
 export type Props = {
     step: number;
@@ -35,6 +37,7 @@ const AddExperiencePage: FC = () => {
     const [messageLoader, setMessageLoader] = useState("Loading...");
     const [messageModal, setMessageModal] = useState("");
     const history = useHistory()
+    const confirm = useConfirmAction();
     // validate status
     const [statusDraft, setStatusDraft] = useState(false);
     // catalogos
@@ -181,13 +184,16 @@ const AddExperiencePage: FC = () => {
     };
 
     const handleOnDraft = async () => {
-        await setStatusDraft(true);
-        let error = await haveErrors();
-        if (!error) {
-            await formikRef.current.setFieldValue("status",EXPERIENCE_STATUS.DRAFT);
-            formikRef.current.submitForm();
-        }else{
-            await setStatusDraft(false);
+        let continue_ = await confirm({ title: 'Save as Draft', message: 'Are you sure you want to save your progress as a draft?' });
+        if(continue_){
+            await setStatusDraft(true);
+            let error = await haveErrors();
+            if (!error) {
+                await formikRef.current.setFieldValue("status",EXPERIENCE_STATUS.DRAFT);
+                formikRef.current.submitForm();
+            }else{
+                await setStatusDraft(false);
+            }
         }
     }
 

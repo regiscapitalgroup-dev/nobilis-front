@@ -733,12 +733,12 @@ const Step2: FC<Props> = ({ onNextStep, onBackStep, haveErrors, onLoad, onLoadMe
                         <button type="button" className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('draft',formik)}`} onClick={onSaveDraft}>
                             <div>save for later</div>
                         </button>
-                        <button type='button' onClick={onNextStep} className="tap-add-experience-2-btn-main tap-flex-center">
+                        <div role='button' onClick={onNextStep} className="tap-add-experience-2-btn-main tap-flex-center">
                             <div className='tap-host-button-text tap-flex-center'>
                                 next
                                 &nbsp;<KTSVG path='/media/svg/nobilis/teams_and_partner/waitlist_nb_btn_icon_host_experience_btn.svg' />
                             </div>
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
