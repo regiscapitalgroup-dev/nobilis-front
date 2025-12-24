@@ -5,16 +5,8 @@ import { ErrorMessage, useFormikContext } from 'formik'
 import { EXPERIENCE_STATUS } from '../../../models/ExperienceStatus'
 import { validateShowButtonActions } from '../utils'
 
-const Step3:FC<Props> = ({ onBackStep, haveErrors, onLoad, onLoadMessage, onPause, catalogs }) => {
+const Step3:FC<Props> = ({ onBackStep, haveErrors, onLoad, onLoadMessage, onPause, catalogs, onSaveDraft }) => {
     const formik = useFormikContext();
-
-    const handleSaveForLater = async () => {
-        await formik.setFieldValue("status",EXPERIENCE_STATUS.DRAFT);
-        let haveErrs:boolean = await haveErrors();
-        if(!haveErrs){
-            await formik.submitForm();
-        }
-    }
     
     const handleSaveDefinitive = async () => {
         await formik.setFieldValue("status",EXPERIENCE_STATUS.PENDING);
@@ -124,7 +116,7 @@ const Step3:FC<Props> = ({ onBackStep, haveErrors, onLoad, onLoadMessage, onPaus
                     <button type="button" className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('paused',formik)}`} onClick={()=>onPause(true)}>
                         <div>Pause Experience</div>
                     </button>
-                    <button className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('draft',formik)}`} onClick={handleSaveForLater}>
+                    <button type="button" className={`tap-add-experience-2-btn-secondary ${validateShowButtonActions('draft',formik)}`} onClick={onSaveDraft}>
                         save for later
                     </button>
 

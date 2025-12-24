@@ -13,7 +13,7 @@ import { EXPERIENCE_STATUS } from "./models/ExperienceStatus";
 import { ExperienceDetail } from "./models/ExperienceSummaryModel";
 import dayjs from 'dayjs'
 import { PauseExperienceModal } from "./components/PauseExperienceModal";
-import { validationSchemaForDraft, validationSchemaForPending } from "./components/AddExperienceSteps/utils";
+import { validationSchemaForDraftEdit, validationSchemaPendingEdit } from "./components/AddExperienceSteps/utils";
 
 const EditExperiencePage: FC = () => {
     const [step, setStep] = useState(1);
@@ -250,7 +250,7 @@ const EditExperiencePage: FC = () => {
             await formikRef.current.setFieldValue("status",EXPERIENCE_STATUS.DRAFT);
             formikRef.current.submitForm();
         }else{
-            setStatusDraft(false);
+            await setStatusDraft(false);
         }
     }
 
@@ -313,7 +313,7 @@ const EditExperiencePage: FC = () => {
     };
 
     return (<>
-        <Formik innerRef={formikRef} initialValues={initialValues} validationSchema={statusDraft ? validationSchemaForDraft : validationSchemaForPending} validateOnMount={true} onSubmit={handleSubmit}>
+        <Formik innerRef={formikRef} initialValues={initialValues} validationSchema={statusDraft ? validationSchemaForDraftEdit : validationSchemaPendingEdit} validateOnMount={true} onSubmit={handleSubmit}>
             {(formik) => {
 
                 const nextStep = async () => {

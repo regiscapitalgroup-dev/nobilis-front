@@ -187,7 +187,7 @@ const AddExperiencePage: FC = () => {
             await formikRef.current.setFieldValue("status",EXPERIENCE_STATUS.DRAFT);
             formikRef.current.submitForm();
         }else{
-            setStatusDraft(false);
+            await setStatusDraft(false);
         }
     }
 
