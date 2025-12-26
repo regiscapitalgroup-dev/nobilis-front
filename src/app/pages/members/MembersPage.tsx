@@ -2,10 +2,21 @@ import {MemberSearchList} from './components/MemberSearchList'
 import {useSearchableMembersContext} from '../../context/SearchableMembersContext'
 import {useCategoriesMembers} from '../../hooks/members/useCategoriesMembers'
 import {MembersCategoriesList} from './components/MembersCategoriesList'
+import {useEffect} from 'react'
+import {useUserProfileContext} from '../../context/UserProfileContext'
 
 const MembersPage = () => {
+  const {data: categories} = useCategoriesMembers()
   const {data: members, loading: membersLoading} = useSearchableMembersContext()
-  const {data: categories, loading: categoriesLoading} = useCategoriesMembers()
+  const {setSearchParams: setParamasData} = useUserProfileContext()
+  const {setSearchParams} = useSearchableMembersContext()
+
+  useEffect(() => {
+    return () => {
+      setSearchParams({where: '', keywords: '', category: ''})
+      setParamasData({userSelected: ''})
+    }
+  }, [setSearchParams, setParamasData])
 
   return (
     <>
@@ -25,7 +36,7 @@ const MembersPage = () => {
           </h1>
         </div>
 
-        <MembersCategoriesList data={categories} loading={categoriesLoading} />
+        <MembersCategoriesList data={categories} />
         <MemberSearchList data={members} loading={membersLoading} />
       </div>
     </>

@@ -8,10 +8,9 @@ interface Category {
 
 interface MembersCategoriesListProps {
   data: Category[]
-  loading: boolean
 }
 
-const MembersCategoriesList: FC<MembersCategoriesListProps> = ({data, loading}) => {
+const MembersCategoriesList: FC<MembersCategoriesListProps> = ({data}) => {
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const {setSearchParams} = useSearchableMembersContext()
 
@@ -23,7 +22,6 @@ useEffect(() => {
   }))
 }, [selectedId, setSearchParams]);
 
-  if (loading) return <div>Cargando...</div>
 
   return (
     <div className='members-page__categories'>

@@ -42,7 +42,7 @@ const MasterLayout: React.FC = ({children}) => {
       <div className='page d-flex flex-column min-vh-100' style={{position: 'relative'}}>
         {/* Header - mantiene estilos originales pero ocupa todo el ancho */}
         {showHeader && <>{isManage ? <AdminHeaderWrapper /> : <HeaderWrapper />}</>}
-        {location.pathname == '/searchable-members' && <MembersHeader />}
+        {/* {location.pathname == '/searchable-members' && <MembersHeader />} */}
         {/* Container principal */}
         <div className='d-flex flex-row flex-fill' style={{position: 'relative'}}>
           {/* Aside */}

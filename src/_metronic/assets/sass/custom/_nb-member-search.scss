@@ -1,6 +1,6 @@
 
 .members-page {
-    width: 100%;    
+  width: 100%;
     &__header {
       margin-bottom: 30px;
     }
@@ -72,10 +72,13 @@
 
 
 &__members-list {
+   /*  width: 100%; */
     width: calc(100% + 90px);
-    display: flex;
+    display: grid;
+    // display: flex;
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    overflow-x: scroll;
+    overflow-x: visible;
     overflow-y: hidden;
     flex-wrap: nowrap;
     scrollbar-width: none;
@@ -91,7 +94,9 @@
   }
   
   &__member-card {
-    width: 290px;
+    width: 100%;
+    // width: 290px;
+    max-width: 305px;
     height: 400px;
     min-width: 290px;
     position: relative;
@@ -435,9 +440,19 @@
     &__arrow {
       font-size: 30px;
     }
+
+    &__members-list {
+      width: calc(100vw - 40px);  
+    }
   }
 }
-
+@media (min-width: 769px) and (max-width: 1440px) {
+  .members-page {
+    &__members-list {
+      width: calc(100vw - 160px);  
+    }
+  }
+}
 
 
 

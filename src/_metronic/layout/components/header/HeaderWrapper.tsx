@@ -74,32 +74,51 @@ export function HeaderWrapper() {
   }
 
   const handleSearch = () => {
-    if (!where.trim() && !keywords.trim()) {
+    const trimmedWhere = where.trim()
+    const trimmedKeywords = keywords.trim()
+
+    if (!trimmedWhere && !trimmedKeywords) {
       return
     }
 
-    setSearchParams({where, keywords})
+    setSearchParams({where: trimmedWhere, keywords: trimmedKeywords})
     navigate.push('/searchable-members')
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!where.trim() && !keywords.trim()) {
-        setSearchParams({where: '', keywords: ''})
+    const bothEmpty = where.trim() === '' && keywords.trim() === ''
+    const isInSearchPages =
+      location.pathname === '/searchable-members' || location.pathname === '/member/overview'
 
-        if (location.pathname == '/searchable-members' || location.pathname == '/member/overview') {
-          navigate.goBack()
-        }
-        setParamasData({userSelected: ''})
-      }
-    }, 500)
+    if (bothEmpty && isInSearchPages) {
+      
+      const timer = setTimeout(() => {
+        navigate.push('/biography')
+      }, 50)
 
-    return () => clearTimeout(timer)
-  }, [where, keywords, location.pathname, navigate, setSearchParams, setParamasData, refetch])
+      return () => clearTimeout(timer)
+    }
+  }, [where, keywords, location.pathname, navigate, setSearchParams, setParamasData])
 
   const profilePicture = searchParams.userSelected
     ? loggedUser.profilePicture
     : data?.profilePicture
+
+  const handleWhereChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (value.startsWith(' ') && where === '') {
+      return
+    }
+    setWhere(value)
+  }
+
+  const handleKeywordsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (value.startsWith(' ') && keywords === '') {
+      return
+    }
+    setKeywords(value)
+  }
 
   return (
     <div
@@ -185,14 +204,14 @@ export function HeaderWrapper() {
               className='nb-header__search-field'
               placeholder='Where'
               value={where}
-              onChange={(e) => setWhere(e.target.value)}
+              onChange={handleWhereChange}
             />
             <input
               type='text'
               className='nb-header__search-field'
               placeholder='Keywords'
               value={keywords}
-              onChange={(e) => setKeywords(e.target.value)}
+              onChange={handleKeywordsChange}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             />
             <div className='nb-header__search-icon cursor-pointer' onClick={handleSearch}>

@@ -5,12 +5,16 @@ export const useSearchableMembers = (where: string, keywords: string, category?:
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<Error | null>(null)
-
   useEffect(() => {
     let isMounted = true
     const fetch = async () => {
       try {
-        const data = await getSearchableMembers(where.trim(), keywords.trim(), category?.trim()  ?? '')
+
+        setData([])
+        setLoading(true)
+        setError(null)
+
+        const data = await getSearchableMembers(where.trim(), keywords.trim(), category  ?? '')
         if (isMounted) {
           setData(data)
         }
